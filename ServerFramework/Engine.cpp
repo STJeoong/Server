@@ -7,7 +7,6 @@
 #include "NetworkLayer.h"
 #include "Decoder.h"
 #include "Encoder.h"
-#include "Serializer.h"
 #include <fstream>
 
 #pragma region public
@@ -33,12 +32,7 @@ void Engine::start()
 {
 	_network->start();
 }
-void Engine::send(int to, S_PacketAttr attr, const google::protobuf::Message& message)
-{
-	std::pair<Size, char*> val = _serializer->serialize(attr, message);
-
-	_encoder->enqueue(to, val.first, val.second);
-}
+void Engine::send(int to, Size blockSize, char* data) { _encoder->enqueue(to, blockSize, data); }
 S_EngineEvent Engine::getEvent() const { return _evtContainer->pop(); }
 #pragma endregion
 

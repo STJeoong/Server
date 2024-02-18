@@ -145,6 +145,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PacketHandler.cpp" />
     <ClCompile Include="protocol.pb.cc" />
+    <ClCompile Include="Serializer.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="UserManager.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="PacketHandler.h" />
     <ClInclude Include="E_PacketID.h" />
     <ClInclude Include="protocol.pb.h" />
+    <ClInclude Include="Serializer.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="S_UserInfo.h" />
     <ClInclude Include="User.h" />

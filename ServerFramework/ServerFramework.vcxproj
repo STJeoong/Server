@@ -161,7 +161,6 @@
     <ClInclude Include="IOCP.h" />
     <ClInclude Include="I_NetworkCore.h" />
     <ClInclude Include="EngineEventContainer.h" />
-    <ClInclude Include="Serializer.h" />
     <ClInclude Include="S_EngineEvent.h" />
     <ClInclude Include="MemoryBlockPool.h" />
     <ClInclude Include="MemoryBlockPoolManager.h" />
@@ -195,7 +194,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Sender.cpp" />
-    <ClCompile Include="Serializer.cpp" />
     <ClCompile Include="SFUtil.cpp" />
     <ClCompile Include="StringConversion.cpp" />
   </ItemGroup>

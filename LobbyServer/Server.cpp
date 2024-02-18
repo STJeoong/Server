@@ -2,6 +2,7 @@
 #include "User.h"
 #include "PacketHandler.h"
 #include "UserManager.h"
+#include "Serializer.h"
 #include <MemoryBlockPoolManager.h>
 
 #pragma region public
@@ -9,6 +10,7 @@ void Server::init(const char* argv0)
 {
 	_engine = new Engine(argv0);
 	_packetHandler = new PacketHandler;
+	_serializer = new Serializer;
 }
 void Server::run()
 {
@@ -27,7 +29,12 @@ void Server::run()
 			MemoryBlockPoolManager::getInstance().release(evt.blockSize, evt.data);
 	}
 }
-void Server::send(int to, S_PacketAttr attr, const google::protobuf::Message& messsage) const { _engine->send(to, attr, messsage); }
+void Server::send(int to, S_PacketAttr attr, const google::protobuf::Message& messsage) const
+{
+	std::pair<Size, char*> val = _serializer->serialize(attr, messsage);
+
+	_engine->send(to, val.first, val.second);
+}
 #pragma endregion
 
 #pragma region private

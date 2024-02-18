@@ -1,7 +1,10 @@
 #pragma once
 #include <Engine.h>
 #include <Singleton.h>
+#include <google/protobuf/message.h>
+
 class PacketHandler;
+class Serializer;
 class Server : public Singleton<Server>
 {
 	friend class Singleton;
@@ -16,4 +19,5 @@ private:
 
 	Engine* _engine = nullptr;
 	PacketHandler* _packetHandler = nullptr;
+	Serializer* _serializer = nullptr;
 };

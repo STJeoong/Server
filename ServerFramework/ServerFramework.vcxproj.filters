@@ -27,9 +27,6 @@
     <Filter Include="소스 파일\Utils">
       <UniqueIdentifier>{b08355b3-2d0b-4dc7-9d1a-79166add922d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\EngineLayer\Serializer">
-      <UniqueIdentifier>{0f0e1306-f44b-4463-9850-6af0c40d8474}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\EngineLayer\EngineEventContainer">
       <UniqueIdentifier>{0f519022-b005-4efe-962b-6357068a492f}</UniqueIdentifier>
     </Filter>
@@ -104,9 +101,6 @@
     <ClInclude Include="S_PacketAttr.h">
       <Filter>소스 파일\EngineLayer</Filter>
     </ClInclude>
-    <ClInclude Include="Serializer.h">
-      <Filter>소스 파일\EngineLayer\Serializer</Filter>
-    </ClInclude>
     <ClInclude Include="E_EngineEventType.h">
       <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>
     </ClInclude>
@@ -153,9 +147,6 @@
     </ClCompile>
     <ClCompile Include="StringConversion.cpp">
       <Filter>소스 파일\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Serializer.cpp">
-      <Filter>소스 파일\EngineLayer\Serializer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
