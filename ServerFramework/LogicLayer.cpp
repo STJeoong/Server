@@ -10,7 +10,7 @@ LogicLayer::~LogicLayer()
 	_cv.notify_one();
 	_thread.join();
 }
-void LogicLayer::enqueue(S_LogicLayerArgs args)
+void LogicLayer::enqueue(S_EngineEvent args)
 {
 	std::lock_guard<std::mutex> lock(_mutex);
 	_queue.push(args);
@@ -21,7 +21,7 @@ void LogicLayer::enqueue(S_LogicLayerArgs args)
 #pragma region private
 void LogicLayer::threadMain()
 {
-	S_LogicLayerArgs args;
+	S_EngineEvent args;
 	while (true)
 	{
 		{

@@ -68,7 +68,7 @@
     <ClInclude Include="LogicLayer.h">
       <Filter>소스 파일\LogicLayer</Filter>
     </ClInclude>
-    <ClInclude Include="S_LogicLayerArgs.h">
+    <ClInclude Include="S_EngineEvent.h">
       <Filter>소스 파일\LogicLayer</Filter>
     </ClInclude>
     <ClInclude Include="I_Server.h">
@@ -107,7 +107,7 @@
     <ClInclude Include="Singleton.h">
       <Filter>소스 파일\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="E_EngineEvent.h">
+    <ClInclude Include="E_EngineEventType.h">
       <Filter>소스 파일\EngineLayer</Filter>
     </ClInclude>
     <ClInclude Include="S_PacketAttr.h">

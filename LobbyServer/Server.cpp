@@ -10,14 +10,14 @@ bool Server::init()
 	return true;
 }
 #include "Engine.h"
-void Server::process(int serial, E_EngineEvent type, char* data)
+void Server::process(int serial, E_EngineEventType type, char* data)
 {
-	switch ((E_EngineEvent)type)
+	switch ((E_EngineEventType)type)
 	{
-	case E_EngineEvent::EVENT_NET_CONNECT: printf("client connect : (%d)\n", serial); UserManager::getInstance().getUser(serial)->connect(); break;
-	case E_EngineEvent::EVENT_NET_DISCONNECT: printf("client disconnect : (%d)\n", serial); UserManager::getInstance().getUser(serial)->disconnect(); break;
-	case E_EngineEvent::EVENT_NET_RECV: _packetHandler->handle(serial, data); break;
-	case E_EngineEvent::EVENT_DB_RESP: break;
+	case E_EngineEventType::EVENT_NET_CONNECT: printf("client connect : (%d)\n", serial); UserManager::getInstance().getUser(serial)->connect(); break;
+	case E_EngineEventType::EVENT_NET_DISCONNECT: printf("client disconnect : (%d)\n", serial); UserManager::getInstance().getUser(serial)->disconnect(); break;
+	case E_EngineEventType::EVENT_NET_RECV: _packetHandler->handle(serial, data); break;
+	case E_EngineEventType::EVENT_DB_RESP: break;
 	}
 }
 #pragma endregion

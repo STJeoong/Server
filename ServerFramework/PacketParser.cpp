@@ -4,7 +4,7 @@
 #include "MemoryBlockPoolManager.h"
 
 #pragma region public
-void PacketParser::pushData(int serial, char* data, int len, S_LogicLayerArgs& args)
+void PacketParser::pushData(int serial, char* data, int len, S_EngineEvent& args)
 {
 	std::lock_guard<std::mutex> lock(_readWriteMutex[serial]);
 	int extraSpace = BUF_SIZE - _writeIdx[serial];
@@ -29,7 +29,7 @@ void PacketParser::resetBuf(int idx)
 #pragma endregion
 
 #pragma region private
-void PacketParser::collectData(int idx, S_LogicLayerArgs& args)
+void PacketParser::collectData(int idx, S_EngineEvent& args)
 {
 	S_PacketHeader* header = nullptr;
 	

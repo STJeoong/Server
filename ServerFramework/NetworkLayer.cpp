@@ -29,16 +29,16 @@ void NetworkLayer::send(int to, Size blockSize, int len, char* data) { _network-
 #pragma region private
 void NetworkLayer::onConnect(int serial)
 {
-	S_LogicLayerArgs args = {};
-	args.type = E_EngineEvent::EVENT_NET_CONNECT;
+	S_EngineEvent args = {};
+	args.type = E_EngineEventType::EVENT_NET_CONNECT;
 	args.serial = serial;
 
 	_logic->enqueue(args);
 }
 void NetworkLayer::onDisconnect(int serial)
 {
-	S_LogicLayerArgs args = {};
-	args.type = E_EngineEvent::EVENT_NET_DISCONNECT;
+	S_EngineEvent args = {};
+	args.type = E_EngineEventType::EVENT_NET_DISCONNECT;
 	args.serial = serial;
 
 	_logic->enqueue(args);

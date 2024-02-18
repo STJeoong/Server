@@ -5,6 +5,7 @@
 #include "ServerConfig.h"
 #include "Singleton.h"
 #include "S_PacketAttr.h"
+#include "S_EngineEvent.h"
 #include "google/protobuf/type.pb.h"
 
 class I_Server;
@@ -22,6 +23,7 @@ public:
 	void shutdown();
 	void start();
 	void send(int to, S_PacketAttr attr, const google::protobuf::Message& message);
+	S_EngineEvent getEvent() const {}
 	int getMaxClient() const { return MAX_CLIENT; }
 private:
 	Engine() = default;

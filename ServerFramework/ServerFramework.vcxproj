@@ -156,14 +156,14 @@
     <ClInclude Include="Define.h" />
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="Engine.h" />
-    <ClInclude Include="E_EngineEvent.h" />
+    <ClInclude Include="E_EngineEventType.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="IOCP.h" />
     <ClInclude Include="I_NetworkCore.h" />
     <ClInclude Include="I_Server.h" />
     <ClInclude Include="LogicLayer.h" />
     <ClInclude Include="Serializer.h" />
-    <ClInclude Include="S_LogicLayerArgs.h" />
+    <ClInclude Include="S_EngineEvent.h" />
     <ClInclude Include="MemoryBlockPool.h" />
     <ClInclude Include="MemoryBlockPoolManager.h" />
     <ClInclude Include="NetworkLayer.h" />

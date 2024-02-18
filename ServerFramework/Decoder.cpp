@@ -35,7 +35,7 @@ void Decoder::threadMain()
 	char* data;
 	int len;
 	Size blockSize;
-	S_LogicLayerArgs args;
+	S_EngineEvent args;
 	while (true)
 	{
 		{
@@ -48,7 +48,7 @@ void Decoder::threadMain()
 		}
 		args = {};
 		args.serial = serial;
-		args.type = E_EngineEvent::EVENT_NET_RECV;
+		args.type = E_EngineEventType::EVENT_NET_RECV;
 
 		_parser->pushData(serial, data, len, args);
 		MemoryBlockPoolManager::getInstance().release(blockSize, data);
