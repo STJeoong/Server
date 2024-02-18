@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "Decoder.h"
-#include "LogicLayer.h"
+#include "EngineEventContainer.h"
 #include "PacketParser.h"
 #include "MemoryBlockPoolManager.h"
 
 #pragma region public
-Decoder::Decoder(LogicLayer* logic, int threadCount) : _logic(logic)
+Decoder::Decoder(EngineEventContainer* evtContainer, int threadCount) : _evtContainer(evtContainer)
 {
 	_parser = new PacketParser;
 	for (int i = 0; i < threadCount; ++i)
@@ -35,7 +35,7 @@ void Decoder::threadMain()
 	char* data;
 	int len;
 	Size blockSize;
-	S_EngineEvent args;
+	S_EngineEvent evt;
 	while (true)
 	{
 		{
@@ -46,15 +46,15 @@ void Decoder::threadMain()
 			std::tie(serial, data, len, blockSize) = _queue.front();
 			_queue.pop();
 		}
-		args = {};
-		args.serial = serial;
-		args.type = E_EngineEventType::EVENT_NET_RECV;
+		evt = {};
+		evt.serial = serial;
+		evt.type = E_EngineEventType::EVENT_NET_RECV;
 
-		_parser->pushData(serial, data, len, args);
+		_parser->pushData(serial, data, len, evt);
 		MemoryBlockPoolManager::getInstance().release(blockSize, data);
-		if (args.data == nullptr)
+		if (evt.data == nullptr)
 			continue;
-		_logic->enqueue(args);
+		_evtContainer->enqueue(evt);
 	}
 }
 #pragma endregion

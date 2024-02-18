@@ -160,8 +160,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="IOCP.h" />
     <ClInclude Include="I_NetworkCore.h" />
-    <ClInclude Include="I_Server.h" />
-    <ClInclude Include="LogicLayer.h" />
+    <ClInclude Include="EngineEventContainer.h" />
     <ClInclude Include="Serializer.h" />
     <ClInclude Include="S_EngineEvent.h" />
     <ClInclude Include="MemoryBlockPool.h" />
@@ -185,7 +184,7 @@
     <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="IOCP.cpp" />
-    <ClCompile Include="LogicLayer.cpp" />
+    <ClCompile Include="EngineEventContainer.cpp" />
     <ClCompile Include="MemoryBlockPool.cpp" />
     <ClCompile Include="MemoryBlockPoolManager.cpp" />
     <ClCompile Include="NetworkLayer.cpp" />

@@ -4,11 +4,11 @@
 #include "ServerConfig.h"
 class I_NetworkCore;
 class Decoder;
-class LogicLayer;
+class EngineEventContainer;
 class NetworkLayer
 {
 public:
-	NetworkLayer(ServerConfig config, LogicLayer* logic, Decoder* decoder);
+	NetworkLayer(ServerConfig config, EngineEventContainer* logic, Decoder* decoder);
 	~NetworkLayer();
 	void start();
 	void send(int to, Size blockSize, int len, char* data);
@@ -18,7 +18,7 @@ private:
 	void onRecv(int serial, int len, char* data);
 
 	I_NetworkCore* _network = nullptr;
-	LogicLayer* _logic = nullptr;
+	EngineEventContainer* _evtContainer = nullptr;
 	Decoder* _decoder = nullptr;
 };
 

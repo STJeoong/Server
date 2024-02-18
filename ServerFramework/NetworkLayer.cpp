@@ -3,7 +3,7 @@
 #include "I_NetworkCore.h"
 #include "MemoryBlockPoolManager.h"
 #include "NetEvent.h"
-#include "LogicLayer.h"
+#include "EngineEventContainer.h"
 #include "Decoder.h"
 #include "IOCP.h"
 #include <fstream>
@@ -11,7 +11,7 @@
 #include "ServerConfig.h"
 
 #pragma region public
-NetworkLayer::NetworkLayer(ServerConfig config, LogicLayer* logic, Decoder* decoder) : _logic(logic), _decoder(decoder)
+NetworkLayer::NetworkLayer(ServerConfig config, EngineEventContainer* evtContainer, Decoder* decoder) : _evtContainer(evtContainer), _decoder(decoder)
 {
 	if (config.network == "iocp")
 		_network = new IOCP(config);
@@ -29,19 +29,19 @@ void NetworkLayer::send(int to, Size blockSize, int len, char* data) { _network-
 #pragma region private
 void NetworkLayer::onConnect(int serial)
 {
-	S_EngineEvent args = {};
-	args.type = E_EngineEventType::EVENT_NET_CONNECT;
-	args.serial = serial;
+	S_EngineEvent evt = {};
+	evt.type = E_EngineEventType::EVENT_NET_CONNECT;
+	evt.serial = serial;
 
-	_logic->enqueue(args);
+	_evtContainer->enqueue(evt);
 }
 void NetworkLayer::onDisconnect(int serial)
 {
-	S_EngineEvent args = {};
-	args.type = E_EngineEventType::EVENT_NET_DISCONNECT;
-	args.serial = serial;
+	S_EngineEvent evt = {};
+	evt.type = E_EngineEventType::EVENT_NET_DISCONNECT;
+	evt.serial = serial;
 
-	_logic->enqueue(args);
+	_evtContainer->enqueue(evt);
 	_decoder->reset(serial);
 }
 void NetworkLayer::onRecv(int serial, int len, char* data)

@@ -1,10 +1,9 @@
 #include "pch.h"
 #include "Engine.h"
-#include "I_Server.h"
 #include "SFUtil.h"
 #include "StringConversion.h"
 #include "Define.h"
-#include "LogicLayer.h"
+#include "EngineEventContainer.h"
 #include "NetworkLayer.h"
 #include "Decoder.h"
 #include "Encoder.h"
@@ -12,28 +11,27 @@
 #include <fstream>
 
 #pragma region public
-void Engine::init(const char* argv0, I_Server* server)
+Engine::Engine(const char* argv0)
 {
 	google::InitGoogleLogging(argv0);
 	LOG(INFO) << "Engine Initialize...";
 	this->setLogFolder();
 	this->setConfig();
-	_logic = new LogicLayer(server);
-	_decoder = new Decoder(_logic);
-	_network = new NetworkLayer(_config, _logic, _decoder);
+	_evtContainer = new EngineEventContainer;
+	_decoder = new Decoder(_evtContainer);
+	_network = new NetworkLayer(_config, _evtContainer, _decoder);
 	_encoder = new Encoder(_network);
 }
-void Engine::shutdown()
+Engine::~Engine()
 {
 	delete _network;
-	delete _logic;
+	delete _evtContainer;
 	delete _decoder;
 	delete _encoder;
 }
 void Engine::start()
 {
 	_network->start();
-	_logic->start();
 }
 void Engine::send(int to, S_PacketAttr attr, const google::protobuf::Message& message)
 {
@@ -46,6 +44,7 @@ void Engine::send(int to, S_PacketAttr attr, const google::protobuf::Message& me
 
 	_encoder->enqueue(data);
 }
+S_EngineEvent Engine::getEvent() const { return _evtContainer->pop(); }
 #pragma endregion
 
 #pragma region private

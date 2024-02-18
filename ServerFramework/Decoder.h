@@ -6,19 +6,19 @@
 #include <vector>
 #include "Define.h"
 
-class LogicLayer;
+class EngineEventContainer;
 class PacketParser;
 class Decoder
 {
 public:
-	Decoder(LogicLayer* logic, int threadCount = 1);
+	Decoder(EngineEventContainer* logic, int threadCount = 1);
 	~Decoder();
 	void enqueue(int serial, char* data, int len, Size blockSize);
 	void reset(int serial);
 private:
 	void threadMain();
 
-	LogicLayer* _logic;
+	EngineEventContainer* _evtContainer;
 	PacketParser* _parser;
 
 	bool _stopThreads = false;
