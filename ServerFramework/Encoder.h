@@ -5,14 +5,14 @@
 #include <condition_variable>
 #include <mutex>
 #include <vector>
-#include "S_RawData.h"
+#include "Define.h"
 class NetworkLayer;
 class Encoder
 {
 public:
 	Encoder(NetworkLayer* network, int threadCount = 1);
 	~Encoder();
-	void enqueue(S_RawData data);
+	void enqueue(int to, Size blockSize, char* data);
 private:
 	void threadMain();
 
@@ -20,7 +20,7 @@ private:
 
 	bool _stopThreads = false;
 	std::vector<std::thread> _threads;
-	std::queue<S_RawData> _queue;
+	std::queue<std::tuple<int, Size, char*>> _queue;
 	std::mutex _mutex;
 	std::condition_variable _cv;
 };

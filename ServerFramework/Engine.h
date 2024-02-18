@@ -1,7 +1,6 @@
 #pragma once
 #include "Define.h"
 #include "NetEvent.h"
-#include "S_RawData.h"
 #include "ServerConfig.h"
 #include "S_PacketAttr.h"
 #include "S_EngineEvent.h"

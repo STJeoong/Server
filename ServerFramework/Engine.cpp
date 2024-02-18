@@ -36,13 +36,8 @@ void Engine::start()
 void Engine::send(int to, S_PacketAttr attr, const google::protobuf::Message& message)
 {
 	std::pair<Size, char*> val = _serializer->serialize(attr, message);
-	S_RawData data = {};
 
-	data.blockSize = val.first;
-	data.data = val.second;
-	data.to = to;
-
-	_encoder->enqueue(data);
+	_encoder->enqueue(to, val.first, val.second);
 }
 S_EngineEvent Engine::getEvent() const { return _evtContainer->pop(); }
 #pragma endregion

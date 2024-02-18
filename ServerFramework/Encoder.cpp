@@ -15,10 +15,10 @@ Encoder::~Encoder()
 	for (int i = 0; i < _threads.size(); ++i)
 		_threads[i].join();
 }
-void Encoder::enqueue(S_RawData data)
+void Encoder::enqueue(int to, Size blockSize, char* data)
 {
 	std::lock_guard<std::mutex> lock(_mutex);
-	_queue.push(data);
+	_queue.push({ to, blockSize, data });
 	_cv.notify_one();
 }
 #pragma endregion
@@ -26,7 +26,9 @@ void Encoder::enqueue(S_RawData data)
 #pragma region private
 void Encoder::threadMain()
 {
-	S_RawData data;
+	int to;
+	Size blockSize;
+	char* data;
 	S_PacketHeader* header;
 	while (true)
 	{
@@ -35,12 +37,12 @@ void Encoder::threadMain()
 			_cv.wait(lock, [&] { return !_queue.empty() || _stopThreads; });
 			if (_stopThreads)
 				return;
-			data = _queue.front();
+			std::tie(to, blockSize, data) = _queue.front();
 			_queue.pop();
 		}
-		header = reinterpret_cast<S_PacketHeader*>(data.data);
+		header = reinterpret_cast<S_PacketHeader*>(data);
 		//TODO : 압축, 암호화 추가 ( 과정을 거치면서 패킷헤더의 _len값 변경해야됨 )
-		_network->send(data.to, data.blockSize, header->len, data.data);
+		_network->send(to, blockSize, header->len, data);
 	}
 }
 #pragma endregion

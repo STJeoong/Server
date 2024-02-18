@@ -80,9 +80,6 @@
     <ClInclude Include="Sender.h">
       <Filter>소스 파일\NetworkLayer\IOCP</Filter>
     </ClInclude>
-    <ClInclude Include="S_RawData.h">
-      <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>
-    </ClInclude>
     <ClInclude Include="Define.h">
       <Filter>소스 파일\Utils</Filter>
     </ClInclude>

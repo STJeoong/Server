@@ -171,7 +171,6 @@
     <ClInclude Include="S_PacketHeader.h" />
     <ClInclude Include="PacketParser.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="S_RawData.h" />
     <ClInclude Include="Sender.h" />
     <ClInclude Include="ServerConfig.h" />
     <ClInclude Include="SFUtil.h" />
