@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package protocol;
+
+enum E_RespCode
+{
+	OK = 0;
+	
+	LOGIN_USER_INVALID_PW = 31;
+}
+
+message Login_Req
+{
+	string id = 1;
+	string passwd = 2;
+}
+
+message Login_Resp
+{
+	E_RespCode resp = 1;
+}
+
+message ChatLobby_Req
+{
+	string content = 1;
+}
+
+message ChatLobby_Notify
+{
+	string name = 1;
+	string content = 2;
+}

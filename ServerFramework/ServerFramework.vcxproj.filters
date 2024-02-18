@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\DBLayer">
+      <UniqueIdentifier>{a728ea01-7004-4324-9ee9-9557ad737e62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\EngineLayer">
+      <UniqueIdentifier>{bfa7edb2-934a-4f21-a71f-c7d65ed8aec5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\EngineLayer\Decode">
+      <UniqueIdentifier>{10093e2e-0028-4d38-b910-e744dbc57391}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\EngineLayer\Encode">
+      <UniqueIdentifier>{82d45c87-b1ef-4a8c-a5c0-02151f43a0e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LogicLayer">
+      <UniqueIdentifier>{0f519022-b005-4efe-962b-6357068a492f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\NetworkLayer">
+      <UniqueIdentifier>{54ee3c65-301e-4cac-bf4a-f003e6055968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\NetworkLayer\IOCP">
+      <UniqueIdentifier>{09ad6953-662b-4608-8ce5-0bfb5dd8fb8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Utils">
+      <UniqueIdentifier>{b08355b3-2d0b-4dc7-9d1a-79166add922d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\EngineLayer\Serializer">
+      <UniqueIdentifier>{0f0e1306-f44b-4463-9850-6af0c40d8474}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DBLayer.h">
+      <Filter>소스 파일\DBLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="I_DBService.h">
+      <Filter>소스 파일\DBLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Decoder.h">
+      <Filter>소스 파일\EngineLayer\Decode</Filter>
+    </ClInclude>
+    <ClInclude Include="Encoder.h">
+      <Filter>소스 파일\EngineLayer\Encode</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>소스 파일\EngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketParser.h">
+      <Filter>소스 파일\EngineLayer\Decode</Filter>
+    </ClInclude>
+    <ClInclude Include="S_PacketHeader.h">
+      <Filter>소스 파일\EngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Accepter.h">
+      <Filter>소스 파일\NetworkLayer\IOCP</Filter>
+    </ClInclude>
+    <ClInclude Include="I_NetworkCore.h">
+      <Filter>소스 파일\NetworkLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkLayer.h">
+      <Filter>소스 파일\NetworkLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="LogicLayer.h">
+      <Filter>소스 파일\LogicLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="S_LogicLayerArgs.h">
+      <Filter>소스 파일\LogicLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="I_Server.h">
+      <Filter>소스 파일\LogicLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="IOCP.h">
+      <Filter>소스 파일\NetworkLayer\IOCP</Filter>
+    </ClInclude>
+    <ClInclude Include="OverlappedEx.h">
+      <Filter>소스 파일\NetworkLayer\IOCP</Filter>
+    </ClInclude>
+    <ClInclude Include="Sender.h">
+      <Filter>소스 파일\NetworkLayer\IOCP</Filter>
+    </ClInclude>
+    <ClInclude Include="S_RawData.h">
+      <Filter>소스 파일\LogicLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>소스 파일\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryBlockPool.h">
+      <Filter>소스 파일\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryBlockPoolManager.h">
+      <Filter>소스 파일\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerConfig.h">
+      <Filter>소스 파일\EngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="SFUtil.h">
+      <Filter>소스 파일\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="StringConversion.h">
+      <Filter>소스 파일\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>소스 파일\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="E_EngineEvent.h">
+      <Filter>소스 파일\EngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="S_PacketAttr.h">
+      <Filter>소스 파일\EngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Serializer.h">
+      <Filter>소스 파일\EngineLayer\Serializer</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="DBLayer.cpp">
+      <Filter>소스 파일\DBLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Decoder.cpp">
+      <Filter>소스 파일\EngineLayer\Decode</Filter>
+    </ClCompile>
+    <ClCompile Include="Encoder.cpp">
+      <Filter>소스 파일\EngineLayer\Encode</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>소스 파일\EngineLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketParser.cpp">
+      <Filter>소스 파일\EngineLayer\Decode</Filter>
+    </ClCompile>
+    <ClCompile Include="Accepter.cpp">
+      <Filter>소스 파일\NetworkLayer\IOCP</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkLayer.cpp">
+      <Filter>소스 파일\NetworkLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="LogicLayer.cpp">
+      <Filter>소스 파일\LogicLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="IOCP.cpp">
+      <Filter>소스 파일\NetworkLayer\IOCP</Filter>
+    </ClCompile>
+    <ClCompile Include="Sender.cpp">
+      <Filter>소스 파일\NetworkLayer\IOCP</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryBlockPool.cpp">
+      <Filter>소스 파일\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryBlockPoolManager.cpp">
+      <Filter>소스 파일\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="SFUtil.cpp">
+      <Filter>소스 파일\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="StringConversion.cpp">
+      <Filter>소스 파일\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Serializer.cpp">
+      <Filter>소스 파일\EngineLayer\Serializer</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
