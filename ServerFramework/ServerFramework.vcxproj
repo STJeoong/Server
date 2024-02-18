@@ -152,7 +152,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Accepter.h" />
-    <ClInclude Include="DBLayer.h" />
     <ClInclude Include="Decoder.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Encoder.h" />
@@ -160,7 +159,6 @@
     <ClInclude Include="E_EngineEvent.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="IOCP.h" />
-    <ClInclude Include="I_DBService.h" />
     <ClInclude Include="I_NetworkCore.h" />
     <ClInclude Include="I_Server.h" />
     <ClInclude Include="LogicLayer.h" />
@@ -183,7 +181,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Accepter.cpp" />
-    <ClCompile Include="DBLayer.cpp" />
     <ClCompile Include="Decoder.cpp" />
     <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="Engine.cpp" />

@@ -4,7 +4,6 @@
 #include "SFUtil.h"
 #include "StringConversion.h"
 #include "Define.h"
-#include "DBLayer.h"
 #include "LogicLayer.h"
 #include "NetworkLayer.h"
 #include "Decoder.h"
@@ -23,13 +22,11 @@ void Engine::init(const char* argv0, I_Server* server)
 	_decoder = new Decoder(_logic);
 	_network = new NetworkLayer(_config, _logic, _decoder);
 	_encoder = new Encoder(_network);
-	_db = new DBLayer;
 }
 void Engine::shutdown()
 {
 	delete _network;
 	delete _logic;
-	delete _db;
 	delete _decoder;
 	delete _encoder;
 }
@@ -37,7 +34,6 @@ void Engine::start()
 {
 	_network->start();
 	_logic->start();
-	_db->start();
 }
 void Engine::send(int to, S_PacketAttr attr, const google::protobuf::Message& message)
 {
@@ -50,7 +46,6 @@ void Engine::send(int to, S_PacketAttr attr, const google::protobuf::Message& me
 
 	_encoder->enqueue(data);
 }
-bool Engine::addDB(int id, I_DBService* db) { return _db->addService(id, db); }
 #pragma endregion
 
 #pragma region private

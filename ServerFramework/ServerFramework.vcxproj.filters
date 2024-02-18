@@ -9,9 +9,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\DBLayer">
-      <UniqueIdentifier>{a728ea01-7004-4324-9ee9-9557ad737e62}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\EngineLayer">
       <UniqueIdentifier>{bfa7edb2-934a-4f21-a71f-c7d65ed8aec5}</UniqueIdentifier>
     </Filter>
@@ -43,12 +40,6 @@
     </ClInclude>
     <ClInclude Include="framework.h">
       <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="DBLayer.h">
-      <Filter>소스 파일\DBLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="I_DBService.h">
-      <Filter>소스 파일\DBLayer</Filter>
     </ClInclude>
     <ClInclude Include="Decoder.h">
       <Filter>소스 파일\EngineLayer\Decode</Filter>
@@ -129,9 +120,6 @@
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="DBLayer.cpp">
-      <Filter>소스 파일\DBLayer</Filter>
     </ClCompile>
     <ClCompile Include="Decoder.cpp">
       <Filter>소스 파일\EngineLayer\Decode</Filter>

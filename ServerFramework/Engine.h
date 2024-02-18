@@ -10,7 +10,6 @@
 class I_Server;
 class NetworkLayer;
 class LogicLayer;
-class DBLayer;
 class Decoder;
 class Encoder;
 class I_DBService;
@@ -23,7 +22,6 @@ public:
 	void shutdown();
 	void start();
 	void send(int to, S_PacketAttr attr, const google::protobuf::Message& message);
-	bool addDB(int id, I_DBService* db);
 	int getMaxClient() const { return MAX_CLIENT; }
 private:
 	Engine() = default;
@@ -35,7 +33,6 @@ private:
 	ServerConfig _config;
 	NetworkLayer* _network = nullptr;
 	LogicLayer* _logic = nullptr;
-	DBLayer* _db = nullptr;
 	Decoder* _decoder = nullptr;
 	Encoder* _encoder = nullptr;
 	Serializer* _serializer = nullptr;
