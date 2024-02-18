@@ -2,25 +2,40 @@
 #include "User.h"
 #include "PacketHandler.h"
 #include "UserManager.h"
+#include <MemoryBlockPoolManager.h>
 
 #pragma region public
-bool Server::init()
+void Server::init(const char* argv0)
 {
-	_packetHandler = new PacketHandler();
-	return true;
+	_engine = new Engine(argv0);
+	_packetHandler = new PacketHandler;
 }
-#include "Engine.h"
-void Server::process(int serial, E_EngineEventType type, char* data)
+void Server::run()
 {
-	switch ((E_EngineEventType)type)
+	_engine->start();
+	S_EngineEvent evt;
+	while (true)
+	{
+		evt = _engine->getEvent();
+		switch (evt.type)
+		{
+		case E_EngineEventType::EVENT_NET_CONNECT: printf("client connect : (%d)\n", evt.serial); UserManager::getInstance().getUser(evt.serial)->connect(); break;
+		case E_EngineEventType::EVENT_NET_DISCONNECT: printf("client disconnect : (%d)\n", evt.serial); UserManager::getInstance().getUser(evt.serial)->disconnect(); break;
+		case E_EngineEventType::EVENT_NET_RECV: _packetHandler->handle(evt.serial, evt.data); break;
+		}
+		if (evt.data != nullptr)
+			MemoryBlockPoolManager::getInstance().release(evt.blockSize, evt.data);
+	}
+}
+void Server::send(int to, S_PacketAttr attr, const google::protobuf::Message& messsage) const { _engine->send(to, attr, messsage); }
+#pragma endregion
+
+#pragma region private
+#pragma endregion
+	/*switch ((E_EngineEventType)type)
 	{
 	case E_EngineEventType::EVENT_NET_CONNECT: printf("client connect : (%d)\n", serial); UserManager::getInstance().getUser(serial)->connect(); break;
 	case E_EngineEventType::EVENT_NET_DISCONNECT: printf("client disconnect : (%d)\n", serial); UserManager::getInstance().getUser(serial)->disconnect(); break;
 	case E_EngineEventType::EVENT_NET_RECV: _packetHandler->handle(serial, data); break;
 	case E_EngineEventType::EVENT_DB_RESP: break;
-	}
-}
-#pragma endregion
-
-#pragma region private
-#pragma endregion
+	}*/

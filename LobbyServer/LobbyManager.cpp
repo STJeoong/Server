@@ -4,6 +4,7 @@
 #include "MemoryBlockPoolManager.h"
 #include "E_PacketID.h"
 #include "protocol.pb.h"
+#include "Server.h"
 #include <S_PacketHeader.h>
 
 #pragma region public
@@ -43,7 +44,7 @@ void LobbyManager::broadcast(int serial, char* data)
 	{
 		if (_users[i]->getInfo()->serial == serial)
 			continue;
-		Engine::getInstance().send(_users[i]->getInfo()->serial, attr, notify);
+		Server::getInstance().send(_users[i]->getInfo()->serial, attr, notify);
 	}
 }
 #pragma endregion

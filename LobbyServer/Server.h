@@ -1,11 +1,19 @@
 #pragma once
-#include "I_Server.h"
+#include <Engine.h>
+#include <Singleton.h>
 class PacketHandler;
-class Server : public I_Server
+class Server : public Singleton<Server>
 {
+	friend class Singleton;
 public:
-	virtual bool init() override; // DB addProtocol 등 등록 및 초기화 작업
-	virtual void process(int serial, E_EngineEventType type, char* data) override;
+	void init(const char* argv0);
+	void run();
+	void send(int to, S_PacketAttr attr, const google::protobuf::Message& message) const;
+	int getMaxClient() const { return _engine->getMaxClient(); }
 private:
-	PacketHandler* _packetHandler;
+	Server() = default;
+	~Server() = default;
+
+	Engine* _engine = nullptr;
+	PacketHandler* _packetHandler = nullptr;
 };
