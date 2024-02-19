@@ -30,6 +30,9 @@
     <Filter Include="소스 파일\EngineLayer\EngineEventContainer">
       <UniqueIdentifier>{0f519022-b005-4efe-962b-6357068a492f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\EngineLayer\ServerEngine">
+      <UniqueIdentifier>{b0d2872e-321c-4391-9adb-80a002903d45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -43,9 +46,6 @@
     </ClInclude>
     <ClInclude Include="Encoder.h">
       <Filter>소스 파일\EngineLayer\Encode</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine.h">
-      <Filter>소스 파일\EngineLayer</Filter>
     </ClInclude>
     <ClInclude Include="PacketParser.h">
       <Filter>소스 파일\EngineLayer\Decode</Filter>
@@ -86,9 +86,6 @@
     <ClInclude Include="MemoryBlockPoolManager.h">
       <Filter>소스 파일\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="ServerConfig.h">
-      <Filter>소스 파일\EngineLayer</Filter>
-    </ClInclude>
     <ClInclude Include="SFUtil.h">
       <Filter>소스 파일\Utils</Filter>
     </ClInclude>
@@ -104,6 +101,12 @@
     <ClInclude Include="E_EngineEventType.h">
       <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>
     </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>소스 파일\EngineLayer\ServerEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerConfig.h">
+      <Filter>소스 파일\EngineLayer\ServerEngine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -114,9 +117,6 @@
     </ClCompile>
     <ClCompile Include="Encoder.cpp">
       <Filter>소스 파일\EngineLayer\Encode</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine.cpp">
-      <Filter>소스 파일\EngineLayer</Filter>
     </ClCompile>
     <ClCompile Include="PacketParser.cpp">
       <Filter>소스 파일\EngineLayer\Decode</Filter>
@@ -147,6 +147,9 @@
     </ClCompile>
     <ClCompile Include="StringConversion.cpp">
       <Filter>소스 파일\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>소스 파일\EngineLayer\ServerEngine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

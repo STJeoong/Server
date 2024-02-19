@@ -8,7 +8,7 @@ class EngineEventContainer;
 class NetworkLayer
 {
 public:
-	NetworkLayer(ServerConfig config, EngineEventContainer* logic, Decoder* decoder);
+	NetworkLayer(ServerConfig config, EngineEventContainer* evtContainer, Decoder* decoder);
 	~NetworkLayer();
 	void start();
 	void send(int to, Size blockSize, int len, char* data);

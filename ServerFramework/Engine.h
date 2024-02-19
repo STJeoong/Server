@@ -2,7 +2,6 @@
 #include "Define.h"
 #include "NetEvent.h"
 #include "ServerConfig.h"
-#include "S_PacketAttr.h"
 #include "S_EngineEvent.h"
 
 class NetworkLayer;

@@ -1,6 +1,7 @@
 #pragma once
 #include <Engine.h>
 #include <Singleton.h>
+#include <S_PacketAttr.h>
 #include <google/protobuf/message.h>
 
 class PacketHandler;
