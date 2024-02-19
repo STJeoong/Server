@@ -101,10 +101,10 @@
     <ClInclude Include="E_EngineEventType.h">
       <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>
     </ClInclude>
-    <ClInclude Include="Engine.h">
+    <ClInclude Include="ServerConfig.h">
       <Filter>소스 파일\EngineLayer\ServerEngine</Filter>
     </ClInclude>
-    <ClInclude Include="ServerConfig.h">
+    <ClInclude Include="Engine.h">
       <Filter>소스 파일\EngineLayer\ServerEngine</Filter>
     </ClInclude>
   </ItemGroup>

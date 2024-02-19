@@ -4,7 +4,6 @@
 // 상수 모음
 #define MAX_USER_ACCEPT 65535 //서버에서 받아들일 수 있는 최대 소켓수
 #define DEFALUT_USER_ACCEPT 5000 //디폴트 유저 접속 허용 수.. 5000
-#define MAX_CLIENT 10
 
 #define PACKET_OPTION_DATACRC 0x00000001
 #define PACKET_OPTION_COMPRESS 0x00000002

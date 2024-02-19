@@ -4,6 +4,15 @@
 #include "MemoryBlockPoolManager.h"
 
 #pragma region public
+PacketParser::PacketParser(int maxClient)
+{
+	_readWriteMutex = new std::mutex[maxClient];
+	_readIdx = new UINT16[maxClient]{};
+	_writeIdx = new UINT16[maxClient]{};
+	_buf = new char*[maxClient];
+	for (int i = 0; i < maxClient; ++i)
+		_buf[i] = new char[maxClient]{};
+}
 void PacketParser::pushData(int serial, char* data, int len, S_EngineEvent& evt)
 {
 	std::lock_guard<std::mutex> lock(_readWriteMutex[serial]);

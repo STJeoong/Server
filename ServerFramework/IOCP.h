@@ -8,7 +8,6 @@
 #include "Define.h"
 #include "OverlappedEx.h"
 #include "I_NetworkCore.h"
-#include "ServerConfig.h"
 
 #pragma comment(lib, "ws2_32")
 #pragma comment(lib, "mswsock.lib")
@@ -19,9 +18,9 @@ class IOCP : public I_NetworkCore
 {
 	static const UINT16 RECV_BUF_SIZE = 1024;
 public:
-	IOCP(const ServerConfig& config);
+	IOCP(std::string ip, u_short port, int maxClient);
 	~IOCP();
-	void start(int threadCount = 4) override;
+	void run(int threadCount = 4) override;
 	void send(int to, Size blockSize, int len, char* data) override;
 	void setOnConnect(std::function<void(int)> onConnect) override;
 	void setOnDisconnect(std::function<void(int)> onDisconnect) override;
@@ -42,11 +41,11 @@ private:
 	HANDLE _cp;
 
 	std::vector<std::thread> _workers;
-	CompletionKey _completionKeys[MAX_CLIENT];
-	OverlappedEx _recvs[MAX_CLIENT];
-	char _recvBufs[MAX_CLIENT][IOCP::RECV_BUF_SIZE];
-	Accepter* _accepter;
-	Sender* _sender;
+	CompletionKey* _completionKeys = nullptr;
+	OverlappedEx* _recvs = nullptr;
+	char** _recvBufs = nullptr;
+	Accepter* _accepter = nullptr;
+	Sender* _sender = nullptr;
 
 	//events
 	std::function<void(int)> _onConnect;

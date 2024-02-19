@@ -8,21 +8,16 @@
 #include "IOCP.h"
 #include <fstream>
 #include <iostream>
-#include "ServerConfig.h"
 
 #pragma region public
-NetworkLayer::NetworkLayer(ServerConfig config, EngineEventContainer* evtContainer, Decoder* decoder) : _evtContainer(evtContainer), _decoder(decoder)
+NetworkLayer::NetworkLayer(I_NetworkCore* network, EngineEventContainer* evtContainer, Decoder* decoder) : _network(network), _evtContainer(evtContainer), _decoder(decoder)
 {
-	if (config.network == "iocp")
-		_network = new IOCP(config);
-	else
-		std::cout << config.network << " is not supported. please check config.json";
 	_network->setOnConnect([this](int serial) { this->onConnect(serial); });
 	_network->setOnDisconnect([this](int serial) { this->onDisconnect(serial); });
 	_network->setOnRecv([this](int serial, int len, char* data) { this->onRecv(serial, len, data); });
 }
 NetworkLayer::~NetworkLayer() { delete _network; }
-void NetworkLayer::start() { _network->start(); }
+void NetworkLayer::run() { _network->run(); }
 void NetworkLayer::send(int to, Size blockSize, int len, char* data) { _network->send(to, blockSize, len, data); }
 #pragma endregion
 

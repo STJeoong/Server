@@ -2,9 +2,12 @@
 #include "Sender.h"
 #include "MemoryBlockPoolManager.h"
 #pragma region public
-Sender::Sender(CompletionKey* completionKeys) : _completionKeys(completionKeys)
+Sender::Sender(CompletionKey* completionKeys, int maxClient) : _completionKeys(completionKeys)
 {
-	for (int i = 0; i < MAX_CLIENT; ++i)
+	_sends = new OverlappedEx[maxClient];
+	_sendMutexs = new std::mutex[maxClient];
+	_thingsToSend = new std::queue<std::tuple<int, Size, char*>>[maxClient];
+	for (int i = 0; i < maxClient; ++i)
 	{
 		memset(&_sends[i].o, 0, sizeof(OVERLAPPED));
 		_sends[i].mode = IOMode::SEND;

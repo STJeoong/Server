@@ -5,9 +5,9 @@
 #include "MemoryBlockPoolManager.h"
 
 #pragma region public
-Decoder::Decoder(EngineEventContainer* evtContainer, int threadCount) : _evtContainer(evtContainer)
+Decoder::Decoder(EngineEventContainer* evtContainer, int maxClient, int threadCount) : _evtContainer(evtContainer)
 {
-	_parser = new PacketParser;
+	_parser = new PacketParser(maxClient);
 	for (int i = 0; i < threadCount; ++i)
 		_threads.push_back(std::thread(&Decoder::threadMain, this));
 }

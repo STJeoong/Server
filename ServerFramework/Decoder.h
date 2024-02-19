@@ -11,7 +11,7 @@ class PacketParser;
 class Decoder
 {
 public:
-	Decoder(EngineEventContainer* logic, int threadCount = 1);
+	Decoder(EngineEventContainer* evtContainer, int maxClient, int threadCount = 1);
 	~Decoder();
 	void enqueue(int serial, char* data, int len, Size blockSize);
 	void reset(int serial);

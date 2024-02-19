@@ -4,7 +4,7 @@ class I_NetworkCore
 {
 public:
 	virtual ~I_NetworkCore() {}
-	virtual void start(int threadCount = 4) = 0;
+	virtual void run(int threadCount = 4) = 0;
 	virtual void send(int to, Size blockSize, int len, char* data) = 0; // TODO : 매개변수로 데이터 받기
 
 	virtual void setOnConnect(std::function<void(int)> onConnect) = 0;

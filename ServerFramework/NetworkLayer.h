@@ -1,16 +1,15 @@
 #pragma once
 
 #include "Define.h"
-#include "ServerConfig.h"
 class I_NetworkCore;
 class Decoder;
 class EngineEventContainer;
 class NetworkLayer
 {
 public:
-	NetworkLayer(ServerConfig config, EngineEventContainer* evtContainer, Decoder* decoder);
+	NetworkLayer(I_NetworkCore* network, EngineEventContainer* evtContainer, Decoder* decoder);
 	~NetworkLayer();
-	void start();
+	void run();
 	void send(int to, Size blockSize, int len, char* data);
 private:
 	void onConnect(int serial);

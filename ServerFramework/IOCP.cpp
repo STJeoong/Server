@@ -6,7 +6,7 @@
 #include "Sender.h"
 
 #pragma region public
-IOCP::IOCP(const ServerConfig& config)
+IOCP::IOCP(std::string ip, u_short port, int maxClient)
 {
 	if (WSAStartup(MAKEWORD(2, 2), &_wsa) != 0)
 	{
@@ -18,21 +18,12 @@ IOCP::IOCP(const ServerConfig& config)
 		printf("WSASocket error\n");
 		return;
 	}
-	for (int i = 0; i < MAX_CLIENT; ++i)
-	{
-		memset(&_recvs[i].o, 0, sizeof(OVERLAPPED));
-		// recvs->wsa.buf 라고 해서 안됐었음...
-		_recvs[i].wsa.len = IOCP::RECV_BUF_SIZE;
-		_recvs[i].wsa.buf = _recvBufs[i];
-		_recvs[i].mode = IOMode::RECV;
-		_recvs[i].sessionIdx = i;
-	}
 	_addr.sin_family = AF_INET;
-	_addr.sin_port = htons(config.port);
-	if (config.ip == "")
+	_addr.sin_port = htons(port);
+	if (ip == "any")
 		_addr.sin_addr.S_un.S_addr = INADDR_ANY;
 	else
-		inet_pton(AF_INET, config.ip.c_str(), &_addr.sin_addr);
+		inet_pton(AF_INET, ip.c_str(), &_addr.sin_addr);
 	if (bind(_sock, (sockaddr*)&_addr, sizeof(sockaddr_in)) == SOCKET_ERROR)
 	{
 		puts("bind error");
@@ -46,9 +37,23 @@ IOCP::IOCP(const ServerConfig& config)
 	_cp = CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, NULL, 0);
 	if (_cp == INVALID_HANDLE_VALUE)
 		puts("CreateIOCompletionPort error");
-
-	_accepter = new Accepter(_sock, _cp, _completionKeys);
-	_sender = new Sender(_completionKeys);
+	
+	_completionKeys = new CompletionKey[maxClient];
+	_recvBufs = new char*[maxClient];
+	for (int i = 0; i < maxClient; ++i)
+		_recvBufs[i] = new char[IOCP::RECV_BUF_SIZE];
+	_recvs = new OverlappedEx[maxClient];
+	for (int i = 0; i < maxClient; ++i)
+	{
+		memset(&_recvs[i].o, 0, sizeof(OVERLAPPED));
+		// recvs->wsa.buf 라고 해서 안됐었음...
+		_recvs[i].wsa.len = IOCP::RECV_BUF_SIZE;
+		_recvs[i].wsa.buf = _recvBufs[i];
+		_recvs[i].mode = IOMode::RECV;
+		_recvs[i].sessionIdx = i;
+	}
+	_accepter = new Accepter(_sock, _cp, _completionKeys, maxClient);
+	_sender = new Sender(_completionKeys, maxClient);
 }
 IOCP::~IOCP()
 {
@@ -60,7 +65,7 @@ IOCP::~IOCP()
 	for (int i = 0; i < _workers.size(); ++i)
 		_workers[i].join();
 }
-void IOCP::start(int threadCount) { this->createWorkerThread(threadCount); }
+void IOCP::run(int threadCount) { this->createWorkerThread(threadCount); }
 void IOCP::send(int to, Size blockSize, int len, char* data) { _sender->send(to, blockSize, len, data); }
 void IOCP::setOnConnect(std::function<void(int)> onConnect) { _onConnect = onConnect; }
 void IOCP::setOnDisconnect(std::function<void(int)> onDisconnect) { _onDisconnect = onDisconnect; }

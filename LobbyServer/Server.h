@@ -1,4 +1,5 @@
 #pragma once
+#include "S_ServerConfig.h"
 #include <Engine.h>
 #include <Singleton.h>
 #include <S_PacketAttr.h>
@@ -13,12 +14,15 @@ public:
 	void init(const char* argv0);
 	void run();
 	void send(int to, S_PacketAttr attr, const google::protobuf::Message& message) const;
-	int getMaxClient() const { return _engine->getMaxClient(); }
+	int getMaxClient() const { return 1; }
 private:
 	Server() = default;
 	~Server() = default;
+	void setLogFolder();
+	void setConfig();
 
 	Engine* _engine = nullptr;
 	PacketHandler* _packetHandler = nullptr;
 	Serializer* _serializer = nullptr;
+	S_ServerConfig _config = {};
 };

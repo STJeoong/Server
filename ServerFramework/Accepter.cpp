@@ -3,10 +3,16 @@
 #include <Ws2tcpip.h>
 #include <mswsock.h>
 #pragma region public
-Accepter::Accepter(SOCKET listenSock, HANDLE cp, CompletionKey* completionKeys, int threadAmount, int waitTime)
-	: _completionKeys(completionKeys), _listenSock(listenSock), _cp(cp), _waitTime(waitTime)
-{	
-	this->init();
+Accepter::Accepter(SOCKET listenSock, HANDLE cp, CompletionKey* completionKeys, int maxClient, int threadAmount, int waitTime)
+	: _listenSock(listenSock), _cp(cp), _completionKeys(completionKeys), _waitTime(waitTime)
+{
+	_acpts = new OverlappedEx[maxClient];
+	_acptBufs = new char*[maxClient];
+	for (int i = 0; i < maxClient; ++i)
+		_acptBufs[i] = new char[Accepter::ACPT_BUF_SIZE]{};
+	_timePoints = new std::chrono::system_clock::time_point[maxClient]{};
+
+	this->init(maxClient);
 	for (int i = 0; i < threadAmount; ++i)
 		_workers.push_back(std::thread(&Accepter::threadMain, this));
 }
@@ -73,7 +79,7 @@ void Accepter::pendingAccept(int idx)
 	if (ret == FALSE && WSAGetLastError() != WSA_IO_PENDING)
 		puts("AcceptEx error");
 }
-void Accepter::init()
+void Accepter::init(int maxClient)
 {
 	if (CreateIoCompletionPort((HANDLE)_listenSock, _cp, 0, 0) == nullptr)
 	{
@@ -81,7 +87,7 @@ void Accepter::init()
 		return;
 	}
 
-	for (int i = 0; i < MAX_CLIENT; ++i)
+	for (int i = 0; i < maxClient; ++i)
 	{
 		_completionKeys[i].id = i;
 		_completionKeys[i].sock = INVALID_SOCKET;

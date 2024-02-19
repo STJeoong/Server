@@ -14,7 +14,7 @@ class Accepter
 	static const UINT64 RE_USE_SESSION_WAIT_TIME_MILLI_SEC = 3000;
 	static const UINT64 TOLERANT_TIME_MILLI_SEC = 50;
 public:
-	Accepter(SOCKET listenSock, HANDLE cp, CompletionKey* completionKeys, int threadAmount = 1, int waitTime = Accepter::RE_USE_SESSION_WAIT_TIME_MILLI_SEC);
+	Accepter(SOCKET listenSock, HANDLE cp, CompletionKey* completionKeys, int maxClient, int threadAmount = 1, int waitTime = Accepter::RE_USE_SESSION_WAIT_TIME_MILLI_SEC);
 	~Accepter();
 	Accepter(const Accepter& obj) = delete;
 	Accepter(Accepter&& obj) = delete;
@@ -24,7 +24,7 @@ public:
 	void onAccept(int idx);
 	void onCloseConnection(int idx);
 private:
-	void init();
+	void init(int maxClient);
 	void threadMain();
 	void pendingAccept(int idx);
 
@@ -34,10 +34,10 @@ private:
 	HANDLE _cp;
 	int _waitTime;
 
-	CompletionKey* _completionKeys;
-	OverlappedEx _acpts[MAX_CLIENT];
-	char _acptBufs[MAX_CLIENT][Accepter::ACPT_BUF_SIZE];
-	std::chrono::system_clock::time_point _timePoints[MAX_CLIENT] = {};
+	CompletionKey* _completionKeys = nullptr;
+	OverlappedEx* _acpts = nullptr;
+	char** _acptBufs = nullptr;
+	std::chrono::system_clock::time_point* _timePoints = nullptr;
 
 	bool _stopThread = false;
 	std::vector<std::thread> _workers;
