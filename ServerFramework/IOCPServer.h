@@ -29,10 +29,10 @@ public:
 private:
 	void createWorkerThread(int threadCount);
 	void threadMain(HANDLE cp);
-	void notifyDisconnection(int idx);
 	void onAccept(int idx);
 	void onRecv(CompletionKey& ck, DWORD bytes);
 	void onSend(CompletionKey& ck, DWORD bytes);
+	void notifyDisconnection(int idx);
 
 
 	WSADATA _wsa = {};

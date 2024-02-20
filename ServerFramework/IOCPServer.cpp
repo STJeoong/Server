@@ -16,7 +16,7 @@ IOCPServer::IOCPServer(std::string ip, u_short port, int maxClient)
 	}
 	if ((_sock = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED)) == INVALID_SOCKET)
 	{
-		printf("WSASocket error\n");
+		puts("WSASocket error");
 		return;
 	}
 	_addr.sin_family = AF_INET;
@@ -90,16 +90,10 @@ void IOCPServer::threadMain(HANDLE cp)
 		}
 	}
 }
-void IOCPServer::notifyDisconnection(int idx)
-{
-	_accepter->onDisconnection(idx);
-	_sender->onDisconnection(idx);
-	_onDisconnect(idx);
-}
 void IOCPServer::onAccept(int idx)
 {
 	_accepter->onAccept(idx);
-	_receiver->onAccept(idx);
+	_receiver->onConnect(idx);
 	_onConnect(idx);
 }
 void IOCPServer::onRecv(CompletionKey& ck, DWORD bytes)
@@ -114,4 +108,10 @@ void IOCPServer::onRecv(CompletionKey& ck, DWORD bytes)
 	_receiver->onRecv(ck.id);
 }
 void IOCPServer::onSend(CompletionKey& ck, DWORD bytes) { _sender->onSend(ck.id, bytes); }
+void IOCPServer::notifyDisconnection(int idx)
+{
+	_accepter->onDisconnection(idx);
+	_sender->onDisconnection(idx);
+	_onDisconnect(idx);
+}
 #pragma endregion

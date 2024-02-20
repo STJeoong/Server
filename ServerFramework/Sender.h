@@ -21,8 +21,8 @@ private:
 	void pendingSend(int completionKeyId);
 
 
-	CompletionKey* _completionKeys;
 	int _maxClient = 0;
+	CompletionKey* _completionKeys;
 	OverlappedEx* _sends;
 	std::mutex* _sendMutexs;
 	std::queue<std::tuple<int, Size, char*>>* _thingsToSend;

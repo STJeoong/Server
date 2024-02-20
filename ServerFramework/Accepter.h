@@ -34,8 +34,8 @@ private:
 	HANDLE _cp;
 	int _waitTime;
 
-	CompletionKey* _completionKeys = nullptr;
 	int _maxClient = 0;
+	CompletionKey* _completionKeys = nullptr;
 	OverlappedEx* _acpts = nullptr;
 	char** _acptBufs = nullptr;
 	std::chrono::system_clock::time_point* _timePoints = nullptr;

@@ -4,6 +4,7 @@
 enum class IOMode
 {
 	ACCEPT,
+	CONNECT,
 	RECV,
 	SEND
 };

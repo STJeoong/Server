@@ -87,7 +87,7 @@ void Accepter::pendingAccept(int idx)
 }
 void Accepter::init(int maxClient)
 {
-	if (CreateIoCompletionPort((HANDLE)_listenSock, _cp, 0, 0) == nullptr)
+	if (CreateIoCompletionPort((HANDLE)_listenSock, _cp, 0, 0) == NULL)
 	{
 		puts("bind listenSock cp error");
 		return;

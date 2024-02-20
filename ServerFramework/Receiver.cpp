@@ -27,7 +27,7 @@ Receiver::~Receiver()
 	delete[] _recvBufs;
 }
 char* Receiver::getBuf(int idx) { return _recvBufs[idx]; }
-void Receiver::onAccept(int idx) { this->pendingRecv(idx); }
+void Receiver::onConnect(int idx) { this->pendingRecv(idx); }
 void Receiver::onRecv(int idx) { this->pendingRecv(idx); }
 #pragma endregion
 
