@@ -11,6 +11,7 @@ public:
 	~NetworkLayer();
 	void run();
 	void send(int to, Size blockSize, int len, char* data);
+	void disconnect(int serial);
 private:
 	void onConnect(int serial);
 	void onDisconnect(int serial);

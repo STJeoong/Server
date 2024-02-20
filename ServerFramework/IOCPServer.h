@@ -22,13 +22,14 @@ public:
 	~IOCPServer();
 	void run(int threadCount = 4) override;
 	void send(int to, Size blockSize, int len, char* data) override;
+	void disconnect(int idx) override;
 	void setOnConnect(std::function<void(int)> onConnect) override;
 	void setOnDisconnect(std::function<void(int)> onDisconnect) override;
 	void setOnRecv(std::function<void(int, int, char*)> onRecv) override;
 private:
 	void createWorkerThread(int threadCount);
 	void threadMain(HANDLE cp);
-	void notifyCloseConnection(int idx);
+	void notifyDisconnection(int idx);
 	void onAccept(int idx);
 	void onRecv(CompletionKey& ck, DWORD bytes);
 	void onSend(CompletionKey& ck, DWORD bytes);

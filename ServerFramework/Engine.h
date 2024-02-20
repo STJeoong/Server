@@ -16,6 +16,7 @@ public:
 	~Engine();
 	void run();
 	void send(int to, Size blockSize, char* data);
+	void disconnect(int serial);
 	S_EngineEvent getEvent() const;
 private:
 

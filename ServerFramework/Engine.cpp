@@ -26,6 +26,7 @@ Engine::~Engine()
 }
 void Engine::run() { _network->run(); }
 void Engine::send(int to, Size blockSize, char* data) { _encoder->enqueue(to, blockSize, data); }
+void Engine::disconnect(int serial) { _network->disconnect(serial); }
 S_EngineEvent Engine::getEvent() const { return _evtContainer->pop(); }
 #pragma endregion
 

@@ -17,6 +17,7 @@ NetworkLayer::NetworkLayer(I_NetworkCore* network, EngineEventContainer* evtCont
 NetworkLayer::~NetworkLayer() { delete _network; }
 void NetworkLayer::run() { _network->run(); }
 void NetworkLayer::send(int to, Size blockSize, int len, char* data) { _network->send(to, blockSize, len, data); }
+void NetworkLayer::disconnect(int serial) { _network->disconnect(serial); }
 #pragma endregion
 
 #pragma region private

@@ -28,7 +28,7 @@ void Accepter::onAccept(int idx)
 	//printf("AcceptCompletion : SessionIndex(%d)\n", idx);
 	CreateIoCompletionPort((HANDLE)_completionKeys[idx].sock, _cp, (ULONG_PTR)&_completionKeys[idx], 0);
 }
-void Accepter::onCloseConnection(int idx)
+void Accepter::onDisconnection(int idx)
 {
 	closesocket(_completionKeys[idx].sock);
 	_completionKeys[idx].sock = INVALID_SOCKET;

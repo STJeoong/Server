@@ -57,6 +57,7 @@ IOCPServer::~IOCPServer()
 }
 void IOCPServer::run(int threadCount) { this->createWorkerThread(threadCount); }
 void IOCPServer::send(int to, Size blockSize, int len, char* data) { _sender->send(to, blockSize, len, data); }
+void IOCPServer::disconnect(int idx) { this->notifyDisconnection(idx); }
 void IOCPServer::setOnConnect(std::function<void(int)> onConnect) { _onConnect = onConnect; }
 void IOCPServer::setOnDisconnect(std::function<void(int)> onDisconnect) { _onDisconnect = onDisconnect; }
 void IOCPServer::setOnRecv(std::function<void(int, int, char*)> onRecv) { _onRecv = onRecv; }
@@ -88,10 +89,10 @@ void IOCPServer::threadMain(HANDLE cp)
 		}
 	}
 }
-void IOCPServer::notifyCloseConnection(int idx)
+void IOCPServer::notifyDisconnection(int idx)
 {
-	_accepter->onCloseConnection(idx);
-	_sender->onCloseConnection(idx);
+	_accepter->onDisconnection(idx);
+	_sender->onDisconnection(idx);
 	_onDisconnect(idx);
 }
 void IOCPServer::onAccept(int idx)
@@ -104,7 +105,7 @@ void IOCPServer::onRecv(CompletionKey& ck, DWORD bytes)
 {
 	if (bytes == 0)
 	{
-		this->notifyCloseConnection(ck.id);
+		this->notifyDisconnection(ck.id);
 		return;
 	}
 

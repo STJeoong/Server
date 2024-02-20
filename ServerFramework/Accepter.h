@@ -22,7 +22,7 @@ public:
 	Accepter& operator=(Accepter&& obj) = delete;
 
 	void onAccept(int idx);
-	void onCloseConnection(int idx);
+	void onDisconnection(int idx);
 private:
 	void init(int maxClient);
 	void threadMain();

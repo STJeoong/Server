@@ -16,7 +16,7 @@ public:
 
 	void send(int to, Size blockSize, int len, char* block);
 	void onSend(int idx, DWORD bytes);
-	void onCloseConnection(int idx);
+	void onDisconnection(int idx);
 private:
 	void pendingSend(int completionKeyId);
 

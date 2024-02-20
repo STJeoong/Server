@@ -34,7 +34,7 @@ void Sender::onSend(int idx, DWORD bytes)
 	if (!_thingsToSend[idx].empty())
 		this->pendingSend(idx);
 }
-void Sender::onCloseConnection(int idx)
+void Sender::onDisconnection(int idx)
 {
 	std::lock_guard<std::mutex> lock(_sendMutexs[idx]);
 	while (!_thingsToSend[idx].empty())
