@@ -113,6 +113,9 @@
     <ClInclude Include="Receiver.h">
       <Filter>소스 파일\NetworkLayer\IOCPServer</Filter>
     </ClInclude>
+    <ClInclude Include="EngineManager.h">
+      <Filter>소스 파일\EngineLayer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -162,6 +165,9 @@
     </ClCompile>
     <ClCompile Include="Receiver.cpp">
       <Filter>소스 파일\NetworkLayer\IOCPServer</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineManager.cpp">
+      <Filter>소스 파일\EngineLayer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

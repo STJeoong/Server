@@ -44,7 +44,7 @@ void LobbyManager::broadcast(int serial, char* data)
 	{
 		if (_users[i]->getInfo().serial == serial)
 			continue;
-		Server::getInstance().send(_users[i]->getInfo().serial, attr, notify);
+		Server::getInstance().send(E_EngineType::LOBBY_SERVER, _users[i]->getInfo().serial, attr, notify);
 	}
 }
 #pragma endregion

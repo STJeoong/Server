@@ -156,6 +156,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="E_EngineType.h" />
     <ClInclude Include="LobbyManager.h" />
     <ClInclude Include="PacketHandler.h" />
     <ClInclude Include="E_PacketID.h" />

@@ -79,5 +79,8 @@
     <ClInclude Include="S_ServerConfig.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="E_EngineType.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

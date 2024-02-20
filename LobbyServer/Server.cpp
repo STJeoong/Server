@@ -3,45 +3,50 @@
 #include "PacketHandler.h"
 #include "UserManager.h"
 #include "Serializer.h"
+#include "E_EngineType.h"
+#include <EngineManager.h>
 #include <fstream>
 #include <MemoryBlockPoolManager.h>
 #include <SFUtil.h>
+#include <Engine.h>
 #include <StringConversion.h>
 #include <IOCPServer.h>
+#include <IOCPClient.h>
 
 #pragma region public
 void Server::init(const char* argv0)
 {
+	_engineManager = new EngineManager;
+	_packetHandler = new PacketHandler;
+	_serializer = new Serializer;
+
 	google::InitGoogleLogging(argv0);
 	LOG(INFO) << "Server Initialize...";
 	this->setLogFolder();
 	this->setConfig();
-	_engine = new Engine(new IOCPServer(_config.ip, _config.port, _config.maxClient), _config.maxClient);
-	_packetHandler = new PacketHandler;
-	_serializer = new Serializer;
+	this->setEngine();
 }
 void Server::run()
 {
-	_engine->run();
+	_engineManager->run();
+	int type;
 	S_EngineEvent evt;
 	while (true)
 	{
-		evt = _engine->getEvent();
-		switch (evt.type)
+		std::tie(type, evt) = _engineManager->getEvent();
+		switch ((E_EngineType)type)
 		{
-		case E_EngineEventType::EVENT_NET_CONNECT: printf("client connect : (%d)\n", evt.serial); UserManager::getInstance().getUser(evt.serial)->connect(); break;
-		case E_EngineEventType::EVENT_NET_DISCONNECT: printf("client disconnect : (%d)\n", evt.serial); UserManager::getInstance().getUser(evt.serial)->disconnect(); break;
-		case E_EngineEventType::EVENT_NET_RECV: _packetHandler->handle(evt.serial, evt.data); break;
+		case E_EngineType::LOBBY_SERVER: break;
+		case E_EngineType::DB_CLIENT: break;
 		}
 		if (evt.data != nullptr)
 			MemoryBlockPoolManager::getInstance().release(evt.blockSize, evt.data);
 	}
 }
-void Server::send(int to, S_PacketAttr attr, const google::protobuf::Message& messsage) const
+void Server::send(E_EngineType type, int serial, S_PacketAttr attr, const google::protobuf::Message& messsage) const
 {
 	std::pair<Size, char*> val = _serializer->serialize(attr, messsage);
-
-	_engine->send(to, val.first, val.second);
+	_engineManager->send((int)type, serial, val.first, val.second);
 }
 #pragma endregion
 
@@ -78,12 +83,20 @@ void Server::setConfig()
 	try
 	{
 		std::ifstream f("config.json");
-		json data = json::parse(f);
-		data.get_to(_config);
+		_json = json::parse(f);
 	}
 	catch (std::exception e)
 	{
 		LOG(ERROR) << "invalid config.json";
 	}
+}
+void Server::setEngine()
+{
+	S_ServerConfig dbConfig = {};
+
+	_json["server"].get_to(_config);
+	_json["dbClient"].get_to(dbConfig);
+	_engineManager->addEngine((int)E_EngineType::LOBBY_SERVER, new Engine(new IOCPServer(_config.ip, _config.port, _config.maxClient), _config.maxClient));
+	_engineManager->addEngine((int)E_EngineType::DB_CLIENT, new Engine(new IOCPClient(dbConfig.ip, dbConfig.port), 1));
 }
 #pragma endregion
