@@ -6,7 +6,8 @@
 #include <google/protobuf/message.h>
 
 class EngineManager;
-class PacketHandler;
+class LobbyServerHandler;
+class DBClientHandler;
 class Serializer;
 class Server : public Singleton<Server>
 {
@@ -24,7 +25,8 @@ private:
 	void setEngine();
 
 	EngineManager* _engineManager = nullptr;
-	PacketHandler* _packetHandler = nullptr;
+	LobbyServerHandler* _lobbyHandler = nullptr;
+	DBClientHandler* _dbHandler = nullptr;
 	Serializer* _serializer = nullptr;
 	nlohmann::json _json;
 	S_ServerConfig _config = {};

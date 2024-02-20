@@ -18,12 +18,15 @@
     <Filter Include="소스 파일\Protocol">
       <UniqueIdentifier>{2540cbc3-b595-4023-851b-8d7f527ad112}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Handler">
+      <UniqueIdentifier>{a6fde297-101a-4810-8394-a90b17e286e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\PacketID">
+      <UniqueIdentifier>{5afde152-62c9-4bb8-b670-9a29b0f6257e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="PacketHandler.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="UserManager.cpp">
@@ -44,14 +47,14 @@
     <ClCompile Include="Server.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="LobbyServerHandler.cpp">
+      <Filter>소스 파일\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="DBClientHandler.cpp">
+      <Filter>소스 파일\Handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="E_PacketID.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PacketHandler.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="E_UserState.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -81,6 +84,18 @@
     </ClInclude>
     <ClInclude Include="E_EngineType.h">
       <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyServerHandler.h">
+      <Filter>소스 파일\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="DBClientHandler.h">
+      <Filter>소스 파일\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="E_PacketID.h">
+      <Filter>소스 파일\PacketID</Filter>
+    </ClInclude>
+    <ClInclude Include="E_DBPacketID.h">
+      <Filter>소스 파일\PacketID</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

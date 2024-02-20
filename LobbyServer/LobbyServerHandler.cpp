@@ -1,5 +1,5 @@
 #include <S_PacketHeader.h>
-#include "PacketHandler.h"
+#include "LobbyServerHandler.h"
 #include "E_PacketID.h"
 #include "UserManager.h"
 #include "User.h"
@@ -10,20 +10,26 @@
 #include "protocol.pb.h"
 
 #pragma region public
-void PacketHandler::handle(int serial, char* data)
+void LobbyServerHandler::handle(S_EngineEvent& evt)
 {
-	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(data);
+	switch (evt.type)
+	{
+	case E_EngineEventType::EVENT_NET_CONNECT: printf("client connect : (%d)\n", evt.serial); UserManager::getInstance().getUser(evt.serial)->connect(); return;
+	case E_EngineEventType::EVENT_NET_DISCONNECT: printf("client disconnect : (%d)\n", evt.serial); UserManager::getInstance().getUser(evt.serial)->disconnect(); return;
+	}
+
+	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(evt.data);
 	switch ((E_PacketID)header->id)
 	{
-	case E_PacketID::LOGIN_REQUEST: this->login(serial, data); break;
-	case E_PacketID::CHAT_LOBBY_REQUEST: this->broadcastLobby(serial, data); break;
+	case E_PacketID::LOGIN_REQUEST: this->login(evt.serial, evt.data); break;
+	case E_PacketID::CHAT_LOBBY_REQUEST: this->broadcastLobby(evt.serial, evt.data); break;
 	default: LOG(ERROR) << "Undefined PacketID : " << header->id; break;
 	}
 }
 #pragma endregion
 
 #pragma region private
-void PacketHandler::login(int serial, char* data)
+void LobbyServerHandler::login(int serial, char* data)
 {
 	User* user = UserManager::getInstance().getUser(serial);
 	S_UserInfo& userInfo = user->getInfo();
@@ -37,7 +43,7 @@ void PacketHandler::login(int serial, char* data)
 	}
 	req.ParseFromArray(data + sizeof(S_PacketHeader), header->initLen);
 }
-void PacketHandler::broadcastLobby(int serial, char* data)
+void LobbyServerHandler::broadcastLobby(int serial, char* data)
 {
 	User* user = UserManager::getInstance().getUser(serial);
 	S_UserInfo& userInfo = user->getInfo();

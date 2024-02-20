@@ -1,6 +1,7 @@
 #include "Server.h"
 #include "User.h"
-#include "PacketHandler.h"
+#include "LobbyServerHandler.h"
+#include "DBClientHandler.h"
 #include "UserManager.h"
 #include "Serializer.h"
 #include "E_EngineType.h"
@@ -17,7 +18,8 @@
 void Server::init(const char* argv0)
 {
 	_engineManager = new EngineManager;
-	_packetHandler = new PacketHandler;
+	_lobbyHandler = new LobbyServerHandler;
+	_dbHandler = new DBClientHandler;
 	_serializer = new Serializer;
 
 	google::InitGoogleLogging(argv0);
@@ -36,8 +38,8 @@ void Server::run()
 		std::tie(type, evt) = _engineManager->getEvent();
 		switch ((E_EngineType)type)
 		{
-		case E_EngineType::LOBBY_SERVER: break;
-		case E_EngineType::DB_CLIENT: break;
+		case E_EngineType::LOBBY_SERVER: _lobbyHandler->handle(evt); break;
+		case E_EngineType::DB_CLIENT: _dbHandler->handle(evt); break;
 		}
 		if (evt.data != nullptr)
 			MemoryBlockPoolManager::getInstance().release(evt.blockSize, evt.data);
