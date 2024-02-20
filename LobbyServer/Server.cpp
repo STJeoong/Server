@@ -7,7 +7,7 @@
 #include <MemoryBlockPoolManager.h>
 #include <SFUtil.h>
 #include <StringConversion.h>
-#include <IOCP.h>
+#include <IOCPServer.h>
 
 #pragma region public
 void Server::init(const char* argv0)
@@ -16,7 +16,7 @@ void Server::init(const char* argv0)
 	LOG(INFO) << "Server Initialize...";
 	this->setLogFolder();
 	this->setConfig();
-	_engine = new Engine(new IOCP(_config.ip, _config.port, _config.maxClient), _config.maxClient);
+	_engine = new Engine(new IOCPServer(_config.ip, _config.port, _config.maxClient), _config.maxClient);
 	_packetHandler = new PacketHandler;
 	_serializer = new Serializer;
 }
