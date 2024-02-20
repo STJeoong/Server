@@ -11,7 +11,7 @@ class PacketParser;
 class Decoder
 {
 public:
-	Decoder(EngineEventContainer* evtContainer, int maxClient, int threadCount = 1);
+	Decoder(EngineEventContainer* evtContainer, int maxClient);
 	~Decoder();
 	void enqueue(int serial, char* data, int len, Size blockSize);
 	void reset(int serial);
@@ -21,8 +21,8 @@ private:
 	EngineEventContainer* _evtContainer;
 	PacketParser* _parser;
 
-	bool _stopThreads = false;
-	std::vector<std::thread> _threads;
+	bool _stopThread = false;
+	std::thread _thread;
 	std::queue<std::tuple<int, char*, int, Size>> _queue;
 	std::mutex _mutex;
 	std::condition_variable _cv;

@@ -14,8 +14,6 @@ public:
 private:
 	void collectData(int idx, S_EngineEvent& evt);
 
-
-	std::mutex* _readWriteMutex = nullptr;
 	UINT16* _readIdx = nullptr;
 	UINT16* _writeIdx = nullptr;
 	char** _buf = nullptr;

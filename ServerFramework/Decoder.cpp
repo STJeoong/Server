@@ -5,19 +5,17 @@
 #include "MemoryBlockPoolManager.h"
 
 #pragma region public
-Decoder::Decoder(EngineEventContainer* evtContainer, int maxClient, int threadCount) : _evtContainer(evtContainer)
+Decoder::Decoder(EngineEventContainer* evtContainer, int maxClient) : _evtContainer(evtContainer)
 {
 	_parser = new PacketParser(maxClient);
-	for (int i = 0; i < threadCount; ++i)
-		_threads.push_back(std::thread(&Decoder::threadMain, this));
+	_thread = std::thread(&Decoder::threadMain, this);
 }
 Decoder::~Decoder()
 {
 	delete _parser;
-	_stopThreads = true;
-	_cv.notify_all();
-	for (int i = 0; i < _threads.size(); ++i)
-		_threads[i].join();
+	_stopThread = true;
+	_cv.notify_one();
+	_thread.join();
 }
 void Decoder::enqueue(int serial, char* data, int len, Size blockSize)
 {
@@ -40,8 +38,8 @@ void Decoder::threadMain()
 	{
 		{
 			std::unique_lock<std::mutex> lock(_mutex);
-			_cv.wait(lock, [&] { return !_queue.empty() || _stopThreads; });
-			if (_stopThreads)
+			_cv.wait(lock, [&] { return !_queue.empty() || _stopThread; });
+			if (_stopThread)
 				return;
 			std::tie(serial, data, len, blockSize) = _queue.front();
 			_queue.pop();

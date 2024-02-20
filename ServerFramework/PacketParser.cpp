@@ -6,7 +6,6 @@
 #pragma region public
 PacketParser::PacketParser(int maxClient)
 {
-	_readWriteMutex = new std::mutex[maxClient];
 	_readIdx = new UINT16[maxClient]{};
 	_writeIdx = new UINT16[maxClient]{};
 	_buf = new char*[maxClient];
@@ -15,7 +14,6 @@ PacketParser::PacketParser(int maxClient)
 }
 void PacketParser::pushData(int serial, char* data, int len, S_EngineEvent& evt)
 {
-	std::lock_guard<std::mutex> lock(_readWriteMutex[serial]);
 	int extraSpace = BUF_SIZE - _writeIdx[serial];
 	if (extraSpace < len)
 	{
@@ -31,7 +29,6 @@ void PacketParser::pushData(int serial, char* data, int len, S_EngineEvent& evt)
 }
 void PacketParser::resetBuf(int idx)
 {
-	std::lock_guard<std::mutex> lock(_readWriteMutex[idx]);
 	_readIdx[idx] = 0;
 	_writeIdx[idx] = 0;
 }
