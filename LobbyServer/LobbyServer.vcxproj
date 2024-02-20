@@ -142,10 +142,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DBClientHandler.cpp" />
+    <ClCompile Include="db_protocol.pb.cc" />
     <ClCompile Include="LobbyManager.cpp" />
+    <ClCompile Include="lobby_protocol.pb.cc" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="LobbyServerHandler.cpp" />
-    <ClCompile Include="protocol.pb.cc" />
     <ClCompile Include="Serializer.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="User.cpp" />
@@ -158,12 +159,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DBClientHandler.h" />
-    <ClInclude Include="E_DBPacketID.h" />
+    <ClInclude Include="db_protocol.pb.h" />
     <ClInclude Include="E_EngineType.h" />
     <ClInclude Include="LobbyManager.h" />
     <ClInclude Include="LobbyServerHandler.h" />
-    <ClInclude Include="E_PacketID.h" />
-    <ClInclude Include="protocol.pb.h" />
+    <ClInclude Include="lobby_protocol.pb.h" />
     <ClInclude Include="Serializer.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="S_ServerConfig.h" />

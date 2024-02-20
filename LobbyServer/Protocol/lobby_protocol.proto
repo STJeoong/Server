@@ -1,12 +1,21 @@
 syntax = "proto3";
 
-package protocol;
+package protocol.lobby;
 
+enum E_PacketID
+{
+	LOGIN_REQUEST = 0;
+	LOGIN_RESPONSE = 1;
+
+	CHAT_LOBBY_REQUEST = 100;
+	CHAT_LOBBY_NOTIFY = 110;
+}
 enum E_RespCode
 {
 	OK = 0;
 	
-	LOGIN_USER_INVALID_PW = 31;
+	LOGIN_INVALID_PW = 10;
+	LOGIN_INVALID_ACCESS = 11;
 }
 
 message Login_Req

@@ -21,9 +21,6 @@
     <Filter Include="소스 파일\Handler">
       <UniqueIdentifier>{a6fde297-101a-4810-8394-a90b17e286e4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\PacketID">
-      <UniqueIdentifier>{5afde152-62c9-4bb8-b670-9a29b0f6257e}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -38,9 +35,6 @@
     <ClCompile Include="LobbyManager.cpp">
       <Filter>소스 파일\Lobby</Filter>
     </ClCompile>
-    <ClCompile Include="protocol.pb.cc">
-      <Filter>소스 파일\Protocol</Filter>
-    </ClCompile>
     <ClCompile Include="Serializer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -52,6 +46,12 @@
     </ClCompile>
     <ClCompile Include="DBClientHandler.cpp">
       <Filter>소스 파일\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="db_protocol.pb.cc">
+      <Filter>소스 파일\Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="lobby_protocol.pb.cc">
+      <Filter>소스 파일\Protocol</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -69,9 +69,6 @@
     </ClInclude>
     <ClInclude Include="S_UserInfo.h">
       <Filter>소스 파일\User</Filter>
-    </ClInclude>
-    <ClInclude Include="protocol.pb.h">
-      <Filter>소스 파일\Protocol</Filter>
     </ClInclude>
     <ClInclude Include="Serializer.h">
       <Filter>소스 파일</Filter>
@@ -91,11 +88,11 @@
     <ClInclude Include="DBClientHandler.h">
       <Filter>소스 파일\Handler</Filter>
     </ClInclude>
-    <ClInclude Include="E_PacketID.h">
-      <Filter>소스 파일\PacketID</Filter>
+    <ClInclude Include="db_protocol.pb.h">
+      <Filter>소스 파일\Protocol</Filter>
     </ClInclude>
-    <ClInclude Include="E_DBPacketID.h">
-      <Filter>소스 파일\PacketID</Filter>
+    <ClInclude Include="lobby_protocol.pb.h">
+      <Filter>소스 파일\Protocol</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

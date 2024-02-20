@@ -5,5 +5,6 @@ class DBClientHandler
 public:
 	void handle(S_EngineEvent& evt);
 private:
+	void loginResp(S_EngineEvent& evt);
 };
 
