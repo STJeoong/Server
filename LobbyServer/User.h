@@ -5,10 +5,11 @@
 class User
 {
 public:
-	void connect() { _info->state = E_UserState::CONNECTED; }
-	void disconnect() { _info->state = E_UserState::DISCONNECTED; }
-	S_UserInfo* getInfo() const { return _info; }
+	User();
+	void connect() { _info.state = E_UserState::CONNECTED; }
+	void disconnect() { _info.state = E_UserState::DISCONNECTED; }
+	S_UserInfo& getInfo() { return _info; }
 private:
-	S_UserInfo* _info;
+	S_UserInfo _info;
 };
 

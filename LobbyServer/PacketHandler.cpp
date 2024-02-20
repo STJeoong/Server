@@ -26,13 +26,13 @@ void PacketHandler::handle(int serial, char* data)
 void PacketHandler::login(int serial, char* data)
 {
 	User* user = UserManager::getInstance().getUser(serial);
-	S_UserInfo* userInfo = user->getInfo();
+	S_UserInfo& userInfo = user->getInfo();
 	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(data);
 	protocol::Login_Req req;
 
-	if (userInfo->state != E_UserState::CONNECTED)
+	if (userInfo.state != E_UserState::CONNECTED)
 	{
-		LOG(ERROR) << "Player(" << userInfo->name << ") is not connected. but request login";
+		LOG(ERROR) << "Player(" << userInfo.name << ") is not connected. but request login";
 		return;
 	}
 	req.ParseFromArray(data + sizeof(S_PacketHeader), header->initLen);
@@ -40,11 +40,11 @@ void PacketHandler::login(int serial, char* data)
 void PacketHandler::broadcastLobby(int serial, char* data)
 {
 	User* user = UserManager::getInstance().getUser(serial);
-	S_UserInfo* userInfo = user->getInfo();
+	S_UserInfo& userInfo = user->getInfo();
 
-	if (userInfo->state != E_UserState::LOBBY && userInfo->state != E_UserState::MATCHING)
+	if (userInfo.state != E_UserState::LOBBY && userInfo.state != E_UserState::MATCHING)
 	{
-		LOG(ERROR) << "Player(" << userInfo->name << ") is not in Lobby. but request broadcastLobby";
+		LOG(ERROR) << "Player(" << userInfo.name << ") is not in Lobby. but request broadcastLobby";
 		return;
 	}
 	LobbyManager::getInstance().broadcast(serial, data);

@@ -6,5 +6,5 @@ struct S_UserInfo
 	int serial;
 	int roomNum;
 	std::string name;
-	E_UserState state = E_UserState::DISCONNECTED;
+	E_UserState state;
 };

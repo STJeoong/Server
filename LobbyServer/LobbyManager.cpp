@@ -28,7 +28,7 @@ void LobbyManager::deleteUser(User* user)
 }
 void LobbyManager::broadcast(int serial, char* data)
 {
-	S_UserInfo* info = this->getUser(serial)->getInfo();
+	S_UserInfo& info = this->getUser(serial)->getInfo();
 	S_PacketAttr attr = {};
 	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(data);
 	protocol::ChatLobby_Req req = {};
@@ -37,14 +37,14 @@ void LobbyManager::broadcast(int serial, char* data)
 	attr.packetID = (UINT16)E_PacketID::CHAT_LOBBY_NOTIFY;
 	attr.option = 0;
 	req.ParseFromArray(data + sizeof(S_PacketHeader), header->initLen);
-	notify.set_name(info->name);
+	notify.set_name(info.name);
 	notify.set_content(req.content());
 
 	for (int i = 0; i < _users.size(); ++i)
 	{
-		if (_users[i]->getInfo()->serial == serial)
+		if (_users[i]->getInfo().serial == serial)
 			continue;
-		Server::getInstance().send(_users[i]->getInfo()->serial, attr, notify);
+		Server::getInstance().send(_users[i]->getInfo().serial, attr, notify);
 	}
 }
 #pragma endregion
@@ -53,7 +53,7 @@ void LobbyManager::broadcast(int serial, char* data)
 User* LobbyManager::getUser(int serial)
 {
 	for (int i = 0; i < _users.size(); ++i)
-		if (_users[i]->getInfo()->serial == serial)
+		if (_users[i]->getInfo().serial == serial)
 			return _users[i];
 
 	return nullptr;

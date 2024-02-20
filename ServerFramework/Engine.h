@@ -8,7 +8,6 @@ class NetworkLayer;
 class EngineEventContainer;
 class Decoder;
 class Encoder;
-class Serializer;
 class Engine
 {
 public:
