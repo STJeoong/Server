@@ -21,9 +21,6 @@
     <Filter Include="소스 파일\NetworkLayer">
       <UniqueIdentifier>{54ee3c65-301e-4cac-bf4a-f003e6055968}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\NetworkLayer\IOCP">
-      <UniqueIdentifier>{09ad6953-662b-4608-8ce5-0bfb5dd8fb8e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Utils">
       <UniqueIdentifier>{b08355b3-2d0b-4dc7-9d1a-79166add922d}</UniqueIdentifier>
     </Filter>
@@ -32,6 +29,12 @@
     </Filter>
     <Filter Include="소스 파일\EngineLayer\ServerEngine">
       <UniqueIdentifier>{b0d2872e-321c-4391-9adb-80a002903d45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\NetworkLayer\IOCPServer">
+      <UniqueIdentifier>{09ad6953-662b-4608-8ce5-0bfb5dd8fb8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\NetworkLayer\IOCPClient">
+      <UniqueIdentifier>{6828c1ad-3168-49a7-817a-0ef1d14c781b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,7 +57,7 @@
       <Filter>소스 파일\EngineLayer</Filter>
     </ClInclude>
     <ClInclude Include="Accepter.h">
-      <Filter>소스 파일\NetworkLayer\IOCP</Filter>
+      <Filter>소스 파일\NetworkLayer\IOCPServer</Filter>
     </ClInclude>
     <ClInclude Include="I_NetworkCore.h">
       <Filter>소스 파일\NetworkLayer</Filter>
@@ -68,14 +71,14 @@
     <ClInclude Include="S_EngineEvent.h">
       <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>
     </ClInclude>
-    <ClInclude Include="IOCP.h">
-      <Filter>소스 파일\NetworkLayer\IOCP</Filter>
+    <ClInclude Include="IOCPServer.h">
+      <Filter>소스 파일\NetworkLayer\IOCPServer</Filter>
     </ClInclude>
     <ClInclude Include="OverlappedEx.h">
-      <Filter>소스 파일\NetworkLayer\IOCP</Filter>
+      <Filter>소스 파일\NetworkLayer\IOCPServer</Filter>
     </ClInclude>
     <ClInclude Include="Sender.h">
-      <Filter>소스 파일\NetworkLayer\IOCP</Filter>
+      <Filter>소스 파일\NetworkLayer\IOCPServer</Filter>
     </ClInclude>
     <ClInclude Include="Define.h">
       <Filter>소스 파일\Utils</Filter>
@@ -101,9 +104,6 @@
     <ClInclude Include="E_EngineEventType.h">
       <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>
     </ClInclude>
-    <ClInclude Include="ServerConfig.h">
-      <Filter>소스 파일\EngineLayer\ServerEngine</Filter>
-    </ClInclude>
     <ClInclude Include="Engine.h">
       <Filter>소스 파일\EngineLayer\ServerEngine</Filter>
     </ClInclude>
@@ -122,7 +122,7 @@
       <Filter>소스 파일\EngineLayer\Decode</Filter>
     </ClCompile>
     <ClCompile Include="Accepter.cpp">
-      <Filter>소스 파일\NetworkLayer\IOCP</Filter>
+      <Filter>소스 파일\NetworkLayer\IOCPServer</Filter>
     </ClCompile>
     <ClCompile Include="NetworkLayer.cpp">
       <Filter>소스 파일\NetworkLayer</Filter>
@@ -130,11 +130,11 @@
     <ClCompile Include="EngineEventContainer.cpp">
       <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>
     </ClCompile>
-    <ClCompile Include="IOCP.cpp">
-      <Filter>소스 파일\NetworkLayer\IOCP</Filter>
+    <ClCompile Include="IOCPServer.cpp">
+      <Filter>소스 파일\NetworkLayer\IOCPServer</Filter>
     </ClCompile>
     <ClCompile Include="Sender.cpp">
-      <Filter>소스 파일\NetworkLayer\IOCP</Filter>
+      <Filter>소스 파일\NetworkLayer\IOCPServer</Filter>
     </ClCompile>
     <ClCompile Include="MemoryBlockPool.cpp">
       <Filter>소스 파일\Utils</Filter>

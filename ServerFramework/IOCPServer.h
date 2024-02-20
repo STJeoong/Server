@@ -14,12 +14,12 @@
 class Accepter;
 class Sender;
 
-class IOCP : public I_NetworkCore
+class IOCPServer : public I_NetworkCore
 {
 	static const UINT16 RECV_BUF_SIZE = 1024;
 public:
-	IOCP(std::string ip, u_short port, int maxClient);
-	~IOCP();
+	IOCPServer(std::string ip, u_short port, int maxClient);
+	~IOCPServer();
 	void run(int threadCount = 4) override;
 	void send(int to, Size blockSize, int len, char* data) override;
 	void setOnConnect(std::function<void(int)> onConnect) override;

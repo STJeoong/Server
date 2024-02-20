@@ -14,7 +14,7 @@ public:
 	void init(const char* argv0);
 	void run();
 	void send(int to, S_PacketAttr attr, const google::protobuf::Message& message) const;
-	int getMaxClient() const { return 1; }
+	int getMaxClient() const { return _config.maxClient; }
 private:
 	Server() = default;
 	~Server() = default;

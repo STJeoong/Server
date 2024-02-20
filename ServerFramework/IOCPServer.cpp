@@ -1,12 +1,12 @@
 #include "pch.h"
 #include <thread>
 #include <WS2tcpip.h>
-#include "IOCP.h"
+#include "IOCPServer.h"
 #include "Accepter.h"
 #include "Sender.h"
 
 #pragma region public
-IOCP::IOCP(std::string ip, u_short port, int maxClient)
+IOCPServer::IOCPServer(std::string ip, u_short port, int maxClient)
 {
 	if (WSAStartup(MAKEWORD(2, 2), &_wsa) != 0)
 	{
@@ -41,13 +41,13 @@ IOCP::IOCP(std::string ip, u_short port, int maxClient)
 	_completionKeys = new CompletionKey[maxClient];
 	_recvBufs = new char*[maxClient];
 	for (int i = 0; i < maxClient; ++i)
-		_recvBufs[i] = new char[IOCP::RECV_BUF_SIZE];
+		_recvBufs[i] = new char[IOCPServer::RECV_BUF_SIZE];
 	_recvs = new OverlappedEx[maxClient];
 	for (int i = 0; i < maxClient; ++i)
 	{
 		memset(&_recvs[i].o, 0, sizeof(OVERLAPPED));
 		// recvs->wsa.buf 라고 해서 안됐었음...
-		_recvs[i].wsa.len = IOCP::RECV_BUF_SIZE;
+		_recvs[i].wsa.len = IOCPServer::RECV_BUF_SIZE;
 		_recvs[i].wsa.buf = _recvBufs[i];
 		_recvs[i].mode = IOMode::RECV;
 		_recvs[i].sessionIdx = i;
@@ -55,7 +55,7 @@ IOCP::IOCP(std::string ip, u_short port, int maxClient)
 	_accepter = new Accepter(_sock, _cp, _completionKeys, maxClient);
 	_sender = new Sender(_completionKeys, maxClient);
 }
-IOCP::~IOCP()
+IOCPServer::~IOCPServer()
 {
 	delete _accepter;
 	delete _sender;
@@ -65,20 +65,20 @@ IOCP::~IOCP()
 	for (int i = 0; i < _workers.size(); ++i)
 		_workers[i].join();
 }
-void IOCP::run(int threadCount) { this->createWorkerThread(threadCount); }
-void IOCP::send(int to, Size blockSize, int len, char* data) { _sender->send(to, blockSize, len, data); }
-void IOCP::setOnConnect(std::function<void(int)> onConnect) { _onConnect = onConnect; }
-void IOCP::setOnDisconnect(std::function<void(int)> onDisconnect) { _onDisconnect = onDisconnect; }
-void IOCP::setOnRecv(std::function<void(int, int, char*)> onRecv) { _onRecv = onRecv; }
+void IOCPServer::run(int threadCount) { this->createWorkerThread(threadCount); }
+void IOCPServer::send(int to, Size blockSize, int len, char* data) { _sender->send(to, blockSize, len, data); }
+void IOCPServer::setOnConnect(std::function<void(int)> onConnect) { _onConnect = onConnect; }
+void IOCPServer::setOnDisconnect(std::function<void(int)> onDisconnect) { _onDisconnect = onDisconnect; }
+void IOCPServer::setOnRecv(std::function<void(int, int, char*)> onRecv) { _onRecv = onRecv; }
 #pragma endregion
 
 #pragma region private
-void IOCP::createWorkerThread(int threadCount)
+void IOCPServer::createWorkerThread(int threadCount)
 {
 	for (int i = 0; i < threadCount; ++i)
-		_workers.emplace_back(&IOCP::threadMain, this, _cp);
+		_workers.emplace_back(&IOCPServer::threadMain, this, _cp);
 }
-void IOCP::threadMain(HANDLE cp)
+void IOCPServer::threadMain(HANDLE cp)
 {
 	DWORD bytes;
 	CompletionKey* pCompletionKey;
@@ -98,19 +98,19 @@ void IOCP::threadMain(HANDLE cp)
 		}
 	}
 }
-void IOCP::onAccept(int idx)
+void IOCPServer::onAccept(int idx)
 {
 	_accepter->onAccept(idx);
 	this->pendingRecv(idx);
 	_onConnect(idx);
 }
-void IOCP::notifyCloseConnection(int idx)
+void IOCPServer::notifyCloseConnection(int idx)
 {
 	_accepter->onCloseConnection(idx);
 	_sender->onCloseConnection(idx);
 	_onDisconnect(idx);
 }
-void IOCP::onRecv(CompletionKey& ck, DWORD bytes)
+void IOCPServer::onRecv(CompletionKey& ck, DWORD bytes)
 {
 	if (bytes == 0)
 	{
@@ -121,11 +121,11 @@ void IOCP::onRecv(CompletionKey& ck, DWORD bytes)
 	_onRecv(ck.id, bytes, _recvBufs[ck.id]);
 	this->pendingRecv(ck.id);
 }
-void IOCP::onSend(CompletionKey& ck, DWORD bytes)
+void IOCPServer::onSend(CompletionKey& ck, DWORD bytes)
 {
 	_sender->onSend(ck.id, bytes);
 }
-void IOCP::pendingRecv(int idx)
+void IOCPServer::pendingRecv(int idx)
 {
 	CompletionKey& ck = _completionKeys[idx];
 	DWORD bytes, flag = 0;
