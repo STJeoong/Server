@@ -12,11 +12,11 @@
 #pragma comment(lib, "ws2_32")
 #pragma comment(lib, "mswsock.lib")
 class Accepter;
+class Receiver;
 class Sender;
 
 class IOCPServer : public I_NetworkCore
 {
-	static const UINT16 RECV_BUF_SIZE = 1024;
 public:
 	IOCPServer(std::string ip, u_short port, int maxClient);
 	~IOCPServer();
@@ -28,11 +28,10 @@ public:
 private:
 	void createWorkerThread(int threadCount);
 	void threadMain(HANDLE cp);
-	void onAccept(int idx);
 	void notifyCloseConnection(int idx);
+	void onAccept(int idx);
 	void onRecv(CompletionKey& ck, DWORD bytes);
 	void onSend(CompletionKey& ck, DWORD bytes);
-	void pendingRecv(int idx);
 
 
 	WSADATA _wsa = {};
@@ -42,8 +41,7 @@ private:
 
 	std::vector<std::thread> _workers;
 	CompletionKey* _completionKeys = nullptr;
-	OverlappedEx* _recvs = nullptr;
-	char** _recvBufs = nullptr;
+	Receiver* _receiver = nullptr;
 	Accepter* _accepter = nullptr;
 	Sender* _sender = nullptr;
 

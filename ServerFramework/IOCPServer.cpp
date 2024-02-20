@@ -3,6 +3,7 @@
 #include <WS2tcpip.h>
 #include "IOCPServer.h"
 #include "Accepter.h"
+#include "Receiver.h"
 #include "Sender.h"
 
 #pragma region public
@@ -39,25 +40,14 @@ IOCPServer::IOCPServer(std::string ip, u_short port, int maxClient)
 		puts("CreateIOCompletionPort error");
 	
 	_completionKeys = new CompletionKey[maxClient];
-	_recvBufs = new char*[maxClient];
-	for (int i = 0; i < maxClient; ++i)
-		_recvBufs[i] = new char[IOCPServer::RECV_BUF_SIZE];
-	_recvs = new OverlappedEx[maxClient];
-	for (int i = 0; i < maxClient; ++i)
-	{
-		memset(&_recvs[i].o, 0, sizeof(OVERLAPPED));
-		// recvs->wsa.buf 라고 해서 안됐었음...
-		_recvs[i].wsa.len = IOCPServer::RECV_BUF_SIZE;
-		_recvs[i].wsa.buf = _recvBufs[i];
-		_recvs[i].mode = IOMode::RECV;
-		_recvs[i].sessionIdx = i;
-	}
 	_accepter = new Accepter(_sock, _cp, _completionKeys, maxClient);
+	_receiver = new Receiver(_completionKeys, maxClient);
 	_sender = new Sender(_completionKeys, maxClient);
 }
 IOCPServer::~IOCPServer()
 {
 	delete _accepter;
+	delete _receiver;
 	delete _sender;
 	closesocket(_sock);
 	CloseHandle(_cp);
@@ -98,17 +88,17 @@ void IOCPServer::threadMain(HANDLE cp)
 		}
 	}
 }
-void IOCPServer::onAccept(int idx)
-{
-	_accepter->onAccept(idx);
-	this->pendingRecv(idx);
-	_onConnect(idx);
-}
 void IOCPServer::notifyCloseConnection(int idx)
 {
 	_accepter->onCloseConnection(idx);
 	_sender->onCloseConnection(idx);
 	_onDisconnect(idx);
+}
+void IOCPServer::onAccept(int idx)
+{
+	_accepter->onAccept(idx);
+	_receiver->onAccept(idx);
+	_onConnect(idx);
 }
 void IOCPServer::onRecv(CompletionKey& ck, DWORD bytes)
 {
@@ -118,18 +108,8 @@ void IOCPServer::onRecv(CompletionKey& ck, DWORD bytes)
 		return;
 	}
 
-	_onRecv(ck.id, bytes, _recvBufs[ck.id]);
-	this->pendingRecv(ck.id);
+	_onRecv(ck.id, bytes, _receiver->getBuf(ck.id));
+	_receiver->onRecv(ck.id);
 }
-void IOCPServer::onSend(CompletionKey& ck, DWORD bytes)
-{
-	_sender->onSend(ck.id, bytes);
-}
-void IOCPServer::pendingRecv(int idx)
-{
-	CompletionKey& ck = _completionKeys[idx];
-	DWORD bytes, flag = 0;
-
-	WSARecv(ck.sock, &_recvs[idx].wsa, 1, &bytes, &flag, &_recvs[idx].o, NULL);
-}
+void IOCPServer::onSend(CompletionKey& ck, DWORD bytes) { _sender->onSend(ck.id, bytes); }
 #pragma endregion
