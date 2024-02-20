@@ -2,7 +2,7 @@
 #include "Sender.h"
 #include "MemoryBlockPoolManager.h"
 #pragma region public
-Sender::Sender(CompletionKey* completionKeys, int maxClient) : _completionKeys(completionKeys)
+Sender::Sender(CompletionKey* completionKeys, int maxClient) : _completionKeys(completionKeys), _maxClient(maxClient)
 {
 	_sends = new OverlappedEx[maxClient];
 	_sendMutexs = new std::mutex[maxClient];
@@ -13,6 +13,12 @@ Sender::Sender(CompletionKey* completionKeys, int maxClient) : _completionKeys(c
 		_sends[i].mode = IOMode::SEND;
 		_sends[i].sessionIdx = i;
 	}
+}
+Sender::~Sender()
+{
+	delete[] _sends;
+	delete[] _sendMutexs;
+	delete[] _thingsToSend;
 }
 void Sender::send(int to, Size blockSize, int len, char* block)
 {

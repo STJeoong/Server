@@ -4,7 +4,7 @@
 #include <mswsock.h>
 #pragma region public
 Accepter::Accepter(SOCKET listenSock, HANDLE cp, CompletionKey* completionKeys, int maxClient, int threadAmount, int waitTime)
-	: _listenSock(listenSock), _cp(cp), _completionKeys(completionKeys), _waitTime(waitTime)
+	: _listenSock(listenSock), _cp(cp), _completionKeys(completionKeys), _maxClient(maxClient), _waitTime(waitTime)
 {
 	_acpts = new OverlappedEx[maxClient];
 	_acptBufs = new char*[maxClient];
@@ -18,6 +18,12 @@ Accepter::Accepter(SOCKET listenSock, HANDLE cp, CompletionKey* completionKeys, 
 }
 Accepter::~Accepter()
 {
+	delete[] _acpts;
+	for (int i = 0; i < _maxClient; ++i)
+		delete[] _acptBufs[i];
+	delete[] _acptBufs;
+	delete[] _timePoints;
+
 	_stopThread = true;
 	_queueCv.notify_all();
 	for (int i = 0; i < _workers.size(); ++i)

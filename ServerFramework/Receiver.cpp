@@ -3,7 +3,7 @@
 
 
 #pragma region public
-Receiver::Receiver(CompletionKey* completionKeys, int maxClient) : _completionKeys(completionKeys)
+Receiver::Receiver(CompletionKey* completionKeys, int maxClient) : _completionKeys(completionKeys), _maxClient(maxClient)
 {
 	_recvBufs = new char*[maxClient];
 	for (int i = 0; i < maxClient; ++i)
@@ -18,6 +18,13 @@ Receiver::Receiver(CompletionKey* completionKeys, int maxClient) : _completionKe
 		_recvs[i].mode = IOMode::RECV;
 		_recvs[i].sessionIdx = i;
 	}
+}
+Receiver::~Receiver()
+{
+	delete[] _recvs;
+	for (int i = 0; i < _maxClient; ++i)
+		delete[] _recvBufs[i];
+	delete[] _recvBufs;
 }
 char* Receiver::getBuf(int idx) { return _recvBufs[idx]; }
 void Receiver::onAccept(int idx) { this->pendingRecv(idx); }

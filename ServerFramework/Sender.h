@@ -8,7 +8,7 @@ class Sender
 {
 public:
 	Sender(CompletionKey* completionKeys, int maxClient);
-	~Sender() = default;
+	~Sender();
 	Sender(const Sender& obj) = delete;
 	Sender(Sender&& obj) = delete;
 	Sender& operator=(const Sender& obj) = delete;
@@ -22,6 +22,7 @@ private:
 
 
 	CompletionKey* _completionKeys;
+	int _maxClient = 0;
 	OverlappedEx* _sends;
 	std::mutex* _sendMutexs;
 	std::queue<std::tuple<int, Size, char*>>* _thingsToSend;

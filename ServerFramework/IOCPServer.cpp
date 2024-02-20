@@ -46,6 +46,7 @@ IOCPServer::IOCPServer(std::string ip, u_short port, int maxClient)
 }
 IOCPServer::~IOCPServer()
 {
+	delete[] _completionKeys;
 	delete _accepter;
 	delete _receiver;
 	delete _sender;
