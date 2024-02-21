@@ -177,6 +177,7 @@
     <ClInclude Include="SFUtil.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="StringConversion.h" />
+    <ClInclude Include="S_ServerConfig.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Accepter.cpp" />

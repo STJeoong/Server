@@ -116,6 +116,9 @@
     <ClInclude Include="EngineManager.h">
       <Filter>소스 파일\EngineLayer</Filter>
     </ClInclude>
+    <ClInclude Include="S_ServerConfig.h">
+      <Filter>소스 파일\EngineLayer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

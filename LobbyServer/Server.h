@@ -21,8 +21,6 @@ public:
 private:
 	Server() = default;
 	~Server() = default;
-	void setLogFolder();
-	void setConfig();
 	void setEngine();
 
 	EngineManager* _engineManager = nullptr;
@@ -30,6 +28,5 @@ private:
 	LobbyServerHandler* _lobbyHandler = nullptr;
 	DBClientHandler* _dbHandler = nullptr;
 	Serializer* _serializer = nullptr;
-	nlohmann::json _json;
 	S_ServerConfig _config = {};
 };
