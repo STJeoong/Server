@@ -17,6 +17,8 @@ void EngineManager::addEngine(int engineID, Engine* engine)
 	_threads.push_back(std::thread(&EngineManager::threadMain, this, engineID));
 }
 void EngineManager::run() { for (auto val : _mp) val.second->run(); }
+void EngineManager::run(int engineID) { _mp[engineID]->run(); }
+void EngineManager::shutdown(int engineID) { delete _mp[engineID]; _mp[engineID] = nullptr; }
 void EngineManager::send(int engineID, int serial, Size blockSize, char* data) { _mp[engineID]->send(serial, blockSize, data); }
 void EngineManager::disconnect(int engineID, int serial) { _mp[engineID]->disconnect(serial); }
 std::pair<int, S_EngineEvent> EngineManager::getEvent()

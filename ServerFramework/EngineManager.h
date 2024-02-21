@@ -16,6 +16,8 @@ public:
 	~EngineManager();
 	void addEngine(int engineID, Engine* engine);
 	void run();
+	void run(int engineID);
+	void shutdown(int engineID);
 	void send(int engineID, int serial, Size blockSize, char* data);
 	void disconnect(int engineID, int serial);
 	std::pair<int, S_EngineEvent> getEvent();
