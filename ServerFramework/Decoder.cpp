@@ -5,7 +5,7 @@
 #include "MemoryBlockPoolManager.h"
 
 #pragma region public
-Decoder::Decoder(EngineEventContainer* evtContainer, int maxClient) : _evtContainer(evtContainer)
+Decoder::Decoder(int engineID, EngineEventContainer* evtContainer, int maxClient) : _engineID(engineID), _evtContainer(evtContainer)
 {
 	_parser = new PacketParser(maxClient);
 	_thread = std::thread(&Decoder::threadMain, this);
@@ -52,7 +52,7 @@ void Decoder::threadMain()
 		MemoryBlockPoolManager::getInstance().release(blockSize, data);
 		if (evt.data == nullptr)
 			continue;
-		_evtContainer->enqueue(evt);
+		_evtContainer->enqueue(_engineID, evt);
 	}
 }
 #pragma endregion

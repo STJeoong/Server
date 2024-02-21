@@ -13,11 +13,13 @@
 #include <StringConversion.h>
 #include <IOCPServer.h>
 #include <IOCPClient.h>
+#include <EngineEventContainer.h>
 
 #pragma region public
 void Server::init(const char* argv0)
 {
 	_engineManager = new EngineManager;
+	_evtContainer = new EngineEventContainer;
 	_lobbyHandler = new LobbyServerHandler;
 	_dbHandler = new DBClientHandler;
 	_serializer = new Serializer;
@@ -35,7 +37,7 @@ void Server::run()
 	S_EngineEvent evt;
 	while (true)
 	{
-		std::tie(type, evt) = _engineManager->getEvent();
+		std::tie(type, evt) = _evtContainer->pop();
 		switch ((E_EngineType)type)
 		{
 		case E_EngineType::LOBBY_SERVER: _lobbyHandler->handle(evt); break;
@@ -95,10 +97,19 @@ void Server::setConfig()
 void Server::setEngine()
 {
 	S_ServerConfig dbConfig = {};
+	IOCPServer* iocpServer;
+	Engine* serverEngine;
+	IOCPClient* iocpClient;
+	Engine* dbClientEngine;
 
 	_json["server"].get_to(_config);
 	_json["dbClient"].get_to(dbConfig);
-	_engineManager->addEngine((int)E_EngineType::LOBBY_SERVER, new Engine(new IOCPServer(_config.ip, _config.port, _config.maxClient), _config.maxClient));
-	_engineManager->addEngine((int)E_EngineType::DB_CLIENT, new Engine(new IOCPClient(dbConfig.ip, dbConfig.port), 1));
+	iocpServer = new IOCPServer(_config.ip, _config.port, _config.maxClient);
+	serverEngine = new Engine((int)E_EngineType::LOBBY_SERVER, iocpServer, _config.maxClient, _evtContainer);
+	iocpClient = new IOCPClient(dbConfig.ip, dbConfig.port);
+	dbClientEngine = new Engine((int)E_EngineType::DB_CLIENT, iocpClient, 1, _evtContainer);
+
+	_engineManager->addEngine((int)E_EngineType::LOBBY_SERVER, serverEngine);
+	_engineManager->addEngine((int)E_EngineType::DB_CLIENT, dbClientEngine);
 }
 #pragma endregion

@@ -2,17 +2,17 @@
 #include "EngineEventContainer.h"
 
 #pragma region public
-void EngineEventContainer::enqueue(S_EngineEvent evt)
+void EngineEventContainer::enqueue(int engineID, S_EngineEvent evt)
 {
 	std::lock_guard<std::mutex> lock(_mutex);
-	_queue.push(evt);
+	_queue.push({ engineID, evt });
 	_cv.notify_one();
 }
-S_EngineEvent EngineEventContainer::pop()
+std::pair<int, S_EngineEvent> EngineEventContainer::pop()
 {
 	std::unique_lock<std::mutex> lock(_mutex);
 	_cv.wait(lock, [&] { return !_queue.empty(); });
-	S_EngineEvent ret = _queue.front();
+	std::pair<int, S_EngineEvent> ret = _queue.front();
 	_queue.pop();
 	return ret;
 }

@@ -10,24 +10,21 @@
 #include <fstream>
 
 #pragma region public
-Engine::Engine(I_NetworkCore* core, int maxClient)
+Engine::Engine(int id, I_NetworkCore* core, int maxClient, EngineEventContainer* container)
 {
-	_evtContainer = new EngineEventContainer;
-	_decoder = new Decoder(_evtContainer, maxClient);
-	_network = new NetworkLayer(core, _evtContainer, _decoder);
+	_decoder = new Decoder(id, container, maxClient);
+	_network = new NetworkLayer(id, core, container, _decoder);
 	_encoder = new Encoder(_network);
 }
 Engine::~Engine()
 {
 	delete _network;
-	delete _evtContainer;
 	delete _decoder;
 	delete _encoder;
 }
 void Engine::run() { _network->run(); }
 void Engine::send(int to, Size blockSize, char* data) { _encoder->enqueue(to, blockSize, data); }
 void Engine::disconnect(int serial) { _network->disconnect(serial); }
-S_EngineEvent Engine::getEvent() const { return _evtContainer->pop(); }
 #pragma endregion
 
 #pragma region private

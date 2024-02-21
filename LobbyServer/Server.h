@@ -9,6 +9,7 @@ class EngineManager;
 class LobbyServerHandler;
 class DBClientHandler;
 class Serializer;
+class EngineEventContainer;
 class Server : public Singleton<Server>
 {
 	friend class Singleton;
@@ -25,6 +26,7 @@ private:
 	void setEngine();
 
 	EngineManager* _engineManager = nullptr;
+	EngineEventContainer* _evtContainer = nullptr;
 	LobbyServerHandler* _lobbyHandler = nullptr;
 	DBClientHandler* _dbHandler = nullptr;
 	Serializer* _serializer = nullptr;

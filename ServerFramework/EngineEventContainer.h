@@ -7,12 +7,12 @@
 class EngineEventContainer
 {
 public:
-	void enqueue(S_EngineEvent evt);
-	S_EngineEvent pop();
+	void enqueue(int engineID, S_EngineEvent evt);
+	std::pair<int, S_EngineEvent> pop();
 private:
 
 	std::mutex _mutex;
-	std::queue<S_EngineEvent> _queue;
+	std::queue<std::pair<int, S_EngineEvent>>_queue;
 	std::condition_variable _cv;
 };
 

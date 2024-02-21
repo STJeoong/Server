@@ -11,13 +11,14 @@ class PacketParser;
 class Decoder
 {
 public:
-	Decoder(EngineEventContainer* evtContainer, int maxClient);
+	Decoder(int engineID, EngineEventContainer* evtContainer, int maxClient);
 	~Decoder();
 	void enqueue(int serial, char* data, int len, Size blockSize);
 	void reset(int serial);
 private:
 	void threadMain();
 
+	int _engineID;
 	EngineEventContainer* _evtContainer;
 	PacketParser* _parser;
 

@@ -11,16 +11,14 @@ class Encoder;
 class Engine
 {
 public:
-	Engine(I_NetworkCore* core, int maxClient);
+	Engine(int id, I_NetworkCore* core, int maxClient, EngineEventContainer* container);
 	~Engine();
 	void run();
 	void send(int to, Size blockSize, char* data);
 	void disconnect(int serial);
-	S_EngineEvent getEvent() const;
 private:
 
 	NetworkLayer* _network = nullptr;
-	EngineEventContainer* _evtContainer = nullptr;
 	Decoder* _decoder = nullptr;
 	Encoder* _encoder = nullptr;
 };

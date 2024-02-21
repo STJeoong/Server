@@ -8,7 +8,8 @@
 #include <iostream>
 
 #pragma region public
-NetworkLayer::NetworkLayer(I_NetworkCore* core, EngineEventContainer* evtContainer, Decoder* decoder) : _core(core), _evtContainer(evtContainer), _decoder(decoder)
+NetworkLayer::NetworkLayer(int engineID, I_NetworkCore* core, EngineEventContainer* evtContainer, Decoder* decoder)
+	: _engineID(engineID), _core(core), _evtContainer(evtContainer), _decoder(decoder)
 {
 	_core->setOnConnect([this](int serial) { this->onConnect(serial); });
 	_core->setOnDisconnect([this](int serial) { this->onDisconnect(serial); });
@@ -27,7 +28,7 @@ void NetworkLayer::onConnect(int serial)
 	evt.type = E_EngineEventType::EVENT_NET_CONNECT;
 	evt.serial = serial;
 
-	_evtContainer->enqueue(evt);
+	_evtContainer->enqueue(_engineID, evt);
 }
 void NetworkLayer::onDisconnect(int serial)
 {
@@ -35,7 +36,7 @@ void NetworkLayer::onDisconnect(int serial)
 	evt.type = E_EngineEventType::EVENT_NET_DISCONNECT;
 	evt.serial = serial;
 
-	_evtContainer->enqueue(evt);
+	_evtContainer->enqueue(_engineID, evt);
 	_decoder->reset(serial);
 }
 void NetworkLayer::onRecv(int serial, int len, char* data)

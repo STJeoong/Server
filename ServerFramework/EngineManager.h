@@ -20,15 +20,8 @@ public:
 	void shutdown(int engineID);
 	void send(int engineID, int serial, Size blockSize, char* data);
 	void disconnect(int engineID, int serial);
-	std::pair<int, S_EngineEvent> getEvent();
 private:
-	void threadMain(int engineID);
 
-	bool _stopThreads = false;
-	std::vector<std::thread> _threads = {};
 	std::unordered_map<int, Engine*> _mp = {};
-	std::queue<std::pair<int, S_EngineEvent>> _queue = {};
-	std::mutex _mutex = {};
-	std::condition_variable _cv = {};
 };
 
