@@ -63,7 +63,7 @@ IOCPClient::~IOCPClient()
 		_workers[i].join();
 }
 void IOCPClient::run(int threadCount) { this->createWorkerThread(threadCount); }
-void IOCPClient::send(int to, Size blockSize, int len, char* data) { _sender->send(to, blockSize, len, data); }
+void IOCPClient::send(int to, Size blockSize, int len, char* data) { _sender->send(0, blockSize, len, data); }
 void IOCPClient::disconnect(int idx) { this->notifyDisconnection(idx); }
 void IOCPClient::setOnConnect(std::function<void(int)> onConnect) { _onConnect = onConnect; }
 void IOCPClient::setOnDisconnect(std::function<void(int)> onDisconnect) { _onDisconnect = onDisconnect; }

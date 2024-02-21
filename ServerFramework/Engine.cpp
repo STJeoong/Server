@@ -10,11 +10,11 @@
 #include <fstream>
 
 #pragma region public
-Engine::Engine(I_NetworkCore* network, int maxClient)
+Engine::Engine(I_NetworkCore* core, int maxClient)
 {
 	_evtContainer = new EngineEventContainer;
 	_decoder = new Decoder(_evtContainer, maxClient);
-	_network = new NetworkLayer(network, _evtContainer, _decoder);
+	_network = new NetworkLayer(core, _evtContainer, _decoder);
 	_encoder = new Encoder(_network);
 }
 Engine::~Engine()

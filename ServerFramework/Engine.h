@@ -11,7 +11,7 @@ class Encoder;
 class Engine
 {
 public:
-	Engine(I_NetworkCore* network, int maxClient);
+	Engine(I_NetworkCore* core, int maxClient);
 	~Engine();
 	void run();
 	void send(int to, Size blockSize, char* data);

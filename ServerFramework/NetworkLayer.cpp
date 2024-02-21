@@ -8,16 +8,16 @@
 #include <iostream>
 
 #pragma region public
-NetworkLayer::NetworkLayer(I_NetworkCore* network, EngineEventContainer* evtContainer, Decoder* decoder) : _network(network), _evtContainer(evtContainer), _decoder(decoder)
+NetworkLayer::NetworkLayer(I_NetworkCore* core, EngineEventContainer* evtContainer, Decoder* decoder) : _core(core), _evtContainer(evtContainer), _decoder(decoder)
 {
-	_network->setOnConnect([this](int serial) { this->onConnect(serial); });
-	_network->setOnDisconnect([this](int serial) { this->onDisconnect(serial); });
-	_network->setOnRecv([this](int serial, int len, char* data) { this->onRecv(serial, len, data); });
+	_core->setOnConnect([this](int serial) { this->onConnect(serial); });
+	_core->setOnDisconnect([this](int serial) { this->onDisconnect(serial); });
+	_core->setOnRecv([this](int serial, int len, char* data) { this->onRecv(serial, len, data); });
 }
-NetworkLayer::~NetworkLayer() { delete _network; }
-void NetworkLayer::run() { _network->run(); }
-void NetworkLayer::send(int to, Size blockSize, int len, char* data) { _network->send(to, blockSize, len, data); }
-void NetworkLayer::disconnect(int serial) { _network->disconnect(serial); }
+NetworkLayer::~NetworkLayer() { delete _core; }
+void NetworkLayer::run() { _core->run(); }
+void NetworkLayer::send(int to, Size blockSize, int len, char* data) { _core->send(to, blockSize, len, data); }
+void NetworkLayer::disconnect(int serial) { _core->disconnect(serial); }
 #pragma endregion
 
 #pragma region private
