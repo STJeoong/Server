@@ -60,12 +60,13 @@ void Sender::pendingSend(int idx)
 	std::tie(len, blockSize, block) = _thingsToSend[idx].front();
 	_sends[idx].wsa.buf = block;
 	_sends[idx].wsa.len = len;
-	BOOL ret = WSASend(ck.sock, &_sends[idx].wsa, 1, &bytes, 0, &_sends[idx].o, NULL);
+	int ret = WSASend(ck.sock, &_sends[idx].wsa, 1, &bytes, 0, &_sends[idx].o, NULL);
+	int error = WSAGetLastError();
 	// 만약 WSASend 에러 났으면 바로 queue에서 pop?
-	if (ret == FALSE && WSAGetLastError() != WSA_IO_PENDING)
-	{
-		MemoryBlockPoolManager::getInstance().release(blockSize, block);
-		_thingsToSend[idx].pop();
-	}
+	if ((ret == 0 && error == NO_ERROR) || (ret == SOCKET_ERROR && error == WSA_IO_PENDING))
+		return;
+
+	MemoryBlockPoolManager::getInstance().release(blockSize, block);
+	_thingsToSend[idx].pop();
 }
 #pragma endregion

@@ -99,8 +99,9 @@ inline bool E_PacketID_Parse(
 }
 enum E_RespCode : int {
   OK = 0,
-  LOGIN_INVALID_PW = 10,
-  LOGIN_INVALID_ACCESS = 11,
+  LOGIN_INVALID_ID = 10,
+  LOGIN_INVALID_PW = 11,
+  LOGIN_INVALID_ACCESS = 12,
   E_RespCode_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   E_RespCode_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };

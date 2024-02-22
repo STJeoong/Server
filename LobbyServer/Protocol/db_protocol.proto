@@ -11,7 +11,8 @@ enum E_RespCode
 {
 	OK = 0;
 
-	LOGIN_INVALID_PW = 10;
+	LOGIN_INVALID_ID = 10;
+	LOGIN_INVALID_PW = 11;
 }
 
 message Login_Req

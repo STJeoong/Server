@@ -137,12 +137,13 @@ const char descriptor_table_protodef_lobby_5fprotocol_2eproto[] PROTOBUF_SECTION
   "\001(\t\022\017\n\007content\030\002 \001(\t*b\n\nE_PacketID\022\021\n\rLO"
   "GIN_REQUEST\020\000\022\022\n\016LOGIN_RESPONSE\020\001\022\026\n\022CHA"
   "T_LOBBY_REQUEST\020d\022\025\n\021CHAT_LOBBY_NOTIFY\020n"
-  "*D\n\nE_RespCode\022\006\n\002OK\020\000\022\024\n\020LOGIN_INVALID_"
-  "PW\020\n\022\030\n\024LOGIN_INVALID_ACCESS\020\013b\006proto3"
+  "*Z\n\nE_RespCode\022\006\n\002OK\020\000\022\024\n\020LOGIN_INVALID_"
+  "ID\020\n\022\024\n\020LOGIN_INVALID_PW\020\013\022\030\n\024LOGIN_INVA"
+  "LID_ACCESS\020\014b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_lobby_5fprotocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_lobby_5fprotocol_2eproto = {
-    false, false, 398, descriptor_table_protodef_lobby_5fprotocol_2eproto,
+    false, false, 420, descriptor_table_protodef_lobby_5fprotocol_2eproto,
     "lobby_protocol.proto",
     &descriptor_table_lobby_5fprotocol_2eproto_once, nullptr, 0, 4,
     schemas, file_default_instances, TableStruct_lobby_5fprotocol_2eproto::offsets,
@@ -182,6 +183,7 @@ bool E_RespCode_IsValid(int value) {
     case 0:
     case 10:
     case 11:
+    case 12:
       return true;
     default:
       return false;

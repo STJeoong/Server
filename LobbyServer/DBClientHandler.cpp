@@ -7,6 +7,7 @@
 #include "LobbyManager.h"
 #include <S_PacketHeader.h>
 
+using namespace protocol;
 #pragma region public
 void DBClientHandler::handle(S_EngineEvent& evt)
 {
@@ -17,9 +18,9 @@ void DBClientHandler::handle(S_EngineEvent& evt)
 	}
 
 	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(evt.data);
-	switch ((protocol::db::E_PacketID)header->id)
+	switch ((db::E_PacketID)header->id)
 	{
-	case protocol::db::E_PacketID::LOGIN_RESPONSE: this->loginResp(evt); break;
+	case db::E_PacketID::LOGIN_RESPONSE: this->loginResp(evt); break;
 	}
 }
 #pragma endregion
@@ -28,24 +29,23 @@ void DBClientHandler::handle(S_EngineEvent& evt)
 void DBClientHandler::loginResp(S_EngineEvent& evt)
 {
 	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(evt.data);
-	protocol::db::Login_Resp dbResp = {};
-	protocol::lobby::Login_Resp lobbyResp = {};
-	S_PacketAttr attr = {};
+	db::Login_Resp dbResp = {};
+	lobby::Login_Resp lobbyResp = {};
 
 	dbResp.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen);
-	if (dbResp.resp() == protocol::db::E_RespCode::OK)
+	if (dbResp.resp() == db::E_RespCode::OK)
 	{
-		lobbyResp.set_resp(protocol::lobby::E_RespCode::OK);
+		lobbyResp.set_resp(lobby::E_RespCode::OK);
 		User* user = UserManager::getInstance().getUser(dbResp.serial());
 		user->getInfo().name = dbResp.nickname();
 		user->getInfo().state = E_UserState::LOBBY;
 		LobbyManager::getInstance().inputUser(user);
 	}
-	else if (dbResp.resp() == protocol::db::E_RespCode::LOGIN_INVALID_PW)
-		lobbyResp.set_resp(protocol::lobby::E_RespCode::LOGIN_INVALID_PW);
-	attr.packetID = (UINT16)protocol::lobby::E_PacketID::LOGIN_RESPONSE;
-	attr.option = 0;
+	else if (dbResp.resp() == db::E_RespCode::LOGIN_INVALID_PW)
+		lobbyResp.set_resp(lobby::E_RespCode::LOGIN_INVALID_PW);
+	else if (dbResp.resp() == db::E_RespCode::LOGIN_INVALID_ID)
+		lobbyResp.set_resp(lobby::E_RespCode::LOGIN_INVALID_ID);
 
-	Server::getInstance().send(E_EngineType::LOBBY_SERVER, dbResp.serial(), attr, lobbyResp);
+	Server::getInstance().send(E_EngineType::LOBBY_SERVER, dbResp.serial(), { (UINT16)lobby::E_PacketID::LOGIN_RESPONSE, 0 }, lobbyResp);
 }
 #pragma endregion

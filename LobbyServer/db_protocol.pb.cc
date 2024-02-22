@@ -94,13 +94,13 @@ const char descriptor_table_protodef_db_5fprotocol_2eproto[] PROTOBUF_SECTION_VA
   "swd\030\003 \001(\t\"U\n\nLogin_Resp\022\016\n\006serial\030\001 \001(\005\022"
   "%\n\004resp\030\002 \001(\0162\027.protocol.db.E_RespCode\022\020"
   "\n\010nickname\030\003 \001(\t*3\n\nE_PacketID\022\021\n\rLOGIN_"
-  "REQUSET\020\000\022\022\n\016LOGIN_RESPONSE\020\001**\n\nE_RespC"
-  "ode\022\006\n\002OK\020\000\022\024\n\020LOGIN_INVALID_PW\020\nb\006proto"
-  "3"
+  "REQUSET\020\000\022\022\n\016LOGIN_RESPONSE\020\001*@\n\nE_RespC"
+  "ode\022\006\n\002OK\020\000\022\024\n\020LOGIN_INVALID_ID\020\n\022\024\n\020LOG"
+  "IN_INVALID_PW\020\013b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_db_5fprotocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_db_5fprotocol_2eproto = {
-    false, false, 281, descriptor_table_protodef_db_5fprotocol_2eproto,
+    false, false, 303, descriptor_table_protodef_db_5fprotocol_2eproto,
     "db_protocol.proto",
     &descriptor_table_db_5fprotocol_2eproto_once, nullptr, 0, 2,
     schemas, file_default_instances, TableStruct_db_5fprotocol_2eproto::offsets,
@@ -137,6 +137,7 @@ bool E_RespCode_IsValid(int value) {
   switch (value) {
     case 0:
     case 10:
+    case 11:
       return true;
     default:
       return false;
