@@ -17,7 +17,7 @@ void LobbyServerHandler::handle(S_EngineEvent& evt)
 	switch (evt.type)
 	{
 	case E_EngineEventType::EVENT_NET_CONNECT: printf("client connect : (%d)\n", evt.serial); UserManager::getInstance().getUser(evt.serial).state = E_UserState::CONNECTED; return;
-	case E_EngineEventType::EVENT_NET_DISCONNECT: printf("client disconnect : (%d)\n", evt.serial); UserManager::getInstance().getUser(evt.serial).state = E_UserState::DISCONNECTED; return;
+	case E_EngineEventType::EVENT_NET_DISCONNECT: printf("client disconnect : (%d)\n", evt.serial); UserManager::getInstance().disconnect(evt.serial); return;
 	}
 
 	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(evt.data);

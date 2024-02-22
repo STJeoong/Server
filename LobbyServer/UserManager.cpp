@@ -4,6 +4,11 @@
 #include "Server.h"
 #pragma region public
 S_UserInfo& UserManager::getUser(int serial) const { return _users[serial]; }
+void UserManager::disconnect(int serial)
+{
+	_users[serial].name = "";
+	_users[serial].state = E_UserState::DISCONNECTED;
+}
 #pragma endregion
 
 #pragma region private

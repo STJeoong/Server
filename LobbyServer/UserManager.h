@@ -7,6 +7,7 @@ class UserManager : public Singleton<UserManager>
 	friend class Singleton;
 public:
 	S_UserInfo& getUser(int serial) const;
+	void disconnect(int serial);
 private:
 	UserManager();
 	~UserManager() = default;
