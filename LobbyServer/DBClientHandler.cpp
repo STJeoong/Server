@@ -3,7 +3,6 @@
 #include "lobby_protocol.pb.h"
 #include "Server.h"
 #include "UserManager.h"
-#include "User.h"
 #include "LobbyManager.h"
 #include <S_PacketHeader.h>
 
@@ -36,10 +35,10 @@ void DBClientHandler::loginResp(S_EngineEvent& evt)
 	if (dbResp.resp() == db::E_RespCode::OK)
 	{
 		lobbyResp.set_resp(lobby::E_RespCode::OK);
-		User* user = UserManager::getInstance().getUser(dbResp.serial());
-		user->getInfo().name = dbResp.nickname();
-		user->getInfo().state = E_UserState::LOBBY;
-		LobbyManager::getInstance().inputUser(user);
+		S_UserInfo& user = UserManager::getInstance().getUser(dbResp.serial());
+		user.name = dbResp.nickname();
+		user.state = E_UserState::LOBBY;
+		LobbyManager::getInstance().inputUser(&user);
 	}
 	else if (dbResp.resp() == db::E_RespCode::LOGIN_INVALID_PW)
 		lobbyResp.set_resp(lobby::E_RespCode::LOGIN_INVALID_PW);

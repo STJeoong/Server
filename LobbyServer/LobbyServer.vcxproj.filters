@@ -29,9 +29,6 @@
     <ClCompile Include="UserManager.cpp">
       <Filter>소스 파일\User</Filter>
     </ClCompile>
-    <ClCompile Include="User.cpp">
-      <Filter>소스 파일\User</Filter>
-    </ClCompile>
     <ClCompile Include="LobbyManager.cpp">
       <Filter>소스 파일\Lobby</Filter>
     </ClCompile>
@@ -59,9 +56,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="UserManager.h">
-      <Filter>소스 파일\User</Filter>
-    </ClInclude>
-    <ClInclude Include="User.h">
       <Filter>소스 파일\User</Filter>
     </ClInclude>
     <ClInclude Include="LobbyManager.h">

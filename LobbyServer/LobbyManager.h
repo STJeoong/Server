@@ -1,20 +1,20 @@
 #pragma once
+#include "S_UserInfo.h"
 #include <Singleton.h>
 #include <vector>
-class User;
 class LobbyManager : public Singleton<LobbyManager>
 {
 	friend class Singleton;
 public:
-	bool inputUser(User* user);
-	void deleteUser(User* user);
+	bool inputUser(S_UserInfo* user);
+	void deleteUser(S_UserInfo* user);
 	void broadcast(int serial, char* data);
 private:
 	LobbyManager() = default;
 	~LobbyManager() = default;
 
-	User* getUser(int serial);
+	S_UserInfo* getUser(int serial);
 
-	std::vector<User*> _users;
+	std::vector<S_UserInfo*> _users;
 };
 

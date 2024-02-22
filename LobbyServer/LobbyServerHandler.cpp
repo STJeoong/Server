@@ -1,7 +1,7 @@
 #include <S_PacketHeader.h>
 #include "LobbyServerHandler.h"
 #include "UserManager.h"
-#include "User.h"
+#include "S_UserInfo.h"
 #include "LobbyManager.h"
 #include "Server.h"
 #define GLOG_NO_ABBREVIATED_SEVERITIES
@@ -16,8 +16,8 @@ void LobbyServerHandler::handle(S_EngineEvent& evt)
 {
 	switch (evt.type)
 	{
-	case E_EngineEventType::EVENT_NET_CONNECT: printf("client connect : (%d)\n", evt.serial); UserManager::getInstance().getUser(evt.serial)->connect(); return;
-	case E_EngineEventType::EVENT_NET_DISCONNECT: printf("client disconnect : (%d)\n", evt.serial); UserManager::getInstance().getUser(evt.serial)->disconnect(); return;
+	case E_EngineEventType::EVENT_NET_CONNECT: printf("client connect : (%d)\n", evt.serial); UserManager::getInstance().getUser(evt.serial).state = E_UserState::CONNECTED; return;
+	case E_EngineEventType::EVENT_NET_DISCONNECT: printf("client disconnect : (%d)\n", evt.serial); UserManager::getInstance().getUser(evt.serial).state = E_UserState::DISCONNECTED; return;
 	}
 
 	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(evt.data);
@@ -33,16 +33,15 @@ void LobbyServerHandler::handle(S_EngineEvent& evt)
 #pragma region private
 void LobbyServerHandler::login(int serial, char* data)
 {
-	User* user = UserManager::getInstance().getUser(serial);
-	S_UserInfo& userInfo = user->getInfo();
+	S_UserInfo& user = UserManager::getInstance().getUser(serial);
 	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(data);
 	lobby::Login_Req req;
 	lobby::Login_Resp resp = {};
 	db::Login_Req dbReq = {};
 
-	if (userInfo.state != E_UserState::CONNECTED)
+	if (user.state != E_UserState::CONNECTED)
 	{
-		LOG(ERROR) << "Player(" << userInfo.name << ") is not connected. but request login";
+		LOG(ERROR) << "Player(" << user.name << ") is not connected. but request login";
 		resp.set_resp(lobby::E_RespCode::LOGIN_INVALID_ACCESS);
 		Server::getInstance().send(E_EngineType::LOBBY_SERVER, serial, { (UINT16)lobby::E_PacketID::LOGIN_RESPONSE, 0 }, resp);
 		return;
@@ -55,12 +54,11 @@ void LobbyServerHandler::login(int serial, char* data)
 }
 void LobbyServerHandler::broadcastLobby(int serial, char* data)
 {
-	User* user = UserManager::getInstance().getUser(serial);
-	S_UserInfo& userInfo = user->getInfo();
+	S_UserInfo& user = UserManager::getInstance().getUser(serial);
 
-	if (userInfo.state != E_UserState::LOBBY && userInfo.state != E_UserState::MATCHING)
+	if (user.state != E_UserState::LOBBY && user.state != E_UserState::MATCHING)
 	{
-		LOG(ERROR) << "Player(" << userInfo.name << ") is not in Lobby. but request broadcastLobby";
+		LOG(ERROR) << "Player(" << user.name << ") is not in Lobby. but request broadcastLobby";
 		return;
 	}
 	LobbyManager::getInstance().broadcast(serial, data);
