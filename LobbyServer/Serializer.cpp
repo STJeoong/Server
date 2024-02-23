@@ -14,7 +14,7 @@ std::pair<Size, char*> Serializer::serialize(S_PacketAttr attr, const google::pr
 	header->initLen = sizeof(S_PacketHeader) + (UINT16)message.ByteSizeLong();
 	header->len = sizeof(S_PacketHeader) + (UINT16)message.ByteSizeLong();
 
-	message.SerializeToArray(block + sizeof(S_PacketHeader), (int)Size::_1024 - (int)message.ByteSizeLong());
+	message.SerializeToArray(block + sizeof(S_PacketHeader), (int)Size::_1024 - (int)sizeof(S_PacketHeader));
 	return { Size::_1024, block };
 }
 #pragma endregion
