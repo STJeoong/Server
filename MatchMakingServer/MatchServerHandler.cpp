@@ -41,8 +41,8 @@ void MatchServerHandler::matchReq(S_EngineEvent& evt)
 	}
 
 	UINT16 portNum = _generator->generate();
-	resp.set_serials(0, _lastRegisteredSerial);
-	resp.set_serials(1, req.serial());
+	resp.add_serials(_lastRegisteredSerial);
+	resp.add_serials(req.serial());
 	resp.set_ip(Server::getInstance().getServerConfig().ip);
 	resp.set_port(portNum);
 	Server::getInstance().send(E_EngineType::MATCH_SERVER, evt.serial, { (UINT16)E_PacketID::MATCH_RESP, 0 }, resp);
