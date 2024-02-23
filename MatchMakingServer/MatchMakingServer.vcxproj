@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{8bc76ddc-a3ad-4179-a5be-1238eac5e055}</ProjectGuid>
-    <RootNamespace>LobbyServer</RootNamespace>
+    <ProjectGuid>{367b10ab-a514-4ccc-934a-5fc6d8f44220}</ProjectGuid>
+    <RootNamespace>MatchMakingServer</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -141,16 +141,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DBClientHandler.cpp" />
-    <ClCompile Include="db_protocol.pb.cc" />
-    <ClCompile Include="LobbyManager.cpp" />
-    <ClCompile Include="lobby_protocol.pb.cc" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="LobbyServerHandler.cpp" />
-    <ClCompile Include="MatchClientHandler.cpp" />
+    <ClCompile Include="MatchServerHandler.cpp" />
     <ClCompile Include="Serializer.cpp" />
     <ClCompile Include="Server.cpp" />
-    <ClCompile Include="UserManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ServerFramework\ServerFramework.vcxproj">
@@ -158,18 +152,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DBClientHandler.h" />
-    <ClInclude Include="db_protocol.pb.h" />
     <ClInclude Include="E_EngineType.h" />
-    <ClInclude Include="LobbyManager.h" />
-    <ClInclude Include="LobbyServerHandler.h" />
-    <ClInclude Include="lobby_protocol.pb.h" />
-    <ClInclude Include="MatchClientHandler.h" />
+    <ClInclude Include="MatchServerHandler.h" />
     <ClInclude Include="Serializer.h" />
     <ClInclude Include="Server.h" />
-    <ClInclude Include="S_UserInfo.h" />
-    <ClInclude Include="UserManager.h" />
-    <ClInclude Include="E_UserState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

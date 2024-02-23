@@ -6,11 +6,9 @@
 #include <google/protobuf/message.h>
 
 class EngineManager;
-class LobbyServerHandler;
-class DBClientHandler;
-class MatchClientHandler;
 class Serializer;
 class EngineEventContainer;
+class MatchServerHandler;
 class Server : public Singleton<Server>
 {
 	friend class Singleton;
@@ -26,9 +24,7 @@ private:
 
 	EngineManager* _engineManager = nullptr;
 	EngineEventContainer* _evtContainer = nullptr;
-	LobbyServerHandler* _lobbyHandler = nullptr;
-	DBClientHandler* _dbHandler = nullptr;
-	MatchClientHandler* _matchHandler = nullptr;
+	MatchServerHandler* _matchHandler = nullptr;
 	Serializer* _serializer = nullptr;
 	S_ServerConfig _config = {};
 };

@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ServerFramework", "ServerFr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LobbyServer", "LobbyServer\LobbyServer.vcxproj", "{8BC76DDC-A3AD-4179-A5BE-1238EAC5E055}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MatchMakingServer", "MatchMakingServer\MatchMakingServer.vcxproj", "{367B10AB-A514-4CCC-934A-5FC6D8F44220}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{8BC76DDC-A3AD-4179-A5BE-1238EAC5E055}.Release|x64.Build.0 = Release|x64
 		{8BC76DDC-A3AD-4179-A5BE-1238EAC5E055}.Release|x86.ActiveCfg = Release|Win32
 		{8BC76DDC-A3AD-4179-A5BE-1238EAC5E055}.Release|x86.Build.0 = Release|Win32
+		{367B10AB-A514-4CCC-934A-5FC6D8F44220}.Debug|x64.ActiveCfg = Debug|x64
+		{367B10AB-A514-4CCC-934A-5FC6D8F44220}.Debug|x64.Build.0 = Debug|x64
+		{367B10AB-A514-4CCC-934A-5FC6D8F44220}.Debug|x86.ActiveCfg = Debug|Win32
+		{367B10AB-A514-4CCC-934A-5FC6D8F44220}.Debug|x86.Build.0 = Debug|Win32
+		{367B10AB-A514-4CCC-934A-5FC6D8F44220}.Release|x64.ActiveCfg = Release|x64
+		{367B10AB-A514-4CCC-934A-5FC6D8F44220}.Release|x64.Build.0 = Release|x64
+		{367B10AB-A514-4CCC-934A-5FC6D8F44220}.Release|x86.ActiveCfg = Release|Win32
+		{367B10AB-A514-4CCC-934A-5FC6D8F44220}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

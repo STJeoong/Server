@@ -47,6 +47,7 @@ void LobbyServerHandler::login(int serial, char* data)
 		return;
 	}
 	req.ParseFromArray(data + sizeof(S_PacketHeader), header->initLen);
+	printf("Login request (%s), (%s)\n", req.id().c_str(), req.passwd().c_str());
 	dbReq.set_serial(serial);
 	dbReq.set_id(req.id());
 	dbReq.set_passwd(req.passwd());
