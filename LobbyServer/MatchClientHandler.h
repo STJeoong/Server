@@ -5,5 +5,5 @@ class MatchClientHandler
 public:
 	void handle(S_EngineEvent& evt);
 private:
+	void matchResp(S_EngineEvent& evt);
 };
-

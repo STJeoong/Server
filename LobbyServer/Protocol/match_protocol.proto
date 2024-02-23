@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package protocol.match;
+
+enum E_PacketID
+{
+	MATCH_REQ = 0;
+	MATCH_CANCLE_REQ = 1;
+	MATCH_RESP = 2;
+}
+
+message Match_Req
+{
+	int32 serial = 1;
+}
+message MatchCancle_Req
+{
+	int32 serial = 1;
+}
+message Match_Resp
+{
+	repeated int32 serials = 1;
+	string ip = 2;
+	int32 port = 3;
+}

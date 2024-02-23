@@ -53,6 +53,9 @@
     <ClCompile Include="MatchClientHandler.cpp">
       <Filter>소스 파일\Handler</Filter>
     </ClCompile>
+    <ClCompile Include="match_protocol.pb.cc">
+      <Filter>소스 파일\Protocol</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="E_UserState.h">
@@ -90,6 +93,9 @@
     </ClInclude>
     <ClInclude Include="MatchClientHandler.h">
       <Filter>소스 파일\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="match_protocol.pb.h">
+      <Filter>소스 파일\Protocol</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

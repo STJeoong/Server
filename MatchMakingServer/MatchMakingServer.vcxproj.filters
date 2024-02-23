@@ -12,6 +12,9 @@
     <Filter Include="소스 파일\Handler">
       <UniqueIdentifier>{4c2ca53c-a6e2-4c21-856f-26cebb20a197}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Protocol">
+      <UniqueIdentifier>{b0136877-34b5-4c65-869c-145234377f53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -26,6 +29,12 @@
     <ClCompile Include="MatchServerHandler.cpp">
       <Filter>소스 파일\Handler</Filter>
     </ClCompile>
+    <ClCompile Include="match_protocol.pb.cc">
+      <Filter>소스 파일\Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessGenerator.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Server.h">
@@ -39,6 +48,12 @@
     </ClInclude>
     <ClInclude Include="MatchServerHandler.h">
       <Filter>소스 파일\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="match_protocol.pb.h">
+      <Filter>소스 파일\Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessGenerator.h">
+      <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

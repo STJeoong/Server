@@ -59,6 +59,9 @@ extern Login_ReqDefaultTypeInternal _Login_Req_default_instance_;
 class Login_Resp;
 struct Login_RespDefaultTypeInternal;
 extern Login_RespDefaultTypeInternal _Login_Resp_default_instance_;
+class Match_Resp;
+struct Match_RespDefaultTypeInternal;
+extern Match_RespDefaultTypeInternal _Match_Resp_default_instance_;
 }  // namespace lobby
 }  // namespace protocol
 PROTOBUF_NAMESPACE_OPEN
@@ -66,6 +69,7 @@ template<> ::protocol::lobby::ChatLobby_Notify* Arena::CreateMaybeMessage<::prot
 template<> ::protocol::lobby::ChatLobby_Req* Arena::CreateMaybeMessage<::protocol::lobby::ChatLobby_Req>(Arena*);
 template<> ::protocol::lobby::Login_Req* Arena::CreateMaybeMessage<::protocol::lobby::Login_Req>(Arena*);
 template<> ::protocol::lobby::Login_Resp* Arena::CreateMaybeMessage<::protocol::lobby::Login_Resp>(Arena*);
+template<> ::protocol::lobby::Match_Resp* Arena::CreateMaybeMessage<::protocol::lobby::Match_Resp>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace protocol {
 namespace lobby {
@@ -75,12 +79,15 @@ enum E_PacketID : int {
   LOGIN_RESPONSE = 1,
   CHAT_LOBBY_REQUEST = 100,
   CHAT_LOBBY_NOTIFY = 110,
+  MATCH_REQ = 200,
+  MATCH_CANCLE_REQ = 201,
+  MATCH_RESP = 202,
   E_PacketID_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   E_PacketID_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool E_PacketID_IsValid(int value);
 constexpr E_PacketID E_PacketID_MIN = LOGIN_REQUEST;
-constexpr E_PacketID E_PacketID_MAX = CHAT_LOBBY_NOTIFY;
+constexpr E_PacketID E_PacketID_MAX = MATCH_RESP;
 constexpr int E_PacketID_ARRAYSIZE = E_PacketID_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_PacketID_descriptor();
@@ -763,6 +770,170 @@ class ChatLobby_Notify final :
   union { Impl_ _impl_; };
   friend struct ::TableStruct_lobby_5fprotocol_2eproto;
 };
+// -------------------------------------------------------------------
+
+class Match_Resp final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.lobby.Match_Resp) */ {
+ public:
+  inline Match_Resp() : Match_Resp(nullptr) {}
+  ~Match_Resp() override;
+  explicit PROTOBUF_CONSTEXPR Match_Resp(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Match_Resp(const Match_Resp& from);
+  Match_Resp(Match_Resp&& from) noexcept
+    : Match_Resp() {
+    *this = ::std::move(from);
+  }
+
+  inline Match_Resp& operator=(const Match_Resp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Match_Resp& operator=(Match_Resp&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Match_Resp& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Match_Resp* internal_default_instance() {
+    return reinterpret_cast<const Match_Resp*>(
+               &_Match_Resp_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(Match_Resp& a, Match_Resp& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Match_Resp* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Match_Resp* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Match_Resp* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Match_Resp>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Match_Resp& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Match_Resp& from) {
+    Match_Resp::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Match_Resp* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "protocol.lobby.Match_Resp";
+  }
+  protected:
+  explicit Match_Resp(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kIpFieldNumber = 1,
+    kPortFieldNumber = 2,
+  };
+  // string ip = 1;
+  void clear_ip();
+  const std::string& ip() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_ip(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_ip();
+  PROTOBUF_NODISCARD std::string* release_ip();
+  void set_allocated_ip(std::string* ip);
+  private:
+  const std::string& _internal_ip() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_ip(const std::string& value);
+  std::string* _internal_mutable_ip();
+  public:
+
+  // int32 port = 2;
+  void clear_port();
+  int32_t port() const;
+  void set_port(int32_t value);
+  private:
+  int32_t _internal_port() const;
+  void _internal_set_port(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:protocol.lobby.Match_Resp)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr ip_;
+    int32_t port_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_lobby_5fprotocol_2eproto;
+};
 // ===================================================================
 
 
@@ -1056,9 +1227,85 @@ inline void ChatLobby_Notify::set_allocated_content(std::string* content) {
   // @@protoc_insertion_point(field_set_allocated:protocol.lobby.ChatLobby_Notify.content)
 }
 
+// -------------------------------------------------------------------
+
+// Match_Resp
+
+// string ip = 1;
+inline void Match_Resp::clear_ip() {
+  _impl_.ip_.ClearToEmpty();
+}
+inline const std::string& Match_Resp::ip() const {
+  // @@protoc_insertion_point(field_get:protocol.lobby.Match_Resp.ip)
+  return _internal_ip();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Match_Resp::set_ip(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.ip_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:protocol.lobby.Match_Resp.ip)
+}
+inline std::string* Match_Resp::mutable_ip() {
+  std::string* _s = _internal_mutable_ip();
+  // @@protoc_insertion_point(field_mutable:protocol.lobby.Match_Resp.ip)
+  return _s;
+}
+inline const std::string& Match_Resp::_internal_ip() const {
+  return _impl_.ip_.Get();
+}
+inline void Match_Resp::_internal_set_ip(const std::string& value) {
+  
+  _impl_.ip_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Match_Resp::_internal_mutable_ip() {
+  
+  return _impl_.ip_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Match_Resp::release_ip() {
+  // @@protoc_insertion_point(field_release:protocol.lobby.Match_Resp.ip)
+  return _impl_.ip_.Release();
+}
+inline void Match_Resp::set_allocated_ip(std::string* ip) {
+  if (ip != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.ip_.SetAllocated(ip, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.ip_.IsDefault()) {
+    _impl_.ip_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:protocol.lobby.Match_Resp.ip)
+}
+
+// int32 port = 2;
+inline void Match_Resp::clear_port() {
+  _impl_.port_ = 0;
+}
+inline int32_t Match_Resp::_internal_port() const {
+  return _impl_.port_;
+}
+inline int32_t Match_Resp::port() const {
+  // @@protoc_insertion_point(field_get:protocol.lobby.Match_Resp.port)
+  return _internal_port();
+}
+inline void Match_Resp::_internal_set_port(int32_t value) {
+  
+  _impl_.port_ = value;
+}
+inline void Match_Resp::set_port(int32_t value) {
+  _internal_set_port(value);
+  // @@protoc_insertion_point(field_set:protocol.lobby.Match_Resp.port)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

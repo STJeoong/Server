@@ -76,9 +76,23 @@ struct ChatLobby_NotifyDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ChatLobby_NotifyDefaultTypeInternal _ChatLobby_Notify_default_instance_;
+PROTOBUF_CONSTEXPR Match_Resp::Match_Resp(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.ip_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.port_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct Match_RespDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR Match_RespDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~Match_RespDefaultTypeInternal() {}
+  union {
+    Match_Resp _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 Match_RespDefaultTypeInternal _Match_Resp_default_instance_;
 }  // namespace lobby
 }  // namespace protocol
-static ::_pb::Metadata file_level_metadata_lobby_5fprotocol_2eproto[4];
+static ::_pb::Metadata file_level_metadata_lobby_5fprotocol_2eproto[5];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_lobby_5fprotocol_2eproto[2];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_lobby_5fprotocol_2eproto = nullptr;
 
@@ -113,12 +127,21 @@ const uint32_t TableStruct_lobby_5fprotocol_2eproto::offsets[] PROTOBUF_SECTION_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::protocol::lobby::ChatLobby_Notify, _impl_.name_),
   PROTOBUF_FIELD_OFFSET(::protocol::lobby::ChatLobby_Notify, _impl_.content_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::protocol::lobby::Match_Resp, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::protocol::lobby::Match_Resp, _impl_.ip_),
+  PROTOBUF_FIELD_OFFSET(::protocol::lobby::Match_Resp, _impl_.port_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::protocol::lobby::Login_Req)},
   { 8, -1, -1, sizeof(::protocol::lobby::Login_Resp)},
   { 15, -1, -1, sizeof(::protocol::lobby::ChatLobby_Req)},
   { 22, -1, -1, sizeof(::protocol::lobby::ChatLobby_Notify)},
+  { 30, -1, -1, sizeof(::protocol::lobby::Match_Resp)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -126,6 +149,7 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::protocol::lobby::_Login_Resp_default_instance_._instance,
   &::protocol::lobby::_ChatLobby_Req_default_instance_._instance,
   &::protocol::lobby::_ChatLobby_Notify_default_instance_._instance,
+  &::protocol::lobby::_Match_Resp_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_lobby_5fprotocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -134,18 +158,20 @@ const char descriptor_table_protodef_lobby_5fprotocol_2eproto[] PROTOBUF_SECTION
   "6\n\nLogin_Resp\022(\n\004resp\030\001 \001(\0162\032.protocol.l"
   "obby.E_RespCode\" \n\rChatLobby_Req\022\017\n\007cont"
   "ent\030\001 \001(\t\"1\n\020ChatLobby_Notify\022\014\n\004name\030\001 "
-  "\001(\t\022\017\n\007content\030\002 \001(\t*b\n\nE_PacketID\022\021\n\rLO"
-  "GIN_REQUEST\020\000\022\022\n\016LOGIN_RESPONSE\020\001\022\026\n\022CHA"
-  "T_LOBBY_REQUEST\020d\022\025\n\021CHAT_LOBBY_NOTIFY\020n"
-  "*Z\n\nE_RespCode\022\006\n\002OK\020\000\022\024\n\020LOGIN_INVALID_"
-  "ID\020\n\022\024\n\020LOGIN_INVALID_PW\020\013\022\030\n\024LOGIN_INVA"
-  "LID_ACCESS\020\014b\006proto3"
+  "\001(\t\022\017\n\007content\030\002 \001(\t\"&\n\nMatch_Resp\022\n\n\002ip"
+  "\030\001 \001(\t\022\014\n\004port\030\002 \001(\005*\232\001\n\nE_PacketID\022\021\n\rL"
+  "OGIN_REQUEST\020\000\022\022\n\016LOGIN_RESPONSE\020\001\022\026\n\022CH"
+  "AT_LOBBY_REQUEST\020d\022\025\n\021CHAT_LOBBY_NOTIFY\020"
+  "n\022\016\n\tMATCH_REQ\020\310\001\022\025\n\020MATCH_CANCLE_REQ\020\311\001"
+  "\022\017\n\nMATCH_RESP\020\312\001*Z\n\nE_RespCode\022\006\n\002OK\020\000\022"
+  "\024\n\020LOGIN_INVALID_ID\020\n\022\024\n\020LOGIN_INVALID_P"
+  "W\020\013\022\030\n\024LOGIN_INVALID_ACCESS\020\014b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_lobby_5fprotocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_lobby_5fprotocol_2eproto = {
-    false, false, 420, descriptor_table_protodef_lobby_5fprotocol_2eproto,
+    false, false, 517, descriptor_table_protodef_lobby_5fprotocol_2eproto,
     "lobby_protocol.proto",
-    &descriptor_table_lobby_5fprotocol_2eproto_once, nullptr, 0, 4,
+    &descriptor_table_lobby_5fprotocol_2eproto_once, nullptr, 0, 5,
     schemas, file_default_instances, TableStruct_lobby_5fprotocol_2eproto::offsets,
     file_level_metadata_lobby_5fprotocol_2eproto, file_level_enum_descriptors_lobby_5fprotocol_2eproto,
     file_level_service_descriptors_lobby_5fprotocol_2eproto,
@@ -168,6 +194,9 @@ bool E_PacketID_IsValid(int value) {
     case 1:
     case 100:
     case 110:
+    case 200:
+    case 201:
+    case 202:
       return true;
     default:
       return false;
@@ -1081,6 +1110,236 @@ void ChatLobby_Notify::InternalSwap(ChatLobby_Notify* other) {
       file_level_metadata_lobby_5fprotocol_2eproto[3]);
 }
 
+// ===================================================================
+
+class Match_Resp::_Internal {
+ public:
+};
+
+Match_Resp::Match_Resp(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:protocol.lobby.Match_Resp)
+}
+Match_Resp::Match_Resp(const Match_Resp& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Match_Resp* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.ip_){}
+    , decltype(_impl_.port_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.ip_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.ip_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_ip().empty()) {
+    _this->_impl_.ip_.Set(from._internal_ip(), 
+      _this->GetArenaForAllocation());
+  }
+  _this->_impl_.port_ = from._impl_.port_;
+  // @@protoc_insertion_point(copy_constructor:protocol.lobby.Match_Resp)
+}
+
+inline void Match_Resp::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.ip_){}
+    , decltype(_impl_.port_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.ip_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.ip_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+Match_Resp::~Match_Resp() {
+  // @@protoc_insertion_point(destructor:protocol.lobby.Match_Resp)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void Match_Resp::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.ip_.Destroy();
+}
+
+void Match_Resp::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void Match_Resp::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.lobby.Match_Resp)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.ip_.ClearToEmpty();
+  _impl_.port_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Match_Resp::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // string ip = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_ip();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "protocol.lobby.Match_Resp.ip"));
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 port = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.port_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* Match_Resp::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.lobby.Match_Resp)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string ip = 1;
+  if (!this->_internal_ip().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_ip().data(), static_cast<int>(this->_internal_ip().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "protocol.lobby.Match_Resp.ip");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_ip(), target);
+  }
+
+  // int32 port = 2;
+  if (this->_internal_port() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_port(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.lobby.Match_Resp)
+  return target;
+}
+
+size_t Match_Resp::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.lobby.Match_Resp)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string ip = 1;
+  if (!this->_internal_ip().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_ip());
+  }
+
+  // int32 port = 2;
+  if (this->_internal_port() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_port());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Match_Resp::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    Match_Resp::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Match_Resp::GetClassData() const { return &_class_data_; }
+
+
+void Match_Resp::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Match_Resp*>(&to_msg);
+  auto& from = static_cast<const Match_Resp&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:protocol.lobby.Match_Resp)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_ip().empty()) {
+    _this->_internal_set_ip(from._internal_ip());
+  }
+  if (from._internal_port() != 0) {
+    _this->_internal_set_port(from._internal_port());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Match_Resp::CopyFrom(const Match_Resp& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.lobby.Match_Resp)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Match_Resp::IsInitialized() const {
+  return true;
+}
+
+void Match_Resp::InternalSwap(Match_Resp* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.ip_, lhs_arena,
+      &other->_impl_.ip_, rhs_arena
+  );
+  swap(_impl_.port_, other->_impl_.port_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Match_Resp::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_lobby_5fprotocol_2eproto_getter, &descriptor_table_lobby_5fprotocol_2eproto_once,
+      file_level_metadata_lobby_5fprotocol_2eproto[4]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace lobby
 }  // namespace protocol
@@ -1100,6 +1359,10 @@ Arena::CreateMaybeMessage< ::protocol::lobby::ChatLobby_Req >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::protocol::lobby::ChatLobby_Notify*
 Arena::CreateMaybeMessage< ::protocol::lobby::ChatLobby_Notify >(Arena* arena) {
   return Arena::CreateMessageInternal< ::protocol::lobby::ChatLobby_Notify >(arena);
+}
+template<> PROTOBUF_NOINLINE ::protocol::lobby::Match_Resp*
+Arena::CreateMaybeMessage< ::protocol::lobby::Match_Resp >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::lobby::Match_Resp >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

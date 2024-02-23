@@ -9,6 +9,7 @@
 #include <Engine.h>
 #include "db_protocol.pb.h"
 #include "lobby_protocol.pb.h"
+#include "match_protocol.pb.h"
 
 using namespace protocol;
 #pragma region public
@@ -25,6 +26,8 @@ void LobbyServerHandler::handle(S_EngineEvent& evt)
 	{
 	case lobby::E_PacketID::LOGIN_REQUEST: this->login(evt.serial, evt.data); break;
 	case lobby::E_PacketID::CHAT_LOBBY_REQUEST: this->broadcastLobby(evt.serial, evt.data); break;
+	case lobby::E_PacketID::MATCH_REQ: this->matchReq(evt); break;
+	case lobby::E_PacketID::MATCH_CANCLE_REQ: this->matchCancle(evt); break;
 	default: LOG(ERROR) << "Undefined PacketID : " << header->id; break;
 	}
 }
@@ -63,5 +66,25 @@ void LobbyServerHandler::broadcastLobby(int serial, char* data)
 		return;
 	}
 	LobbyManager::getInstance().broadcast(serial, data);
+}
+void LobbyServerHandler::matchReq(S_EngineEvent& evt)
+{
+	if (UserManager::getInstance().getUser(evt.serial).state != E_UserState::LOBBY)
+		return;
+	match::Match_Req req = {};
+
+	req.set_serial(evt.serial);
+	Server::getInstance().send(E_EngineType::MATCH_CLIENT, 0, { (UINT16)match::E_PacketID::MATCH_REQ, 0 }, req);
+	UserManager::getInstance().getUser(evt.serial).state = E_UserState::MATCHING;
+}
+void LobbyServerHandler::matchCancle(S_EngineEvent& evt)
+{
+	if (UserManager::getInstance().getUser(evt.serial).state != E_UserState::MATCHING)
+		return;
+	match::MatchCancle_Req req = {};
+
+	req.set_serial(evt.serial);
+	Server::getInstance().send(E_EngineType::MATCH_CLIENT, 0, { (UINT16)match::E_PacketID::MATCH_CANCLE_REQ, 0 }, req);
+	UserManager::getInstance().getUser(evt.serial).state = E_UserState::LOBBY;
 }
 #pragma endregion

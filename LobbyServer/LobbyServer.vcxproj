@@ -148,6 +148,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="LobbyServerHandler.cpp" />
     <ClCompile Include="MatchClientHandler.cpp" />
+    <ClCompile Include="match_protocol.pb.cc" />
     <ClCompile Include="Serializer.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="UserManager.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="LobbyServerHandler.h" />
     <ClInclude Include="lobby_protocol.pb.h" />
     <ClInclude Include="MatchClientHandler.h" />
+    <ClInclude Include="match_protocol.pb.h" />
     <ClInclude Include="Serializer.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="S_UserInfo.h" />

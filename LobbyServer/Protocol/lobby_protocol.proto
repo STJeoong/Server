@@ -9,6 +9,10 @@ enum E_PacketID
 
 	CHAT_LOBBY_REQUEST = 100;
 	CHAT_LOBBY_NOTIFY = 110;
+
+	MATCH_REQ = 200;
+	MATCH_CANCLE_REQ = 201;
+	MATCH_RESP = 202;
 }
 enum E_RespCode
 {
@@ -18,25 +22,26 @@ enum E_RespCode
 	LOGIN_INVALID_PW = 11;
 	LOGIN_INVALID_ACCESS = 12;
 }
-
 message Login_Req
 {
 	string id = 1;
 	string passwd = 2;
 }
-
 message Login_Resp
 {
 	E_RespCode resp = 1;
 }
-
 message ChatLobby_Req
 {
 	string content = 1;
 }
-
 message ChatLobby_Notify
 {
 	string name = 1;
 	string content = 2;
+}
+message Match_Resp
+{
+	string ip = 1;
+	int32 port = 2;
 }
