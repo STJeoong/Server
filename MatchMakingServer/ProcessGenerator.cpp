@@ -12,7 +12,16 @@ ProcessGenerator::ProcessGenerator()
 	for (int i = 0; i < ProcessGenerator::MAX_PORT_NUM - ProcessGenerator::MIN_PORT_NUM; ++i)
 		_pinfos->hProcess = INVALID_HANDLE_VALUE;
 }
-ProcessGenerator::~ProcessGenerator() { delete[] _pinfos; }
+ProcessGenerator::~ProcessGenerator()
+{
+	for (int i = ProcessGenerator::MIN_PORT_NUM; i < ProcessGenerator::MAX_PORT_NUM; ++i)
+		if (_pinfos[i].hProcess != INVALID_HANDLE_VALUE)
+		{
+			CloseHandle(_pinfos[i].hThread);
+			CloseHandle(_pinfos[i].hProcess);
+		}
+	delete[] _pinfos;
+}
 UINT16 ProcessGenerator::generate()
 {
 	// TODO : 할당할 수 없을 때 처리
@@ -37,12 +46,12 @@ UINT16 ProcessGenerator::generate()
 
 	si.cb = sizeof(STARTUPINFO);
 	si.dwFlags = STARTF_USESHOWWINDOW;
-	si.wShowWindow = SW_NORMAL;
+	si.wShowWindow = SW_HIDE;
 
 	std::wstring programArg = _T("C:\\Users\\taejeong\\Desktop\\SimulationServer\\SimulationServer.exe ");
 	programArg += std::to_wstring(val.first);
 	if (CreateProcess(_T("C:\\Users\\taejeong\\Desktop\\SimulationServer\\SimulationServer.exe"), (LPWSTR)programArg.c_str(),
-		NULL, NULL, TRUE, CREATE_NEW_CONSOLE, NULL, NULL, &si, val.second) == FALSE)
+		NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, &si, val.second) == FALSE)
 	{
 		puts("CreateProcess error");
 		CloseHandle(hPipe);
