@@ -20,25 +20,23 @@ UINT16 ProcessGenerator::generate()
 	if (val.second == nullptr)
 		return 0;
 
-	SECURITY_ATTRIBUTES sa = {}; // 보안 속성
-	sa.nLength = sizeof(SECURITY_ATTRIBUTES);
-	sa.bInheritHandle = TRUE; // 핸들 상속 여부
-	sa.lpSecurityDescriptor = NULL;
+	HANDLE hPipe;
+	char buffer[100];
+	DWORD bytesRead;
 
-	HANDLE hPipeWrite;
-	HANDLE hPipeRead;
-	if (CreatePipe(&hPipeRead, &hPipeWrite, &sa, 0) == FALSE) // 파이프 생성
-	{
-		puts("CreatePipe error");
-		return 1;
-	}
+	hPipe = CreateNamedPipe(
+        _T("\\\\.\\pipe\\SimulationPipe"),
+        PIPE_ACCESS_DUPLEX,
+        PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE | PIPE_WAIT,
+        PIPE_UNLIMITED_INSTANCES,
+        4096, 4096, 0, NULL);
+	if (hPipe == INVALID_HANDLE_VALUE)
+		return 0;
 
-	STARTUPINFO si = {}; // 자식 프로세스 속성
+	STARTUPINFO si = {};
 
 	si.cb = sizeof(STARTUPINFO);
-	si.hStdOutput = hPipeWrite; // 리다이렉션
-	si.hStdError = hPipeWrite; // 리다이렉션
-	si.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES; // STARTF_USESTDHANDLES 옵션을 걸어줘야 si.hStdOutput 값을 넣어준게 적용된다.
+	si.dwFlags = STARTF_USESHOWWINDOW;
 	si.wShowWindow = SW_NORMAL;
 
 	std::wstring programArg = _T("C:\\Users\\taejeong\\Desktop\\SimulationServer\\SimulationServer.exe ");
@@ -47,20 +45,19 @@ UINT16 ProcessGenerator::generate()
 		NULL, NULL, TRUE, CREATE_NEW_CONSOLE, NULL, NULL, &si, val.second) == FALSE)
 	{
 		puts("CreateProcess error");
-		return 1;
+		CloseHandle(hPipe);
+		return 0;
 	}
-	char buf[1024];
-	DWORD readByte = 0;
-	if (ReadFile(hPipeRead, buf, 1024, &readByte, NULL) == TRUE)
-	{
-		buf[readByte] = '\0';
-		printf("from simulation server : %s\n", buf);
-	}
-	else
-		puts("ReadFile error");
 
-	CloseHandle(hPipeRead);
-	CloseHandle(hPipeWrite);
+	if (!ConnectNamedPipe(hPipe, NULL)) {
+		puts("pipe connect error");
+		CloseHandle(hPipe);
+		return 0;
+	}
+	ReadFile(hPipe, buffer, sizeof(buffer), &bytesRead, NULL);
+	buffer[bytesRead] = '\0';
+	printf("from simulation server: %s\n", buffer);
+	CloseHandle(hPipe);
 	return val.first;
 }
 #pragma endregion
