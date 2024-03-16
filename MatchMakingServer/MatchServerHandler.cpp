@@ -2,6 +2,7 @@
 #include "match_protocol.pb.h"
 #include "ProcessGenerator.h"
 #include "Server.h"
+#include "ThreadPool.h"
 #include <S_PacketHeader.h>
 
 using namespace protocol::match;
@@ -40,13 +41,16 @@ void MatchServerHandler::matchReq(S_EngineEvent& evt)
 		return;
 	}
 
-	UINT16 portNum = _generator->generate();
-	resp.add_serials(_lastRegisteredSerial);
-	resp.add_serials(req.serial());
-	resp.set_ip(Server::getInstance().getServerConfig().ip);
-	resp.set_port(portNum);
-	Server::getInstance().send(E_EngineType::MATCH_SERVER, evt.serial, { (UINT16)E_PacketID::MATCH_RESP, 0 }, resp);
+	int s1 = req.serial(), s2 = _lastRegisteredSerial;
 	_lastRegisteredSerial = MatchServerHandler::INVALID_SERIAL;
+	ThreadPool::getInstance().enqueue([evt, this, s1, s2]() {
+		UINT16 portNum = _generator->generate();
+		Match_Resp resp = {};
+		resp.add_serials(s1);
+		resp.add_serials(s2);
+		resp.set_ip(Server::getInstance().getServerConfig().ip);
+		resp.set_port(portNum);
+		Server::getInstance().send(E_EngineType::MATCH_SERVER, evt.serial, { (UINT16)E_PacketID::MATCH_RESP, 0 }, resp); });
 }
 void MatchServerHandler::matchCancle(S_EngineEvent& evt)
 {
