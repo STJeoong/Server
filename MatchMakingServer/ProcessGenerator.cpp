@@ -8,9 +8,9 @@
 #pragma region public
 ProcessGenerator::ProcessGenerator()
 {
-	_pinfos = new PROCESS_INFORMATION[ProcessGenerator::MAX_PORT_NUM - ProcessGenerator::MIN_PORT_NUM];
-	for (int i = 0; i < ProcessGenerator::MAX_PORT_NUM - ProcessGenerator::MIN_PORT_NUM; ++i)
-		_pinfos->hProcess = INVALID_HANDLE_VALUE;
+	_pinfos = new PROCESS_INFORMATION[ProcessGenerator::MAX_PORT_NUM - ProcessGenerator::MIN_PORT_NUM + 1]{};
+	for (int i = 0; i <= ProcessGenerator::MAX_PORT_NUM - ProcessGenerator::MIN_PORT_NUM; ++i)
+		_pinfos[i].hProcess = INVALID_HANDLE_VALUE;
 }
 ProcessGenerator::~ProcessGenerator()
 {
@@ -30,8 +30,6 @@ UINT16 ProcessGenerator::generate()
 		return 0;
 
 	HANDLE hPipe;
-	char buffer[100];
-	DWORD bytesRead;
 
 	hPipe = CreateNamedPipe(
         _T("\\\\.\\pipe\\SimulationPipe"),
@@ -42,15 +40,17 @@ UINT16 ProcessGenerator::generate()
 	if (hPipe == INVALID_HANDLE_VALUE)
 		return 0;
 
-	STARTUPINFO si = {};
+	STARTUPINFOA si = {};
 
-	si.cb = sizeof(STARTUPINFO);
+	si.cb = sizeof(STARTUPINFOA);
 	si.dwFlags = STARTF_USESHOWWINDOW;
 	si.wShowWindow = SW_HIDE;
 
-	std::wstring programArg = _T("C:\\Users\\taejeong\\Desktop\\SimulationServer\\SimulationServer.exe ");
-	programArg += std::to_wstring(val.first);
-	if (CreateProcess(_T("C:\\Users\\taejeong\\Desktop\\SimulationServer\\SimulationServer.exe"), (LPWSTR)programArg.c_str(),
+	std::string programArg = "C:\\Users\\taejeong\\Desktop\\SimulationServer\\SimulationServer.exe ";
+	programArg += Server::getInstance().getServerConfig().ip + " ";
+	programArg += std::to_string(val.first);
+	std::cout << programArg << '\n';
+	if (CreateProcessA("C:\\Users\\taejeong\\Desktop\\SimulationServer\\SimulationServer.exe", (LPSTR)programArg.c_str(),
 		NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, &si, val.second) == FALSE)
 	{
 		puts("CreateProcess error");
@@ -63,9 +63,6 @@ UINT16 ProcessGenerator::generate()
 		CloseHandle(hPipe);
 		return 0;
 	}
-	ReadFile(hPipe, buffer, sizeof(buffer), &bytesRead, NULL);
-	buffer[bytesRead] = '\0';
-	printf("from simulation server: %s\n", buffer);
 	CloseHandle(hPipe);
 	return val.first;
 }
@@ -84,8 +81,8 @@ std::pair<int, PROCESS_INFORMATION*> ProcessGenerator::getUsableInfo()
 		if (WaitForSingleObject(_pinfos[i].hProcess, 0) == WAIT_OBJECT_0)
 		{
 			printf("simulation server (%d) is end\n", i);
-			CloseHandle(_pinfos[i].hProcess);
 			CloseHandle(_pinfos[i].hThread);
+			CloseHandle(_pinfos[i].hProcess);
 			_pinfos[i] = {};
 			return { ProcessGenerator::MIN_PORT_NUM + i, &_pinfos[i] };
 		}

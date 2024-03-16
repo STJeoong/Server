@@ -46,6 +46,7 @@ void MatchServerHandler::matchReq(S_EngineEvent& evt)
 	resp.set_ip(Server::getInstance().getServerConfig().ip);
 	resp.set_port(portNum);
 	Server::getInstance().send(E_EngineType::MATCH_SERVER, evt.serial, { (UINT16)E_PacketID::MATCH_RESP, 0 }, resp);
+	_lastRegisteredSerial = MatchServerHandler::INVALID_SERIAL;
 }
 void MatchServerHandler::matchCancle(S_EngineEvent& evt)
 {
