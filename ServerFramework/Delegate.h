@@ -17,10 +17,18 @@ public:
 	void operator-=(const std::function<void(Args...)>& func)
 	{
 		void(* const* funcPtr)(Args...) = func.template target<void(*)(Args...)>();
-		if (funcPtr == nullptr)
-			return;
 		size_t funcHash = func.target_type().hash_code();
 
+		if (funcPtr == nullptr)
+		{
+			for (auto it = functions.begin(); it != functions.end(); ++it)
+				if (funcHash == it->target_type().hash_code())
+				{
+					functions.erase(it);
+					break;
+				}
+			return;
+		}
 		for (auto it = functions.begin(); it != functions.end(); ++it)
 		{
 			void(* const* ptr)(Args...) = it->template target<void(*)(Args...)>();
