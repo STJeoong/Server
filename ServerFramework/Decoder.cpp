@@ -33,7 +33,6 @@ void Decoder::threadMain()
 	char* data;
 	int len;
 	Size blockSize;
-	S_EngineEvent evt;
 	while (true)
 	{
 		{
@@ -44,14 +43,14 @@ void Decoder::threadMain()
 			std::tie(serial, data, len, blockSize) = _queue.front();
 			_queue.pop();
 		}
-		evt = {};
-		evt.serial = serial;
-		evt.type = E_EngineEventType::EVENT_NET_RECV;
 
 		_parser->pushData(serial, data, len);
 		MemoryBlockPoolManager::getInstance().release(blockSize, data);
 		while (true)
 		{
+			S_EngineEvent evt = {};
+			evt.serial = serial;
+			evt.type = E_EngineEventType::EVENT_NET_RECV;
 			_parser->collectData(serial, evt);
 			// TODO : 복호화, 압축 해제
 			if (evt.data == nullptr)
