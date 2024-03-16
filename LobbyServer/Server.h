@@ -18,7 +18,7 @@ public:
 	void init(const char* argv0);
 	void run();
 	void send(E_EngineType type, int serial, S_PacketAttr attr, const google::protobuf::Message& message) const;
-	int getMaxClient() const { return _config.maxClient; }
+	S_ServerConfig& getServerConfig() { return _config; }
 private:
 	Server() = default;
 	~Server() = default;

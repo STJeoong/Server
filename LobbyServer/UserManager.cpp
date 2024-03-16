@@ -25,7 +25,7 @@ void UserManager::disconnect(int serial)
 #pragma region private
 UserManager::UserManager()
 {
-	_users = std::vector<S_UserInfo>(Server::getInstance().getMaxClient());
+	_users = std::vector<S_UserInfo>(Server::getInstance().getServerConfig().maxClient);
 	for (int i = 0; i < _users.size(); ++i)
 	{
 		_users[i].name = "";
