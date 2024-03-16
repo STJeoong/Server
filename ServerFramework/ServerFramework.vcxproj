@@ -154,6 +154,7 @@
     <ClInclude Include="Accepter.h" />
     <ClInclude Include="Decoder.h" />
     <ClInclude Include="Define.h" />
+    <ClInclude Include="Delegate.h" />
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EngineManager.h" />
