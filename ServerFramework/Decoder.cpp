@@ -48,11 +48,16 @@ void Decoder::threadMain()
 		evt.serial = serial;
 		evt.type = E_EngineEventType::EVENT_NET_RECV;
 
-		_parser->pushData(serial, data, len, evt);
+		_parser->pushData(serial, data, len);
 		MemoryBlockPoolManager::getInstance().release(blockSize, data);
-		if (evt.data == nullptr)
-			continue;
-		_evtContainer->enqueue(_engineID, evt);
+		while (true)
+		{
+			_parser->collectData(serial, evt);
+			// TODO : 복호화, 압축 해제
+			if (evt.data == nullptr)
+				break;
+			_evtContainer->enqueue(_engineID, evt);
+		}
 	}
 }
 #pragma endregion

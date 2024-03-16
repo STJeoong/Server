@@ -178,6 +178,7 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="StringConversion.h" />
     <ClInclude Include="S_ServerConfig.h" />
+    <ClInclude Include="ThreadPool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Accepter.cpp" />
@@ -202,6 +203,7 @@
     <ClCompile Include="Sender.cpp" />
     <ClCompile Include="SFUtil.cpp" />
     <ClCompile Include="StringConversion.cpp" />
+    <ClCompile Include="ThreadPool.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

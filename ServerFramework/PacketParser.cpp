@@ -12,7 +12,7 @@ PacketParser::PacketParser(int maxClient)
 	for (int i = 0; i < maxClient; ++i)
 		_buf[i] = new char[maxClient]{};
 }
-void PacketParser::pushData(int serial, char* data, int len, S_EngineEvent& evt)
+void PacketParser::pushData(int serial, char* data, int len)
 {
 	int extraSpace = BUF_SIZE - _writeIdx[serial];
 	if (extraSpace < len)
@@ -24,17 +24,12 @@ void PacketParser::pushData(int serial, char* data, int len, S_EngineEvent& evt)
 	// 만약 버퍼 다 찼으면?
 	memcpy(&_buf[serial][_writeIdx[serial]], data, len);
 	_writeIdx[serial] += len;
-	this->collectData(serial, evt);
-	// TODO : 압축 해제, 복호화
 }
 void PacketParser::resetBuf(int idx)
 {
 	_readIdx[idx] = 0;
 	_writeIdx[idx] = 0;
 }
-#pragma endregion
-
-#pragma region private
 void PacketParser::collectData(int idx, S_EngineEvent& evt)
 {
 	S_PacketHeader* header = nullptr;
@@ -60,4 +55,7 @@ void PacketParser::collectData(int idx, S_EngineEvent& evt)
 	if (_readIdx[idx] == _writeIdx[idx])
 		_readIdx[idx] = _writeIdx[idx] = 0;
 }
+#pragma endregion
+
+#pragma region private
 #pragma endregion

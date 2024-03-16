@@ -119,6 +119,9 @@
     <ClInclude Include="S_ServerConfig.h">
       <Filter>소스 파일\EngineLayer</Filter>
     </ClInclude>
+    <ClInclude Include="ThreadPool.h">
+      <Filter>소스 파일\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -171,6 +174,9 @@
     </ClCompile>
     <ClCompile Include="EngineManager.cpp">
       <Filter>소스 파일\EngineLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadPool.cpp">
+      <Filter>소스 파일\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
