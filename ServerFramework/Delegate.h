@@ -10,11 +10,6 @@ public:
 		for (auto& func : functions)
 			func(args...);
 	}
-	void operator()(Args&&... args)
-	{
-		for (auto& func : functions)
-			func(std::forward<Args>(args)...);
-	}
 	void operator+=(const std::function<void(Args...)>& func)
 	{
 		functions.push_back(std::move(func));
