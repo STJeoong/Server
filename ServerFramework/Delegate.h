@@ -5,6 +5,11 @@ template<class... Args>
 class Delegate
 {
 public:
+	void operator()(Args&... args)
+	{
+		for (auto& func : functions)
+			func(args...);
+	}
 	void operator()(Args&&... args)
 	{
 		for (auto& func : functions)
