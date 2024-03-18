@@ -30,7 +30,7 @@ GameServerBroadcaster::~GameServerBroadcaster()
 }
 void GameServerBroadcaster::broadcastTimer(S_EngineEvent& evt)
 {
-	switch ((E_TimerEvent)((int)evt.data))
+	switch ((E_TimerEvent)((size_t)evt.data))
 	{
 	case E_TimerEvent::UPDATE_WORLD: _onUpdateWorldTime(); break;
 	case E_TimerEvent::GAME_START: _onGameStart(); break;

@@ -35,7 +35,7 @@ void GameManager::onConnect(int serial)
 	// TODO : 맵에 따라서 다른 초기 위치 주기
 	int idx = 0;
 	Welcome_Notify notify = {};
-	std::pair<float, float> positions[2] = { {0,0}, {3,3} };
+	std::pair<float, float> positions[2] = { {(float)0,(float)0}, {(float)3,(float)3} };
 	const std::unordered_map<int, Player*>& players = PlayerManager::getInstance().getAllPlayers();
 	for (const auto& val : players)
 	{

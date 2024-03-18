@@ -8,7 +8,7 @@ class PlayerManager : public Singleton<PlayerManager>
 {
 	friend class Singleton;
 public:
-	int size() { return _mp.size(); }
+	size_t size() { return _mp.size(); }
 	bool newPlayer(int serial);
 	bool deletePlayer(int serial);
 	Player* getPlayer(int serial) { if (_mp.find(serial) == _mp.end()) return nullptr; return _mp[serial]; }
