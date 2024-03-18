@@ -29,41 +29,22 @@ UINT16 ProcessGenerator::generate()
 	if (val.second == nullptr)
 		return 0;
 
-	HANDLE hPipe;
-
-	hPipe = CreateNamedPipe(
-        _T("\\\\.\\pipe\\SimulationPipe"),
-        PIPE_ACCESS_DUPLEX,
-        PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE | PIPE_WAIT,
-        PIPE_UNLIMITED_INSTANCES,
-        4096, 4096, 0, NULL);
-	if (hPipe == INVALID_HANDLE_VALUE)
-		return 0;
-
 	STARTUPINFOA si = {};
 
 	si.cb = sizeof(STARTUPINFOA);
 	si.dwFlags = STARTF_USESHOWWINDOW;
-	si.wShowWindow = SW_HIDE;
+	si.wShowWindow = SW_SHOW;
 
-	std::string programArg = "C:\\Users\\taejeong\\Desktop\\SimulationServer\\SimulationServer.exe ";
+	std::string programArg = "C:\\Users\\taejeong\\source\\repos\\ServerFramework\\x64\\Debug\\GameServer.exe ";
 	programArg += Server::getInstance().getServerConfig().ip + " ";
 	programArg += std::to_string(val.first);
 	std::cout << programArg << '\n';
-	if (CreateProcessA("C:\\Users\\taejeong\\Desktop\\SimulationServer\\SimulationServer.exe", (LPSTR)programArg.c_str(),
-		NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, &si, val.second) == FALSE)
+	if (CreateProcessA("C:\\Users\\taejeong\\source\\repos\\ServerFramework\\x64\\Debug\\GameServer.exe", (LPSTR)programArg.c_str(),
+		NULL, NULL, TRUE, CREATE_NEW_CONSOLE, NULL, NULL, &si, val.second) == FALSE)
 	{
 		puts("CreateProcess error");
-		CloseHandle(hPipe);
 		return 0;
 	}
-
-	if (!ConnectNamedPipe(hPipe, NULL)) {
-		puts("pipe connect error");
-		CloseHandle(hPipe);
-		return 0;
-	}
-	CloseHandle(hPipe);
 	return val.first;
 }
 #pragma endregion

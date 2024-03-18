@@ -146,7 +146,28 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameServerBroadcaster.cpp" />
+    <ClCompile Include="game_protocol.pb.cc" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerManager.cpp" />
+    <ClCompile Include="PlayerMoveUpdater.cpp" />
+    <ClCompile Include="Serializer.cpp" />
+    <ClCompile Include="Server.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="E_EngineType.h" />
+    <ClInclude Include="E_TimerEvent.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameServerBroadcaster.h" />
+    <ClInclude Include="E_GameState.h" />
+    <ClInclude Include="game_protocol.pb.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerManager.h" />
+    <ClInclude Include="PlayerMoveUpdater.h" />
+    <ClInclude Include="Serializer.h" />
+    <ClInclude Include="Server.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

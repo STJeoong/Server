@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package protocol.game;
+
+enum E_PacketID
+{
+	MOVE_REQ = 0;
+	UPDATE_NOTIFY = 1;
+	WELCOME_NOTIFY = 2;
+	GAME_START_NOTIFY = 3;
+	GAME_OVER_NOTIFY = 4;
+}
+enum E_RespCode
+{
+	OK = 0;
+}
+enum E_Direction
+{
+	UP = 0;
+	DOWN = 1;
+	LEFT = 2;
+	RIGHT = 3;
+}
+
+
+// not used for packet ( used for data struct )
+
+message Vec2
+{
+	float x = 1;
+	float y = 2;
+}
+message PlayerState
+{
+	int32 id = 1;
+	Vec2 pos = 2;
+}
+//
+
+
+message Welcome_Notify
+{
+	int32 id = 1;
+	repeated PlayerState players = 2;
+}
+message Move_Req
+{
+	int32 seqID = 1;
+	E_Direction dir = 2;
+}
+message Update_Notify
+{
+	int32 lpi = 1;
+	repeated PlayerState players = 2;
+}
+message GameOver_Notify
+{
+	bool isWin = 1;
+}

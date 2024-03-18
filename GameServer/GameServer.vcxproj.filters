@@ -9,10 +9,87 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\Protocol">
+      <UniqueIdentifier>{ac8c9b68-dd86-42ee-bf24-68e56d2c4240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\PlayerMoveUpdate">
+      <UniqueIdentifier>{89074627-8036-4752-b0d5-79f7d1940024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Serializer">
+      <UniqueIdentifier>{85b4abbe-0409-4999-84bd-dbc14f0fde23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Player">
+      <UniqueIdentifier>{bf190552-883d-447a-83c1-f1ba9020e591}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GameManager">
+      <UniqueIdentifier>{408400bc-a1b7-4f53-8f5c-3b5624915b3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Broadcast">
+      <UniqueIdentifier>{11d36bd1-aa9b-4b3d-bab8-a432e3fb9a39}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameServerBroadcaster.cpp">
+      <Filter>소스 파일\Broadcast</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMoveUpdater.cpp">
+      <Filter>소스 파일\PlayerMoveUpdate</Filter>
+    </ClCompile>
+    <ClCompile Include="Serializer.cpp">
+      <Filter>소스 파일\Serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>소스 파일\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>소스 파일\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="game_protocol.pb.cc">
+      <Filter>소스 파일\Protocol</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Server.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="E_EngineType.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameServerBroadcaster.h">
+      <Filter>소스 파일\Broadcast</Filter>
+    </ClInclude>
+    <ClInclude Include="E_TimerEvent.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMoveUpdater.h">
+      <Filter>소스 파일\PlayerMoveUpdate</Filter>
+    </ClInclude>
+    <ClInclude Include="Serializer.h">
+      <Filter>소스 파일\Serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>소스 파일\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="E_GameState.h">
+      <Filter>소스 파일\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerManager.h">
+      <Filter>소스 파일\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="game_protocol.pb.h">
+      <Filter>소스 파일\Protocol</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
