@@ -31,7 +31,7 @@ void DBClientHandler::loginResp(S_EngineEvent& evt)
 	db::Login_Resp dbResp = {};
 	lobby::Login_Resp lobbyResp = {};
 
-	dbResp.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen);
+	dbResp.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader));
 	if (dbResp.resp() == db::E_RespCode::OK)
 	{
 		lobbyResp.set_resp(lobby::E_RespCode::OK);

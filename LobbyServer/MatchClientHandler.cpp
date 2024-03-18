@@ -31,7 +31,7 @@ void MatchClientHandler::matchResp(S_EngineEvent& evt)
 	match::Match_Resp respFromMatch = {};
 	lobby::Match_Resp lobbyResp = {};
 
-	respFromMatch.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen);
+	respFromMatch.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader));
 	lobbyResp.set_ip(respFromMatch.ip());
 	lobbyResp.set_port(respFromMatch.port());
 

@@ -49,7 +49,7 @@ void LobbyServerHandler::login(int serial, char* data)
 		Server::getInstance().send(E_EngineType::LOBBY_SERVER, serial, { (UINT16)lobby::E_PacketID::LOGIN_RESPONSE, 0 }, resp);
 		return;
 	}
-	req.ParseFromArray(data + sizeof(S_PacketHeader), header->initLen);
+	req.ParseFromArray(data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader));
 	printf("Login request (%s), (%s)\n", req.id().c_str(), req.passwd().c_str());
 	dbReq.set_serial(serial);
 	dbReq.set_id(req.id());

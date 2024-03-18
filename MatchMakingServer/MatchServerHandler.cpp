@@ -34,7 +34,7 @@ void MatchServerHandler::matchReq(S_EngineEvent& evt)
 	Match_Req req = {};
 	Match_Resp resp = {};
 
-	req.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen);
+	req.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader));
 	if (_lastRegisteredSerial == MatchServerHandler::INVALID_SERIAL)
 	{
 		_lastRegisteredSerial = req.serial();
@@ -57,7 +57,7 @@ void MatchServerHandler::matchCancle(S_EngineEvent& evt)
 	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(evt.data);
 	MatchCancle_Req req = {};
 
-	req.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen);
+	req.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader));
 	if (_lastRegisteredSerial == req.serial())
 		_lastRegisteredSerial = MatchServerHandler::INVALID_SERIAL;
 }

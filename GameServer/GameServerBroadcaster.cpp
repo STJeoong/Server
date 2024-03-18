@@ -41,7 +41,7 @@ void GameServerBroadcaster::broadcastMessage(S_EngineEvent& evt)
 	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(evt.data);
 	switch ((E_PacketID)header->id)
 	{
-	case E_PacketID::MOVE_REQ: Move_Req req = {}; req.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen); _onMoveReq(evt.serial, req); break;
+	case E_PacketID::MOVE_REQ: Move_Req req = {}; req.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader)); _onMoveReq(evt.serial, req); break;
 	}
 }
 #pragma endregion

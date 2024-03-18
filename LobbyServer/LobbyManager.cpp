@@ -35,7 +35,7 @@ void LobbyManager::broadcast(int serial, char* data)
 
 	attr.packetID = (UINT16)protocol::lobby::E_PacketID::CHAT_LOBBY_NOTIFY;
 	attr.option = 0;
-	req.ParseFromArray(data + sizeof(S_PacketHeader), header->initLen);
+	req.ParseFromArray(data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader));
 	std::string name = info.name;
 	std::string con = req.content();
 	printf("chat req : (%s), content : (%s)\n", info.name.c_str(), req.content().c_str());
