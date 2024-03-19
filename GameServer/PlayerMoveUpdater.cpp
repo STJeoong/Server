@@ -26,20 +26,7 @@ void PlayerMoveUpdater::update()
 	if (GameManager::gameState() != E_GameState::GAME_START)
 		return;
 
-	int serial;
-	Move_Req req;
 	Update_Notify notify = {};
-	Player* player = nullptr;
-	while (!_queue.empty())
-	{
-		std::tie(serial, req) = _queue.front();
-		_queue.pop();
-		player = PlayerManager::getInstance().getPlayer(serial);
-		if (player == nullptr)
-			continue;
-		player->move(req);
-	}
-
 	const std::unordered_map<int, Player*>& players = PlayerManager::getInstance().getAllPlayers();
 	for (const auto& val : players)
 		if (val.second->hasProcessed())
@@ -57,8 +44,10 @@ void PlayerMoveUpdater::onMoveReq(int serial, Move_Req& req)
 	if (GameManager::gameState() != E_GameState::GAME_START)
 		return;
 
-	printf("direction : %d\n", req.dir());
-	_queue.push({ serial, req }); // TODO : req บนป็?
+	Player* player = PlayerManager::getInstance().getPlayer(serial);
+	if (player == nullptr)
+		return;
+	player->move(req);
 }
 #pragma endregion
 

@@ -5,7 +5,7 @@ class GameManager
 {
 	static const int GAME_START_PLAYER_COUNT = 2;
 	static const int GAME_START_DELAY = 2000;
-	static const int UPDATE_WORLD_RATE = 30;
+	static const int UPDATE_WORLD_RATE = 5;
 public:
 	static E_GameState gameState() { return _state; }
 	GameManager();
