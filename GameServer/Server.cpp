@@ -58,13 +58,16 @@ void Server::setTimer(int engineID, int serial, int milliTime, E_TimerEvent evt)
 void Server::setRepetitiveTimer(int engineID, int serial, int milliTime, E_TimerEvent evt)
 {
 	ThreadPool::getInstance().enqueue([engineID, serial, milliTime, evt, this]() {
-		std::this_thread::sleep_for(std::chrono::milliseconds(milliTime));
 		S_EngineEvent engineEvt = {};
 		engineEvt.serial = serial;
 		engineEvt.type = E_EngineEventType::EVENT_TIMER;
 		engineEvt.data = (char*)evt;
-		_evtContainer->enqueue(engineID, engineEvt);
-		this->setRepetitiveTimer(engineID, serial, milliTime, evt); });
+		while (true)
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(milliTime));
+			_evtContainer->enqueue(engineID, engineEvt);
+		}
+		});
 }
 #pragma endregion
 

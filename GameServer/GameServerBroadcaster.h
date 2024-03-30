@@ -6,8 +6,9 @@
 #include "game_protocol.pb.h"
 
 using namespace protocol::game;
-class PlayerMoveUpdater;
 class GameManager;
+class PlayerMoveUpdater;
+class BombUpdater;
 class GameServerBroadcaster : public Singleton<GameServerBroadcaster>
 {
 	friend class Singleton;
@@ -17,6 +18,7 @@ public:
 	void onGameStart(bool add, std::function<void()> func) { if (add) _onGameStart += func; else _onGameStart -= func; }
 	void onUpdateWorldTime(bool add, std::function<void()> func) { if (add) _onUpdateWorldTime += func; else _onUpdateWorldTime -= func; }
 	void onMoveReq(bool add, std::function<void(int, Move_Req&)> func) { if (add) _onMoveReq += func; else _onMoveReq -= func; }
+	void onBombPlantReq(bool add, std::function<void(int)> func) { if (add) _onBombPlantReq += func; else _onBombPlantReq -= func; }
 
 	void init();
 	void broadcast(S_EngineEvent& evt);
@@ -26,8 +28,9 @@ private:
 	void broadcastTimer(S_EngineEvent& evt);
 	void broadcastMessage(S_EngineEvent& evt);
 
-	PlayerMoveUpdater* _updater = nullptr;
 	GameManager* _gameManager = nullptr;
+	PlayerMoveUpdater* _playerUpdater = nullptr;
+	BombUpdater* _bombUpdater = nullptr;
 
 	// events
 	Delegate<int> _onConnect;
@@ -35,5 +38,6 @@ private:
 	Delegate<> _onGameStart;
 	Delegate<> _onUpdateWorldTime;
 	Delegate<int, Move_Req&> _onMoveReq;
+	Delegate<int> _onBombPlantReq;
 };
 

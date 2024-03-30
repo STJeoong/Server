@@ -36,7 +36,7 @@ void PlayerMoveUpdater::update()
 	for (const auto& val : players)
 	{
 		notify.set_lpi(val.second->lpi());
-		Server::getInstance().send((int)E_EngineType::GAME_SERVER, val.first, { (UINT16)E_PacketID::UPDATE_NOTIFY, 0 }, notify);
+		Server::getInstance().send((int)E_EngineType::GAME_SERVER, val.first, { (UINT16)E_PacketID::UPDATE_PLAYER_NOTIFY, 0 }, notify);
 	}
 }
 void PlayerMoveUpdater::onMoveReq(int serial, Move_Req& req)

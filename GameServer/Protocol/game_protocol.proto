@@ -5,10 +5,12 @@ package protocol.game;
 enum E_PacketID
 {
 	MOVE_REQ = 0;
-	UPDATE_NOTIFY = 1;
-	WELCOME_NOTIFY = 2;
-	GAME_START_NOTIFY = 3;
-	GAME_OVER_NOTIFY = 4;
+	PLANT_BOMB_REQ = 1;
+	UPDATE_PLAYER_NOTIFY = 2;
+	BOMB_EXPLOSION_NOTIFY = 3;
+	WELCOME_NOTIFY = 4;
+	GAME_START_NOTIFY = 5;
+	GAME_OVER_NOTIFY = 6;
 }
 enum E_RespCode
 {
@@ -38,15 +40,24 @@ message PlayerState
 //
 
 
-message Welcome_Notify
-{
-	int32 id = 1;
-	repeated PlayerState players = 2;
-}
 message Move_Req
 {
 	int32 seqID = 1;
 	E_Direction dir = 2;
+}
+message BombPlant_Notify
+{
+	Vec2 pos = 1;
+	int32 power = 2;
+}
+message BombExplosion_Notify
+{
+	repeated Vec2 positions = 1;
+}
+message Welcome_Notify
+{
+	int32 id = 1;
+	repeated PlayerState players = 2;
 }
 message Update_Notify
 {

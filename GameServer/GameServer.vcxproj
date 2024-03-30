@@ -148,7 +148,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BombUpdater.cpp" />
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameServerBroadcaster.cpp" />
     <ClCompile Include="game_protocol.pb.cc" />
     <ClCompile Include="main.cpp" />
@@ -159,9 +162,13 @@
     <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BombUpdater.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="E_EngineType.h" />
+    <ClInclude Include="E_GameObjectEvent.h" />
     <ClInclude Include="E_TimerEvent.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameServerBroadcaster.h" />
     <ClInclude Include="E_GameState.h" />
     <ClInclude Include="game_protocol.pb.h" />

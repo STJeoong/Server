@@ -4,6 +4,7 @@ using namespace protocol::game;
 class Player
 {
 	static const float INITIAL_SPEED;
+	static const int INITIAL_POWER = 1;
 	static const float FIXED_DELTA_TIME;
 	static const int NO_UPDATE = -1;
 public:
@@ -17,6 +18,7 @@ private:
 
 	PlayerState _state = {};
 	float _speed = Player::INITIAL_SPEED;
+	int _power = Player::INITIAL_POWER;
 	int _lastLpi = Player::NO_UPDATE;
 	int _lpi = Player::NO_UPDATE;
 };
