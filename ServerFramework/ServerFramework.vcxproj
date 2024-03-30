@@ -167,7 +167,6 @@
     <ClInclude Include="Receiver.h" />
     <ClInclude Include="S_EngineEvent.h" />
     <ClInclude Include="MemoryBlockPool.h" />
-    <ClInclude Include="MemoryBlockPoolManager.h" />
     <ClInclude Include="NetworkLayer.h" />
     <ClInclude Include="OverlappedEx.h" />
     <ClInclude Include="S_PacketAttr.h" />
@@ -191,7 +190,6 @@
     <ClCompile Include="IOCPServer.cpp" />
     <ClCompile Include="EngineEventContainer.cpp" />
     <ClCompile Include="MemoryBlockPool.cpp" />
-    <ClCompile Include="MemoryBlockPoolManager.cpp" />
     <ClCompile Include="NetworkLayer.cpp" />
     <ClCompile Include="PacketParser.cpp" />
     <ClCompile Include="pch.cpp">

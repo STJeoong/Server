@@ -3,7 +3,7 @@
 #include "Serializer.h"
 #include "GameServerBroadcaster.h"
 #include "E_TimerEvent.h"
-#include <MemoryBlockPoolManager.h>
+#include <MemoryBlockPool.h>
 #include <ThreadPool.h>
 
 #pragma region public
@@ -32,7 +32,7 @@ void Server::run()
 		case E_EngineType::GAME_SERVER: GameServerBroadcaster::getInstance().broadcast(evt); break;
 		}
 		if (evt.type == E_EngineEventType::EVENT_NET_RECV)
-			MemoryBlockPoolManager::getInstance().release(evt.blockSize, evt.data);
+			MemoryBlockPool::release(evt.blockSize, evt.data);
 	}
 }
 void Server::send(int engineID, int serial, S_PacketAttr attr, const google::protobuf::Message& message)

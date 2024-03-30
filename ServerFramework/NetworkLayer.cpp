@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "NetworkLayer.h"
 #include "I_NetworkCore.h"
-#include "MemoryBlockPoolManager.h"
+#include "MemoryBlockPool.h"
 #include "EngineEventContainer.h"
 #include "Decoder.h"
 #include <fstream>
@@ -42,7 +42,7 @@ void NetworkLayer::onDisconnect(int serial)
 void NetworkLayer::onRecv(int serial, int len, char* data)
 {
 	// TODO : len이 256을 넘을 수 있나?
-	char* block = MemoryBlockPoolManager::getInstance().get(Size::_256);
+	char* block = MemoryBlockPool::get(Size::_256);
 	memcpy(block, data, len);
 
 	_decoder->enqueue(serial, block, len, Size::_256);

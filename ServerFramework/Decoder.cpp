@@ -2,7 +2,7 @@
 #include "Decoder.h"
 #include "EngineEventContainer.h"
 #include "PacketParser.h"
-#include "MemoryBlockPoolManager.h"
+#include "MemoryBlockPool.h"
 
 #pragma region public
 Decoder::Decoder(int engineID, EngineEventContainer* evtContainer, int maxClient) : _engineID(engineID), _evtContainer(evtContainer)
@@ -45,7 +45,7 @@ void Decoder::threadMain()
 		}
 
 		_parser->pushData(serial, data, len);
-		MemoryBlockPoolManager::getInstance().release(blockSize, data);
+		MemoryBlockPool::release(blockSize, data);
 		while (true)
 		{
 			S_EngineEvent evt = {};

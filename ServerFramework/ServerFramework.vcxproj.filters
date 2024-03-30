@@ -86,9 +86,6 @@
     <ClInclude Include="MemoryBlockPool.h">
       <Filter>소스 파일\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="MemoryBlockPoolManager.h">
-      <Filter>소스 파일\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="SFUtil.h">
       <Filter>소스 파일\Utils</Filter>
     </ClInclude>
@@ -155,9 +152,6 @@
       <Filter>소스 파일\NetworkLayer\IOCPServer</Filter>
     </ClCompile>
     <ClCompile Include="MemoryBlockPool.cpp">
-      <Filter>소스 파일\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="MemoryBlockPoolManager.cpp">
       <Filter>소스 파일\Utils</Filter>
     </ClCompile>
     <ClCompile Include="SFUtil.cpp">

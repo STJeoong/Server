@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "Serializer.h"
-#include <MemoryBlockPoolManager.h>
+#include <MemoryBlockPool.h>
 #include <S_PacketHeader.h>
 
 #pragma region public
 std::pair<Size, char*> Serializer::serialize(S_PacketAttr attr)
 {
-	char* block = MemoryBlockPoolManager::getInstance().get(Size::_256);
+	char* block = MemoryBlockPool::get(Size::_256);
 	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(block);
 
 	header->id = attr.packetID;
@@ -18,7 +18,7 @@ std::pair<Size, char*> Serializer::serialize(S_PacketAttr attr)
 }
 std::pair<Size, char*> Serializer::serialize(S_PacketAttr attr, const google::protobuf::Message& message)
 {
-	char* block = MemoryBlockPoolManager::getInstance().get(Size::_1024);
+	char* block = MemoryBlockPool::get(Size::_1024);
 	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(block);
 
 	header->id = attr.packetID;

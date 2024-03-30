@@ -3,7 +3,7 @@
 #include "Serializer.h"
 #include <EngineManager.h>
 #include <fstream>
-#include <MemoryBlockPoolManager.h>
+#include <MemoryBlockPool.h>
 #include <EngineEventContainer.h>
 
 #pragma region public
@@ -29,7 +29,7 @@ void Server::run()
 		case E_EngineType::MATCH_SERVER: _matchHandler->handle(evt); break;
 		}
 		if (evt.data != nullptr)
-			MemoryBlockPoolManager::getInstance().release(evt.blockSize, evt.data);
+			MemoryBlockPool::release(evt.blockSize, evt.data);
 	}
 }
 void Server::send(E_EngineType type, int serial, S_PacketAttr attr, const google::protobuf::Message& messsage) const
