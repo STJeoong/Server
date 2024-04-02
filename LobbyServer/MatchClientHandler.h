@@ -1,9 +1,11 @@
 #pragma once
 #include <S_EngineEvent.h>
+#include "match_protocol.pb.h"
 class MatchClientHandler
 {
 public:
-	void handle(S_EngineEvent& evt);
+	MatchClientHandler();
+	~MatchClientHandler();
 private:
-	void matchResp(S_EngineEvent& evt);
+	void onMatchResp(const protocol::match::Match_Resp& resp);
 };

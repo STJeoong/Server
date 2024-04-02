@@ -1,13 +1,14 @@
 #pragma once
 #include <S_EngineEvent.h>
+#include "lobby_protocol.pb.h"
 class LobbyServerHandler
 {
 public:
-	void handle(S_EngineEvent& evt);
+	LobbyServerHandler();
+	~LobbyServerHandler();
 private:
-	void login(int serial, char* data);
-	void broadcastLobby(int serial, char* data);
-	void matchReq(S_EngineEvent& evt);
-	void matchCancle(S_EngineEvent& evt);
+	void onLoginReq(int serial, const protocol::lobby::Login_Req& req);
+	void broadcastLobby(int serial, const protocol::lobby::ChatLobby_Req& req);
+	void onMatchReq(int serial);
+	void onMatchCancle(int serial);
 };
-

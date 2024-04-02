@@ -1,43 +1,33 @@
 #pragma once
 #include <S_EngineEvent.h>
-#include <Singleton.h>
 #include <Delegate.h>
 #include <functional>
+#include <I_Broadcaster.h>
 #include "game_protocol.pb.h"
 
 using namespace protocol::game;
-class GameManager;
-class PlayerMoveUpdater;
-class BombUpdater;
-class GameServerBroadcaster : public Singleton<GameServerBroadcaster>
+class GameServerBroadcaster : public I_Broadcaster
 {
-	friend class Singleton;
 public:
-	void onConnect(bool add, std::function<void(int)> func) { if (add) _onConnect += func; else _onConnect -= func; }
-	void onDisconnect(bool add, std::function<void(int)> func) { if (add) _onDisconnect += func; else _onDisconnect -= func; }
-	void onGameStart(bool add, std::function<void()> func) { if (add) _onGameStart += func; else _onGameStart -= func; }
-	void onUpdateWorldTime(bool add, std::function<void()> func) { if (add) _onUpdateWorldTime += func; else _onUpdateWorldTime -= func; }
-	void onMoveReq(bool add, std::function<void(int, Move_Req&)> func) { if (add) _onMoveReq += func; else _onMoveReq -= func; }
-	void onBombPlantReq(bool add, std::function<void(int)> func) { if (add) _onBombPlantReq += func; else _onBombPlantReq -= func; }
+	// events
+	static void onConnect(bool add, std::function<void(int)> func) { if (add) s_onConnect += func; else s_onConnect -= func; }
+	static void onDisconnect(bool add, std::function<void(int)> func) { if (add) s_onDisconnect += func; else s_onDisconnect -= func; }
+	static void onGameStart(bool add, std::function<void()> func) { if (add) s_onGameStart += func; else s_onGameStart -= func; }
+	static void onUpdateWorldTime(bool add, std::function<void()> func) { if (add) s_onUpdateWorldTime += func; else s_onUpdateWorldTime -= func; }
+	static void onMoveReq(bool add, std::function<void(int, const Move_Req&)> func) { if (add) s_onMoveReq += func; else s_onMoveReq -= func; }
+	static void onBombPlantReq(bool add, std::function<void(int)> func) { if (add) s_onBombPlantReq += func; else s_onBombPlantReq -= func; }
 
-	void init();
-	void broadcast(S_EngineEvent& evt);
+	void broadcast(const S_EngineEvent& evt) override;
 private:
-	GameServerBroadcaster() = default;
-	~GameServerBroadcaster();
-	void broadcastTimer(S_EngineEvent& evt);
-	void broadcastMessage(S_EngineEvent& evt);
-
-	GameManager* _gameManager = nullptr;
-	PlayerMoveUpdater* _playerUpdater = nullptr;
-	BombUpdater* _bombUpdater = nullptr;
+	void broadcastTimer(const S_EngineEvent& evt);
+	void broadcastMessage(const S_EngineEvent& evt);
 
 	// events
-	Delegate<int> _onConnect;
-	Delegate<int> _onDisconnect;
-	Delegate<> _onGameStart;
-	Delegate<> _onUpdateWorldTime;
-	Delegate<int, Move_Req&> _onMoveReq;
-	Delegate<int> _onBombPlantReq;
+	static Delegate<const int> s_onConnect;
+	static Delegate<const int> s_onDisconnect;
+	static Delegate<> s_onGameStart;
+	static Delegate<> s_onUpdateWorldTime;
+	static Delegate<const int, const Move_Req&> s_onMoveReq;
+	static Delegate<const int> s_onBombPlantReq;
 };
 

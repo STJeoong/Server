@@ -1,8 +1,10 @@
 #include <windows.h>
 #include "UserManager.h"
 #include "S_UserInfo.h"
-#include "Server.h"
+#include <Engine.h>
+#include "Serializer.h"
 #include "match_protocol.pb.h"
+#include "E_EngineType.h"
 
 using namespace protocol::match;
 #pragma region public
@@ -18,14 +20,15 @@ void UserManager::disconnect(int serial)
 
 	MatchCancle_Req req = {};
 	req.set_serial(serial);
-	Server::getInstance().send(E_EngineType::MATCH_CLIENT, 0, { (int)E_PacketID::MATCH_CANCLE_REQ, 0 }, req);
+	std::pair<Size, char*> ret = Serializer::serialize({ (UINT16)E_PacketID::MATCH_CANCLE_REQ, 0 }, req);
+	Engine::send((int)E_EngineType::MATCH_CLIENT, 0, ret.first, ret.second);
 }
 #pragma endregion
 
 #pragma region private
 UserManager::UserManager()
 {
-	_users = std::vector<S_UserInfo>(Server::getInstance().getServerConfig().maxClient);
+	_users = std::vector<S_UserInfo>(Engine::getEngineConfig((int)E_EngineType::LOBBY_SERVER).maxClient);
 	for (int i = 0; i < _users.size(); ++i)
 	{
 		_users[i].name = "";

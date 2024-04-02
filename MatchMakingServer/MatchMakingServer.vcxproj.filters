@@ -15,15 +15,15 @@
     <Filter Include="소스 파일\Protocol">
       <UniqueIdentifier>{b0136877-34b5-4c65-869c-145234377f53}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Broadcast">
+      <UniqueIdentifier>{5aa22401-defa-4f28-88ba-3b8819b12a8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Serializer">
+      <UniqueIdentifier>{c2fc5813-8746-429a-9e3b-c245b4f3aeb9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Server.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Serializer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="MatchServerHandler.cpp">
@@ -35,15 +35,15 @@
     <ClCompile Include="ProcessGenerator.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="MatchServerBroadcaster.cpp">
+      <Filter>소스 파일\Broadcast</Filter>
+    </ClCompile>
+    <ClCompile Include="Serializer.cpp">
+      <Filter>소스 파일\Serializer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Server.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="E_EngineType.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Serializer.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="MatchServerHandler.h">
@@ -54,6 +54,12 @@
     </ClInclude>
     <ClInclude Include="ProcessGenerator.h">
       <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MatchServerBroadcaster.h">
+      <Filter>소스 파일\Broadcast</Filter>
+    </ClInclude>
+    <ClInclude Include="Serializer.h">
+      <Filter>소스 파일\Serializer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -27,14 +27,26 @@
     <Filter Include="소스 파일\EngineLayer\EngineEventContainer">
       <UniqueIdentifier>{0f519022-b005-4efe-962b-6357068a492f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\EngineLayer\ServerEngine">
-      <UniqueIdentifier>{b0d2872e-321c-4391-9adb-80a002903d45}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\NetworkLayer\IOCPServer">
       <UniqueIdentifier>{09ad6953-662b-4608-8ce5-0bfb5dd8fb8e}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\NetworkLayer\IOCPClient">
       <UniqueIdentifier>{6828c1ad-3168-49a7-817a-0ef1d14c781b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\EngineLayer\Engine">
+      <UniqueIdentifier>{b0d2872e-321c-4391-9adb-80a002903d45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\EngineLayer\Engine\ServerMode">
+      <UniqueIdentifier>{01371d94-9abc-47ad-9e1b-a2d370585796}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\EngineLayer\Engine\ServerMode\Passive">
+      <UniqueIdentifier>{3ad419c1-5543-473a-8e39-398f6a53efd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\EngineLayer\Engine\ServerMode\Physics">
+      <UniqueIdentifier>{e595ae02-589d-44aa-9101-61de619dcc95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\EngineLayer\Engine\Broacast">
+      <UniqueIdentifier>{4bf39fba-a51b-4dd9-9773-09f239193898}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,16 +114,13 @@
       <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h">
-      <Filter>소스 파일\EngineLayer\ServerEngine</Filter>
+      <Filter>소스 파일\EngineLayer\Engine</Filter>
     </ClInclude>
     <ClInclude Include="IOCPClient.h">
       <Filter>소스 파일\NetworkLayer\IOCPClient</Filter>
     </ClInclude>
     <ClInclude Include="Receiver.h">
       <Filter>소스 파일\NetworkLayer\IOCPServer</Filter>
-    </ClInclude>
-    <ClInclude Include="EngineManager.h">
-      <Filter>소스 파일\EngineLayer</Filter>
     </ClInclude>
     <ClInclude Include="S_ServerConfig.h">
       <Filter>소스 파일\EngineLayer</Filter>
@@ -121,6 +130,27 @@
     </ClInclude>
     <ClInclude Include="Delegate.h">
       <Filter>소스 파일\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="E_EngineEventPopMode.h">
+      <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>
+    </ClInclude>
+    <ClInclude Include="E_EngineState.h">
+      <Filter>소스 파일\EngineLayer\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerMode.h">
+      <Filter>소스 파일\EngineLayer\Engine\ServerMode</Filter>
+    </ClInclude>
+    <ClInclude Include="E_ServerMode.h">
+      <Filter>소스 파일\EngineLayer\Engine\ServerMode</Filter>
+    </ClInclude>
+    <ClInclude Include="PassiveMode.h">
+      <Filter>소스 파일\EngineLayer\Engine\ServerMode\Passive</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsMode.h">
+      <Filter>소스 파일\EngineLayer\Engine\ServerMode\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="I_Broadcaster.h">
+      <Filter>소스 파일\EngineLayer\Engine\Broacast</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -161,7 +191,7 @@
       <Filter>소스 파일\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Engine.cpp">
-      <Filter>소스 파일\EngineLayer\ServerEngine</Filter>
+      <Filter>소스 파일\EngineLayer\Engine</Filter>
     </ClCompile>
     <ClCompile Include="IOCPClient.cpp">
       <Filter>소스 파일\NetworkLayer\IOCPClient</Filter>
@@ -169,11 +199,14 @@
     <ClCompile Include="Receiver.cpp">
       <Filter>소스 파일\NetworkLayer\IOCPServer</Filter>
     </ClCompile>
-    <ClCompile Include="EngineManager.cpp">
-      <Filter>소스 파일\EngineLayer</Filter>
-    </ClCompile>
     <ClCompile Include="ThreadPool.cpp">
       <Filter>소스 파일\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="PassiveMode.cpp">
+      <Filter>소스 파일\EngineLayer\Engine\ServerMode\Passive</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsMode.cpp">
+      <Filter>소스 파일\EngineLayer\Engine\ServerMode\Physics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

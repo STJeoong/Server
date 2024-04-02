@@ -1,6 +1,8 @@
 #pragma once
 #include <S_EngineEvent.h>
+#include "match_protocol.pb.h"
 
+using namespace protocol::match;
 class ProcessGenerator;
 class MatchServerHandler
 {
@@ -8,10 +10,9 @@ class MatchServerHandler
 public:
 	MatchServerHandler();
 	~MatchServerHandler();
-	void handle(S_EngineEvent& evt);
 private:
-	void matchReq(S_EngineEvent& evt);
-	void matchCancle(S_EngineEvent& evt);
+	void onMatchReq(int serial, const Match_Req& req);
+	void onMatchCancle(int serial, const MatchCancle_Req& req);
 
 	int _lastRegisteredSerial = MatchServerHandler::INVALID_SERIAL;
 	ProcessGenerator* _generator;

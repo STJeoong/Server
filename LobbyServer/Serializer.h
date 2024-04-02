@@ -6,7 +6,7 @@
 class Serializer
 {
 public:
-	std::pair<Size, char*> serialize(S_PacketAttr attr, const google::protobuf::Message& message);
+	static std::pair<Size, char*> serialize(S_PacketAttr attr, const google::protobuf::Message& message);
 private:
 };
 

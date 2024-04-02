@@ -144,11 +144,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MatchServerBroadcaster.cpp" />
     <ClCompile Include="MatchServerHandler.cpp" />
     <ClCompile Include="match_protocol.pb.cc" />
     <ClCompile Include="ProcessGenerator.cpp" />
     <ClCompile Include="Serializer.cpp" />
-    <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ServerFramework\ServerFramework.vcxproj">
@@ -157,11 +157,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="E_EngineType.h" />
+    <ClInclude Include="MatchServerBroadcaster.h" />
     <ClInclude Include="MatchServerHandler.h" />
     <ClInclude Include="match_protocol.pb.h" />
     <ClInclude Include="ProcessGenerator.h" />
     <ClInclude Include="Serializer.h" />
-    <ClInclude Include="Server.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

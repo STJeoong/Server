@@ -6,8 +6,8 @@
 class Serializer
 {
 public:
-	std::pair<Size, char*> serialize(S_PacketAttr attr);
-	std::pair<Size, char*> serialize(S_PacketAttr attr, const google::protobuf::Message& message);
+	static void serializeAndSend(int engineID, int serial, S_PacketAttr attr);
+	static void serializeAndSend(int engineID, int serial, S_PacketAttr attr, const google::protobuf::Message& message);
 private:
 };
 

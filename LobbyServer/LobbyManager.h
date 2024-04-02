@@ -1,5 +1,6 @@
 #pragma once
 #include "S_UserInfo.h"
+#include "lobby_protocol.pb.h"
 #include <Singleton.h>
 #include <vector>
 class LobbyManager : public Singleton<LobbyManager>
@@ -8,7 +9,7 @@ class LobbyManager : public Singleton<LobbyManager>
 public:
 	bool inputUser(S_UserInfo* user);
 	void deleteUser(S_UserInfo* user);
-	void broadcast(int serial, char* data);
+	void broadcast(int serial, const protocol::lobby::ChatLobby_Req& req);
 private:
 	LobbyManager() = default;
 	~LobbyManager() = default;

@@ -8,7 +8,7 @@ public:
 	PlayerMoveUpdater();
 	~PlayerMoveUpdater();
 private:
-	void onMoveReq(int serial, Move_Req& req);
+	void onMoveReq(int serial, const Move_Req& req);
 	void update();
 };
 

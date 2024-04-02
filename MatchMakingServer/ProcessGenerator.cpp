@@ -1,9 +1,11 @@
 #include "ProcessGenerator.h"
-#include "Server.h"
 #include <string>
 #include <Windows.h>
 #include <stdio.h>
 #include <tchar.h>
+#include <Engine.h>
+#include <iostream>
+#include "E_EngineType.h"
 
 #pragma region public
 ProcessGenerator::ProcessGenerator()
@@ -36,7 +38,7 @@ UINT16 ProcessGenerator::generate()
 	si.wShowWindow = SW_SHOW;
 
 	std::string programArg = "C:\\Users\\taejeong\\source\\repos\\ServerFramework\\x64\\Debug\\GameServer.exe ";
-	programArg += Server::getInstance().getServerConfig().ip + " ";
+	programArg += Engine::getEngineConfig((int)E_EngineType::MATCH_SERVER).ip + " ";
 	programArg += std::to_string(val.first);
 	std::cout << programArg << '\n';
 	if (CreateProcessA("C:\\Users\\taejeong\\source\\repos\\ServerFramework\\x64\\Debug\\GameServer.exe", (LPSTR)programArg.c_str(),

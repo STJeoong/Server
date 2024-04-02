@@ -4,19 +4,19 @@
 #include "E_GameState.h"
 #include "PlayerManager.h"
 #include "Player.h"
-#include "Server.h"
 #include "E_EngineType.h"
+#include "Serializer.h"
 
 #pragma region public
 PlayerMoveUpdater::PlayerMoveUpdater()
 {
-	GameServerBroadcaster::getInstance().onUpdateWorldTime(true, std::bind(&PlayerMoveUpdater::update, this));
-	GameServerBroadcaster::getInstance().onMoveReq(true, std::bind(&PlayerMoveUpdater::onMoveReq, this, std::placeholders::_1, std::placeholders::_2));
+	GameServerBroadcaster::onUpdateWorldTime(true, std::bind(&PlayerMoveUpdater::update, this));
+	GameServerBroadcaster::onMoveReq(true, std::bind(&PlayerMoveUpdater::onMoveReq, this, std::placeholders::_1, std::placeholders::_2));
 }
 PlayerMoveUpdater::~PlayerMoveUpdater()
 {
-	GameServerBroadcaster::getInstance().onUpdateWorldTime(false, std::bind(&PlayerMoveUpdater::update, this));
-	GameServerBroadcaster::getInstance().onMoveReq(false, std::bind(&PlayerMoveUpdater::onMoveReq, this, std::placeholders::_1, std::placeholders::_2));
+	GameServerBroadcaster::onUpdateWorldTime(false, std::bind(&PlayerMoveUpdater::update, this));
+	GameServerBroadcaster::onMoveReq(false, std::bind(&PlayerMoveUpdater::onMoveReq, this, std::placeholders::_1, std::placeholders::_2));
 }
 #pragma endregion
 
@@ -36,10 +36,10 @@ void PlayerMoveUpdater::update()
 	for (const auto& val : players)
 	{
 		notify.set_lpi(val.second->lpi());
-		Server::getInstance().send((int)E_EngineType::GAME_SERVER, val.first, { (UINT16)E_PacketID::UPDATE_PLAYER_NOTIFY, 0 }, notify);
+		Serializer::serializeAndSend((int)E_EngineType::GAME_SERVER, val.first, { (UINT16)E_PacketID::UPDATE_PLAYER_NOTIFY, 0 }, notify);
 	}
 }
-void PlayerMoveUpdater::onMoveReq(int serial, Move_Req& req)
+void PlayerMoveUpdater::onMoveReq(int serial, const Move_Req& req)
 {
 	if (GameManager::gameState() != E_GameState::GAME_START)
 		return;

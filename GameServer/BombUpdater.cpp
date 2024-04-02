@@ -6,11 +6,11 @@
 #pragma region public
 BombUpdater::BombUpdater()
 {
-	GameServerBroadcaster::getInstance().onBombPlantReq(true, std::bind(&BombUpdater::onBombPlantReq, this, std::placeholders::_1));
+	GameServerBroadcaster::onBombPlantReq(true, std::bind(&BombUpdater::onBombPlantReq, this, std::placeholders::_1));
 }
 BombUpdater::~BombUpdater()
 {
-	GameServerBroadcaster::getInstance().onBombPlantReq(false, std::bind(&BombUpdater::onBombPlantReq, this, std::placeholders::_1));
+	GameServerBroadcaster::onBombPlantReq(false, std::bind(&BombUpdater::onBombPlantReq, this, std::placeholders::_1));
 }
 #pragma endregion
 

@@ -159,7 +159,6 @@
     <ClCompile Include="PlayerManager.cpp" />
     <ClCompile Include="PlayerMoveUpdater.cpp" />
     <ClCompile Include="Serializer.cpp" />
-    <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombUpdater.h" />
@@ -176,7 +175,6 @@
     <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="PlayerMoveUpdater.h" />
     <ClInclude Include="Serializer.h" />
-    <ClInclude Include="Server.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

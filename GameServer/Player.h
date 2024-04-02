@@ -10,7 +10,7 @@ class Player
 public:
 	Player(int id) { _state.set_id(id); Vec2* pos = _state.mutable_pos(); pos->set_x(0); pos->set_y(0); }
 	void setPosition(float x, float y) { Vec2* pos = _state.mutable_pos(); pos->set_x(x); pos->set_y(y); }
-	void move(Move_Req& req);
+	void move(const Move_Req& req);
 	void write(PlayerState* state);
 	bool hasProcessed() { return _lastLpi != _lpi; }
 	int lpi() { if (_lastLpi == _lpi) return Player::NO_UPDATE; _lastLpi = _lpi; return _lpi; }

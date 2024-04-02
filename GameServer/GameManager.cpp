@@ -1,11 +1,12 @@
 #include "GameManager.h"
 #include "game_protocol.pb.h"
 #include "PlayerManager.h"
+#include "Serializer.h"
 #include "Player.h"
-#include "Server.h"
 #include "E_EngineType.h"
-#include "ThreadPool.h"
 #include "GameServerBroadcaster.h"
+#include <Engine.h>
+#include "E_TimerEvent.h"
 
 using namespace protocol::game;
 E_GameState GameManager::_state = E_GameState::READY;
@@ -13,16 +14,16 @@ E_GameState GameManager::_state = E_GameState::READY;
 GameManager::GameManager()
 {
 	GameManager::_state = E_GameState::READY;
-	GameServerBroadcaster::getInstance().onConnect(true, std::bind(&GameManager::onConnect, this, std::placeholders::_1));
-	GameServerBroadcaster::getInstance().onDisconnect(true, std::bind(&GameManager::onDisconnect, this, std::placeholders::_1));
-	GameServerBroadcaster::getInstance().onGameStart(true, std::bind(&GameManager::gameStart, this));
+	GameServerBroadcaster::onConnect(true, std::bind(&GameManager::onConnect, this, std::placeholders::_1));
+	GameServerBroadcaster::onDisconnect(true, std::bind(&GameManager::onDisconnect, this, std::placeholders::_1));
+	GameServerBroadcaster::onGameStart(true, std::bind(&GameManager::gameStart, this));
 }
 GameManager::~GameManager()
 {
 	GameManager::_state = E_GameState::GAME_OVER;
-	GameServerBroadcaster::getInstance().onConnect(false, std::bind(&GameManager::onConnect, this, std::placeholders::_1));
-	GameServerBroadcaster::getInstance().onDisconnect(false, std::bind(&GameManager::onDisconnect, this, std::placeholders::_1));
-	GameServerBroadcaster::getInstance().onGameStart(false, std::bind(&GameManager::gameStart, this));
+	GameServerBroadcaster::onConnect(false, std::bind(&GameManager::onConnect, this, std::placeholders::_1));
+	GameServerBroadcaster::onDisconnect(false, std::bind(&GameManager::onDisconnect, this, std::placeholders::_1));
+	GameServerBroadcaster::onGameStart(false, std::bind(&GameManager::gameStart, this));
 }
 #pragma endregion
 
@@ -46,9 +47,9 @@ void GameManager::onConnect(int serial)
 	for (const auto& val : players)
 	{
 		notify.set_id(val.first);
-		Server::getInstance().send((int)E_EngineType::GAME_SERVER, val.first, { (UINT16)E_PacketID::WELCOME_NOTIFY, 0 }, notify);
+		Serializer::serializeAndSend((int)E_EngineType::GAME_SERVER, val.first, { (UINT16)E_PacketID::WELCOME_NOTIFY, 0 }, notify);
 	}
-	Server::getInstance().setTimer((int)E_EngineType::GAME_SERVER, 0, GameManager::GAME_START_DELAY, E_TimerEvent::GAME_START);
+	Engine::setTimer((int)E_EngineType::GAME_SERVER, 0, GameManager::GAME_START_DELAY, (int)E_TimerEvent::GAME_START);
 }
 void GameManager::onDisconnect(int serial)
 {
@@ -60,7 +61,7 @@ void GameManager::onDisconnect(int serial)
 	notify.set_iswin(true);
 	for (const auto& val : players)
 		if (val.first != serial)
-			Server::getInstance().send((int)E_EngineType::GAME_SERVER, val.first, { (UINT16)E_PacketID::GAME_OVER_NOTIFY, 0 }, notify);
+			Serializer::serializeAndSend((int)E_EngineType::GAME_SERVER, val.first, { (UINT16)E_PacketID::GAME_OVER_NOTIFY, 0 }, notify);
 	GameManager::_state = E_GameState::GAME_OVER;
 }
 void GameManager::gameStart()
@@ -70,8 +71,8 @@ void GameManager::gameStart()
 
 	const std::unordered_map<int, Player*>& players = PlayerManager::getInstance().getAllPlayers();
 	for (const auto& val : players)
-		Server::getInstance().send((int)E_EngineType::GAME_SERVER, val.first, { (UINT16)E_PacketID::GAME_START_NOTIFY, 0 });
+		Serializer::serializeAndSend((int)E_EngineType::GAME_SERVER, val.first, { (UINT16)E_PacketID::GAME_START_NOTIFY, 0 });
 	GameManager::_state = E_GameState::GAME_START;
-	Server::getInstance().setRepetitiveTimer((int)E_EngineType::GAME_SERVER, 0, 1000 / GameManager::UPDATE_WORLD_RATE, E_TimerEvent::UPDATE_WORLD);
+	Engine::setRepetitiveTimer((int)E_EngineType::GAME_SERVER, 0, 1000 / GameManager::UPDATE_WORLD_RATE, (int)E_TimerEvent::UPDATE_WORLD);
 }
 #pragma endregion

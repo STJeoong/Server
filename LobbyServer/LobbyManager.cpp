@@ -2,8 +2,11 @@
 #include "S_UserInfo.h"
 #include "Engine.h"
 #include "lobby_protocol.pb.h"
-#include "Server.h"
+#include <Engine.h>
 #include <S_PacketHeader.h>
+#include <S_PacketAttr.h>
+#include "E_EngineType.h"
+#include "Serializer.h"
 
 #pragma region public
 bool LobbyManager::inputUser(S_UserInfo* user)
@@ -24,28 +27,23 @@ void LobbyManager::deleteUser(S_UserInfo* user)
 			return;
 		}
 }
-void LobbyManager::broadcast(int serial, char* data)
+void LobbyManager::broadcast(int serial, const protocol::lobby::ChatLobby_Req& req)
 {
 	S_UserInfo& info = *(this->getUser(serial));
-	S_PacketAttr attr = {};
-	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(data);
-	protocol::lobby::ChatLobby_Req req = {};
 	protocol::lobby::ChatLobby_Notify notify = {};
 
-	attr.packetID = (UINT16)protocol::lobby::E_PacketID::CHAT_LOBBY_NOTIFY;
-	attr.option = 0;
-	req.ParseFromArray(data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader));
 	std::string name = info.name;
 	std::string con = req.content();
 	printf("chat req : (%s), content : (%s)\n", info.name.c_str(), req.content().c_str());
 	notify.set_name(info.name);
 	notify.set_content(req.content());
+	std::pair<Size, char*> ret = Serializer::serialize({ (UINT16)protocol::lobby::E_PacketID::CHAT_LOBBY_NOTIFY, 0 }, notify);
 
 	for (int i = 0; i < _users.size(); ++i)
 	{
 		if (_users[i]->serial == serial)
 			continue;
-		Server::getInstance().send(E_EngineType::LOBBY_SERVER, _users[i]->serial, attr, notify);
+		Engine::send((int)E_EngineType::LOBBY_SERVER, _users[i]->serial, ret.first, ret.second);
 	}
 }
 #pragma endregion

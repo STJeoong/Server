@@ -21,6 +21,9 @@
     <Filter Include="소스 파일\Handler">
       <UniqueIdentifier>{a6fde297-101a-4810-8394-a90b17e286e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Broadcast">
+      <UniqueIdentifier>{a470b55f-d1bf-46a6-9153-bb61fa371a68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -33,9 +36,6 @@
       <Filter>소스 파일\Lobby</Filter>
     </ClCompile>
     <ClCompile Include="Serializer.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Server.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="LobbyServerHandler.cpp">
@@ -56,11 +56,17 @@
     <ClCompile Include="match_protocol.pb.cc">
       <Filter>소스 파일\Protocol</Filter>
     </ClCompile>
+    <ClCompile Include="LobbyServerBroadcaster.cpp">
+      <Filter>소스 파일\Broadcast</Filter>
+    </ClCompile>
+    <ClCompile Include="MatchClientBroadcaster.cpp">
+      <Filter>소스 파일\Broadcast</Filter>
+    </ClCompile>
+    <ClCompile Include="DBClientBroadcaster.cpp">
+      <Filter>소스 파일\Broadcast</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="E_UserState.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="UserManager.h">
       <Filter>소스 파일\User</Filter>
     </ClInclude>
@@ -71,9 +77,6 @@
       <Filter>소스 파일\User</Filter>
     </ClInclude>
     <ClInclude Include="Serializer.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Server.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="E_EngineType.h">
@@ -96,6 +99,18 @@
     </ClInclude>
     <ClInclude Include="match_protocol.pb.h">
       <Filter>소스 파일\Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyServerBroadcaster.h">
+      <Filter>소스 파일\Broadcast</Filter>
+    </ClInclude>
+    <ClInclude Include="MatchClientBroadcaster.h">
+      <Filter>소스 파일\Broadcast</Filter>
+    </ClInclude>
+    <ClInclude Include="DBClientBroadcaster.h">
+      <Filter>소스 파일\Broadcast</Filter>
+    </ClInclude>
+    <ClInclude Include="E_UserState.h">
+      <Filter>소스 파일\User</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

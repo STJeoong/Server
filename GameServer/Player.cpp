@@ -3,7 +3,7 @@
 const float Player::INITIAL_SPEED = 5;
 const float Player::FIXED_DELTA_TIME = (float)0.02;
 #pragma region public
-void Player::move(Move_Req& req)
+void Player::move(const Move_Req& req)
 {
 	// TODO : Àå¾Ö¹°
 	_lpi = req.seqid();

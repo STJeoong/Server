@@ -1,10 +1,12 @@
 #pragma once
 #include <S_EngineEvent.h>
+#include "db_protocol.pb.h"
 class DBClientHandler
 {
 public:
-	void handle(S_EngineEvent& evt);
+	DBClientHandler();
+	~DBClientHandler();
 private:
-	void loginResp(S_EngineEvent& evt);
+	void onLoginResp(const protocol::db::Login_Resp& resp);
 };
 

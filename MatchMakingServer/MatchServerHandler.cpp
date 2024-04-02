@@ -1,40 +1,35 @@
 #include "MatchServerHandler.h"
 #include "match_protocol.pb.h"
 #include "ProcessGenerator.h"
-#include "Server.h"
-#include "ThreadPool.h"
+#include "MatchServerBroadcaster.h"
+#include "E_EngineType.h"
+#include "Serializer.h"
+#include <ThreadPool.h>
 #include <S_PacketHeader.h>
+#include <Engine.h>
 
 using namespace protocol::match;
 
 #pragma region public
-MatchServerHandler::MatchServerHandler() { _generator = new ProcessGenerator; }
-MatchServerHandler::~MatchServerHandler() { delete _generator; }
-void MatchServerHandler::handle(S_EngineEvent& evt)
+MatchServerHandler::MatchServerHandler()
 {
-	switch (evt.type)
-	{
-	case E_EngineEventType::EVENT_NET_CONNECT: printf("client connect : (%d)\n", evt.serial); return;
-	case E_EngineEventType::EVENT_NET_DISCONNECT: printf("client disconnect : (%d)\n", evt.serial); return;
-	}
-
-	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(evt.data);
-	switch ((E_PacketID)header->id)
-	{
-	case E_PacketID::MATCH_REQ: this->matchReq(evt); break;
-	case E_PacketID::MATCH_CANCLE_REQ: this->matchCancle(evt); break;
-	}
+	_generator = new ProcessGenerator;
+	MatchServerBroadcaster::onConnect(true, [](int serial) { printf("client(%d) connected\n", serial); });
+	MatchServerBroadcaster::onDisconnect(true, [](int serial) { printf("client(%d) disconnected\n", serial); });
+	MatchServerBroadcaster::onMatchReq(true, std::bind(&MatchServerHandler::onMatchReq, this, std::placeholders::_1, std::placeholders::_2));
+	MatchServerBroadcaster::onMatchCancleReq(true, std::bind(&MatchServerHandler::onMatchCancle, this, std::placeholders::_1, std::placeholders::_2));
+}
+MatchServerHandler::~MatchServerHandler()
+{
+	delete _generator;
+	MatchServerBroadcaster::onMatchReq(false, std::bind(&MatchServerHandler::onMatchReq, this, std::placeholders::_1, std::placeholders::_2));
+	MatchServerBroadcaster::onMatchCancleReq(false, std::bind(&MatchServerHandler::onMatchCancle, this, std::placeholders::_1, std::placeholders::_2));
 }
 #pragma endregion
 
 #pragma region private
-void MatchServerHandler::matchReq(S_EngineEvent& evt)
+void MatchServerHandler::onMatchReq(int serial, const Match_Req& req)
 {
-	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(evt.data);
-	Match_Req req = {};
-	Match_Resp resp = {};
-
-	req.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader));
 	if (_lastRegisteredSerial == MatchServerHandler::INVALID_SERIAL)
 	{
 		_lastRegisteredSerial = req.serial();
@@ -43,21 +38,18 @@ void MatchServerHandler::matchReq(S_EngineEvent& evt)
 
 	int s1 = req.serial(), s2 = _lastRegisteredSerial;
 	_lastRegisteredSerial = MatchServerHandler::INVALID_SERIAL;
-	ThreadPool::getInstance().enqueue([evt, this, s1, s2]() {
+	ThreadPool::getInstance().enqueue([serial, this, s1, s2]() {
 		UINT16 portNum = _generator->generate();
 		Match_Resp resp = {};
 		resp.add_serials(s1);
 		resp.add_serials(s2);
-		resp.set_ip(Server::getInstance().getServerConfig().ip);
+		resp.set_ip(Engine::getEngineConfig((int)E_EngineType::MATCH_SERVER).ip);
 		resp.set_port(portNum);
-		Server::getInstance().send(E_EngineType::MATCH_SERVER, evt.serial, { (UINT16)E_PacketID::MATCH_RESP, 0 }, resp); });
+		std::pair<Size, char*> ret = Serializer::serialize({ (UINT16)E_PacketID::MATCH_RESP, 0 }, resp);
+		Engine::send((int)E_EngineType::MATCH_SERVER, serial, ret.first, ret.second);});
 }
-void MatchServerHandler::matchCancle(S_EngineEvent& evt)
+void MatchServerHandler::onMatchCancle(int serial, const MatchCancle_Req& req)
 {
-	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(evt.data);
-	MatchCancle_Req req = {};
-
-	req.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader));
 	if (_lastRegisteredSerial == req.serial())
 		_lastRegisteredSerial = MatchServerHandler::INVALID_SERIAL;
 }

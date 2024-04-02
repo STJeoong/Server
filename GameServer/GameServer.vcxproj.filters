@@ -35,9 +35,6 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Server.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="GameServerBroadcaster.cpp">
       <Filter>소스 파일\Broadcast</Filter>
     </ClCompile>
@@ -70,9 +67,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Server.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="E_EngineType.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
