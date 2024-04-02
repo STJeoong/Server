@@ -77,7 +77,7 @@
     <ClInclude Include="NetworkLayer.h">
       <Filter>소스 파일\NetworkLayer</Filter>
     </ClInclude>
-    <ClInclude Include="EngineEventContainer.h">
+    <ClInclude Include="I_EngineEventContainer.h">
       <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>
     </ClInclude>
     <ClInclude Include="S_EngineEvent.h">
@@ -131,9 +131,6 @@
     <ClInclude Include="Delegate.h">
       <Filter>소스 파일\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="E_EngineEventPopMode.h">
-      <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>
-    </ClInclude>
     <ClInclude Include="E_EngineState.h">
       <Filter>소스 파일\EngineLayer\Engine</Filter>
     </ClInclude>
@@ -151,6 +148,12 @@
     </ClInclude>
     <ClInclude Include="I_Broadcaster.h">
       <Filter>소스 파일\EngineLayer\Engine\Broacast</Filter>
+    </ClInclude>
+    <ClInclude Include="NoWaitEngineEventContainer.h">
+      <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>
+    </ClInclude>
+    <ClInclude Include="WaitEngineEventContainer.h">
+      <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -171,9 +174,6 @@
     </ClCompile>
     <ClCompile Include="NetworkLayer.cpp">
       <Filter>소스 파일\NetworkLayer</Filter>
-    </ClCompile>
-    <ClCompile Include="EngineEventContainer.cpp">
-      <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>
     </ClCompile>
     <ClCompile Include="IOCPServer.cpp">
       <Filter>소스 파일\NetworkLayer\IOCPServer</Filter>
@@ -207,6 +207,12 @@
     </ClCompile>
     <ClCompile Include="PhysicsMode.cpp">
       <Filter>소스 파일\EngineLayer\Engine\ServerMode\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="NoWaitEngineEventContainer.cpp">
+      <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>
+    </ClCompile>
+    <ClCompile Include="WaitEngineEventContainer.cpp">
+      <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

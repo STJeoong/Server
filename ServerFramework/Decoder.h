@@ -6,12 +6,12 @@
 #include <vector>
 #include "Define.h"
 
-class EngineEventContainer;
+class I_EngineEventContainer;
 class PacketParser;
 class Decoder
 {
 public:
-	Decoder(int engineID, EngineEventContainer* evtContainer, int maxClient);
+	Decoder(int engineID, I_EngineEventContainer* evtContainer, int maxClient);
 	~Decoder();
 	void enqueue(int serial, char* data, int len, Size blockSize);
 	void reset(int serial);
@@ -19,7 +19,7 @@ private:
 	void threadMain();
 
 	int _engineID;
-	EngineEventContainer* _evtContainer;
+	I_EngineEventContainer* _evtContainer;
 	PacketParser* _parser;
 
 	bool _stopThread = false;

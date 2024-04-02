@@ -2,13 +2,13 @@
 #include "NetworkLayer.h"
 #include "I_NetworkCore.h"
 #include "MemoryBlockPool.h"
-#include "EngineEventContainer.h"
+#include "I_EngineEventContainer.h"
 #include "Decoder.h"
 #include <fstream>
 #include <iostream>
 
 #pragma region public
-NetworkLayer::NetworkLayer(int engineID, I_NetworkCore* core, EngineEventContainer* evtContainer, Decoder* decoder)
+NetworkLayer::NetworkLayer(int engineID, I_NetworkCore* core, I_EngineEventContainer* evtContainer, Decoder* decoder)
 	: _engineID(engineID), _core(core), _evtContainer(evtContainer), _decoder(decoder)
 {
 	_core->setOnConnect([this](int serial) { this->onConnect(serial); });

@@ -9,7 +9,7 @@
 
 class I_NetworkCore;
 class NetworkLayer;
-class EngineEventContainer;
+class I_EngineEventContainer;
 class Decoder;
 class Encoder;
 class I_Broadcaster;
@@ -34,7 +34,7 @@ public:
 private:
 	static Engine* parseConfig(int engineID, const S_ServerConfig& config);
 
-	Engine(int id, I_NetworkCore* core, int maxClient, EngineEventContainer* container);
+	Engine(int id, I_NetworkCore* core, int maxClient, I_EngineEventContainer* container);
 	~Engine();
 	void run();
 	void send(int to, Size blockSize, char* data);
@@ -42,7 +42,7 @@ private:
 
 	static std::unordered_map<int, Engine*> s_engines;
 	static ServerMode* s_serverMode;
-	static EngineEventContainer* s_evtContainer;
+	static I_EngineEventContainer* s_evtContainer;
 
 	E_EngineState _state = E_EngineState::INITIAL;
 	S_ServerConfig _config = {};

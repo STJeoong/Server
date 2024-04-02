@@ -3,7 +3,9 @@
 #include "SFUtil.h"
 #include "StringConversion.h"
 #include "Define.h"
-#include "EngineEventContainer.h"
+#include "I_EngineEventContainer.h"
+#include "NoWaitEngineEventContainer.h"
+#include "WaitEngineEventContainer.h"
 #include "NetworkLayer.h"
 #include "Decoder.h"
 #include "Encoder.h"
@@ -59,8 +61,8 @@ void Engine::setServerMode(E_ServerMode mode)
 
 	switch (mode)
 	{
-	case E_ServerMode::PASSIVE_MODE: s_evtContainer = new EngineEventContainer(E_EngineEventPopMode::WAIT_MODE); s_serverMode = new PassiveMode(); break;
-	case E_ServerMode::PHYSICS_MODE: s_evtContainer = new EngineEventContainer(E_EngineEventPopMode::NO_WAIT_MODE); s_serverMode = new PhysicsMode(); break;
+	case E_ServerMode::PASSIVE_MODE: s_evtContainer = new WaitEngineEventContainer(); s_serverMode = new PassiveMode(); break;
+	case E_ServerMode::PHYSICS_MODE: s_evtContainer = new NoWaitEngineEventContainer(); s_serverMode = new PhysicsMode(); break;
 	}
 
 	s_serverMode->setEventContainer(s_evtContainer);
@@ -142,7 +144,7 @@ Engine* Engine::parseConfig(int engineID, const S_ServerConfig& config)
 	return ret;
 }
 
-Engine::Engine(int id, I_NetworkCore* core, int maxClient, EngineEventContainer* container)
+Engine::Engine(int id, I_NetworkCore* core, int maxClient, I_EngineEventContainer* container)
 {
 	_decoder = new Decoder(id, container, maxClient);
 	_network = new NetworkLayer(id, core, container, _decoder);
@@ -162,4 +164,4 @@ void Engine::disconnect(int serial) { _network->disconnect(serial); }
 
 std::unordered_map<int, Engine*> Engine::s_engines;
 ServerMode* Engine::s_serverMode = nullptr;
-EngineEventContainer* Engine::s_evtContainer = nullptr;
+I_EngineEventContainer* Engine::s_evtContainer = nullptr;

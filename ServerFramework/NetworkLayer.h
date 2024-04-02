@@ -3,11 +3,11 @@
 #include "Define.h"
 class I_NetworkCore;
 class Decoder;
-class EngineEventContainer;
+class I_EngineEventContainer;
 class NetworkLayer
 {
 public:
-	NetworkLayer(int engineID, I_NetworkCore* core, EngineEventContainer* evtContainer, Decoder* decoder);
+	NetworkLayer(int engineID, I_NetworkCore* core, I_EngineEventContainer* evtContainer, Decoder* decoder);
 	~NetworkLayer();
 	void run();
 	void send(int to, Size blockSize, int len, char* data);
@@ -19,7 +19,7 @@ private:
 
 	int _engineID;
 	I_NetworkCore* _core = nullptr;
-	EngineEventContainer* _evtContainer = nullptr;
+	I_EngineEventContainer* _evtContainer = nullptr;
 	Decoder* _decoder = nullptr;
 };
 

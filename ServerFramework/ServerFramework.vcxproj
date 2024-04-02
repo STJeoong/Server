@@ -157,7 +157,6 @@
     <ClInclude Include="Delegate.h" />
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="Engine.h" />
-    <ClInclude Include="E_EngineEventPopMode.h" />
     <ClInclude Include="E_EngineEventType.h" />
     <ClInclude Include="E_EngineState.h" />
     <ClInclude Include="E_ServerMode.h" />
@@ -166,7 +165,8 @@
     <ClInclude Include="IOCPServer.h" />
     <ClInclude Include="I_Broadcaster.h" />
     <ClInclude Include="I_NetworkCore.h" />
-    <ClInclude Include="EngineEventContainer.h" />
+    <ClInclude Include="I_EngineEventContainer.h" />
+    <ClInclude Include="NoWaitEngineEventContainer.h" />
     <ClInclude Include="PassiveMode.h" />
     <ClInclude Include="PhysicsMode.h" />
     <ClInclude Include="ServerMode.h" />
@@ -185,6 +185,7 @@
     <ClInclude Include="StringConversion.h" />
     <ClInclude Include="S_ServerConfig.h" />
     <ClInclude Include="ThreadPool.h" />
+    <ClInclude Include="WaitEngineEventContainer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Accepter.cpp" />
@@ -193,9 +194,9 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="IOCPClient.cpp" />
     <ClCompile Include="IOCPServer.cpp" />
-    <ClCompile Include="EngineEventContainer.cpp" />
     <ClCompile Include="MemoryBlockPool.cpp" />
     <ClCompile Include="NetworkLayer.cpp" />
+    <ClCompile Include="NoWaitEngineEventContainer.cpp" />
     <ClCompile Include="PacketParser.cpp" />
     <ClCompile Include="PassiveMode.cpp" />
     <ClCompile Include="pch.cpp">
@@ -210,6 +211,7 @@
     <ClCompile Include="SFUtil.cpp" />
     <ClCompile Include="StringConversion.cpp" />
     <ClCompile Include="ThreadPool.cpp" />
+    <ClCompile Include="WaitEngineEventContainer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

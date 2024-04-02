@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "Decoder.h"
-#include "EngineEventContainer.h"
+#include "I_EngineEventContainer.h"
 #include "PacketParser.h"
 #include "MemoryBlockPool.h"
 
 #pragma region public
-Decoder::Decoder(int engineID, EngineEventContainer* evtContainer, int maxClient) : _engineID(engineID), _evtContainer(evtContainer)
+Decoder::Decoder(int engineID, I_EngineEventContainer* evtContainer, int maxClient) : _engineID(engineID), _evtContainer(evtContainer)
 {
 	_parser = new PacketParser(maxClient);
 	_thread = std::thread(&Decoder::threadMain, this);
