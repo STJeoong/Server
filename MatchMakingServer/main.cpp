@@ -4,7 +4,7 @@
 #include "MatchServerBroadcaster.h"
 #include "MatchServerHandler.h"
 
-void setEngine()
+static void setEngine()
 {
 	std::ifstream f("match_config.json");
 	json data = json::parse(f);

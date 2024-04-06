@@ -5,7 +5,7 @@
 #include "BombUpdater.h"
 #include "PlayerMoveUpdater.h"
 
-void setEngine(char* argv[])
+static void setEngine(char* argv[])
 {
 	S_ServerConfig config{};
 	config.network = "iocp_server";

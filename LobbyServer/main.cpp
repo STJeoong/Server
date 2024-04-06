@@ -8,7 +8,7 @@
 #include "DBClientHandler.h"
 #include "MatchClientHandler.h"
 
-void setEngine()
+static void setEngine()
 {
 	std::ifstream f("config.json");
 	json data = json::parse(f);
