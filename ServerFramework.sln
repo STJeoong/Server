@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameServer", "GameServer\Ga
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PhysicsEngine", "PhysicsEngine\PhysicsEngine.vcxproj", "{0F827C70-FBF6-4293-9F9D-15C8C36B2A29}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utils", "Utils\Utils.vcxproj", "{E560E68A-E943-4FB0-9C1A-66D546EE8AEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{0F827C70-FBF6-4293-9F9D-15C8C36B2A29}.Release|x64.Build.0 = Release|x64
 		{0F827C70-FBF6-4293-9F9D-15C8C36B2A29}.Release|x86.ActiveCfg = Release|Win32
 		{0F827C70-FBF6-4293-9F9D-15C8C36B2A29}.Release|x86.Build.0 = Release|Win32
+		{E560E68A-E943-4FB0-9C1A-66D546EE8AEF}.Debug|x64.ActiveCfg = Debug|x64
+		{E560E68A-E943-4FB0-9C1A-66D546EE8AEF}.Debug|x64.Build.0 = Debug|x64
+		{E560E68A-E943-4FB0-9C1A-66D546EE8AEF}.Debug|x86.ActiveCfg = Debug|Win32
+		{E560E68A-E943-4FB0-9C1A-66D546EE8AEF}.Debug|x86.Build.0 = Debug|Win32
+		{E560E68A-E943-4FB0-9C1A-66D546EE8AEF}.Release|x64.ActiveCfg = Release|x64
+		{E560E68A-E943-4FB0-9C1A-66D546EE8AEF}.Release|x64.Build.0 = Release|x64
+		{E560E68A-E943-4FB0-9C1A-66D546EE8AEF}.Release|x86.ActiveCfg = Release|Win32
+		{E560E68A-E943-4FB0-9C1A-66D546EE8AEF}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
