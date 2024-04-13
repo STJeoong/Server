@@ -45,7 +45,7 @@ void Decoder::threadMain()
 		}
 
 		_parser->pushData(serial, data, len);
-		MemoryBlockPool::release(blockSize, data);
+		MemoryBlockPool::release((int)blockSize, data);
 		while (true)
 		{
 			S_EngineEvent evt = {};

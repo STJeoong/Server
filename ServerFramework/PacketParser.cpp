@@ -42,12 +42,12 @@ void PacketParser::collectData(int idx, S_EngineEvent& evt)
 	if (header->len <= 256)
 	{
 		evt.blockSize = Size::_256;
-		evt.data = MemoryBlockPool::get(Size::_256);
+		evt.data = MemoryBlockPool::get((int)Size::_256);
 	}
 	else
 	{
 		evt.blockSize = Size::_1024;
-		evt.data = MemoryBlockPool::get(Size::_1024);
+		evt.data = MemoryBlockPool::get((int)Size::_1024);
 	}
 	memcpy(evt.data, &_buf[idx][_readIdx[idx]], header->len);
 

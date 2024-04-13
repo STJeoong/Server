@@ -35,7 +35,7 @@ void Sender::onSend(int idx, DWORD bytes)
 
 	std::lock_guard<std::mutex> lock(_sendMutexs[idx]);
 	std::tie(len, blockSize, block) = _thingsToSend[idx].front();
-	MemoryBlockPool::release(blockSize, block);
+	MemoryBlockPool::release((int)blockSize, block);
 	_thingsToSend[idx].pop();
 	if (!_thingsToSend[idx].empty())
 		this->pendingSend(idx);
@@ -66,7 +66,7 @@ void Sender::pendingSend(int idx)
 	if ((ret == 0 && error == NO_ERROR) || (ret == SOCKET_ERROR && error == WSA_IO_PENDING))
 		return;
 
-	MemoryBlockPool::release(blockSize, block);
+	MemoryBlockPool::release((int)blockSize, block);
 	_thingsToSend[idx].pop();
 }
 #pragma endregion

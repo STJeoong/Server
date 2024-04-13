@@ -95,16 +95,10 @@
     <ClInclude Include="Define.h">
       <Filter>소스 파일\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="MemoryBlockPool.h">
-      <Filter>소스 파일\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="SFUtil.h">
       <Filter>소스 파일\Utils</Filter>
     </ClInclude>
     <ClInclude Include="StringConversion.h">
-      <Filter>소스 파일\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
       <Filter>소스 파일\Utils</Filter>
     </ClInclude>
     <ClInclude Include="S_PacketAttr.h">
@@ -124,12 +118,6 @@
     </ClInclude>
     <ClInclude Include="S_ServerConfig.h">
       <Filter>소스 파일\EngineLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="ThreadPool.h">
-      <Filter>소스 파일\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Delegate.h">
-      <Filter>소스 파일\Utils</Filter>
     </ClInclude>
     <ClInclude Include="E_EngineState.h">
       <Filter>소스 파일\EngineLayer\Engine</Filter>
@@ -181,9 +169,6 @@
     <ClCompile Include="Sender.cpp">
       <Filter>소스 파일\NetworkLayer\IOCPServer</Filter>
     </ClCompile>
-    <ClCompile Include="MemoryBlockPool.cpp">
-      <Filter>소스 파일\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="SFUtil.cpp">
       <Filter>소스 파일\Utils</Filter>
     </ClCompile>
@@ -198,9 +183,6 @@
     </ClCompile>
     <ClCompile Include="Receiver.cpp">
       <Filter>소스 파일\NetworkLayer\IOCPServer</Filter>
-    </ClCompile>
-    <ClCompile Include="ThreadPool.cpp">
-      <Filter>소스 파일\Utils</Filter>
     </ClCompile>
     <ClCompile Include="PassiveMode.cpp">
       <Filter>소스 파일\EngineLayer\Engine\ServerMode\Passive</Filter>

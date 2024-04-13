@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\taejeong\source\repos\ServerFramework\ServerFramework;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\taejeong\source\repos\ServerFramework\ServerFramework;C:\Users\taejeong\source\repos\ServerFramework\Utils;</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -132,7 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\taejeong\source\repos\ServerFramework\ServerFramework;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\taejeong\source\repos\ServerFramework\ServerFramework;C:\Users\taejeong\source\repos\ServerFramework\Utils;</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -153,6 +153,9 @@
   <ItemGroup>
     <ProjectReference Include="..\ServerFramework\ServerFramework.vcxproj">
       <Project>{48868cee-7fcf-4f24-9a06-a2dba1020bb1}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.vcxproj">
+      <Project>{e560e68a-e943-4fb0-9c1a-66d546ee8aef}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

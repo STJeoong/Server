@@ -24,7 +24,7 @@ void PhysicsMode::run()
 			_broadcasters[engineType]->broadcast(evt);
 
 			if (evt.type == E_EngineEventType::EVENT_NET_RECV)
-				MemoryBlockPool::release(evt.blockSize, evt.data);
+				MemoryBlockPool::release((int)evt.blockSize, evt.data);
 		}
 		// TODO : Physics
 	}

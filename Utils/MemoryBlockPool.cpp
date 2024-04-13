@@ -2,14 +2,14 @@
 #include "MemoryBlockPool.h"
 
 #pragma region public
-char* MemoryBlockPool::get(Size blockSize)
+char* MemoryBlockPool::get(int blockSize)
 {
 	std::lock_guard<std::mutex> lock(s_mutex);
 	if (s_mp.find(blockSize) == s_mp.end())
 		s_mp[blockSize] = new MemoryBlockPool(blockSize, MemoryBlockPool::DEFAULT_POOL_SIZE);
 	return s_mp[blockSize]->get();
 }
-void MemoryBlockPool::release(Size blockSize, char*& obj)
+void MemoryBlockPool::release(int blockSize, char*& obj)
 {
 	std::lock_guard<std::mutex> lock(s_mutex);
 	// TODO : 사실 release할때는 find안해도 될듯
@@ -20,7 +20,7 @@ void MemoryBlockPool::release(Size blockSize, char*& obj)
 #pragma endregion
 
 #pragma region private
-MemoryBlockPool::MemoryBlockPool(Size blockSize, int amount) : _blockSize(blockSize), _amount(amount), _currentAmount(amount)
+MemoryBlockPool::MemoryBlockPool(int blockSize, int amount) : _blockSize(blockSize), _amount(amount), _currentAmount(amount)
 {
 	_pool = new char* [amount];
 	for (int i = 0; i < amount; ++i)
@@ -60,5 +60,5 @@ void MemoryBlockPool::release(char*& obj)
 }
 #pragma endregion
 
-std::unordered_map<Size, MemoryBlockPool*> MemoryBlockPool::s_mp;
+std::unordered_map<int, MemoryBlockPool*> MemoryBlockPool::s_mp;
 std::mutex MemoryBlockPool::s_mutex;
