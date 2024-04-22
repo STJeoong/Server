@@ -1,12 +1,15 @@
 ﻿#pragma once
 
 #define WIN32_LEAN_AND_MEAN             // 거의 사용되지 않는 내용을 Windows 헤더에서 제외합니다.
+#include <Windows.h>
 #include <iostream>
+#include <vector>
 #include <algorithm>
-#include <stack>
+#include <tuple>
 #include <queue>
-#include <unordered_map>
+#include <stack>
+#include <limits>
+#include <set>
 #include <map>
 #include <unordered_set>
-#include <set>
-#include <vector>
+#include <unordered_map>

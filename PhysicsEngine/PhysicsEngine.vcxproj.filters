@@ -9,8 +9,20 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\Temp">
-      <UniqueIdentifier>{e7221bad-1ca7-4543-ba8d-9872fdfb6059}</UniqueIdentifier>
+    <Filter Include="소스 파일\Utils">
+      <UniqueIdentifier>{5d6c359c-01d9-497f-ba48-439a5809bde3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\World">
+      <UniqueIdentifier>{7a4579fe-519a-4aa2-8884-f29dd8d007d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Body">
+      <UniqueIdentifier>{e9220302-2c93-4eef-8f61-b3645e5b99e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Collider">
+      <UniqueIdentifier>{969eef11-bc3c-4940-a6c4-6fc5a954ba84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\World\CollisionDectection">
+      <UniqueIdentifier>{cd78b1b9-7042-44cc-87d1-dd0e7fb1f40f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -20,14 +32,39 @@
     <ClInclude Include="pch.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Matrix22.h">
-      <Filter>소스 파일\Temp</Filter>
-    </ClInclude>
-    <ClInclude Include="S_RigidBody.h">
-      <Filter>소스 파일\Temp</Filter>
-    </ClInclude>
     <ClInclude Include="Vector2D.h">
-      <Filter>소스 파일\Temp</Filter>
+      <Filter>소스 파일\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix22.h">
+      <Filter>소스 파일\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>소스 파일\World</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Body.h">
+      <Filter>소스 파일\Body</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionResolver.h">
+      <Filter>소스 파일\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D.h">
+      <Filter>소스 파일\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>소스 파일\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider2D.h">
+      <Filter>소스 파일\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionDetector.h">
+      <Filter>소스 파일\World\CollisionDectection</Filter>
+    </ClInclude>
+    <ClInclude Include="AABB.h">
+      <Filter>소스 파일\World\CollisionDectection</Filter>
+    </ClInclude>
+    <ClInclude Include="DAT.h">
+      <Filter>소스 파일\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -35,7 +72,31 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Matrix22.cpp">
-      <Filter>소스 파일\Temp</Filter>
+      <Filter>소스 파일\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2D.cpp">
+      <Filter>소스 파일\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>소스 파일\World</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionResolver.cpp">
+      <Filter>소스 파일\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Body.cpp">
+      <Filter>소스 파일\Body</Filter>
+    </ClCompile>
+    <ClCompile Include="Box2D.cpp">
+      <Filter>소스 파일\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>소스 파일\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionDetector.cpp">
+      <Filter>소스 파일\World\CollisionDectection</Filter>
+    </ClCompile>
+    <ClCompile Include="DAT.cpp">
+      <Filter>소스 파일\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
