@@ -88,6 +88,8 @@ void GameObject::transform(const Motion& motionInWorld)
 		for (int i = 0; i < obj._children.size(); ++i) stk.push(obj._children[i]);
 	}
 }
+void GameObject::transform(const Vector2D& displacement) { Motion motion{ displacement,0.0f }; this->transform(motion); }
+void GameObject::transform(float radian) { Motion motion{ {0.0f, 0.0f}, radian }; this->transform(motion); }
 void GameObject::isActive(bool flag)
 {
 	if (_isActive == flag)

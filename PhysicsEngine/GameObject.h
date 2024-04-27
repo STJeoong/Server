@@ -24,6 +24,8 @@ public:
 	std::vector<Component*>& components() { return _components; }
 	const Transform& transform() const { return _worldTF; }
 	void transform(const Motion& motionInWorld);
+	void transform(const Vector2D& displacement);
+	void transform(float radian);
 	const std::string& name() const { return _name; }
 	std::string& name() { return _name; }
 	void isActive(bool flag);
