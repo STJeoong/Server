@@ -19,8 +19,8 @@ GameObject* GameObject::instantiate(GameObject* obj, GameObject* parent, bool ac
 	if (obj == nullptr) ret = new GameObject();
 	else ret = new GameObject(*obj);
 	ret->_isActive = active;
-	if (parent == nullptr) ret->_parent = s_root;
-	else ret->_parent = parent;
+	if (parent == nullptr) ret->setParent(*s_root);
+	else ret->setParent(*parent);
 	s_root->_children.push_back(ret);
 	s_gameObjects.push_back(ret);
 	return ret;
@@ -52,7 +52,8 @@ void GameObject::removeComponent(Component* component)
 }
 void GameObject::setParent(GameObject& obj)
 {
-	_parent->removeChild(this);
+	if (_parent != nullptr)
+		_parent->removeChild(this);
 	_parent = &obj;
 	obj._children.push_back(this);
 	_localTF.position() = _worldTF.position() - obj._worldTF.position();
@@ -61,7 +62,8 @@ void GameObject::setParent(GameObject& obj)
 void GameObject::setChild(GameObject& obj)
 {
 	_children.push_back(&obj);
-	obj._parent->removeChild(&obj);
+	if (obj._parent != nullptr)
+		obj._parent->removeChild(&obj);
 	obj._parent = this;
 	obj._localTF.position() = obj._worldTF.position() - _worldTF.position();
 	obj._localTF.rotation() = obj._worldTF.rotation() * _worldTF.rotation().transpose();
