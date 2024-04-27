@@ -71,7 +71,7 @@ void GameObject::setChild(GameObject& obj)
 void GameObject::transform(const Motion& motionInWorld)
 {
 	// 로컬 위치는 displacement.position()을 부모 오브젝트의 회전값의 반대방향으로 돌려서 더해주면 된다.
-	Matrix22 rot(_parent->_localTF.rotation().radian() * -1);
+	Matrix22 rot = _parent->_worldTF.rotation().transpose();
 	Vector2D localDisplacement = rot * motionInWorld.displacement();
 	_localTF.move(localDisplacement);
 	_localTF.rotate(motionInWorld.rotation());

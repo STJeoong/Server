@@ -41,7 +41,7 @@ int main()
     GameObject* g1 = GameObject::instantiate();
     GameObject* g2 = GameObject::instantiate(nullptr, g1);
     GameObject* g3 = GameObject::instantiate(nullptr, g2);
-    g1->transform({ 200.0f, 200.0f });
+    g1->transform({ 400.0f, 300.0f });
     g2->transform({100.0f, 100.0f});
     g3->transform({ 50.0f, 0.0f });
     sf::CircleShape shape1(10.0f);
@@ -66,8 +66,10 @@ int main()
         // 중력 적용
         //body.applyForce(sf::Vector2f(0.0f, 0.098f * body.mass));
 
-        Motion motion({ 30.0f*dt, 30.0f*dt }, 0.001f);
+        Motion motion({ 0, 0 }, 0.001f);
+        Motion motion2({ -300.0f*dt, -300.0f*dt }, 0.01f);
         g1->transform(motion);
+        g2->transform(motion2);
         printf("g1:(x : %f, y: %f), g2:(x: %f, y: %f)\n", g1->transform().position().x(), g1->transform().position().y(),
                                                         g2->transform().position().x(), g2->transform().position().y());
         // 업데이트
