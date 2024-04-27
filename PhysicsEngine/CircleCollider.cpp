@@ -6,12 +6,6 @@
 
 #pragma region public
 CircleCollider* CircleCollider::clone() { return new CircleCollider(*this); }
-void CircleCollider::onAddComponent(Component* component)
-{
-	RigidBody2D* rigid = dynamic_cast<RigidBody2D*>(component);
-	if (rigid == nullptr) return;
-	this->attachTo(rigid);
-}
 AABB CircleCollider::getAABB()
 {
 	const Point2D& worldObjPos = this->gameObject()->transform().position();

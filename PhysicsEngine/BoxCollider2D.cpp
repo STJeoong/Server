@@ -8,12 +8,6 @@
 
 #pragma region public
 BoxCollider2D* BoxCollider2D::clone() { return new BoxCollider2D(*this); }
-void BoxCollider2D::onAddComponent(Component* component)
-{
-	RigidBody2D* rigid = dynamic_cast<RigidBody2D*>(component);
-	if (rigid == nullptr) return;
-	this->attachTo(rigid);
-}
 AABB BoxCollider2D::getAABB()
 {
 	const Point2D& worldObjPos = this->gameObject()->transform().position();

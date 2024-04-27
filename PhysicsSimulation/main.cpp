@@ -67,7 +67,7 @@ int main()
         //body.applyForce(sf::Vector2f(0.0f, 0.098f * body.mass));
 
         Motion motion({ 0, 0 }, 0.001f);
-        Motion motion2({ -300.0f*dt, -300.0f*dt }, 0.01f);
+        Motion motion2({ -100.0f*dt, -100.0f*dt }, 0.01f);
         g1->transform(motion);
         g2->transform(motion2);
         printf("g1:(x : %f, y: %f), g2:(x: %f, y: %f)\n", g1->transform().position().x(), g1->transform().position().y(),

@@ -16,7 +16,6 @@ private:
 	BoxCollider2D(const S_BoxDef& def);
 	~BoxCollider2D() = default;
 	virtual BoxCollider2D* clone() override;
-	void onAddComponent(Component* component) override; // this is used when rigidbody is made later than collider
 	void compute(); // compute mass and inerita. call this when definition of collider is changed.
 
 

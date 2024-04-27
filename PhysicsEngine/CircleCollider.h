@@ -14,7 +14,6 @@ private:
 	CircleCollider(const S_CircleDef& def);
 	~CircleCollider() = default;
 	virtual CircleCollider* clone() override;
-	void onAddComponent(Component* component) override; // this is used when rigidbody is made later than collider
 	void compute(); // compute mass and inerita. call this when definition of collider is changed.
 
 
