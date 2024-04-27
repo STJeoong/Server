@@ -55,12 +55,16 @@ void GameObject::setParent(GameObject& obj)
 	_parent->removeChild(this);
 	_parent = &obj;
 	obj._children.push_back(this);
+	_localTF.position() = _worldTF.position() - obj._worldTF.position();
+	_localTF.rotation() = _worldTF.rotation() * obj._worldTF.rotation().transpose();
 }
 void GameObject::setChild(GameObject& obj)
 {
 	_children.push_back(&obj);
 	obj._parent->removeChild(&obj);
 	obj._parent = this;
+	obj._localTF.position() = obj._worldTF.position() - _worldTF.position();
+	obj._localTF.rotation() = obj._worldTF.rotation() * _worldTF.rotation().transpose();
 }
 void GameObject::transform(const Motion& motionInWorld)
 {

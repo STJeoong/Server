@@ -5,6 +5,7 @@
 #include "Joint2D.h"
 
 // 일단은 월드는 한개만 존재할 수 있음.
+// simulate physics
 class World
 {
 public:
