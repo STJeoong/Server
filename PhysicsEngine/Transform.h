@@ -8,7 +8,8 @@ public:
 	Transform(const Point2D& p, float radian) : _pos(p), _rot(radian) {}
 	void set(const Point2D& p, float radian) { _pos = p; _rot.set(radian); }
 	const Point2D& position() const { return _pos; }
-	const Vector2D& displacement() const { return _pos; } // equals to position().
+	// equals to position(). use this when you want to interpret _pos as displacement.
+	const Vector2D& displacement() const { return _pos; }
 	const Matrix22& rotation() const { return _rot; }
 	Point2D& position() { return _pos; }
 	Vector2D& displacement() { return _pos; }

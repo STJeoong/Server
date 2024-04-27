@@ -2,6 +2,7 @@
 #include "CircleCollider.h"
 #include "AABB.h"
 #include "RigidBody2D.h"
+#include "GameObject.h"
 
 #pragma region public
 CircleCollider* CircleCollider::clone() { return new CircleCollider(*this); }
@@ -13,9 +14,13 @@ void CircleCollider::onAddComponent(Component* component)
 }
 AABB CircleCollider::getAABB()
 {
+	const Point2D& worldObjPos = this->gameObject()->transform().position();
+	const Matrix22& worldObjRot = this->gameObject()->transform().rotation();
+	Point2D worldCenter = worldObjPos + worldObjRot * _offset;
+
 	Vector2D v{ _radius, _radius };
-	Point2D mini = _offset - v;
-	Point2D maxi = _offset + v;
+	Point2D mini = worldCenter - v;
+	Point2D maxi = worldCenter + v;
 	return { mini, maxi };
 }
 #pragma endregion

@@ -3,6 +3,7 @@
 #include "AABB.h"
 #include "Matrix22.h"
 #include "RigidBody2D.h"
+#include "GameObject.h"
 #include "Utils.h"
 
 #pragma region public
@@ -15,30 +16,33 @@ void BoxCollider2D::onAddComponent(Component* component)
 }
 AABB BoxCollider2D::getAABB()
 {
-	//Matrix22 r(_rotation);
+	const Point2D& worldObjPos = this->gameObject()->transform().position();
+	const Matrix22& worldObjRot = this->gameObject()->transform().rotation();
+	Point2D worldCenter = worldObjPos + worldObjRot * _offset;
 
-	//// TODO : world 좌표로 반환해야 되나?
-	//// before rotation
-	//Point2D beforeRot[4];
-	//beforeRot[0] = _halfSize;
-	//beforeRot[1] = { _halfSize.x() * -1, _halfSize.y() };
-	//beforeRot[2] = { _halfSize.x() * -1, _halfSize.y() * -1 };
-	//beforeRot[3] = { _halfSize.x(), _halfSize.y() * -1 };
+	// before rotation
+	Point2D beforeRot[4];
+	beforeRot[0] = _halfSize;
+	beforeRot[1] = { _halfSize.x() * -1, _halfSize.y() };
+	beforeRot[2] = { _halfSize.x() * -1, _halfSize.y() * -1 };
+	beforeRot[3] = { _halfSize.x(), _halfSize.y() * -1 };
 
-	//// after rotation
-	//Point2D afterRot[4] = { r * beforeRot[0], r * beforeRot[1], r * beforeRot[2], r * beforeRot[3] };
+	// after rotation. be careful! you have to add worldCenter after rotation.
+	Point2D afterRot[4] = { worldObjRot * beforeRot[0], worldObjRot * beforeRot[1],
+							worldObjRot * beforeRot[2], worldObjRot * beforeRot[3] };
+	for (int i = 0; i < 4; ++i)
+		afterRot[i] += worldCenter;
 
-	//Point2D mini = afterRot[0];
-	//Point2D maxi = afterRot[0];
-	//for (int i = 1; i < 4; ++i)
-	//{
-	//	mini.x() = min(mini.x(), afterRot[i].x());
-	//	mini.y() = min(mini.y(), afterRot[i].y());
-	//	maxi.x() = max(maxi.x(), afterRot[i].x());
-	//	maxi.y() = max(maxi.y(), afterRot[i].y());
-	//}
-	//return { mini, maxi };
-	return {};
+	Point2D mini = afterRot[0];
+	Point2D maxi = afterRot[0];
+	for (int i = 1; i < 4; ++i)
+	{
+		mini.x() = min(mini.x(), afterRot[i].x());
+		mini.y() = min(mini.y(), afterRot[i].y());
+		maxi.x() = max(maxi.x(), afterRot[i].x());
+		maxi.y() = max(maxi.y(), afterRot[i].y());
+	}
+	return { mini, maxi };
 }
 #pragma endregion
 
