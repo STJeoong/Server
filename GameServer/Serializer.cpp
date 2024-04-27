@@ -7,7 +7,7 @@
 #pragma region public
 void Serializer::serializeAndSend(int engineID, int serial, S_PacketAttr attr)
 {
-	char* block = MemoryBlockPool::get(Size::_256);
+	char* block = MemoryBlockPool::get((int)Size::_256);
 	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(block);
 
 	header->id = attr.packetID;
@@ -19,7 +19,7 @@ void Serializer::serializeAndSend(int engineID, int serial, S_PacketAttr attr)
 }
 void Serializer::serializeAndSend(int engineID, int serial, S_PacketAttr attr, const google::protobuf::Message& message)
 {
-	char* block = MemoryBlockPool::get(Size::_1024);
+	char* block = MemoryBlockPool::get((int)Size::_1024);
 	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(block);
 
 	header->id = attr.packetID;

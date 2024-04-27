@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\taejeong\source\repos\ServerFramework\ServerFramework;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\taejeong\source\repos\ServerFramework\ServerFramework;C:\Users\taejeong\source\repos\ServerFramework\Utils;</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -132,7 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\taejeong\source\repos\ServerFramework\ServerFramework;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\taejeong\source\repos\ServerFramework\ServerFramework;C:\Users\taejeong\source\repos\ServerFramework\Utils;</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -146,12 +146,13 @@
     <ProjectReference Include="..\ServerFramework\ServerFramework.vcxproj">
       <Project>{48868cee-7fcf-4f24-9a06-a2dba1020bb1}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.vcxproj">
+      <Project>{e560e68a-e943-4fb0-9c1a-66d546ee8aef}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BombUpdater.cpp" />
-    <ClCompile Include="Component.cpp" />
     <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameServerBroadcaster.cpp" />
     <ClCompile Include="game_protocol.pb.cc" />
     <ClCompile Include="main.cpp" />
@@ -162,12 +163,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombUpdater.h" />
-    <ClInclude Include="Component.h" />
     <ClInclude Include="E_EngineType.h" />
-    <ClInclude Include="E_GameObjectEvent.h" />
     <ClInclude Include="E_TimerEvent.h" />
     <ClInclude Include="GameManager.h" />
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameServerBroadcaster.h" />
     <ClInclude Include="E_GameState.h" />
     <ClInclude Include="game_protocol.pb.h" />

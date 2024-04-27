@@ -9,8 +9,7 @@ class GameObject
 {
 public:
 	static GameObject* find(const std::string& name);
-	static GameObject* instantiate(bool active = true) { GameObject* ret = new GameObject(); ret->_isActive = active; s_gameObjects.push_back(ret); return ret; }
-	static GameObject* instantiate(GameObject* obj, bool active = true) { GameObject* ret = new GameObject(*obj); ret->_isActive = active; s_gameObjects.push_back(ret); return ret; }
+	static GameObject* instantiate(GameObject* obj = nullptr, GameObject* parent = nullptr, bool active = true);
 	static void destroy(GameObject*& obj);
 
 	template<typename T>
@@ -24,7 +23,7 @@ public:
 	const std::vector<Component*>& components() const { return _components; }
 	std::vector<Component*>& components() { return _components; }
 	const Transform& transform() const { return _worldTF; }
-	void transform(const Transform& displacement);
+	void transform(const Motion& motionInWorld);
 	const std::string& name() const { return _name; }
 	std::string& name() { return _name; }
 	void isActive(bool flag);
@@ -34,8 +33,10 @@ private:
 	GameObject(const GameObject& obj);
 	~GameObject();
 	void broadcast(E_GameObjectEvent evt, void* arg);
+	void removeChild(GameObject* child);
 
 	static std::vector<GameObject*> s_gameObjects;
+	static GameObject* s_root;
 
 	std::vector<Component*> _components;
 	GameObject* _parent = nullptr;

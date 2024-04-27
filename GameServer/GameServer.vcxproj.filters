@@ -27,9 +27,6 @@
     <Filter Include="소스 파일\Update">
       <UniqueIdentifier>{89074627-8036-4752-b0d5-79f7d1940024}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\GameObject">
-      <UniqueIdentifier>{b24b7103-4106-492d-8fd4-56a3fcfac7bc}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -58,12 +55,6 @@
     </ClCompile>
     <ClCompile Include="BombUpdater.cpp">
       <Filter>소스 파일\Update</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>소스 파일\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Component.cpp">
-      <Filter>소스 파일\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -99,15 +90,6 @@
     </ClInclude>
     <ClInclude Include="BombUpdater.h">
       <Filter>소스 파일\Update</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>소스 파일\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="E_GameObjectEvent.h">
-      <Filter>소스 파일\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>소스 파일\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
