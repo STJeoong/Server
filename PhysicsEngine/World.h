@@ -1,19 +1,23 @@
 #pragma once
-#include "Vector2D.h"
-#include "Body.h"
 #include <vector>
-#include <unordered_map>
+#include "Vector2D.h"
+#include "RigidBody2D.h"
+#include "Joint2D.h"
 
+// 일단은 월드는 한개만 존재할 수 있음.
 class World
 {
 public:
-	World(const Vector2D& gravity) : _gravity(gravity) {}
-	void add(Body* rigid) { _rigids.push_back(rigid); }
-	void broadPhase();
-	void step(float dt);
+	static void gravity(const Vector2D& g) { s_gravity = g; }
+	static void addRigid(RigidBody2D* rigid);
+	static void removeRigid(RigidBody2D* rigid);
+	static void addJoint(Joint2D* joint);
+	static void removeJoint(Joint2D* joint);
+	static void step(float dt);
 private:
+	static void broadPhase();
 
-	Vector2D _gravity;
-	std::vector<Body*> _rigids;
-	//std::unordered_map<ArbiterKey, ArbPair> _arbiters;
+	static Vector2D s_gravity;
+	static std::vector<RigidBody2D*> s_rigids;
+	static std::vector<Joint2D*> s_joints;
 };

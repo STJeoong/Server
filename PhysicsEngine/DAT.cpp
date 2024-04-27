@@ -23,12 +23,12 @@ size_t DAT::insert(void* userData, const AABB& aabb)
     this->insertLeaf(node);
     return node;
 }
-void DAT::remove(size_t leaf)
+void DAT::remove(size_t id)
 {
-    this->removeLeaf(leaf);
-    this->release(leaf);
+    this->removeLeaf(id);
+    this->release(id);
 }
-bool DAT::move(size_t leaf, const AABB& sweepAABB, const Vector2D& displacement)
+bool DAT::move(size_t id, const AABB& sweepAABB, const Vector2D& displacement)
 {
     Vector2D r{ DAT::FATTEN_AABB, DAT::FATTEN_AABB };
     AABB fatAABB = sweepAABB;
@@ -38,7 +38,7 @@ bool DAT::move(size_t leaf, const AABB& sweepAABB, const Vector2D& displacement)
     Vector2D predictMovement = displacement * DAT::PREDICT_MULTIPLIER;
     fatAABB += predictMovement;
 
-    const AABB& treeAABB = _nodes[leaf].aabb;
+    const AABB& treeAABB = _nodes[id].aabb;
     if (treeAABB.contains(sweepAABB))
     {
         AABB hugeAABB = fatAABB;
@@ -49,11 +49,12 @@ bool DAT::move(size_t leaf, const AABB& sweepAABB, const Vector2D& displacement)
         // rotation이 0이 되고 그 상태에서 살짝 움직임.
         // 이 상황에서는 hugeAABB가 treeAABB보다 작을 수 있음. => treeAABB 크기 재조정 필요
     }
-    this->removeLeaf(leaf);
-    _nodes[leaf].aabb = fatAABB;
-    this->insertLeaf(leaf);
+    this->removeLeaf(id);
+    _nodes[id].aabb = fatAABB;
+    this->insertLeaf(id);
     return true;
 }
+void* DAT::getData(size_t id) { return _nodes[id].userData; }
 #pragma endregion
 
 #pragma region private
@@ -86,7 +87,7 @@ void DAT::insertLeaf(size_t leaf)
     }
     else
         _root = newParent;
-    this->fixUpwardsTree(newParent);
+    this->fixUpwards(newParent);
 }
 void DAT::removeLeaf(size_t leaf)
 {
@@ -115,7 +116,7 @@ void DAT::removeLeaf(size_t leaf)
         _nodes[grandParent].left = sibling;
     else
         _nodes[grandParent].right = sibling;
-    this->fixUpwardsTree(grandParent);
+    this->fixUpwards(grandParent);
 }
 size_t DAT::findBestSibling(size_t leaf)
 {
@@ -139,14 +140,14 @@ size_t DAT::findBestSibling(size_t leaf)
     }
     return idx;
 }
-void DAT::fixUpwardsTree(size_t idx)
+void DAT::fixUpwards(size_t idx)
 {
     while (idx != DAT::NULL_NODE)
     {
         idx = this->balance(idx);
 
-        int left = _nodes[idx].left;
-        int right = _nodes[idx].right;
+        size_t left = _nodes[idx].left;
+        size_t right = _nodes[idx].right;
 
         _nodes[idx].height = 1 + max(_nodes[left].height, _nodes[right].height);
         _nodes[idx].aabb = _nodes[left].aabb + _nodes[right].aabb;

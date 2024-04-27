@@ -9,13 +9,14 @@ class DAT
 public:
     DAT();
     size_t insert(void* userData, const AABB& aabb);
-    void remove(size_t leaf);
-    bool move(size_t leaf, const AABB& sweepAABB, const Vector2D& displacement); // sweepAABB = 물체의 시작위치AABB + 물체의 마지막위치AABB, displacement : 변위
+    void remove(size_t id);
+    bool move(size_t id, const AABB& sweepAABB, const Vector2D& displacement); // sweepAABB = 물체의 시작위치AABB + 물체의 마지막위치AABB, displacement : 변위
+    void* getData(size_t id);
 private:
     void insertLeaf(size_t leaf); // 균형을 유지하면서 새로운 leaf 노드를 적절한 위치에 위치시킴
     void removeLeaf(size_t leaf);
     size_t findBestSibling(size_t leaf);
-    void fixUpwardsTree(size_t idx);
+    void fixUpwards(size_t idx);
     size_t balance(size_t iA);
     void rr(size_t iA);
     void ll(size_t iA);

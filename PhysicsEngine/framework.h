@@ -13,3 +13,7 @@
 #include <map>
 #include <unordered_set>
 #include <unordered_map>
+
+// define
+#define PI 3.14159265359f
+#define MIN_SIZE 0.0001f // minimum size of circle, box

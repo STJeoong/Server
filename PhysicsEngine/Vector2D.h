@@ -24,8 +24,8 @@ public:
 	Vector2D& operator+=(const Vector2D& obj);
 	const float& x() const { return _x; }
 	const float& y() const { return _y; }
-	void x(float f) { _x = f; }
-	void y(float f) { _y = f; }
+	float& x() { return _x; }
+	float& y() { return _y; }
 private:
 	float _x = 0.0f;
 	float _y = 0.0f;
