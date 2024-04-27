@@ -21,6 +21,7 @@ public:
 	// TODO : offset, density, trigger 바뀌면 rigidbody에 이벤트 보내도록
 protected:
 	virtual ~Collider2D() = default;
+	void onAddComponent(Component* component) override; // this is used when rigidbody is made later than collider
 
 	Point2D _offset;
 	float _density = 1.0f;
@@ -29,6 +30,4 @@ protected:
 	float _mass = 0.0f; // you need to keep this value up to date. update this whenever related to mass is changed.
 	float _inertia = 0.0f; // you need to keep this value up to date. update this whenever related to inertia is changed.
 	bool _isTrigger = false;
-private:
-	void onAddComponent(Component* component) override; // this is used when rigidbody is made later than collider
 };

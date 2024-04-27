@@ -15,8 +15,6 @@ protected:
 	// this is made for inner component. if caller was component, you can use this.
 	// only component can use this when they want to trigger event
 	void invokeAll(const E_GameObjectEvent& evt, void* arg);
-private:
-	virtual Component* clone() = 0;
 	virtual void start() {}
 	virtual void onDestroy() {}
 	virtual void update() {}
@@ -32,6 +30,8 @@ private:
 	virtual void onRemoveComponent(Component* component) {}
 	virtual void onEnableComponent(Component* component) {}
 	virtual void onDisableComponent(Component* component) {}
+private:
+	virtual Component* clone() = 0;
 	void setGameObject(GameObject* obj) { _gameObject = obj; }
 	// used to invoke just one component's invoke()
 	void invoke(const E_GameObjectEvent& evt, void* arg);
