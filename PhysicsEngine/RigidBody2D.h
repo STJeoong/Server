@@ -19,6 +19,7 @@ public:
 	bool fixedRotation() const { return _flags & (int)E_BodyFlag::FIXED_ROTATION; }
 	void fixedRotation(bool flag);
 	void type(E_BodyType bodyType);
+	bool isAwake() { return _flags & (int)E_BodyFlag::AWAKE; }
 	void wakeUp();
 	void sleep();
 private:
@@ -26,8 +27,8 @@ private:
 	RigidBody2D(const S_RigidDef& def);
 	~RigidBody2D() = default;
 	virtual RigidBody2D* clone() override;
-	void onAddComponent(Component* component) override; // this is used when collider is made later than rigidbody.
-	void onRemoveComponent(Component* component) override; // this is used when collider is removed later than rigidbody.
+	void onAddComponent(Component* component) override;
+	void onRemoveComponent(Component* component) override;
 	void onEnableComponent(Component* component) override;
 	void onDisableComponent(Component* component) override;
 	void resetMassData();
@@ -48,5 +49,5 @@ private:
 	UINT8 _flags = 1; // default : awake start
 	float _sleepTime = 0.0f;
 
-	std::vector<Collider2D*> _colliders; // TODO : 없애도 되나?
+	std::vector<Collider2D*> _colliders;
 };
