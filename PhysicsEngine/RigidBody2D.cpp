@@ -5,8 +5,6 @@
 #include "World.h"
 
 #pragma region public
-RigidBody2D::RigidBody2D() { World::addRigid(this); }
-RigidBody2D::~RigidBody2D() { World::removeRigid(this); }
 RigidBody2D* RigidBody2D::clone()
 {
 	RigidBody2D* ret = new RigidBody2D(*this);
@@ -46,6 +44,7 @@ void RigidBody2D::onAddComponent(Component* component)
 			_colliders.push_back(tmp);
 		}
 		this->resetMassData();
+		World::addRigid(this);
 	}
 	else if (collider != nullptr)
 	{
@@ -59,8 +58,11 @@ void RigidBody2D::onRemoveComponent(Component* component)
 	Collider2D* collider = dynamic_cast<Collider2D*>(component);
 	if (rigid == nullptr && collider == nullptr) return;
 	if (rigid != nullptr)
+	{
 		for (int i = 0; i < _colliders.size(); ++i)
 			_colliders[i]->attachTo(nullptr);
+		World::removeRigid(this);
+	}
 	else if (collider != nullptr)
 	{
 		auto it = std::find(_colliders.begin(), _colliders.end(), component);

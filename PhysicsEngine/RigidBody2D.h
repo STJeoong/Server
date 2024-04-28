@@ -19,8 +19,8 @@ public:
 	void fixedRotation(bool flag);
 	void type(E_BodyType bodyType);
 private:
-	RigidBody2D();
-	~RigidBody2D();
+	RigidBody2D() = default;
+	~RigidBody2D() = default;
 	virtual RigidBody2D* clone() override;
 	void onAddComponent(Component* component) override; // this is used when collider is made later than rigidbody.
 	void onRemoveComponent(Component* component) override; // this is used when collider is removed later than rigidbody.

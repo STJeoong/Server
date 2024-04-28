@@ -45,12 +45,22 @@ private:
 	Transform _localTF; // local transform
 	std::string _name;
 	bool _isActive = true;
+	bool _isRigid = false;
 };
 
+#include "RigidBody2D.h"
 template<typename T, typename... Args>
 inline T* GameObject::addComponent(Args&&... args)
 {
 	Component* ret = new T(std::forward<Args>(args)...);
+	RigidBody2D* rigid = dynamic_cast<RigidBody2D*>(ret);
+	if (_isRigid && rigid != nullptr)
+	{
+		delete ret;
+		return nullptr;
+	}
+	else if (!_isRigid && rigid != nullptr)
+		_isRigid = true;
 	ret->setGameObject(this);
 	_components.push_back(ret);
 	for (Component* com : _components)

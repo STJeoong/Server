@@ -46,3 +46,4 @@ void World::broadPhase()
 
 Vector2D World::s_gravity;
 std::vector<RigidBody2D*> World::s_rigids;
+std::vector<Joint2D*> World::s_joints;
