@@ -30,10 +30,7 @@ void RigidBody2D::fixedRotation(bool flag)
 #pragma region private
 void RigidBody2D::onAddComponent(Component* component)
 {
-	RigidBody2D* rigid = dynamic_cast<RigidBody2D*>(component);
-	Collider2D* collider = dynamic_cast<Collider2D*>(component);
-	if (rigid == nullptr && collider == nullptr) return;
-	if (rigid != nullptr)
+	if (typeid(*component) == typeid(RigidBody2D))
 	{
 		const std::vector<Component*>& components = this->gameObject()->components();
 		Collider2D* tmp = nullptr;
@@ -45,30 +42,27 @@ void RigidBody2D::onAddComponent(Component* component)
 		}
 		this->resetMassData();
 		World::addRigid(this);
+		return;
 	}
-	else if (collider != nullptr)
-	{
-		_colliders.push_back(collider);
-		this->resetMassData();
-	}
+	Collider2D* collider = dynamic_cast<Collider2D*>(component);
+	if (collider == nullptr) return;
+	_colliders.push_back(collider);
+	this->resetMassData();
 }
 void RigidBody2D::onRemoveComponent(Component* component)
 {
-	RigidBody2D* rigid = dynamic_cast<RigidBody2D*>(component);
-	Collider2D* collider = dynamic_cast<Collider2D*>(component);
-	if (rigid == nullptr && collider == nullptr) return;
-	if (rigid != nullptr)
+	if (typeid(*component) == typeid(RigidBody2D))
 	{
 		for (int i = 0; i < _colliders.size(); ++i)
 			_colliders[i]->attachTo(nullptr);
 		World::removeRigid(this);
+		return;
 	}
-	else if (collider != nullptr)
-	{
-		auto it = std::find(_colliders.begin(), _colliders.end(), component);
-		_colliders.erase(it);
-		this->resetMassData();
-	}
+	Collider2D* collider = dynamic_cast<Collider2D*>(component);
+	if (collider == nullptr) return;
+	auto it = std::find(_colliders.begin(), _colliders.end(), component);
+	_colliders.erase(it);
+	this->resetMassData();
 }
 void RigidBody2D::onEnableComponent(Component* component)
 {

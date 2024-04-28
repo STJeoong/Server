@@ -52,15 +52,12 @@ private:
 template<typename T, typename... Args>
 inline T* GameObject::addComponent(Args&&... args)
 {
-	Component* ret = new T(std::forward<Args>(args)...);
-	RigidBody2D* rigid = dynamic_cast<RigidBody2D*>(ret);
-	if (_isRigid && rigid != nullptr)
+	if (typeid(T) == typeid(RigidBody2D))
 	{
-		delete ret;
-		return nullptr;
-	}
-	else if (!_isRigid && rigid != nullptr)
+		if (_isRigid) return nullptr;
 		_isRigid = true;
+	}
+	Component* ret = new T(std::forward<Args>(args)...);
 	ret->setGameObject(this);
 	_components.push_back(ret);
 	for (Component* com : _components)
