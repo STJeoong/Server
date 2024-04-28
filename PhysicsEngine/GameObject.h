@@ -3,6 +3,7 @@
 #include <string>
 #include "E_GameObjectEvent.h"
 #include "Transform.h"
+#include "E_Layer.h"
 class Component;
 class GameObject
 {
@@ -28,6 +29,7 @@ public:
 	std::string& name() { return _name; }
 	void isActive(bool flag);
 	bool isActive() const { return _isActive; }
+	const E_Layer& layer() const { return _layer; }
 private:
 	GameObject() = default; // RigidBody는 추가하면 추가되도록하자.
 	GameObject(const GameObject& obj);
@@ -46,6 +48,7 @@ private:
 	std::string _name;
 	bool _isActive = true;
 	bool _isRigid = false;
+	E_Layer _layer = E_Layer::DEFAULT;
 };
 
 #include "RigidBody2D.h"

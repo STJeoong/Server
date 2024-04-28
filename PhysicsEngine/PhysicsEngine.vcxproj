@@ -157,8 +157,10 @@
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="Collision2D.h" />
     <ClInclude Include="Contact2D.h" />
+    <ClInclude Include="ContactFilter.h" />
     <ClInclude Include="E_BodyFlag.h" />
     <ClInclude Include="E_BodyType.h" />
+    <ClInclude Include="E_Layer.h" />
     <ClInclude Include="Joint2D.h" />
     <ClInclude Include="RigidBody2D.h" />
     <ClInclude Include="BoxCollider2D.h" />
@@ -185,6 +187,7 @@
     <ClCompile Include="Collider2D.cpp" />
     <ClCompile Include="Collision2D.cpp" />
     <ClCompile Include="Contact2D.cpp" />
+    <ClCompile Include="ContactFilter.cpp" />
     <ClCompile Include="RigidBody2D.cpp" />
     <ClCompile Include="BoxCollider2D.cpp" />
     <ClCompile Include="CircleCollider.cpp" />

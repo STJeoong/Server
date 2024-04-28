@@ -7,11 +7,12 @@ class GameObject;
 class Component
 {
 	friend class GameObject;
+public:
+	const GameObject* gameObject() const { return _gameObject; }
+	GameObject* gameObject() { return _gameObject; }
 protected:
 	Component() = default;
 	virtual ~Component() = default;
-	const GameObject* gameObject() const { return _gameObject; }
-	GameObject* gameObject() { return _gameObject; }
 	// used to invoke all component's invoke() in gameobject
 	// this is made for inner component. if caller was component, you can use this.
 	// only component can use this when they want to trigger event
