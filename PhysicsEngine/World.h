@@ -17,8 +17,8 @@ public:
 	static void init(const Vector2D& g);
 	static void addRigid(RigidBody2D* rigid);
 	static void removeRigid(RigidBody2D* rigid);
-	static size_t addCollider(Collider2D* collider);
-	static void removeCollider(size_t key);
+	static int addCollider(Collider2D* collider);
+	static void removeCollider(int key);
 	static void addJoint(Joint2D* joint);
 	static void removeJoint(Joint2D* joint);
 	static void step(float dt);

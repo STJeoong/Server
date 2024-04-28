@@ -18,8 +18,8 @@ void World::removeRigid(RigidBody2D* rigid)
 	auto it = std::find(s_rigids.begin(), s_rigids.end(), rigid);
 	s_rigids.erase(it);
 }
-size_t World::addCollider(Collider2D* collider) { return s_tree.insert(collider, collider->getAABB()); }
-void World::removeCollider(size_t key)
+int World::addCollider(Collider2D* collider) { return s_tree.insert(collider, collider->getAABB()); }
+void World::removeCollider(int key)
 {
 	Collider2D* collider = reinterpret_cast<Collider2D*>(s_tree.getData(key));
 	s_tree.remove(key);

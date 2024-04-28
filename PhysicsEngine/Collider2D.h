@@ -40,7 +40,7 @@ private:
 	void addToBroadPhase();
 	void removeFromBroadPhase();
 	void attachTo(RigidBody2D* rigid) { _attachedRigidBody = rigid; }
-	const size_t& key() const { return _key; }
+	const int& key() const { return _key; }
 
-	size_t _key = -1; // DAT node index
+	int _key = -1; // DAT node index
 };
