@@ -5,16 +5,16 @@
 DAT::DAT() : _root(DAT::NULL_NODE), _freeNode(0), _cnt(0), _capacity(16)
 {
     _nodes.resize(_capacity);
-    for (size_t i = 0; i < _capacity; ++i)
+    for (int i = 0; i < _capacity; ++i)
     {
         _nodes[i].parent = i + 1;
         _nodes[i].height = -1;
     }
     _nodes[_capacity - 1].parent = DAT::NULL_NODE;
 }
-size_t DAT::insert(void* userData, const AABB& aabb)
+int DAT::insert(void* userData, const AABB& aabb)
 {
-    size_t node = this->allocate();
+    int node = this->allocate();
     // fatten aabb
     Vector2D r{ DAT::FATTEN_AABB, DAT::FATTEN_AABB };
     _nodes[node].aabb += r;
@@ -23,12 +23,12 @@ size_t DAT::insert(void* userData, const AABB& aabb)
     this->insertLeaf(node);
     return node;
 }
-void DAT::remove(size_t id)
+void DAT::remove(int id)
 {
     this->removeLeaf(id);
     this->release(id);
 }
-bool DAT::move(size_t id, const AABB& sweepAABB, const Vector2D& displacement)
+bool DAT::move(int id, const AABB& sweepAABB, const Vector2D& displacement)
 {
     Vector2D r{ DAT::FATTEN_AABB, DAT::FATTEN_AABB };
     AABB fatAABB = sweepAABB;
@@ -54,21 +54,22 @@ bool DAT::move(size_t id, const AABB& sweepAABB, const Vector2D& displacement)
     this->insertLeaf(id);
     return true;
 }
-void* DAT::getData(size_t id) { return _nodes[id].userData; }
+void* DAT::getData(int id) { return _nodes[id].userData; }
 #pragma endregion
 
 #pragma region private
-void DAT::insertLeaf(size_t leaf)
+void DAT::insertLeaf(int leaf)
 {
     if (_root == DAT::NULL_NODE)
     {
         _root = leaf;
         _nodes[_root].parent = DAT::NULL_NODE;
+        return;
     }
 
-    size_t sibling = this->findBestSibling(leaf);
-    size_t oldParent = _nodes[sibling].parent;
-    size_t newParent = this->allocate();
+    int sibling = this->findBestSibling(leaf);
+    int oldParent = _nodes[sibling].parent;
+    int newParent = this->allocate();
     _nodes[newParent].parent = oldParent;
     _nodes[newParent].userData = nullptr;
     _nodes[newParent].aabb = _nodes[leaf].aabb + _nodes[sibling].aabb;
@@ -89,7 +90,7 @@ void DAT::insertLeaf(size_t leaf)
         _root = newParent;
     this->fixUpwards(newParent);
 }
-void DAT::removeLeaf(size_t leaf)
+void DAT::removeLeaf(int leaf)
 {
     if (leaf == _root)
     {
@@ -97,9 +98,9 @@ void DAT::removeLeaf(size_t leaf)
         return;
     }
 
-    size_t parent = _nodes[leaf].parent;
-    size_t grandParent = _nodes[parent].parent;
-    size_t sibling;
+    int parent = _nodes[leaf].parent;
+    int grandParent = _nodes[parent].parent;
+    int sibling;
     if (_nodes[parent].left == leaf)
         sibling = _nodes[parent].right;
     else
@@ -118,13 +119,13 @@ void DAT::removeLeaf(size_t leaf)
         _nodes[grandParent].right = sibling;
     this->fixUpwards(grandParent);
 }
-size_t DAT::findBestSibling(size_t leaf)
+int DAT::findBestSibling(int leaf)
 {
-    size_t idx = _root;
+    int idx = _root;
     while (!_nodes[idx].isLeaf()) // node != leaf 면 left, right모두 -1이 아님. 반대로 node == leaf면 둘다 -1임.
     {
-        size_t left = _nodes[idx].left;
-        size_t right = _nodes[idx].right;
+        int left = _nodes[idx].left;
+        int right = _nodes[idx].right;
 
         float area = _nodes[idx].aabb.perimeter();
         AABB combinedAABB = _nodes[idx].aabb + _nodes[leaf].aabb;
@@ -140,14 +141,14 @@ size_t DAT::findBestSibling(size_t leaf)
     }
     return idx;
 }
-void DAT::fixUpwards(size_t idx)
+void DAT::fixUpwards(int idx)
 {
     while (idx != DAT::NULL_NODE)
     {
         idx = this->balance(idx);
 
-        size_t left = _nodes[idx].left;
-        size_t right = _nodes[idx].right;
+        int left = _nodes[idx].left;
+        int right = _nodes[idx].right;
 
         _nodes[idx].height = 1 + max(_nodes[left].height, _nodes[right].height);
         _nodes[idx].aabb = _nodes[left].aabb + _nodes[right].aabb;
@@ -155,16 +156,16 @@ void DAT::fixUpwards(size_t idx)
         idx = _nodes[idx].parent;
     }
 }
-size_t DAT::balance(size_t iA)
+int DAT::balance(int iA)
 {
     if (_nodes[iA].isLeaf() || _nodes[iA].height < 2) return iA;
-    size_t iB = _nodes[iA].left;
-    size_t iC = _nodes[iA].right;
+    int iB = _nodes[iA].left;
+    int iC = _nodes[iA].right;
     int balance = _nodes[iB].height - _nodes[iC].height;
     if (balance < -1) // R
     {
-        size_t iF = _nodes[iC].left;
-        size_t iG = _nodes[iC].right;
+        int iF = _nodes[iC].left;
+        int iG = _nodes[iC].right;
         if (_nodes[iF].height > _nodes[iG].height) // RL 상태 : LL -> RR
         {
             this->ll(iC);
@@ -179,8 +180,8 @@ size_t DAT::balance(size_t iA)
     }
     if (balance > 1) // L
     {
-        size_t iD = _nodes[iB].left;
-        size_t iE = _nodes[iB].right;
+        int iD = _nodes[iB].left;
+        int iE = _nodes[iB].right;
         if (_nodes[iD].height > _nodes[iE].height) // LL 상태
         {
             this->ll(iA);
@@ -195,12 +196,12 @@ size_t DAT::balance(size_t iA)
     }
     return iA;
 }
-void DAT::rr(size_t iA)
+void DAT::rr(int iA)
 {
-    size_t iC = _nodes[iA].right;
-    size_t iF = _nodes[iC].left;
-    size_t iG = _nodes[iC].right;
-    size_t oldParent = _nodes[iA].parent;
+    int iC = _nodes[iA].right;
+    int iF = _nodes[iC].left;
+    int iG = _nodes[iC].right;
+    int oldParent = _nodes[iA].parent;
     Node& A = _nodes[iA];
     Node& C = _nodes[iC];
     Node& F = _nodes[iF];
@@ -226,12 +227,12 @@ void DAT::rr(size_t iA)
             _nodes[oldParent].right = iC;
     }
 }
-void DAT::ll(size_t iA)
+void DAT::ll(int iA)
 {
-    size_t iB = _nodes[iA].left;
-    size_t iD = _nodes[iB].left;
-    size_t iE = _nodes[iB].right;
-    size_t oldParent = _nodes[iA].parent;
+    int iB = _nodes[iA].left;
+    int iD = _nodes[iB].left;
+    int iE = _nodes[iB].right;
+    int oldParent = _nodes[iA].parent;
     Node& A = _nodes[iA];
     Node& B = _nodes[iB];
     Node& D = _nodes[iD];
@@ -257,14 +258,14 @@ void DAT::ll(size_t iA)
             _nodes[oldParent].right = iB;
     }
 }
-size_t DAT::allocate()
+int DAT::allocate()
 {
     if (_freeNode == DAT::NULL_NODE)
     {
-        size_t oldCapacity = _capacity;
+        int oldCapacity = _capacity;
         _capacity *= 2;
         _nodes.resize(_capacity);
-        for (size_t i = oldCapacity; i < _capacity; ++i)
+        for (int i = oldCapacity; i < _capacity; ++i)
         {
             _nodes[i].parent = i + 1;
             _nodes[i].height = -1;
@@ -272,7 +273,7 @@ size_t DAT::allocate()
         _nodes[_capacity - 1].parent = DAT::NULL_NODE;
         _freeNode = oldCapacity;
     }
-    size_t node = _freeNode;
+    int node = _freeNode;
     _freeNode = _nodes[node].parent; // _freeNode를 다음 미사용중인 노드로 옮김
     _nodes[node].parent = DAT::NULL_NODE;
     _nodes[node].left = DAT::NULL_NODE;
@@ -281,14 +282,14 @@ size_t DAT::allocate()
     ++_cnt;
     return node;
 }
-void DAT::release(size_t node)
+void DAT::release(int node)
 {
     _nodes[node].parent = _freeNode;
     _nodes[node].height = -1;
     _freeNode = node;
     --_cnt;
 }
-float DAT::cost(size_t i, const AABB& aabb) const
+float DAT::cost(int i, const AABB& aabb) const
 {
     AABB combinedAABB = _nodes[i].aabb + aabb;
     float combinedArea = combinedAABB.perimeter();
