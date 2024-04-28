@@ -20,6 +20,7 @@ int DAT::insert(void* userData, const AABB& aabb)
     _nodes[node].aabb += r;
     _nodes[node].aabb -= r;
     _nodes[node].userData = userData;
+    _nodes[node].moved = true;
     this->insertLeaf(node);
     return node;
 }
@@ -52,6 +53,7 @@ bool DAT::move(int id, const AABB& sweepAABB, const Vector2D& displacement)
     this->removeLeaf(id);
     _nodes[id].aabb = fatAABB;
     this->insertLeaf(id);
+    _nodes[id].moved = true;
     return true;
 }
 void* DAT::getData(int id) { return _nodes[id].userData; }
