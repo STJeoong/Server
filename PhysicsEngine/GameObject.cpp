@@ -27,12 +27,8 @@ GameObject* GameObject::instantiate(GameObject* obj, GameObject* parent, bool ac
 }
 void GameObject::destroy(GameObject*& obj)
 {
-	for (int i = 0; i < s_gameObjects.size(); ++i)
-		if (s_gameObjects[i] == obj)
-		{
-			s_gameObjects.erase(s_gameObjects.begin() + i);
-			break;
-		}
+	auto it = std::find(s_gameObjects.begin(), s_gameObjects.end(), obj);
+	s_gameObjects.erase(it);
 	obj->broadcast(E_GameObjectEvent::DESTROY, nullptr);
 	delete obj;
 	obj = nullptr;
@@ -42,12 +38,8 @@ void GameObject::removeComponent(Component* component)
 	for (Component* com : _components)
 		com->invoke(E_GameObjectEvent::REMOVE_COMPONENT, component);
 	
-	for (int i = 0; i < _components.size(); ++i)
-		if (_components[i] == component)
-		{
-			_components.erase(_components.begin() + i);
-			break;
-		}
+	auto it = std::find(_components.begin(), _components.end(), component);
+	_components.erase(it);
 	delete component;
 }
 void GameObject::setParent(GameObject& obj)
@@ -110,9 +102,9 @@ GameObject::GameObject(const GameObject& obj) : _worldTF(obj._worldTF), _name(ob
 	for (Component* otherComponent : obj._components)
 	{
 		Component* component = otherComponent->clone();
+		_components.push_back(component);
 		for (Component* myComponent : _components)
 			myComponent->invoke(E_GameObjectEvent::ADD_COMPONENT, component);
-		_components.push_back(component);
 	}
 }
 GameObject::~GameObject()
@@ -132,12 +124,8 @@ void GameObject::broadcast(E_GameObjectEvent evt, void* arg)
 }
 void GameObject::removeChild(GameObject* child)
 {
-	for (int i = 0; i < _children.size(); ++i)
-		if (_children[i] == child)
-		{
-			_children.erase(_children.begin() + i);
-			break;
-		}
+	auto it = std::find(_children.begin(), _children.end(), child);
+	_children.erase(it);
 }
 #pragma endregion
 

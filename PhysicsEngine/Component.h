@@ -8,6 +8,7 @@ class Component
 {
 	friend class GameObject;
 protected:
+	Component() = default;
 	virtual ~Component() = default;
 	const GameObject* gameObject() const { return _gameObject; }
 	GameObject* gameObject() { return _gameObject; }

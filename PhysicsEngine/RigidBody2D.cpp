@@ -32,54 +32,56 @@ void RigidBody2D::fixedRotation(bool flag)
 #pragma region private
 void RigidBody2D::onAddComponent(Component* component)
 {
+	RigidBody2D* rigid = dynamic_cast<RigidBody2D*>(component);
 	Collider2D* collider = dynamic_cast<Collider2D*>(component);
-	if (collider == nullptr) return;
-	this->addCollider(collider);
+	if (rigid == nullptr && collider == nullptr) return;
+	if (rigid != nullptr)
+	{
+		const std::vector<Component*>& components = this->gameObject()->components();
+		Collider2D* tmp = nullptr;
+		for (int i = 0; i < components.size(); ++i)
+		{
+			tmp = dynamic_cast<Collider2D*>(components[i]);
+			if (tmp == nullptr) continue;
+			_colliders.push_back(tmp);
+		}
+		this->resetMassData();
+	}
+	else if (collider != nullptr)
+	{
+		_colliders.push_back(collider);
+		this->resetMassData();
+	}
 }
 void RigidBody2D::onRemoveComponent(Component* component)
 {
+	RigidBody2D* rigid = dynamic_cast<RigidBody2D*>(component);
 	Collider2D* collider = dynamic_cast<Collider2D*>(component);
-	if (collider == nullptr) return;
-	this->removeCollider(collider);
-}
-void RigidBody2D::onActiveGameObject()
-{
-	// TODO : 가지고 있는 모든 콜라이더 월드에 push
-}
-void RigidBody2D::onInactiveGameObject()
-{
-	// TODO : world에 있는 관련된 콜라이더 제거
+	if (rigid == nullptr && collider == nullptr) return;
+	if (rigid != nullptr)
+		for (int i = 0; i < _colliders.size(); ++i)
+			_colliders[i]->attachTo(nullptr);
+	else if (collider != nullptr)
+	{
+		auto it = std::find(_colliders.begin(), _colliders.end(), component);
+		_colliders.erase(it);
+		this->resetMassData();
+	}
 }
 void RigidBody2D::onEnableComponent(Component* component)
 {
 	Collider2D* collider = dynamic_cast<Collider2D*>(component);
 	if (collider == nullptr) return;
-	this->addCollider(collider);
+	_colliders.push_back(collider);
+	this->resetMassData();
 }
 void RigidBody2D::onDisableComponent(Component* component)
 {
 	Collider2D* collider = dynamic_cast<Collider2D*>(component);
 	if (collider == nullptr) return;
-	this->removeCollider(collider);
-}
-void RigidBody2D::addCollider(Collider2D* collider)
-{
-	_colliders.push_back(collider);
+	auto it = std::find(_colliders.begin(), _colliders.end(), component);
+	_colliders.erase(it);
 	this->resetMassData();
-	if (!this->gameObject()->isActive()) return;
-	// TODO : world의 broadphase에 추가
-}
-void RigidBody2D::removeCollider(Collider2D* collider)
-{
-	for (int i = 0; i < _colliders.size(); ++i)
-		if (_colliders[i] == collider)
-		{
-			_colliders.erase(_colliders.begin() + i);
-			break;
-		}
-	this->resetMassData();
-	if (!this->gameObject()->isActive()) return;
-	// TODO : world의 broadphase에서 제거
 }
 void RigidBody2D::resetMassData()
 {

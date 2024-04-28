@@ -4,7 +4,6 @@
 #include "E_GameObjectEvent.h"
 #include "Transform.h"
 class Component;
-class Collider2D;
 class GameObject
 {
 public:
@@ -21,7 +20,6 @@ public:
 	void setParent(GameObject& obj);
 	void setChild(GameObject& obj);
 	const std::vector<Component*>& components() const { return _components; }
-	std::vector<Component*>& components() { return _components; }
 	const Transform& transform() const { return _worldTF; }
 	void transform(const Motion& motionInWorld);
 	void transform(const Vector2D& displacement);
@@ -54,8 +52,8 @@ inline T* GameObject::addComponent(Args&&... args)
 {
 	Component* ret = new T(std::forward<Args>(args)...);
 	ret->setGameObject(this);
+	_components.push_back(ret);
 	for (Component* com : _components)
 		com->invoke(E_GameObjectEvent::ADD_COMPONENT, ret);
-	_components.push_back(ret);
 	return dynamic_cast<T*>(ret);
 }

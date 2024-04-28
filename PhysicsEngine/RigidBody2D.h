@@ -8,7 +8,6 @@
 class Collider2D;
 class RigidBody2D : public Component
 {
-	friend class Collider2D;
 	friend class GameObject;
 public:
 	void addForce(const Vector2D& force) { _force += force; }
@@ -25,15 +24,10 @@ private:
 	virtual RigidBody2D* clone() override;
 	void onAddComponent(Component* component) override; // this is used when collider is made later than rigidbody.
 	void onRemoveComponent(Component* component) override; // this is used when collider is removed later than rigidbody.
-	void onActiveGameObject() override;
-	void onInactiveGameObject() override;
 	void onEnableComponent(Component* component) override;
 	void onDisableComponent(Component* component) override;
-	void addCollider(Collider2D* collider);
-	void removeCollider(Collider2D* collider);
 	void resetMassData();
 
-	Point2D _worldCOM; // world center of mass
 	Point2D _localCOM; // local center of mass
 	Vector2D _velocity;
 	float _angularVelocity = 0.0f;

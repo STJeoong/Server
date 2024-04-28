@@ -36,6 +36,23 @@ public:
 };
 #include <GameObject.h>
 #include <BoxCollider2D.h>
+class A;
+class B
+{
+public:
+    void append(A* a) { v.push_back(a); }
+private:
+    std::vector<A*> v;
+};
+B b;
+class A
+{
+public:
+    A()
+    {
+        b.append(this);
+    }
+};
 int main()
 {
     GameObject* g1 = GameObject::instantiate();

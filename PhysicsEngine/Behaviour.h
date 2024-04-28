@@ -6,7 +6,7 @@ class Behaviour : public Component
 {
 public:
 	const bool& enabled() const { return _enabled; }
-	void enable(bool flag)
+	virtual void enabled(bool flag)
 	{
 		if (_enabled == flag) return;
 		_enabled = flag;
@@ -14,6 +14,7 @@ public:
 		else this->invokeAll(E_GameObjectEvent::ENABLE_COMPONENT, this);
 	}
 protected:
+	Behaviour() = default;
 	virtual ~Behaviour() = default;
 private:
 	bool _enabled = true;
