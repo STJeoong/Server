@@ -38,7 +38,7 @@ void MatchServerHandler::onMatchReq(int serial, const Match_Req& req)
 
 	int s1 = req.serial(), s2 = _lastRegisteredSerial;
 	_lastRegisteredSerial = MatchServerHandler::INVALID_SERIAL;
-	ThreadPool::getInstance().enqueue([serial, this, s1, s2]() {
+	ThreadPool::enqueue([serial, this, s1, s2]() {
 		UINT16 portNum = _generator->generate();
 		Match_Resp resp = {};
 		resp.add_serials(s1);

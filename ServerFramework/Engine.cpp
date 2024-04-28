@@ -100,7 +100,7 @@ void Engine::send(int engineID, int serial, Size blockSize, char* data) { s_engi
 void Engine::disconnect(int engineID, int serial) { s_engines[engineID]->disconnect(serial); }
 void Engine::setTimer(int engineID, int serial, int millisec, int evt)
 {
-	ThreadPool::getInstance().enqueue([engineID, serial, millisec, evt]() {
+	ThreadPool::enqueue([engineID, serial, millisec, evt]() {
 		std::this_thread::sleep_for(std::chrono::milliseconds(millisec));
 		S_EngineEvent engineEvt = {};
 		engineEvt.serial = serial;
@@ -110,7 +110,7 @@ void Engine::setTimer(int engineID, int serial, int millisec, int evt)
 }
 void Engine::setRepetitiveTimer(int engineID, int serial, int millisec, int evt)
 {
-	ThreadPool::getInstance().enqueue([engineID, serial, millisec, evt]() {
+	ThreadPool::enqueue([engineID, serial, millisec, evt]() {
 		S_EngineEvent engineEvt = {};
 		engineEvt.serial = serial;
 		engineEvt.type = E_EngineEventType::EVENT_TIMER;

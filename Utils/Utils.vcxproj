@@ -154,6 +154,7 @@
     <ClInclude Include="Delegate.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MemoryBlockPool.h" />
+    <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SIngleton.h" />
     <ClInclude Include="ThreadPool.h" />
