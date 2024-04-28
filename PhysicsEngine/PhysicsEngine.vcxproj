@@ -124,6 +124,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>C:\Users\taejeong\source\repos\ServerFramework\Utils</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -141,6 +142,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>C:\Users\taejeong\source\repos\ServerFramework\Utils</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -153,6 +155,8 @@
   <ItemGroup>
     <ClInclude Include="AABB.h" />
     <ClInclude Include="Behaviour.h" />
+    <ClInclude Include="Collision2D.h" />
+    <ClInclude Include="Contact2D.h" />
     <ClInclude Include="E_BodyFlag.h" />
     <ClInclude Include="E_BodyType.h" />
     <ClInclude Include="Joint2D.h" />
@@ -168,6 +172,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Matrix22.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="S_RigidDef.h" />
     <ClInclude Include="S_BoxDef.h" />
     <ClInclude Include="S_CircleDef.h" />
     <ClInclude Include="Transform.h" />
@@ -178,6 +183,8 @@
   <ItemGroup>
     <ClCompile Include="AABB.cpp" />
     <ClCompile Include="Collider2D.cpp" />
+    <ClCompile Include="Collision2D.cpp" />
+    <ClCompile Include="Contact2D.cpp" />
     <ClCompile Include="RigidBody2D.cpp" />
     <ClCompile Include="BoxCollider2D.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
@@ -195,6 +202,11 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="World.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utils\Utils.vcxproj">
+      <Project>{e560e68a-e943-4fb0-9c1a-66d546ee8aef}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

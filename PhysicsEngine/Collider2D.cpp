@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Collider2D.h"
+#include "World.h"
 
 #pragma region public
 void Collider2D::enabled(bool flag)
@@ -23,10 +24,6 @@ void Collider2D::onRemoveComponent(Component* component)
 	if (component != this) return;
 	this->removeFromBroadPhase();
 }
-void Collider2D::addToBroadPhase()
-{
-}
-void Collider2D::removeFromBroadPhase()
-{
-}
+void Collider2D::addToBroadPhase() { _key = World::addCollider(this); }
+void Collider2D::removeFromBroadPhase() { World::removeCollider(_key); _key = -1; }
 #pragma endregion

@@ -107,6 +107,15 @@
     <ClInclude Include="E_BodyFlag.h">
       <Filter>소스 파일\Collision\Body</Filter>
     </ClInclude>
+    <ClInclude Include="Contact2D.h">
+      <Filter>소스 파일\Collision\CollisionDectection</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision2D.h">
+      <Filter>소스 파일\Collision\CollisionDectection</Filter>
+    </ClInclude>
+    <ClInclude Include="S_RigidDef.h">
+      <Filter>소스 파일\Collision\Body</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -150,6 +159,12 @@
     </ClCompile>
     <ClCompile Include="Collider2D.cpp">
       <Filter>소스 파일\Collision\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Contact2D.cpp">
+      <Filter>소스 파일\Collision\CollisionDectection</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision2D.cpp">
+      <Filter>소스 파일\Collision\CollisionDectection</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
