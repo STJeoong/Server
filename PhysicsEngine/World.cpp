@@ -12,12 +12,6 @@ void World::init(const Vector2D& g)
 	ObjectPool::makePool<Contact2D>(World::CONTACT_POOL_SIZE, [] { return new Contact2D(); },
 		[](void* contact) {}, [](void* contact) {});
 }
-void World::addRigid(RigidBody2D* rigid) { s_rigids.push_back(rigid); }
-void World::removeRigid(RigidBody2D* rigid)
-{
-	auto it = std::find(s_rigids.begin(), s_rigids.end(), rigid);
-	s_rigids.erase(it);
-}
 int World::addCollider(Collider2D* collider) { return s_tree.insert(collider, collider->getAABB()); }
 void World::removeCollider(int key)
 {
@@ -55,7 +49,6 @@ void World::broadPhase()
 #pragma endregion
 
 Vector2D World::s_gravity;
-std::vector<RigidBody2D*> World::s_rigids;
 std::vector<Joint2D*> World::s_joints;
 std::vector<Collision2D*> World::s_collisions;
 DAT World::s_tree;

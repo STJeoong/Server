@@ -2,7 +2,6 @@
 #include "GameObject.h"
 #include "RigidBody2D.h"
 #include "Collider2D.h"
-#include "World.h"
 
 #pragma region public
 RigidBody2D* RigidBody2D::clone()
@@ -65,7 +64,6 @@ void RigidBody2D::onAddComponent(Component* component)
 			_colliders.push_back(tmp);
 		}
 		this->resetMassData();
-		World::addRigid(this);
 		return;
 	}
 	Collider2D* collider = dynamic_cast<Collider2D*>(component);
@@ -79,7 +77,6 @@ void RigidBody2D::onRemoveComponent(Component* component)
 	{
 		for (int i = 0; i < _colliders.size(); ++i)
 			_colliders[i]->attachTo(nullptr);
-		World::removeRigid(this);
 		return;
 	}
 	Collider2D* collider = dynamic_cast<Collider2D*>(component);

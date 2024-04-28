@@ -48,9 +48,12 @@ public:
     static void func() { std::cout << "B\n"; }
 };
 #include <World.h>
+#include <ContactFilter.h>
 int main()
 {
+    ContactFilter::reset();
     GameObject* go = GameObject::instantiate();
+    ContactFilter::enableCollision(1, 2);
     BoxCollider2D* box1 = go->addComponent<BoxCollider2D>();
     go->removeComponent(box1);
  //   GameObject* g = GameObject::instantiate();
