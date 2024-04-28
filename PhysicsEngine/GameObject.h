@@ -63,7 +63,6 @@ inline T* GameObject::addComponent(Args&&... args)
 	Component* ret = new T(std::forward<Args>(args)...);
 	ret->setGameObject(this);
 	_components.push_back(ret);
-	for (Component* com : _components)
-		com->invoke(E_GameObjectEvent::ADD_COMPONENT, ret);
+	this->broadcast(E_GameObjectEvent::ADD_COMPONENT, ret);
 	return dynamic_cast<T*>(ret);
 }

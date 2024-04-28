@@ -35,8 +35,7 @@ void GameObject::destroy(GameObject*& obj)
 }
 void GameObject::removeComponent(Component* component)
 {
-	for (Component* com : _components)
-		com->invoke(E_GameObjectEvent::REMOVE_COMPONENT, component);
+	this->broadcast(E_GameObjectEvent::REMOVE_COMPONENT, component);
 	
 	auto it = std::find(_components.begin(), _components.end(), component);
 	_components.erase(it);
@@ -103,8 +102,7 @@ GameObject::GameObject(const GameObject& obj) : _worldTF(obj._worldTF), _name(ob
 	{
 		Component* component = otherComponent->clone();
 		_components.push_back(component);
-		for (Component* myComponent : _components)
-			myComponent->invoke(E_GameObjectEvent::ADD_COMPONENT, component);
+		this->broadcast(E_GameObjectEvent::ADD_COMPONENT, component);
 	}
 }
 GameObject::~GameObject()
