@@ -5,22 +5,22 @@
 #include <mutex>
 #include <functional>
 #include <thread>
-#include "Singleton.h"
-class ThreadPool : public Singleton<ThreadPool>
+class ThreadPool
 {
 	static const int THREAD_COUNT = 50;
-	friend class Singleton;
 public:
-	void enqueue(std::function<void()> func);
+	static void enqueue(std::function<void()> func);
+	static void terminate();
 private:
-	ThreadPool();
-	~ThreadPool();
-	void threadMain();
+	ThreadPool() = default;
+	~ThreadPool() = default;
+	static void makeWorkers();
+	static void threadMain();
 
-	bool _stopThreads = false;
-	std::vector<std::thread> _workers;
-	std::mutex _mutex;
-	std::queue<std::function<void()>> _queue;
-	std::condition_variable _cv;
+	static bool s_stopThreads;
+	static std::vector<std::thread> s_workers;
+	static std::mutex s_mutex;
+	static std::queue<std::function<void()>> s_queue;
+	static std::condition_variable s_cv;
 };
 
