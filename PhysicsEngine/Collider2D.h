@@ -25,8 +25,11 @@ public:
 protected:
 	Collider2D() = default;
 	virtual ~Collider2D() = default;
-	virtual void onAddComponent(Component* component) override; // this is used when rigidbody is made later than collider
-	virtual void onRemoveComponent(Component* component) override; // this is used when rigidbody is made later than collider
+	virtual void onDestroy() override;
+	virtual void onActiveGameObject() override;
+	virtual void onInactiveGameObject() override;
+	virtual void onAddComponent(Component* component) override;
+	virtual void onRemoveComponent(Component* component) override;
 
 	Point2D _offset;
 	float _density = 1.0f;

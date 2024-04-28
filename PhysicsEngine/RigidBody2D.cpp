@@ -54,7 +54,7 @@ RigidBody2D::RigidBody2D(const S_RigidDef& def)
 }
 void RigidBody2D::onAddComponent(Component* component)
 {
-	if (typeid(*component) == typeid(RigidBody2D))
+	if (component == this)
 	{
 		const std::vector<Component*>& components = this->gameObject()->components();
 		Collider2D* tmp = nullptr;
@@ -75,7 +75,7 @@ void RigidBody2D::onAddComponent(Component* component)
 }
 void RigidBody2D::onRemoveComponent(Component* component)
 {
-	if (typeid(*component) == typeid(RigidBody2D))
+	if (component == this)
 	{
 		for (int i = 0; i < _colliders.size(); ++i)
 			_colliders[i]->attachTo(nullptr);

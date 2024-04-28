@@ -14,6 +14,9 @@ void Collider2D::enabled(bool flag)
 #pragma endregion
 
 #pragma region protected
+void Collider2D::onDestroy() { this->removeFromBroadPhase(); }
+void Collider2D::onActiveGameObject() { this->addToBroadPhase(); }
+void Collider2D::onInactiveGameObject() { this->removeFromBroadPhase(); }
 void Collider2D::onAddComponent(Component* component)
 {
 	if (component != this) return;
