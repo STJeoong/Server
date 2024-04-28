@@ -16,6 +16,22 @@ void RigidBody2D::type(E_BodyType bodyType)
 	if (_type == bodyType) return;
 	// TODO : type 변경되면 충돌 판정 명단에서도 변경이 있어야됨.
 }
+void RigidBody2D::wakeUp()
+{
+	if (_type == E_BodyType::STATIC) return;
+	_flags |= (int)E_BodyFlag::AWAKE;
+	_sleepTime = 0.0f;
+}
+void RigidBody2D::sleep()
+{
+	if (_type == E_BodyType::STATIC) return;
+	_flags &= ~(int)E_BodyFlag::AWAKE;
+	_sleepTime = 0.0f;
+	_velocity = {};
+	_angularVelocity = 0.0f;
+	_force = {};
+	_torque = 0.0f;
+}
 void RigidBody2D::fixedRotation(bool flag)
 {
 	bool old = (_flags & (int)E_BodyFlag::FIXED_ROTATION);
@@ -28,6 +44,14 @@ void RigidBody2D::fixedRotation(bool flag)
 #pragma endregion
 
 #pragma region private
+RigidBody2D::RigidBody2D(const S_RigidDef& def)
+{
+	_type = def.type;
+	_gravityScale = def.gravityScale;
+	if (def.awake) _flags |= (int)E_BodyFlag::AWAKE;
+	if (def.fixedRotation) _flags |= (int)E_BodyFlag::FIXED_ROTATION;
+	if (def.autoSleep) _flags |= (int)E_BodyFlag::AUTO_SLEEP;
+}
 void RigidBody2D::onAddComponent(Component* component)
 {
 	if (typeid(*component) == typeid(RigidBody2D))
