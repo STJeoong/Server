@@ -40,6 +40,7 @@ private:
         int right; // 오른쪽 자식노드
         int height; // 현재 노드의 높이 정보. 높이는 depth의 반대라고 보면 됨.
         void* userData; // Object pointer or some user data
+        bool moved;
     };
     std::vector<Node> _nodes; // 배열로 트리 관리
     int _root; // 루트 노드의 인덱스. 트리가 비어있으면 -1(NULL_NODE)로 초기화. 루트 노드는 모든 객체를 둘러싸는 group AABB를 가지고 있음.

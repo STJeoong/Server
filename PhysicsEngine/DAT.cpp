@@ -279,6 +279,7 @@ int DAT::allocate()
     _nodes[node].left = DAT::NULL_NODE;
     _nodes[node].right = DAT::NULL_NODE;
     _nodes[node].height = 0;
+    _nodes[node].moved = false;
     ++_cnt;
     return node;
 }
