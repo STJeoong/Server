@@ -7,8 +7,8 @@ class ObjectPool
 {
 public:
 	template<typename T>
-	static void makePool(size_t size, std::function<T*()> createFunc, std::function<void(T&)> actionOnGet,
-						std::function<void(T&)> actionOnRelease);
+	static void makePool(size_t size, std::function<void*()> createFunc, std::function<void(void*)> actionOnGet,
+						std::function<void(void*)> actionOnRelease);
 	// if you try to get object from not initialized pool, your program is going to be crashed.
 	template<typename T>
 	static T* get();
@@ -19,14 +19,14 @@ private:
 
 	static std::unordered_map<size_t, std::queue<void*>> s_mp;
 	static std::unordered_map<size_t, size_t> s_size;
-	static std::unordered_map<size_t, std::function<T*()>> s_createFunc;
-	static std::unordered_map<size_t, std::function<void(T&)>> s_actionOnGet;
-	static std::unordered_map<size_t, std::function<void(T&)>> s_actionOnRelease;
+	static std::unordered_map<size_t, std::function<void*()>> s_createFunc;
+	static std::unordered_map<size_t, std::function<void(void*)>> s_actionOnGet;
+	static std::unordered_map<size_t, std::function<void(void*)>> s_actionOnRelease;
 };
 
 template<typename T>
-inline void ObjectPool::makePool(size_t size, std::function<T*()> createFunc, std::function<void(T&)> actionOnGet,
-								std::function<void(T&)> actionOnRelease)
+inline void ObjectPool::makePool(size_t size, std::function<void*()> createFunc, std::function<void(void*)> actionOnGet,
+								std::function<void(void*)> actionOnRelease)
 {
 	const std::type_info& info = typeid(T);
 	size_t typeId = info.hash_code();
@@ -54,7 +54,7 @@ inline T* ObjectPool::get()
 		ret = q.front();
 		q.pop();
 	}
-	s_actionOnGet[typeId](*ret);
+	s_actionOnGet[typeId](ret);
 	return ret;
 }
 template<typename T>
@@ -66,6 +66,6 @@ inline void ObjectPool::release(T*& obj)
 
 	if (q.size() == s_size[typeId]) delete obj;
 	else q.push(obj);
-	s_actionOnRelease[typeId](*obj);
+	s_actionOnRelease[typeId](obj);
 	obj = nullptr;
 }
