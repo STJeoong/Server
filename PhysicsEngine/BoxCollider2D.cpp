@@ -43,9 +43,9 @@ AABB BoxCollider2D::getAABB()
 #pragma region private
 BoxCollider2D::BoxCollider2D(const S_BoxDef& def)
 {
-	_bounciness = def.bounciness;
+	_bounciness = Utils::clamp(def.bounciness, 100000.0f, 0.0f);
 	_density = def.density;
-	_friction = def.friction;
+	_friction = Utils::clamp(def.friction, 100000.0f, 0.0f);
 	_halfSize = def.halfSize;
 	_isTrigger = def.isTrigger;
 	_offset = def.offset;

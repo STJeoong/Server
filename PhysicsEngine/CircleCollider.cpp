@@ -22,9 +22,9 @@ AABB CircleCollider::getAABB()
 #pragma region private
 CircleCollider::CircleCollider(const S_CircleDef& def)
 {
-	_bounciness = def.bounciness;
+	_bounciness = Utils::clamp(def.bounciness, 100000.0f, 0.0f);
 	_density = def.density;
-	_friction = def.friction;
+	_friction = Utils::clamp(def.friction, 100000.0f, 0.0f);
 	_isTrigger = def.isTrigger;
 	_offset = def.offset;
 	_radius = def.radius;
