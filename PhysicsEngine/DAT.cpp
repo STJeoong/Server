@@ -56,9 +56,32 @@ bool DAT::move(int id, const AABB& sweepAABB, const Vector2D& displacement)
     _nodes[id].moved = true;
     return true;
 }
-void* DAT::getData(int id) { return _nodes[id].userData; }
-bool DAT::wasMoved(int id) { return _nodes[id].moved; }
-void DAT::clearMoved(int id) { _nodes[id].moved = false; }
+void* DAT::getData(int id) const { return _nodes[id].userData; }
+void DAT::makeCandidates(const std::vector<int>& queryId, std::vector<std::pair<int, int>>& candidates)
+{
+    for (int i = 0; i < queryId.size(); ++i)
+    {
+        const AABB& queryAABB = _nodes[queryId[i]].aabb;
+        std::stack<int> stk;
+        stk.push(_root);
+        while (!stk.empty())
+        {
+            int id = stk.top();
+            stk.pop();
+            if (!queryAABB.overlaps(_nodes[id].aabb)) continue;
+            if (queryId[i] == id) continue;
+            if (!_nodes[id].isLeaf())
+            {
+                stk.push(_nodes[id].left);
+                stk.push(_nodes[id].right);
+                continue;
+            }
+            if (_nodes[id].moved && _nodes[queryId[i]].moved && id < queryId[i]) continue;
+            candidates.push_back({ min(id, queryId[i]), max(id, queryId[i]) });
+        }
+        _nodes[queryId[i]].moved = false;
+    }
+}
 #pragma endregion
 
 #pragma region private
