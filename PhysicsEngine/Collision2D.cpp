@@ -21,5 +21,10 @@ void Collision2D::onDestroy()
 	}
 	for (int i = 0; i < _contacts.size(); ++i)
 		ObjectPool::release(_contacts[i]);
+	_colliderA = nullptr;
+	_colliderB = nullptr;
+	_rigidA = nullptr;
+	_rigidB = nullptr;
+	_isTouching = false;
 	_contacts.clear();
 }

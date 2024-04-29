@@ -20,4 +20,5 @@ private:
 	Collider2D* _colliderB = nullptr;
 	RigidBody2D* _rigidA = nullptr;
 	RigidBody2D* _rigidB = nullptr;
+	bool _isTouching = false;
 };
