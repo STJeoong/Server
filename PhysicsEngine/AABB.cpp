@@ -9,6 +9,12 @@ bool AABB::contains(const AABB& obj) const
 	return _min.x() <= obj.mini().x() && _min.y() <= obj.mini().y() &&
 		_max.x() >= obj.maxi().x() && _max.y() >= obj.maxi().y();
 }
+bool AABB::overlaps(const AABB& obj) const
+{
+	if (_max.x() < obj.mini().x() || _min.x() > obj.maxi().x()) return false;
+	if (_max.y() < obj.mini().y() || _min.y() > obj.maxi().y()) return false;
+	return true;
+}
 AABB AABB::operator+(const AABB& obj) const
 {
 	Point2D mini{ min(_min.x(), obj._min.x()), min(_min.y(), obj._min.y()) };

@@ -8,6 +8,7 @@ public:
 	AABB(const Point2D& mini, const Point2D& maxi);
 	float perimeter() const; 
 	bool contains(const AABB& obj) const;
+	bool overlaps(const AABB& obj) const;
 	AABB operator+(const AABB& obj) const;
 	AABB& operator+=(const Vector2D& v);
 	AABB operator+(const Vector2D& v) const; 
