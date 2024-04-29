@@ -21,5 +21,5 @@ void Collision2D::onDestroy()
 	}
 	for (int i = 0; i < _contacts.size(); ++i)
 		ObjectPool::release(_contacts[i]);
-	_contacts.resize(0);
+	_contacts.clear();
 }

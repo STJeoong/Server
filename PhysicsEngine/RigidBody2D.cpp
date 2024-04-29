@@ -7,7 +7,7 @@
 RigidBody2D* RigidBody2D::clone()
 {
 	RigidBody2D* ret = new RigidBody2D(*this);
-	ret->_colliders.resize(0);
+	ret->_colliders.clear();
 	return ret;
 }
 void RigidBody2D::type(E_BodyType bodyType)
