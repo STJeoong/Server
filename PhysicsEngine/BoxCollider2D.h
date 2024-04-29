@@ -6,7 +6,7 @@ class BoxCollider2D : public Collider2D
 {
 	friend class GameObject;
 public:
-	virtual AABB getAABB() override;
+	virtual AABB computeAABB() override;
 	const Vector2D& halfSize() const { return _halfSize; }
 	Vector2D& halfSize() { return _halfSize; }
 private:

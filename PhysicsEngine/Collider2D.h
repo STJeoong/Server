@@ -9,7 +9,7 @@ class Collider2D : public Behaviour
 {
 	friend class RigidBody2D;
 public:
-	virtual AABB getAABB() = 0;
+	virtual AABB computeAABB() = 0;
 	virtual void enabled(bool flag) override;
 	const Point2D& offset() const { return _offset; } // local offset
 	const float& density() const { return _density; }

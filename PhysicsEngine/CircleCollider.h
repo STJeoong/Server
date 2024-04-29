@@ -6,7 +6,7 @@ class CircleCollider : public Collider2D
 {
 	friend class GameObject;
 public:
-	virtual AABB getAABB() override;
+	virtual AABB computeAABB() override;
 	const float& radius() const { return _radius; }
 	float& radius() { return _radius; }
 private:

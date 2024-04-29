@@ -6,7 +6,7 @@
 
 #pragma region public
 CircleCollider* CircleCollider::clone() { return new CircleCollider(*this); }
-AABB CircleCollider::getAABB()
+AABB CircleCollider::computeAABB()
 {
 	const Point2D& worldObjPos = this->gameObject()->transform().position();
 	const Matrix22& worldObjRot = this->gameObject()->transform().rotation();

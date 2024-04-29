@@ -8,7 +8,7 @@
 
 #pragma region public
 BoxCollider2D* BoxCollider2D::clone() { return new BoxCollider2D(*this); }
-AABB BoxCollider2D::getAABB()
+AABB BoxCollider2D::computeAABB()
 {
 	const Point2D& worldObjPos = this->gameObject()->transform().position();
 	const Matrix22& worldObjRot = this->gameObject()->transform().rotation();
