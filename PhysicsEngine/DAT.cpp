@@ -57,6 +57,8 @@ bool DAT::move(int id, const AABB& sweepAABB, const Vector2D& displacement)
     return true;
 }
 void* DAT::getData(int id) { return _nodes[id].userData; }
+bool DAT::wasMoved(int id) { return _nodes[id].moved; }
+void DAT::clearMoved(int id) { _nodes[id].moved = false; }
 #pragma endregion
 
 #pragma region private

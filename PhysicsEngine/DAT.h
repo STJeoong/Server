@@ -12,6 +12,8 @@ public:
     void remove(int id);
     bool move(int id, const AABB& sweepAABB, const Vector2D& displacement); // sweepAABB = 물체의 시작위치AABB + 물체의 마지막위치AABB, displacement : 변위
     void* getData(int id);
+    bool wasMoved(int id);
+    void clearMoved(int id);
 private:
     void insertLeaf(int leaf); // 균형을 유지하면서 새로운 leaf 노드를 적절한 위치에 위치시킴
     void removeLeaf(int leaf);
