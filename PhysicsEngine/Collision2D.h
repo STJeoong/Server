@@ -4,6 +4,7 @@
 class Collision2D
 {
 	friend class World;
+	friend class CollisionDetector;
 public:
 	size_t contactCount() const { return _contacts.size(); }
 	const Contact2D& getContact(size_t idx) const { return *_contacts[idx]; }

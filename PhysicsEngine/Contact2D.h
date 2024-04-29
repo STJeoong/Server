@@ -5,6 +5,7 @@ class Collider2D;
 class RigidBody2D;
 class Contact2D
 {
+	friend class CollisionDetector;
 public:
 	const Point2D& point() const { return _point; }
 	const Vector2D& normal() const { return _normal; }
