@@ -47,10 +47,11 @@ inline T* ObjectPool::get()
 	std::queue<void*>& q = s_mp[typeId];
 	T* ret = nullptr;
 
-	if (q.empty()) ret = s_createFunc[typeId]();
+	if (q.empty())
+		ret = reinterpret_cast<T*>(s_createFunc[typeId]());
 	else
 	{
-		ret = q.front();
+		ret = reinterpret_cast<T*>(q.front());
 		q.pop();
 	}
 	s_actionOnGet[typeId](ret);
