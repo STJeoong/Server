@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Component.h"
 #include "GameObject.h"
+#include "Collider2D.h"
+#include "Collision2D.h"
 
 #pragma region public
 #pragma endregion
@@ -23,12 +25,12 @@ void Component::invoke(const E_GameObjectEvent& evt, void* arg)
 	case E_GameObjectEvent::INACTIVE: this->onInactiveGameObject(); break;
 	case E_GameObjectEvent::UPDATE: this->onUpdate(); break;
 	case E_GameObjectEvent::DESTROY: this->onDestroy(); break;
-	case E_GameObjectEvent::COLLISION_ENTER: this->onCollisionEnter(); break;
-	case E_GameObjectEvent::COLLISION_STAY: this->onCollisionStay(); break;
-	case E_GameObjectEvent::COLLISION_EXIT: this->onCollisionExit(); break;
-	case E_GameObjectEvent::TRIGGER_ENTER: this->onTriggerEnter(); break;
-	case E_GameObjectEvent::TRIGGER_STAY: this->onTriggerStay(); break;
-	case E_GameObjectEvent::TRIGGER_EXIT: this->onTriggerExit(); break;
+	case E_GameObjectEvent::COLLISION_ENTER: { Collision2D* p = reinterpret_cast<Collision2D*>(arg); this->onCollisionEnter(*p); break; }
+	case E_GameObjectEvent::COLLISION_STAY: { Collision2D* p = reinterpret_cast<Collision2D*>(arg); this->onCollisionStay(*p); break; }
+	case E_GameObjectEvent::COLLISION_EXIT: { Collision2D* p = reinterpret_cast<Collision2D*>(arg); this->onCollisionExit(*p); break; }
+	case E_GameObjectEvent::TRIGGER_ENTER: { Collider2D* p = reinterpret_cast<Collider2D*>(arg); this->onTriggerEnter(*p); break; }
+	case E_GameObjectEvent::TRIGGER_STAY: { Collider2D* p = reinterpret_cast<Collider2D*>(arg); this->onTriggerStay(*p); break; }
+	case E_GameObjectEvent::TRIGGER_EXIT: { Collider2D* p = reinterpret_cast<Collider2D*>(arg); this->onTriggerExit(*p); break; }
 	case E_GameObjectEvent::ADD_COMPONENT: { Component* comp = reinterpret_cast<Component*>(arg); this->onAddComponent(comp); break; }
 	case E_GameObjectEvent::REMOVE_COMPONENT: { Component* comp = reinterpret_cast<Component*>(arg); this->onRemoveComponent(comp); break; }
 	case E_GameObjectEvent::ENABLE_COMPONENT: { Component* comp = reinterpret_cast<Component*>(arg); this->onEnableComponent(comp); break; }

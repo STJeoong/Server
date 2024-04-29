@@ -1,6 +1,8 @@
 #pragma once
 #include "E_GameObjectEvent.h"
 class GameObject;
+class Collision2D;
+class Collider2D;
 // all components have to restrict their constructor and destructor's authority
 // and make GameObject class your friend class.
 // because it must be created or destroyed only in GameObject.
@@ -22,12 +24,12 @@ protected:
 	virtual void update() {}
 	virtual void onActiveGameObject() {}
 	virtual void onInactiveGameObject() {}
-	virtual void onCollisionEnter() {}
-	virtual void onCollisionStay() {}
-	virtual void onCollisionExit() {}
-	virtual void onTriggerEnter() {}
-	virtual void onTriggerStay() {}
-	virtual void onTriggerExit() {}
+	virtual void onCollisionEnter(const Collision2D& collision) {}
+	virtual void onCollisionStay(const Collision2D& collision) {}
+	virtual void onCollisionExit(const Collision2D& collision) {}
+	virtual void onTriggerEnter(const Collider2D& other) {}
+	virtual void onTriggerStay(const Collider2D& other) {}
+	virtual void onTriggerExit(const Collider2D& other) {}
 	virtual void onAddComponent(Component* component) {}
 	virtual void onRemoveComponent(Component* component) {}
 	virtual void onEnableComponent(Component* component) {}
