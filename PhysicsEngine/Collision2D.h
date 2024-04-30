@@ -22,5 +22,5 @@ private:
 	RigidBody2D* _rigidA = nullptr;
 	RigidBody2D* _rigidB = nullptr;
 	bool _isTouching = false;
-	E_GameObjectEvent _evt;
+	E_GameObjectEvent _evt = E_GameObjectEvent::NONE;
 };
