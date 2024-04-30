@@ -12,6 +12,12 @@ Vector2D::Vector2D(float x, float y) { _x = x; _y = y; }
 float Vector2D::len() const { return sqrtf(_x * _x + _y * _y); }
 float Vector2D::squaredLen() const { return _x * _x + _y * _y; }
 void Vector2D::normalize() { float length = len(); if (length == 0) return; _x /= length; _y /= length; }
+Vector2D Vector2D::normalized() const
+{
+	Vector2D ret = *this;
+	ret.normalize();
+	return ret;
+}
 void Vector2D::rotate(const Vector2D& origin, float radian)
 {
 	Matrix22 rotMatrix(radian);

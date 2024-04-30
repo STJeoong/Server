@@ -14,7 +14,10 @@ public:
 	float len() const;
 	// for performance
 	float squaredLen() const;
+	// normalize this vector.
 	void normalize();
+	// get normarlized vector.
+	Vector2D normalized() const;
 	void rotate(const Vector2D& origin, float radian);
 	void rotate(const Vector2D& origin, const Matrix22& mat);
 	Vector2D operator*(float val) const;
