@@ -36,6 +36,11 @@ Vector2D& Vector2D::operator*=(float val) { _x *= val; _y *= val; return *this; 
 Vector2D Vector2D::operator+(const Vector2D& obj) const { return { _x + obj._x, _y + obj._y }; }
 Vector2D Vector2D::operator-(const Vector2D& obj) const { return { _x - obj._x, _y - obj._y }; }
 Vector2D& Vector2D::operator+=(const Vector2D& obj) { _x += obj._x; _y += obj._y; return *this; }
+bool Vector2D::operator==(const Vector2D& obj)
+{
+	if (abs(_x - obj._x) < FLT_EPSILON && abs(_y - obj._y) < FLT_EPSILON) return true;
+	return false;
+}
 #pragma endregion
 
 #pragma region private

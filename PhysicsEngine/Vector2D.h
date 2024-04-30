@@ -25,6 +25,7 @@ public:
 	Vector2D operator+(const Vector2D& obj) const;
 	Vector2D operator-(const Vector2D& obj) const;
 	Vector2D& operator+=(const Vector2D& obj);
+	bool operator==(const Vector2D& obj);
 	const float& x() const { return _x; }
 	const float& y() const { return _y; }
 	float& x() { return _x; }
