@@ -107,9 +107,7 @@ void CollisionDetector::importFromBroadPhase(const BroadPhase& broadPhase)
 }
 void CollisionDetector::update(Collision2D* collision)
 {
-	Collider2D* colliderA = collision->colliderA();
-	Collider2D* colliderB = collision->colliderB();
-	if (!gjk(colliderA, colliderB))
+	if (!gjk(collision))
 		this->remove(collision);
 	else
 	{
@@ -119,19 +117,20 @@ void CollisionDetector::update(Collision2D* collision)
 #pragma endregion
 
 #pragma region private
-bool CollisionDetector::gjk(Collider2D* colliderA, Collider2D* colliderB)
+bool CollisionDetector::gjk(Collision2D* collision)
 {
+	Collider2D* colliderA = collision->colliderA();
+	Collider2D* colliderB = collision->colliderB();
 	Point2D pointA = colliderA->computeSupportPoint({ 1.0f,0.0f });
 	Point2D pointB = colliderB->computeSupportPoint({ -1.0f,0.0f });
-	Simplex simplex;
 
-	simplex.init(pointA - pointB);
+	collision->_simplex.init(pointA - pointB);
 	while (true)
 	{
-		pointA = colliderA->computeSupportPoint(simplex.supportVec());
-		pointB = colliderB->computeSupportPoint(simplex.supportVec() * -1);
-		if (!simplex.insert(pointA - pointB)) return false;
-		if (simplex.containsOrigin()) return true;
+		pointA = colliderA->computeSupportPoint(collision->_simplex.supportVec());
+		pointB = colliderB->computeSupportPoint(collision->_simplex.supportVec() * -1);
+		if (!collision->_simplex.insert(pointA - pointB)) return false;
+		if (collision->_simplex.containsOrigin()) return true;
 	}
 }
 #pragma endregion
