@@ -122,13 +122,13 @@ void CollisionDetector::update(Collision2D* collision)
 bool CollisionDetector::gjk(Collider2D* colliderA, Collider2D* colliderB)
 {
 	Point2D pointA = colliderA->computeSupportPoint({ 1.0f,0.0f });
-	Point2D pointB = colliderB->computeSupportPoint({ 1.0f,0.0f });
+	Point2D pointB = colliderB->computeSupportPoint({ -1.0f,0.0f });
 	Simplex simplex(pointA - pointB);
 
 	while (true)
 	{
 		pointA = colliderA->computeSupportPoint(simplex.supportVec());
-		pointB = colliderB->computeSupportPoint(simplex.supportVec());
+		pointB = colliderB->computeSupportPoint(simplex.supportVec() * -1);
 		if (!simplex.insert(pointA - pointB)) return false;
 		if (simplex.containsOrigin()) return true;
 	}
