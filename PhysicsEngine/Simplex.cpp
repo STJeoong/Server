@@ -5,6 +5,7 @@
 void Simplex::init(const Point2D& p)
 {
 	_state = 0;
+	_points.resize(3);
 	_points[0] = p;
 	_supportVec = _points[0] * -1;
 }

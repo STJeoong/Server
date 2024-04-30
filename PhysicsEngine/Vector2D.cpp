@@ -9,9 +9,9 @@ Vector2D Vector2D::cross(const Vector2D& v, float z) { return { v._y * z, v._x *
 Vector2D Vector2D::cross(float z, const Vector2D& v) { return { v._y * z * -1, v._x * z }; }
 
 Vector2D::Vector2D(float x, float y) { _x = x; _y = y; }
-float Vector2D::len() const { return sqrtf(_x * _x + _y * _y); }
+float Vector2D::len() const { return std::sqrtf(_x * _x + _y * _y); }
 float Vector2D::squaredLen() const { return _x * _x + _y * _y; }
-void Vector2D::normalize() { float length = len(); if (length == 0) return; _x /= length; _y /= length; }
+void Vector2D::normalize() { float length = this->len(); if (length == 0) return; _x /= length; _y /= length; }
 Vector2D Vector2D::normalized() const
 {
 	Vector2D ret = *this;
@@ -36,9 +36,9 @@ Vector2D& Vector2D::operator*=(float val) { _x *= val; _y *= val; return *this; 
 Vector2D Vector2D::operator+(const Vector2D& obj) const { return { _x + obj._x, _y + obj._y }; }
 Vector2D Vector2D::operator-(const Vector2D& obj) const { return { _x - obj._x, _y - obj._y }; }
 Vector2D& Vector2D::operator+=(const Vector2D& obj) { _x += obj._x; _y += obj._y; return *this; }
-bool Vector2D::operator==(const Vector2D& obj)
+bool Vector2D::operator==(const Vector2D& obj) const
 {
-	if (abs(_x - obj._x) < FLT_EPSILON && abs(_y - obj._y) < FLT_EPSILON) return true;
+	if (std::abs(_x - obj._x) < FLT_EPSILON && std::abs(_y - obj._y) < FLT_EPSILON) return true;
 	return false;
 }
 #pragma endregion

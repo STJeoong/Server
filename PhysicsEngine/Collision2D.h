@@ -14,6 +14,8 @@ public:
 	Collider2D* const& colliderB() const { return _colliderB; }
 	RigidBody2D* const& rigidA() const { return _rigidA; }
 	RigidBody2D* const& rigidB() const { return _rigidB; }
+	float depth() const { return _depth; }
+	const Vector2D& normal() const { return _normal; }
 private:
 	void onDestroy();
 
@@ -23,6 +25,8 @@ private:
 	RigidBody2D* _rigidA = nullptr;
 	RigidBody2D* _rigidB = nullptr;
 	bool _isTouching = false;
+	float _depth = 0.0f;
+	Vector2D _normal;
 	Simplex _simplex;
 	E_GameObjectEvent _evt = E_GameObjectEvent::NONE;
 };

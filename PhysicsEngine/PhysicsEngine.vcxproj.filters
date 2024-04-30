@@ -128,6 +128,9 @@
     <ClInclude Include="Simplex.h">
       <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
     </ClInclude>
+    <ClInclude Include="Polytope.h">
+      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -185,6 +188,9 @@
       <Filter>소스 파일\Dynamics\World</Filter>
     </ClCompile>
     <ClCompile Include="Simplex.cpp">
+      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
+    </ClCompile>
+    <ClCompile Include="Polytope.cpp">
       <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
     </ClCompile>
   </ItemGroup>

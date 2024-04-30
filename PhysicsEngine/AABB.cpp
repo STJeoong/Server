@@ -17,8 +17,8 @@ bool AABB::overlaps(const AABB& obj) const
 }
 AABB AABB::operator+(const AABB& obj) const
 {
-	Point2D mini{ min(_min.x(), obj._min.x()), min(_min.y(), obj._min.y()) };
-	Point2D maxi{ max(_max.x(), obj._max.x()), max(_max.y(), obj._max.y()) };
+	Point2D mini{ std::min(_min.x(), obj._min.x()), std::min(_min.y(), obj._min.y()) };
+	Point2D maxi{ std::max(_max.x(), obj._max.x()), std::max(_max.y(), obj._max.y()) };
 	return { mini, maxi };
 }
 AABB& AABB::operator+=(const Vector2D& v)

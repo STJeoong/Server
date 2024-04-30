@@ -78,7 +78,7 @@ void DAT::makeCandidates(const std::vector<int>& queryId, std::vector<std::pair<
                 continue;
             }
             if (_nodes[id].moved && _nodes[queryId[i]].moved && id < queryId[i]) continue;
-            candidates.push_back({ min(id, queryId[i]), max(id, queryId[i]) });
+            candidates.push_back({ std::min(id, queryId[i]), std::max(id, queryId[i]) });
         }
         _nodes[queryId[i]].moved = false;
     }
@@ -178,7 +178,7 @@ void DAT::fixUpwards(int idx)
         int left = _nodes[idx].left;
         int right = _nodes[idx].right;
 
-        _nodes[idx].height = 1 + max(_nodes[left].height, _nodes[right].height);
+        _nodes[idx].height = 1 + std::max(_nodes[left].height, _nodes[right].height);
         _nodes[idx].aabb = _nodes[left].aabb + _nodes[right].aabb;
 
         idx = _nodes[idx].parent;
@@ -242,8 +242,8 @@ void DAT::rr(int iA)
     A.right = iF;
     F.parent = iA; // 이걸 안해줘서 무한루프 돌았음.
     A.aabb = _nodes[A.left].aabb + F.aabb;
-    A.height = max(_nodes[A.left].height, F.height) + 1;
-    C.height = max(A.height, G.height) + 1;
+    A.height = std::max(_nodes[A.left].height, F.height) + 1;
+    C.height = std::max(A.height, G.height) + 1;
 
     if (oldParent == DAT::NULL_NODE)
         _root = iC;
@@ -273,8 +273,8 @@ void DAT::ll(int iA)
     A.parent = iB;
     B.right = iA;
     A.aabb = _nodes[A.right].aabb + E.aabb;
-    A.height = max(_nodes[A.right].height, E.height) + 1;
-    B.height = max(A.height, D.height) + 1;
+    A.height = std::max(_nodes[A.right].height, E.height) + 1;
+    B.height = std::max(A.height, D.height) + 1;
 
     if (oldParent == DAT::NULL_NODE)
         _root = iB;

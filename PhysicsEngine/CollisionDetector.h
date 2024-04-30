@@ -16,6 +16,7 @@ private:
 	void importFromBroadPhase(const BroadPhase& broadPhase);
 	void update(Collision2D* collision);
 	bool gjk(Collision2D* collision);
+	void epa(Collision2D* collision);
 
 	std::vector<Collision2D*> _collisions;
 };

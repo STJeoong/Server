@@ -6,6 +6,7 @@
 #include "RigidBody2D.h"
 #include "GameObject.h"
 #include "Simplex.h"
+#include "Polytope.h"
 #include <ObjectPool.h>
 
 #pragma region public
@@ -107,11 +108,16 @@ void CollisionDetector::importFromBroadPhase(const BroadPhase& broadPhase)
 }
 void CollisionDetector::update(Collision2D* collision)
 {
+	Collider2D* colliderA = collision->colliderA();
+	Collider2D* colliderB = collision->colliderB();
+	bool trigger = colliderA->isTrigger() || colliderB->isTrigger();
+
 	if (!gjk(collision))
 		this->remove(collision);
 	else
 	{
-
+		if (trigger) return;
+		this->epa(collision);
 	}
 }
 #pragma endregion
@@ -132,5 +138,11 @@ bool CollisionDetector::gjk(Collision2D* collision)
 		if (!collision->_simplex.insert(pointA - pointB)) return false;
 		if (collision->_simplex.containsOrigin()) return true;
 	}
+}
+void CollisionDetector::epa(Collision2D* collision)
+{
+	Polytope polytope(*collision, collision->_simplex.points());
+	collision->_depth = polytope.depth();
+	collision->_normal = polytope.normal();
 }
 #pragma endregion
