@@ -12,6 +12,14 @@ void Collider2D::enabled(bool flag)
 	if (flag) this->addToBroadPhase();
 	else this->removeFromBroadPhase();
 }
+Point2D Collider2D::position() const
+{
+	const Point2D& worldObjPos = this->gameObject()->transform().position();
+	const Matrix22& worldObjRot = this->gameObject()->transform().rotation();
+	Point2D worldCenter = worldObjPos + worldObjRot * _offset;
+
+	return worldCenter;
+}
 #pragma endregion
 
 #pragma region protected

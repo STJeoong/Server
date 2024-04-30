@@ -13,6 +13,7 @@ class Collider2D : public Behaviour
 	friend class CollisionDetector;
 public:
 	virtual AABB computeAABB() = 0;
+	virtual Point2D computeSupportPoint(const Vector2D& vec) = 0;
 	virtual void enabled(bool flag) override;
 	const Point2D& offset() const { return _offset; } // local offset
 	const float& density() const { return _density; }
@@ -25,6 +26,8 @@ public:
 	void friction(float f) { _friction = Utils::clamp(f, 100000.0f, 0.0f); }
 	void bounciness(float b) { _bounciness = Utils::clamp(b, 100000.0f, 0.0f); }
 	const std::vector<Contact2D*>& contacts() const { return _contacts; }
+	// get world position of collider's center
+	Point2D position() const;
 	// TODO : offset, density, trigger 바뀌면 rigidbody에 이벤트 보내도록
 protected:
 	Collider2D() = default;

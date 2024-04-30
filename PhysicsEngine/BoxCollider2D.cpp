@@ -10,33 +10,34 @@
 BoxCollider2D* BoxCollider2D::clone() { return new BoxCollider2D(*this); }
 AABB BoxCollider2D::computeAABB()
 {
-	const Point2D& worldObjPos = this->gameObject()->transform().position();
-	const Matrix22& worldObjRot = this->gameObject()->transform().rotation();
-	Point2D worldCenter = worldObjPos + worldObjRot * _offset;
+	this->computePoints();
 
-	// before rotation
-	Point2D beforeRot[4];
-	beforeRot[0] = _halfSize;
-	beforeRot[1] = { _halfSize.x() * -1, _halfSize.y() };
-	beforeRot[2] = { _halfSize.x() * -1, _halfSize.y() * -1 };
-	beforeRot[3] = { _halfSize.x(), _halfSize.y() * -1 };
-
-	// after rotation. be careful! you have to add worldCenter after rotation.
-	Point2D afterRot[4] = { worldObjRot * beforeRot[0], worldObjRot * beforeRot[1],
-							worldObjRot * beforeRot[2], worldObjRot * beforeRot[3] };
-	for (int i = 0; i < 4; ++i)
-		afterRot[i] += worldCenter;
-
-	Point2D mini = afterRot[0];
-	Point2D maxi = afterRot[0];
+	Point2D mini = _points[0];
+	Point2D maxi = _points[0];
 	for (int i = 1; i < 4; ++i)
 	{
-		mini.x() = min(mini.x(), afterRot[i].x());
-		mini.y() = min(mini.y(), afterRot[i].y());
-		maxi.x() = max(maxi.x(), afterRot[i].x());
-		maxi.y() = max(maxi.y(), afterRot[i].y());
+		mini.x() = min(mini.x(), _points[i].x());
+		mini.y() = min(mini.y(), _points[i].y());
+		maxi.x() = max(maxi.x(), _points[i].x());
+		maxi.y() = max(maxi.y(), _points[i].y());
 	}
 	return { mini, maxi };
+}
+Point2D BoxCollider2D::computeSupportPoint(const Vector2D& vec)
+{
+	this->computePoints();
+	float maxVal = Vector2D::dot(vec, _points[0]);
+	int maxIdx = 0;
+	for (int i = 1; i < 4; ++i)
+	{
+		float val = Vector2D::dot(vec, _points[i]);
+		if (val > maxVal)
+		{
+			maxVal = val;
+			maxIdx = i;
+		}
+	}
+	return _points[maxIdx];
 }
 #pragma endregion
 
@@ -59,5 +60,23 @@ void BoxCollider2D::compute()
 	Vector2D fullSize = _halfSize * 2;
 	_mass = _density * fullSize.x() * fullSize.y();
 	_inertia = _mass * (fullSize.x() * fullSize.x() + fullSize.y() * fullSize.y()) / 12.0f;
+}
+void BoxCollider2D::computePoints()
+{
+	Point2D worldCenter = this->position();
+	const Matrix22& worldObjRot = this->gameObject()->transform().rotation();
+
+	// before rotation
+	Point2D beforeRot[4];
+	beforeRot[0] = _halfSize;
+	beforeRot[1] = { _halfSize.x() * -1, _halfSize.y() };
+	beforeRot[2] = { _halfSize.x() * -1, _halfSize.y() * -1 };
+	beforeRot[3] = { _halfSize.x(), _halfSize.y() * -1 };
+
+	// after rotation. be careful! you have to add worldCenter after rotation.
+	_points = { worldObjRot * beforeRot[0], worldObjRot * beforeRot[1],
+				worldObjRot * beforeRot[2], worldObjRot * beforeRot[3] };
+	for (int i = 0; i < 4; ++i)
+		_points[i] += worldCenter;
 }
 #pragma endregion

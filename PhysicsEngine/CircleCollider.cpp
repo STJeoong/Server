@@ -8,14 +8,19 @@
 CircleCollider* CircleCollider::clone() { return new CircleCollider(*this); }
 AABB CircleCollider::computeAABB()
 {
-	const Point2D& worldObjPos = this->gameObject()->transform().position();
-	const Matrix22& worldObjRot = this->gameObject()->transform().rotation();
-	Point2D worldCenter = worldObjPos + worldObjRot * _offset;
-
+	Point2D worldCenter = this->position();
 	Vector2D v{ _radius, _radius };
 	Point2D mini = worldCenter - v;
 	Point2D maxi = worldCenter + v;
+
 	return { mini, maxi };
+}
+Point2D CircleCollider::computeSupportPoint(const Vector2D& vec)
+{
+	Point2D worldCenter = this->position();
+	Vector2D dirVec = vec.normalized();
+
+	return worldCenter + dirVec * _radius;
 }
 #pragma endregion
 
