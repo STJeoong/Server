@@ -20,6 +20,18 @@ void CollisionDetector::remove(Collider2D* collider)
 		}
 	}
 }
+void CollisionDetector::remove(Collision2D* collision)
+{
+	std::vector<Contact2D*>& contactsA = collision->colliderA()->_contacts;
+	std::vector<Contact2D*>& contactsB = collision->colliderB()->_contacts;
+	contactsA.erase(std::remove_if(contactsA.begin(), contactsA.end(),
+		[&collision](Contact2D* c) { return (c->colliderA() == collision->colliderA() && c->colliderB() == collision->colliderB()) ||
+											(c->colliderA() == collision->colliderB() && c->colliderB() == collision->colliderA()); }), contactsA.end());
+	contactsB.erase(std::remove_if(contactsB.begin(), contactsB.end(),
+		[&collision](Contact2D* c) { return (c->colliderA() == collision->colliderA() && c->colliderB() == collision->colliderB()) ||
+											(c->colliderA() == collision->colliderB() && c->colliderB() == collision->colliderA()); }), contactsB.end());
+	ObjectPool::release(collision);
+}
 void CollisionDetector::update(const BroadPhase& broadPhase)
 {
 	this->removeOldCollisions(broadPhase);
@@ -84,8 +96,8 @@ void CollisionDetector::update(Collision2D* collision)
 	Collider2D* colliderA = collision->colliderA();
 	Collider2D* colliderB = collision->colliderB();
 	bool wasTouching = collision->_isTouching;
-	bool sensor = colliderA->isTrigger() || colliderB->isTrigger();
-	if (sensor)
+	bool trigger = colliderA->isTrigger() || colliderB->isTrigger();
+	if (trigger)
 	{
 
 	}
@@ -93,18 +105,6 @@ void CollisionDetector::update(Collision2D* collision)
 	{
 
 	}
-}
-void CollisionDetector::remove(Collision2D* collision)
-{
-	std::vector<Contact2D*>& contactsA = collision->colliderA()->_contacts;
-	std::vector<Contact2D*>& contactsB = collision->colliderB()->_contacts;
-	contactsA.erase(std::remove_if(contactsA.begin(), contactsA.end(),
-		[&collision](Contact2D* c) { return (c->colliderA() == collision->colliderA() && c->colliderB() == collision->colliderB()) ||
-											(c->colliderA() == collision->colliderB() && c->colliderB() == collision->colliderA()); }), contactsA.end());
-	contactsB.erase(std::remove_if(contactsB.begin(), contactsB.end(),
-		[&collision](Contact2D* c) { return (c->colliderA() == collision->colliderA() && c->colliderB() == collision->colliderB()) ||
-											(c->colliderA() == collision->colliderB() && c->colliderB() == collision->colliderA()); }), contactsB.end());
-	ObjectPool::release(collision);
 }
 #pragma endregion
 

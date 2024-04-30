@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Contact2D.h"
+#include "E_GameObjectEvent.h"
 class Collision2D
 {
 	friend class World;
@@ -21,4 +22,5 @@ private:
 	RigidBody2D* _rigidA = nullptr;
 	RigidBody2D* _rigidB = nullptr;
 	bool _isTouching = false;
+	E_GameObjectEvent _evt;
 };
