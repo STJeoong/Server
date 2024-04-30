@@ -2,7 +2,8 @@
 #include <vector>
 #include "Vector2D.h"
 #include "Collision2D.h"
-#include "DAT.h"
+#include "BroadPhase.h"
+#include "CollisionDetector.h"
 
 // 일단은 월드는 한개만 존재할 수 있음.
 // simulate physics
@@ -17,14 +18,10 @@ public:
 	static void init(const Vector2D& g);
 	static int addCollider(Collider2D* collider);
 	static void removeCollider(int key);
-	static void addJoint(Joint2D* joint);
-	static void removeJoint(Joint2D* joint);
 	static void step(float dt);
 private:
-	static void broadPhase();
 
 	static Vector2D s_gravity;
-	static std::vector<Joint2D*> s_joints;
-	static std::vector<Collision2D*> s_collisions;
-	static DAT s_tree;
+	static BroadPhase s_broadPhase;
+	static CollisionDetector s_detector;
 };

@@ -12,43 +12,23 @@ void World::init(const Vector2D& g)
 	ObjectPool::makePool<Contact2D>(World::CONTACT_POOL_SIZE, [] { return new Contact2D(); },
 		[](void* contact) {}, [](void* contact) {});
 }
-int World::addCollider(Collider2D* collider) { return s_tree.insert(collider, collider->getAABB()); }
+int World::addCollider(Collider2D* collider) { return s_broadPhase.insert(collider, collider->computeAABB()); }
 void World::removeCollider(int key)
 {
-	Collider2D* collider = reinterpret_cast<Collider2D*>(s_tree.getData(key));
-	s_tree.remove(key);
-
-	// TODO : need to be tested.
-	auto it = s_collisions.begin();
-	while (it < s_collisions.end())
-	{
-		it = std::find_if(it, s_collisions.end(), [&collider](Collision2D* c) { return c->colliderA() == collider || c->colliderB() == collider; });
-		if (it != s_collisions.end())
-		{
-			ObjectPool::release(*it);
-			it = s_collisions.erase(it);
-		}
-	}
-}
-void World::addJoint(Joint2D* joint) { s_joints.push_back(joint); }
-void World::removeJoint(Joint2D* joint)
-{
-	auto it = std::find(s_joints.begin(), s_joints.end(), joint);
-	s_joints.erase(it);
+	Collider2D* collider = reinterpret_cast<Collider2D*>(s_broadPhase.getData(key));
+	s_broadPhase.remove(key);
+	s_detector.remove(collider);
 }
 void World::step(float dt)
 {
-	World::broadPhase();
+	s_broadPhase.update();
+	s_detector.update(s_broadPhase);
 }
 #pragma endregion
 
 #pragma region private
-void World::broadPhase()
-{
-}
 #pragma endregion
 
 Vector2D World::s_gravity;
-std::vector<Joint2D*> World::s_joints;
-std::vector<Collision2D*> World::s_collisions;
-DAT World::s_tree;
+BroadPhase World::s_broadPhase;
+CollisionDetector World::s_detector;

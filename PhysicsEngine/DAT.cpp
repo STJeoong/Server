@@ -57,6 +57,7 @@ bool DAT::move(int id, const AABB& sweepAABB, const Vector2D& displacement)
     return true;
 }
 void* DAT::getData(int id) const { return _nodes[id].userData; }
+const AABB& DAT::getAABB(int id) const { return _nodes[id].aabb; }
 void DAT::makeCandidates(const std::vector<int>& queryId, std::vector<std::pair<int, int>>& candidates)
 {
     for (int i = 0; i < queryId.size(); ++i)

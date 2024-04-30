@@ -12,29 +12,29 @@
     <Filter Include="소스 파일\Utils">
       <UniqueIdentifier>{5d6c359c-01d9-497f-ba48-439a5809bde3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Collision">
-      <UniqueIdentifier>{fced188f-3b43-4f46-8709-17acf219d18c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Dynamics">
       <UniqueIdentifier>{3e8438f7-424c-4502-87ac-366dc7e2a6bc}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Dynamics\World">
       <UniqueIdentifier>{7a4579fe-519a-4aa2-8884-f29dd8d007d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Collision\Body">
-      <UniqueIdentifier>{e9220302-2c93-4eef-8f61-b3645e5b99e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Collision\Collider">
-      <UniqueIdentifier>{969eef11-bc3c-4940-a6c4-6fc5a954ba84}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Dynamics\GameObject">
       <UniqueIdentifier>{358bcf2d-cf93-4369-96e1-84d9a97f026d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Collision\CollisionDectection">
-      <UniqueIdentifier>{cd78b1b9-7042-44cc-87d1-dd0e7fb1f40f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Joint">
       <UniqueIdentifier>{5c6a6937-a3f0-4f2f-851b-72c0174a538b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Body">
+      <UniqueIdentifier>{fced188f-3b43-4f46-8709-17acf219d18c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Body\Collider">
+      <UniqueIdentifier>{969eef11-bc3c-4940-a6c4-6fc5a954ba84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Body\RigidyBody">
+      <UniqueIdentifier>{e9220302-2c93-4eef-8f61-b3645e5b99e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Dynamics\CollisionDectection">
+      <UniqueIdentifier>{cd78b1b9-7042-44cc-87d1-dd0e7fb1f40f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,19 +54,19 @@
       <Filter>소스 파일\Dynamics\World</Filter>
     </ClInclude>
     <ClInclude Include="RigidBody2D.h">
-      <Filter>소스 파일\Collision\Body</Filter>
+      <Filter>소스 파일\Body\RigidyBody</Filter>
     </ClInclude>
     <ClInclude Include="BoxCollider2D.h">
-      <Filter>소스 파일\Collision\Collider</Filter>
+      <Filter>소스 파일\Body\Collider</Filter>
     </ClInclude>
     <ClInclude Include="CircleCollider.h">
-      <Filter>소스 파일\Collision\Collider</Filter>
+      <Filter>소스 파일\Body\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Collider2D.h">
-      <Filter>소스 파일\Collision\Collider</Filter>
+      <Filter>소스 파일\Body\Collider</Filter>
     </ClInclude>
     <ClInclude Include="CollisionDetector.h">
-      <Filter>소스 파일\Collision\CollisionDectection</Filter>
+      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
     </ClInclude>
     <ClInclude Include="DAT.h">
       <Filter>소스 파일\Utils</Filter>
@@ -87,7 +87,7 @@
       <Filter>소스 파일\Dynamics\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="E_BodyType.h">
-      <Filter>소스 파일\Collision\Body</Filter>
+      <Filter>소스 파일\Body\RigidyBody</Filter>
     </ClInclude>
     <ClInclude Include="AABB.h">
       <Filter>소스 파일\Utils</Filter>
@@ -99,28 +99,31 @@
       <Filter>소스 파일\Joint</Filter>
     </ClInclude>
     <ClInclude Include="S_BoxDef.h">
-      <Filter>소스 파일\Collision\Collider</Filter>
+      <Filter>소스 파일\Body\Collider</Filter>
     </ClInclude>
     <ClInclude Include="S_CircleDef.h">
-      <Filter>소스 파일\Collision\Collider</Filter>
+      <Filter>소스 파일\Body\Collider</Filter>
     </ClInclude>
     <ClInclude Include="E_BodyFlag.h">
-      <Filter>소스 파일\Collision\Body</Filter>
+      <Filter>소스 파일\Body\RigidyBody</Filter>
     </ClInclude>
     <ClInclude Include="Contact2D.h">
-      <Filter>소스 파일\Collision\CollisionDectection</Filter>
+      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
     </ClInclude>
     <ClInclude Include="Collision2D.h">
-      <Filter>소스 파일\Collision\CollisionDectection</Filter>
+      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
     </ClInclude>
     <ClInclude Include="S_RigidDef.h">
-      <Filter>소스 파일\Collision\Body</Filter>
+      <Filter>소스 파일\Body\RigidyBody</Filter>
     </ClInclude>
     <ClInclude Include="ContactFilter.h">
-      <Filter>소스 파일\Collision\CollisionDectection</Filter>
+      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
     </ClInclude>
     <ClInclude Include="E_Layer.h">
-      <Filter>소스 파일\Collision\CollisionDectection</Filter>
+      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
+    </ClInclude>
+    <ClInclude Include="BroadPhase.h">
+      <Filter>소스 파일\Dynamics\World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -137,16 +140,16 @@
       <Filter>소스 파일\Dynamics\World</Filter>
     </ClCompile>
     <ClCompile Include="RigidBody2D.cpp">
-      <Filter>소스 파일\Collision\Body</Filter>
+      <Filter>소스 파일\Body\RigidyBody</Filter>
     </ClCompile>
     <ClCompile Include="BoxCollider2D.cpp">
-      <Filter>소스 파일\Collision\Collider</Filter>
+      <Filter>소스 파일\Body\Collider</Filter>
     </ClCompile>
     <ClCompile Include="CircleCollider.cpp">
-      <Filter>소스 파일\Collision\Collider</Filter>
+      <Filter>소스 파일\Body\Collider</Filter>
     </ClCompile>
     <ClCompile Include="CollisionDetector.cpp">
-      <Filter>소스 파일\Collision\CollisionDectection</Filter>
+      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
     </ClCompile>
     <ClCompile Include="DAT.cpp">
       <Filter>소스 파일\Utils</Filter>
@@ -164,16 +167,19 @@
       <Filter>소스 파일\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Collider2D.cpp">
-      <Filter>소스 파일\Collision\Collider</Filter>
+      <Filter>소스 파일\Body\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Contact2D.cpp">
-      <Filter>소스 파일\Collision\CollisionDectection</Filter>
+      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
     </ClCompile>
     <ClCompile Include="Collision2D.cpp">
-      <Filter>소스 파일\Collision\CollisionDectection</Filter>
+      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
     </ClCompile>
     <ClCompile Include="ContactFilter.cpp">
-      <Filter>소스 파일\Collision\CollisionDectection</Filter>
+      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
+    </ClCompile>
+    <ClCompile Include="BroadPhase.cpp">
+      <Filter>소스 파일\Dynamics\World</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
