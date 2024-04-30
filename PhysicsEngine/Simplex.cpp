@@ -2,8 +2,9 @@
 #include "Simplex.h"
 
 #pragma region public
-Simplex::Simplex(const Point2D& p)
+void Simplex::init(const Point2D& p)
 {
+	_state = 0;
 	_points[0] = p;
 	_supportVec = _points[0] * -1;
 }
@@ -20,6 +21,7 @@ bool Simplex::insert(const Point2D& p)
 		_points[1] = _points[2];
 		_points[2] = p;
 	}
+
 	return this->check();
 }
 #pragma endregion

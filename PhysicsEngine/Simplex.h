@@ -3,7 +3,7 @@
 class Simplex
 {
 public:
-	Simplex(const Point2D& p);
+	void init(const Point2D& p);
 	// @return check if simplex is possible to contain the origin.
 	bool insert(const Point2D& p);
 	const Vector2D& supportVec() const { return _supportVec; }
