@@ -36,13 +36,13 @@ void Polytope::expand(const Collision2D& collision)
 		Vector2D AO = A * -1;
 		Vector2D supportVec = Vector2D::cross(Vector2D::cross(AO, AB), AB);
 		Point2D minkowskiPoint = colliderA->computeSupportPoint(supportVec) - colliderB->computeSupportPoint(supportVec * -1);
-		for (size_t i = 0; i < _points.size(); ++i)
-			if (_points[i] == minkowskiPoint)
-			{
-				_depth = distance;
-				_normal = supportVec;
-				return;
-			}
+		if (A == minkowskiPoint || B == minkowskiPoint)
+		{
+			_depth = distance;
+			_normal = supportVec;
+			return;
+		}
+
 		_points.push_back(minkowskiPoint);
 		{
 			float computedValue = this->computeDistance(A, minkowskiPoint);
