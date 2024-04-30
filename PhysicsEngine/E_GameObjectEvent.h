@@ -2,6 +2,8 @@
 
 enum class E_GameObjectEvent
 {
+	NONE,
+
 	//GameObject Event
 	ACTIVE,
 	INACTIVE,
