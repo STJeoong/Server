@@ -15,6 +15,7 @@ private:
 	void removeOldCollisions(const BroadPhase& broadPhase);
 	void importFromBroadPhase(const BroadPhase& broadPhase);
 	void update(Collision2D* collision);
+	bool gjk(Collider2D* colliderA, Collider2D* colliderB);
 
 	std::vector<Collision2D*> _collisions;
 };

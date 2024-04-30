@@ -9,7 +9,7 @@ public:
 	const Vector2D& supportVec() const { return _supportVec; }
 	bool containsOrigin() const { return _containsOrigin; }
 private:
-	// 새로운 점이 원점 건너편에 있는지, 2-simplex라면 원점을 포함하는지
+	// 충돌가능성 체크
 	bool check();
 
 	Point2D _points[3];

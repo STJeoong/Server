@@ -125,6 +125,9 @@
     <ClInclude Include="BroadPhase.h">
       <Filter>소스 파일\Dynamics\World</Filter>
     </ClInclude>
+    <ClInclude Include="Simplex.h">
+      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -180,6 +183,9 @@
     </ClCompile>
     <ClCompile Include="BroadPhase.cpp">
       <Filter>소스 파일\Dynamics\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Simplex.cpp">
+      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

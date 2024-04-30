@@ -7,6 +7,8 @@
 class Component;
 class GameObject
 {
+	friend class CollisionDetector;
+	friend class World;
 public:
 	static GameObject* find(const std::string& name);
 	static GameObject* instantiate(GameObject* obj = nullptr, GameObject* parent = nullptr, bool active = true);

@@ -4,6 +4,8 @@
 #include "Collider2D.h"
 #include "ContactFilter.h"
 #include "RigidBody2D.h"
+#include "GameObject.h"
+#include "Simplex.h"
 #include <ObjectPool.h>
 
 #pragma region public
@@ -22,14 +24,25 @@ void CollisionDetector::remove(Collider2D* collider)
 }
 void CollisionDetector::remove(Collision2D* collision)
 {
-	std::vector<Contact2D*>& contactsA = collision->colliderA()->_contacts;
-	std::vector<Contact2D*>& contactsB = collision->colliderB()->_contacts;
-	contactsA.erase(std::remove_if(contactsA.begin(), contactsA.end(),
-		[&collision](Contact2D* c) { return (c->colliderA() == collision->colliderA() && c->colliderB() == collision->colliderB()) ||
-											(c->colliderA() == collision->colliderB() && c->colliderB() == collision->colliderA()); }), contactsA.end());
-	contactsB.erase(std::remove_if(contactsB.begin(), contactsB.end(),
-		[&collision](Contact2D* c) { return (c->colliderA() == collision->colliderA() && c->colliderB() == collision->colliderB()) ||
-											(c->colliderA() == collision->colliderB() && c->colliderB() == collision->colliderA()); }), contactsB.end());
+	std::vector<Collision2D*>& collisionsA = collision->colliderA()->_collisions;
+	std::vector<Collision2D*>& collisionsB = collision->colliderB()->_collisions;
+	GameObject* objA = collision->colliderA()->gameObject();
+	GameObject* objB = collision->colliderB()->gameObject();
+	Collider2D* colliderA = collision->colliderA();
+	Collider2D* colliderB = collision->colliderB();
+
+	collisionsA.erase(std::remove(collisionsA.begin(), collisionsA.end(), collision), collisionsA.end());
+	collisionsB.erase(std::remove(collisionsB.begin(), collisionsB.end(), collision), collisionsB.end());
+	if (collision->_evt == E_GameObjectEvent::COLLISION_ENTER || collision->_evt == E_GameObjectEvent::COLLISION_STAY)
+	{
+		objA->broadcast(E_GameObjectEvent::COLLISION_EXIT, collision);
+		objB->broadcast(E_GameObjectEvent::COLLISION_EXIT, collision);
+	}
+	else if (collision->_evt == E_GameObjectEvent::TRIGGER_ENTER || collision->_evt == E_GameObjectEvent::TRIGGER_STAY)
+	{
+		objA->broadcast(E_GameObjectEvent::TRIGGER_EXIT, colliderB);
+		objB->broadcast(E_GameObjectEvent::TRIGGER_EXIT, colliderA);
+	}
 	ObjectPool::release(collision);
 }
 void CollisionDetector::update(const BroadPhase& broadPhase)
@@ -49,18 +62,16 @@ void CollisionDetector::removeOldCollisions(const BroadPhase& broadPhase)
 		RigidBody2D* rigidB = _collisions[i]->rigidB();
 
 		if (!ContactFilter::shouldCollide(*colliderA, *colliderB))
-		{
 			this->remove(_collisions[i]);
-			continue;
-		}
-		if ((rigidA == nullptr || rigidA->type() != E_BodyType::DYNAMIC) && (rigidB == nullptr || rigidB->type() != E_BodyType::DYNAMIC))
-		{
+		if ((rigidA == nullptr || rigidA->type() == E_BodyType::STATIC) && (rigidB == nullptr || rigidB->type() == E_BodyType::STATIC))
 			this->remove(_collisions[i]);
-			continue;
-		}
-		bool activeA = rigidA != nullptr && rigidA->isAwake() && rigidA->type() != E_BodyType::STATIC;
-		bool activeB = rigidB != nullptr && rigidB->isAwake() && rigidB->type() != E_BodyType::STATIC;
-		if (!activeA && !activeB) continue; // TODO : 왜 삭제안하지??
+		if ((!colliderA->isTrigger() && !colliderB->isTrigger()) &&
+			(rigidA == nullptr || rigidA->type() != E_BodyType::DYNAMIC) &&
+			(rigidB == nullptr || rigidB->type() != E_BodyType::DYNAMIC))
+			this->remove(_collisions[i]);
+		//bool activeA = rigidA != nullptr && rigidA->isAwake() && rigidA->type() != E_BodyType::STATIC;
+		//bool activeB = rigidB != nullptr && rigidB->isAwake() && rigidB->type() != E_BodyType::STATIC;
+		//if (!activeA && !activeB) continue; // TODO : 왜 삭제안하지??
 		if (!broadPhase.getAABB(colliderA->key()).overlaps(broadPhase.getAABB(colliderB->key())))
 			this->remove(_collisions[i]);
 	}
@@ -75,12 +86,15 @@ void CollisionDetector::importFromBroadPhase(const BroadPhase& broadPhase)
 		RigidBody2D* rigidA = colliderA->attachedRigidBody();
 		RigidBody2D* rigidB = colliderB->attachedRigidBody();
 
-		auto it = std::find_if(colliderA->contacts().begin(), colliderA->contacts().end(),
-			[&colliderB](Contact2D* c) { return c->colliderA() == colliderB || c->colliderB() == colliderB; });
+		auto it = std::find_if(colliderA->collisions().begin(), colliderA->collisions().end(),
+			[&colliderB](Collision2D* c) { return c->colliderA() == colliderB || c->colliderB() == colliderB; });
 		if (rigidA == rigidB) continue;
 		if (!ContactFilter::shouldCollide(*colliderA, *colliderB)) continue;
-		if ((rigidA == nullptr || rigidA->type() != E_BodyType::DYNAMIC) && (rigidB == nullptr || rigidB->type() != E_BodyType::DYNAMIC)) continue;
-		if (it != colliderA->contacts().end()) continue; // already exist
+		if ((rigidA == nullptr || rigidA->type() == E_BodyType::STATIC) && (rigidB == nullptr || rigidB->type() == E_BodyType::STATIC)) continue;
+		if ((!colliderA->isTrigger() && !colliderB->isTrigger()) &&
+			(rigidA == nullptr || rigidA->type() != E_BodyType::DYNAMIC) &&
+			(rigidB == nullptr || rigidB->type() != E_BodyType::DYNAMIC)) continue;
+		if (it != colliderA->collisions().end()) continue; // already exist
 
 		// new Collision
 		Collision2D* collision = ObjectPool::get<Collision2D>();
@@ -95,12 +109,8 @@ void CollisionDetector::update(Collision2D* collision)
 {
 	Collider2D* colliderA = collision->colliderA();
 	Collider2D* colliderB = collision->colliderB();
-	bool wasTouching = collision->_isTouching;
-	bool trigger = colliderA->isTrigger() || colliderB->isTrigger();
-	if (trigger)
-	{
-
-	}
+	if (!gjk(colliderA, colliderB))
+		this->remove(collision);
 	else
 	{
 
@@ -109,4 +119,18 @@ void CollisionDetector::update(Collision2D* collision)
 #pragma endregion
 
 #pragma region private
+bool CollisionDetector::gjk(Collider2D* colliderA, Collider2D* colliderB)
+{
+	Point2D pointA = colliderA->computeSupportPoint({ 1.0f,0.0f });
+	Point2D pointB = colliderB->computeSupportPoint({ 1.0f,0.0f });
+	Simplex simplex(pointA - pointB);
+
+	while (true)
+	{
+		pointA = colliderA->computeSupportPoint(simplex.supportVec());
+		pointB = colliderB->computeSupportPoint(simplex.supportVec());
+		if (!simplex.insert(pointA - pointB)) return false;
+		if (simplex.containsOrigin()) return true;
+	}
+}
 #pragma endregion
