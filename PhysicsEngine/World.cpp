@@ -52,7 +52,7 @@ void World::removeCollider(int key)
 void World::step(float dt)
 {
 	for (int i = 0; i < s_gameObjects.size(); ++i)
-		s_gameObjects[i]->broadcast(E_GameObjectEvent::UPDATE, &dt);
+		s_gameObjects[i]->broadcast(E_GameObjectEvent::UPDATE, nullptr);
 	s_broadPhase.update();
 	s_detector.update(s_broadPhase);
 }

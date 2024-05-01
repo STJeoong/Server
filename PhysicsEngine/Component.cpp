@@ -23,7 +23,7 @@ void Component::invoke(const E_GameObjectEvent& evt, void* arg)
 	{
 	case E_GameObjectEvent::ACTIVE: this->onActiveGameObject(); break;
 	case E_GameObjectEvent::INACTIVE: this->onInactiveGameObject(); break;
-	case E_GameObjectEvent::UPDATE: { float* dt = reinterpret_cast<float*>(arg); this->onUpdate(*dt); break; }
+	case E_GameObjectEvent::UPDATE: this->onUpdate(); break;
 	case E_GameObjectEvent::DESTROY: this->onDestroy(); break;
 	case E_GameObjectEvent::COLLISION_ENTER: { Collision2D* p = reinterpret_cast<Collision2D*>(arg); this->onCollisionEnter(*p); break; }
 	case E_GameObjectEvent::COLLISION_STAY: { Collision2D* p = reinterpret_cast<Collision2D*>(arg); this->onCollisionStay(*p); break; }
@@ -37,7 +37,7 @@ void Component::invoke(const E_GameObjectEvent& evt, void* arg)
 	case E_GameObjectEvent::DISABLE_COMPONENT: { Component* comp = reinterpret_cast<Component*>(arg); this->onDisableComponent(comp); break; }
 	}
 }
-void Component::onUpdate(float dt)
+void Component::onUpdate()
 {
 	if (!_gameObject->isActive())
 		return;
@@ -47,6 +47,6 @@ void Component::onUpdate(float dt)
 		this->start();
 	}
 	else
-		this->update(dt);
+		this->update();
 }
 #pragma endregion
