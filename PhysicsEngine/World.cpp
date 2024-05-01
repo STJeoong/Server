@@ -74,7 +74,7 @@ void World::invokeCollisionEvents()
 		Collider2D* colliderB = c->colliderB();
 		GameObject* objA = colliderA->gameObject();
 		GameObject* objB = colliderB->gameObject();
-		E_GameObjectEvent& evt = c->_evt;
+		const E_GameObjectEvent& evt = c->_evt;
 
 		if (evt == E_GameObjectEvent::COLLISION_ENTER || evt == E_GameObjectEvent::COLLISION_STAY)
 		{
@@ -101,7 +101,7 @@ void World::invokeExitEvents()
 		size_t before = s_exits.size();
 		for (; idx < before; ++idx)
 		{
-			E_GameObjectEvent& evt = s_exits[idx]->_evt;
+			const E_GameObjectEvent& evt = s_exits[idx]->_evt;
 			colliderA = s_exits[idx]->colliderA();
 			colliderB = s_exits[idx]->colliderB();
 			objA = colliderA->gameObject();

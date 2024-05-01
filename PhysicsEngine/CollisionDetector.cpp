@@ -29,7 +29,7 @@ void CollisionDetector::update(const BroadPhase& broadPhase)
 	this->importFromBroadPhase(broadPhase);
 	for (int i = 0; i < _collisions.size(); ++i)
 	{
-		E_GameObjectEvent& evt = _collisions[i]->_evt;
+		const E_GameObjectEvent& evt = _collisions[i]->_evt;
 		if (evt != E_GameObjectEvent::COLLISION_EXIT && evt != E_GameObjectEvent::TRIGGER_EXIT)
 			this->narrowPhase(_collisions[i]);
 	}
@@ -50,7 +50,7 @@ void CollisionDetector::update(const BroadPhase& broadPhase)
 	it = _collisions.begin();
 	while (it != _collisions.end())
 	{
-		E_GameObjectEvent& evt = (*it)->_evt;
+		const E_GameObjectEvent& evt = (*it)->_evt;
 		if (evt == E_GameObjectEvent::COLLISION_STAY || evt == E_GameObjectEvent::TRIGGER_STAY)
 		{
 			++it;
