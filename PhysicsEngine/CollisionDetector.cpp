@@ -25,24 +25,48 @@ void CollisionDetector::findRelatedCollisions(Collider2D* collider, std::vector<
 }
 void CollisionDetector::update(const BroadPhase& broadPhase)
 {
-	this->removeOldCollisions(broadPhase);
+	this->pruneOldCollisions(broadPhase);
 	this->importFromBroadPhase(broadPhase);
 	for (int i = 0; i < _collisions.size(); ++i)
-		this->update(_collisions[i]);
+	{
+		E_GameObjectEvent& evt = _collisions[i]->_evt;
+		if (evt != E_GameObjectEvent::COLLISION_EXIT && evt != E_GameObjectEvent::TRIGGER_EXIT)
+			this->narrowPhase(_collisions[i]);
+	}
+
 	auto it = _collisions.begin();
 	while (it != _collisions.end())
 	{
 		const E_GameObjectEvent& evt = (*it)->_evt;
 		if (evt == E_GameObjectEvent::NONE || evt == E_GameObjectEvent::COLLISION_EXIT || evt == E_GameObjectEvent::TRIGGER_EXIT)
-			it = this->remove(it);
+		{
+			ObjectPool::release(*it);
+			it = _collisions.erase(it);
+		}
 		else
 			++it;
+	}
+
+	it = _collisions.begin();
+	while (it != _collisions.end())
+	{
+		E_GameObjectEvent& evt = (*it)->_evt;
+		if (evt == E_GameObjectEvent::COLLISION_STAY || evt == E_GameObjectEvent::TRIGGER_STAY)
+		{
+			++it;
+			continue;
+		}
+		Collider2D* colliderA = (*it)->colliderA();
+		Collider2D* colliderB = (*it)->colliderB();
+		colliderA->_collisions.push_back(*it);
+		colliderB->_collisions.push_back(*it);
+		++it;
 	}
 }
 #pragma endregion
 
 #pragma region private
-void CollisionDetector::removeOldCollisions(const BroadPhase& broadPhase)
+void CollisionDetector::pruneOldCollisions(const BroadPhase& broadPhase)
 {
 	for (int i = 0; i < _collisions.size(); ++i)
 	{
@@ -95,7 +119,7 @@ void CollisionDetector::importFromBroadPhase(const BroadPhase& broadPhase)
 		_collisions.push_back(collision);
 	}
 }
-void CollisionDetector::update(Collision2D* collision)
+void CollisionDetector::narrowPhase(Collision2D* collision)
 {
 	Collider2D* colliderA = collision->colliderA();
 	Collider2D* colliderB = collision->colliderB();
@@ -159,6 +183,8 @@ void CollisionDetector::setExit(Collision2D* collision)
 	GameObject* objA = colliderA->gameObject();
 	GameObject* objB = colliderB->gameObject();
 	E_GameObjectEvent& evt = collision->_evt;
+	std::vector<Collision2D*>& collisionsA = collision->colliderA()->_collisions;
+	std::vector<Collision2D*>& collisionsB = collision->colliderB()->_collisions;
 
 	if (evt == E_GameObjectEvent::COLLISION_ENTER || evt == E_GameObjectEvent::COLLISION_STAY)
 	{
@@ -172,16 +198,7 @@ void CollisionDetector::setExit(Collision2D* collision)
 		objA->broadcast(evt, colliderB);
 		objB->broadcast(evt, colliderA);
 	}
-}
-std::vector<Collision2D*>::iterator CollisionDetector::remove(std::vector<Collision2D*>::iterator& it)
-{
-	Collision2D* collision = (*it);
-	std::vector<Collision2D*>& collisionsA = collision->colliderA()->_collisions;
-	std::vector<Collision2D*>& collisionsB = collision->colliderB()->_collisions;
-
 	collisionsA.erase(std::remove(collisionsA.begin(), collisionsA.end(), collision), collisionsA.end());
 	collisionsB.erase(std::remove(collisionsB.begin(), collisionsB.end(), collision), collisionsB.end());
-	ObjectPool::release(collision);
-	return _collisions.erase(it);
 }
 #pragma endregion
