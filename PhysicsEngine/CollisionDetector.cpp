@@ -10,16 +10,6 @@
 #include <ObjectPool.h>
 
 #pragma region public
-//void CollisionDetector::remove(Collider2D* collider)
-//{
-//	auto it = _collisions.begin();
-//	while (it != _collisions.end())
-//	{
-//		it = std::find_if(it, _collisions.end(), [&collider](Collision2D* c) { return c->colliderA() == collider || c->colliderB() == collider; });
-//		if (it != _collisions.end())
-//			it = this->remove(it);
-//	}
-//}
 void CollisionDetector::findRelatedCollisions(Collider2D* collider, std::vector<Collision2D*>& exits)
 {
 	auto it = _collisions.begin();

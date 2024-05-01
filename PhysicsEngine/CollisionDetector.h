@@ -7,7 +7,6 @@ class Collider2D;
 class CollisionDetector
 {
 public:
-	//void remove(Collider2D* collider);
 	void findRelatedCollisions(Collider2D* collider, std::vector<Collision2D*>& exits);
 	void update(const BroadPhase& broadPhase);
 	const std::vector<Collision2D*>& collisions() const { return _collisions; }
