@@ -9,6 +9,7 @@ void Collider2D::enabled(bool flag)
 	if (Behaviour::enabled() == flag) return;
 	if (_needToToggleEnabled) return;
 	_needToToggleEnabled = true;
+	Behaviour::enabled(flag);
 	if (!this->gameObject()->isActive()) return;
 	if (flag) this->addToWorld();
 	else this->removeFromWorld();
@@ -62,8 +63,6 @@ void Collider2D::onApplyReservation()
 {
 	if (_needToToggleTriggerState) _isTrigger = !_isTrigger;
 	_needToToggleTriggerState = false;
-
-	if (_needToToggleEnabled) Behaviour::enabled(!Behaviour::enabled());
 	_needToToggleEnabled = false;
 }
 void Collider2D::addToWorld() { _key = World::add(this); }
