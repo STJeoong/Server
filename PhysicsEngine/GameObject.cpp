@@ -2,37 +2,11 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "RigidBody2D.h"
+#include "World.h"
 
 
 #pragma region public
-GameObject* GameObject::find(const std::string& name)
-{
-	for (GameObject*& obj : s_gameObjects)
-		if (obj->_name == name)
-			return obj;
-	return nullptr;
-}
-GameObject* GameObject::instantiate(GameObject* obj, GameObject* parent, bool active)
-{
-	if (s_root == nullptr) s_root = new GameObject();
-	GameObject* ret;
-	if (obj == nullptr) ret = new GameObject();
-	else ret = new GameObject(*obj);
-	ret->_isActive = active;
-	if (parent == nullptr) ret->setParent(*s_root);
-	else ret->setParent(*parent);
-	s_root->_children.push_back(ret);
-	s_gameObjects.push_back(ret);
-	return ret;
-}
-void GameObject::destroy(GameObject*& obj)
-{
-	auto it = std::find(s_gameObjects.begin(), s_gameObjects.end(), obj);
-	s_gameObjects.erase(it);
-	obj->broadcast(E_GameObjectEvent::DESTROY, nullptr);
-	delete obj;
-	obj = nullptr;
-}
+
 void GameObject::removeComponent(Component* component)
 {
 	this->broadcast(E_GameObjectEvent::REMOVE_COMPONENT, component);
@@ -113,7 +87,7 @@ GameObject::~GameObject()
 		com = nullptr;
 	}
 	for (int i = 0; i < _children.size(); ++i)
-		GameObject::destroy(_children[i]);
+		World::destroy(_children[i]);
 }
 void GameObject::broadcast(E_GameObjectEvent evt, void* arg)
 {
@@ -126,6 +100,3 @@ void GameObject::removeChild(GameObject* child)
 	_children.erase(it);
 }
 #pragma endregion
-
-std::vector<GameObject*> GameObject::s_gameObjects;
-GameObject* GameObject::s_root = nullptr;
