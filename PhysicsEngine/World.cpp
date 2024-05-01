@@ -138,7 +138,6 @@ void World::removeColliders()
 	{
 		int key = s_removals.front();
 		s_removals.pop();
-		Collider2D* collider = reinterpret_cast<Collider2D*>(s_broadPhase.getData(key));
 		s_broadPhase.remove(key);
 	}
 }
