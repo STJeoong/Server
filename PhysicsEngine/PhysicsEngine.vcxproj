@@ -177,6 +177,7 @@
     <ClInclude Include="Matrix22.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Simplex.h" />
+    <ClInclude Include="Solver.h" />
     <ClInclude Include="S_RigidDef.h" />
     <ClInclude Include="S_BoxDef.h" />
     <ClInclude Include="S_CircleDef.h" />
@@ -208,6 +209,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Simplex.cpp" />
+    <ClCompile Include="Solver.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="World.cpp" />

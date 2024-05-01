@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <queue>
 #include "E_GameObjectEvent.h"
 #include "Transform.h"
 #include "E_Layer.h"
@@ -30,13 +31,16 @@ public:
 	const E_Layer& layer() const { return _layer; }
 private:
 	GameObject() = default; // RigidBody는 추가하면 추가되도록하자.
-	GameObject(const GameObject& obj);
+	GameObject& operator=(const GameObject& obj);
 	~GameObject();
 	void broadcast(E_GameObjectEvent evt, void* arg);
 	void removeChild(GameObject* child);
+	void update();
+	void removeComponents();
 
 
 	std::vector<Component*> _components;
+	std::queue<Component*> _thingsToBeRemoved; // 다음 step에서 사라질 component들
 	GameObject* _parent = nullptr;
 	std::vector<GameObject*> _children;
 	Transform _worldTF; // world transform
@@ -45,6 +49,9 @@ private:
 	bool _isActive = true;
 	bool _isRigid = false;
 	E_Layer _layer = E_Layer::DEFAULT;
+
+	// reservation ( executed next time step )
+	bool _needToToggleActiveState = false;
 };
 
 #include "RigidBody2D.h"

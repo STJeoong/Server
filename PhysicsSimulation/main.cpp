@@ -34,28 +34,14 @@ public:
         window.draw(s2);
     }
 };
+#include <Simplex.h>
 #include <GameObject.h>
-#include <BoxCollider2D.h>
-class A
-{
-public:
-    static void func() { std::cout << "A\n"; }
-    virtual ~A() = default;
-};
-class B : public A
-{
-public:
-    static void func() { std::cout << "B\n"; }
-};
+#include <queue>
 #include <World.h>
-#include <ContactFilter.h>
 int main()
 {
-    ContactFilter::reset();
-    GameObject* go = GameObject::instantiate();
-    ContactFilter::enableCollision(1, 2);
-    BoxCollider2D* box1 = go->addComponent<BoxCollider2D>();
-    go->removeComponent(box1);
+    World::init({ 0.0f, -9.8f });
+    World::step(0.5f);
  //   GameObject* g = GameObject::instantiate();
  //   RigidBody2D* rigid = g->addComponent<RigidBody2D>();
  //   RigidBody2D* rigid2 = g->addComponent<RigidBody2D>();

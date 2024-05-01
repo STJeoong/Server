@@ -36,6 +36,9 @@
     <Filter Include="소스 파일\Dynamics\CollisionDectection">
       <UniqueIdentifier>{cd78b1b9-7042-44cc-87d1-dd0e7fb1f40f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Dynamics\Resolution">
+      <UniqueIdentifier>{9f13d13b-fb20-4c0b-a985-0dc669bd9479}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -131,6 +134,9 @@
     <ClInclude Include="Polytope.h">
       <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
     </ClInclude>
+    <ClInclude Include="Solver.h">
+      <Filter>소스 파일\Dynamics\Resolution</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -192,6 +198,9 @@
     </ClCompile>
     <ClCompile Include="Polytope.cpp">
       <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
+    </ClCompile>
+    <ClCompile Include="Solver.cpp">
+      <Filter>소스 파일\Dynamics\Resolution</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

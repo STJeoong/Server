@@ -7,10 +7,18 @@
 void Collider2D::enabled(bool flag)
 {
 	if (Behaviour::enabled() == flag) return;
-	Behaviour::enabled(flag);
+	if (_needToToggleEnabled) return;
+	_needToToggleEnabled = true;
 	if (!this->gameObject()->isActive()) return;
-	if (flag) this->addToBroadPhase();
-	else this->removeFromBroadPhase();
+	if (flag) this->addToWorld();
+	else this->removeFromWorld();
+}
+void Collider2D::isTrigger(bool flag)
+{
+	if (!_needToToggleTriggerState && flag != _isTrigger)
+		_needToToggleTriggerState = true;
+	else if (_needToToggleTriggerState && flag == _isTrigger)
+		_needToToggleTriggerState = false;
 }
 Point2D Collider2D::position() const
 {
@@ -26,30 +34,43 @@ Point2D Collider2D::position() const
 void Collider2D::onDestroy()
 {
 	if (!Behaviour::enabled() || !this->gameObject()->isActive()) return;
-	this->removeFromBroadPhase();
+	this->removeFromWorld();
 }
 void Collider2D::onActiveGameObject()
 {
 	if (!Behaviour::enabled()) return;
-	this->addToBroadPhase();
+	this->addToWorld();
 }
 void Collider2D::onInactiveGameObject()
 {
 	if (!Behaviour::enabled()) return;
-	this->removeFromBroadPhase();
+	this->removeFromWorld();
 }
 void Collider2D::onAddComponent(Component* component)
 {
 	if (component != this) return;
 	if (!this->gameObject()->isActive()) return;
-	this->addToBroadPhase();
+	this->addToWorld();
 }
 void Collider2D::onRemoveComponent(Component* component)
 {
 	if (component != this) return;
 	if (!this->gameObject()->isActive()) return;
-	this->removeFromBroadPhase();
+	this->removeFromWorld();
 }
-void Collider2D::addToBroadPhase() { _key = World::addCollider(this); }
-void Collider2D::removeFromBroadPhase() { World::removeCollider(_key); _key = -1; }
+void Collider2D::onApplyReservation()
+{
+	if (_needToToggleTriggerState) _isTrigger = !_isTrigger;
+	_needToToggleTriggerState = false;
+
+	if (_needToToggleEnabled) Behaviour::enabled(!Behaviour::enabled());
+	_needToToggleEnabled = false;
+}
+void Collider2D::addToWorld() { _key = World::add(this); }
+void Collider2D::removeFromWorld()
+{
+	if (_key == -1) return;
+	World::removalReq(_key);
+	_key = -1;
+}
 #pragma endregion

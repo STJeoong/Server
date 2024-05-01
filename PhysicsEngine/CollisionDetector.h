@@ -7,8 +7,8 @@ class Collider2D;
 class CollisionDetector
 {
 public:
-	void remove(Collider2D* collider);
-	void remove(Collision2D* collision);
+	//void remove(Collider2D* collider);
+	void findRelatedCollisions(Collider2D* collider, std::vector<Collision2D*>& exits);
 	void update(const BroadPhase& broadPhase);
 	const std::vector<Collision2D*>& collisions() const { return _collisions; }
 private:
@@ -17,6 +17,8 @@ private:
 	void update(Collision2D* collision);
 	bool gjk(Collision2D* collision);
 	void epa(Collision2D* collision);
+	void setExit(Collision2D* collision);
+	std::vector<Collision2D*>::iterator remove(std::vector<Collision2D*>::iterator& it);
 
 	std::vector<Collision2D*> _collisions;
 };

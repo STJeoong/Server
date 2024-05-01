@@ -31,4 +31,7 @@ enum class E_GameObjectEvent
 	// enable or disable component
 	ENABLE_COMPONENT,
 	DISABLE_COMPONENT,
+
+	// 이전 step에서 World에 요청한 것들 적용 ( RigidBody type 변경, GameObject active 상태 변경, Collider Trigger 상태 변경 )
+	APPLY_RESERVATION,
 };

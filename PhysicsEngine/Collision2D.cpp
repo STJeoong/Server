@@ -26,5 +26,6 @@ void Collision2D::onDestroy()
 	_rigidA = nullptr;
 	_rigidB = nullptr;
 	_isTouching = false;
+	_evt = E_GameObjectEvent::NONE;
 	_contacts.clear();
 }

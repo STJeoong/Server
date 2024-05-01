@@ -31,6 +31,7 @@ private:
 	void onRemoveComponent(Component* component) override;
 	void onEnableComponent(Component* component) override;
 	void onDisableComponent(Component* component) override;
+	void onApplyReservation() override;
 	void resetMassData();
 
 	Point2D _localCOM; // local center of mass
@@ -50,4 +51,7 @@ private:
 	float _sleepTime = 0.0f;
 
 	std::vector<Collider2D*> _colliders;
+
+	// reservation ( executed next time step )
+	E_BodyType _newType = E_BodyType::STATIC;
 };

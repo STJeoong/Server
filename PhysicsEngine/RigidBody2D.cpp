@@ -12,8 +12,7 @@ RigidBody2D* RigidBody2D::clone()
 }
 void RigidBody2D::type(E_BodyType bodyType)
 {
-	if (_type == bodyType) return;
-	// TODO : type 변경되면 충돌 판정 명단에서도 변경이 있어야됨.
+	_newType = bodyType;
 }
 void RigidBody2D::wakeUp()
 {
@@ -100,6 +99,7 @@ void RigidBody2D::onDisableComponent(Component* component)
 	_colliders.erase(it);
 	this->resetMassData();
 }
+void RigidBody2D::onApplyReservation() { _type = _newType; }
 void RigidBody2D::resetMassData()
 {
 	_mass = 0.0f;

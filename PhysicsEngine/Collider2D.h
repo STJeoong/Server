@@ -11,6 +11,7 @@ class Collider2D : public Behaviour
 {
 	friend class RigidBody2D;
 	friend class CollisionDetector;
+	friend class World;
 public:
 	virtual AABB computeAABB() = 0;
 	virtual Point2D computeSupportPoint(const Vector2D& vec) = 0;
@@ -22,6 +23,7 @@ public:
 	const float& mass() const { return _mass; }
 	const float& inertia() const { return _inertia; }
 	const bool& isTrigger() const { return _isTrigger; }
+	void isTrigger(bool flag);
 	RigidBody2D* attachedRigidBody() const { return _attachedRigidBody; }
 	void friction(float f) { _friction = Utils::clamp(f, 100000.0f, 0.0f); }
 	void bounciness(float b) { _bounciness = Utils::clamp(b, 100000.0f, 0.0f); }
@@ -37,6 +39,7 @@ protected:
 	virtual void onInactiveGameObject() override;
 	virtual void onAddComponent(Component* component) override;
 	virtual void onRemoveComponent(Component* component) override;
+	virtual void onApplyReservation() override;
 
 	Point2D _offset;
 	float _density = 1.0f;
@@ -47,9 +50,13 @@ protected:
 	bool _isTrigger = false;
 	RigidBody2D* _attachedRigidBody = nullptr;
 	std::vector<Collision2D*> _collisions;
+
+	// reservation ( executed next time step )
+	bool _needToToggleTriggerState = false; // have you reserved modification of trigger state?
+	bool _needToToggleEnabled = false;
 private:
-	void addToBroadPhase();
-	void removeFromBroadPhase();
+	void addToWorld();
+	void removeFromWorld();
 	void attachTo(RigidBody2D* rigid) { _attachedRigidBody = rigid; }
 	const int& key() const { return _key; }
 

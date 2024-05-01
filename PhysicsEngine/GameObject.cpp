@@ -4,16 +4,14 @@
 #include "RigidBody2D.h"
 #include "World.h"
 
-
 #pragma region public
-
 void GameObject::removeComponent(Component* component)
 {
 	this->broadcast(E_GameObjectEvent::REMOVE_COMPONENT, component);
 	
 	auto it = std::find(_components.begin(), _components.end(), component);
 	_components.erase(it);
-	delete component;
+	_thingsToBeRemoved.push(*it);
 }
 void GameObject::setParent(GameObject& obj)
 {
@@ -59,9 +57,9 @@ void GameObject::transform(const Vector2D& displacement) { Motion motion{ displa
 void GameObject::transform(float radian) { Motion motion{ {0.0f, 0.0f}, radian }; this->transform(motion); }
 void GameObject::isActive(bool flag)
 {
-	if (_isActive == flag)
-		return;
-	_isActive = flag;
+	if (_isActive == flag) return;
+	if (_needToToggleActiveState) return;
+	_needToToggleActiveState = true;
 	if (_isActive == false)
 		this->broadcast(E_GameObjectEvent::ACTIVE, nullptr);
 	else
@@ -70,14 +68,18 @@ void GameObject::isActive(bool flag)
 #pragma endregion
 
 #pragma region private
-GameObject::GameObject(const GameObject& obj) : _worldTF(obj._worldTF), _name(obj._name)
+GameObject& GameObject::operator=(const GameObject& obj)
 {
+	_worldTF = obj._worldTF;
+	_name = obj._name;
+	_isRigid = obj._isRigid;
 	for (Component* otherComponent : obj._components)
 	{
 		Component* component = otherComponent->clone();
 		_components.push_back(component);
 		this->broadcast(E_GameObjectEvent::ADD_COMPONENT, component);
 	}
+	return *this;
 }
 GameObject::~GameObject()
 {
@@ -98,5 +100,22 @@ void GameObject::removeChild(GameObject* child)
 {
 	auto it = std::find(_children.begin(), _children.end(), child);
 	_children.erase(it);
+}
+void GameObject::update()
+{
+	if (_needToToggleActiveState) _isActive = !_isActive;
+	_needToToggleActiveState = false;
+	this->removeComponents();
+	this->broadcast(E_GameObjectEvent::APPLY_RESERVATION, nullptr);
+	this->broadcast(E_GameObjectEvent::UPDATE, nullptr);
+}
+void GameObject::removeComponents()
+{
+	while (!_thingsToBeRemoved.empty())
+	{
+		Component* c = _thingsToBeRemoved.front();
+		_thingsToBeRemoved.pop();
+		delete c;
+	}
 }
 #pragma endregion

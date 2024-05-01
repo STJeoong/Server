@@ -4,47 +4,34 @@
 #include "Collider2D.h"
 #include "ContactFilter.h"
 #include "RigidBody2D.h"
-#include "GameObject.h"
 #include "Simplex.h"
 #include "Polytope.h"
+#include "GameObject.h"
 #include <ObjectPool.h>
 
 #pragma region public
-void CollisionDetector::remove(Collider2D* collider)
+//void CollisionDetector::remove(Collider2D* collider)
+//{
+//	auto it = _collisions.begin();
+//	while (it != _collisions.end())
+//	{
+//		it = std::find_if(it, _collisions.end(), [&collider](Collision2D* c) { return c->colliderA() == collider || c->colliderB() == collider; });
+//		if (it != _collisions.end())
+//			it = this->remove(it);
+//	}
+//}
+void CollisionDetector::findRelatedCollisions(Collider2D* collider, std::vector<Collision2D*>& exits)
 {
 	auto it = _collisions.begin();
-	while (it < _collisions.end())
+	while (it != _collisions.end())
 	{
 		it = std::find_if(it, _collisions.end(), [&collider](Collision2D* c) { return c->colliderA() == collider || c->colliderB() == collider; });
 		if (it != _collisions.end())
 		{
-			this->remove(*it);
+			exits.push_back(*it);
 			it = _collisions.erase(it);
 		}
 	}
-}
-void CollisionDetector::remove(Collision2D* collision)
-{
-	std::vector<Collision2D*>& collisionsA = collision->colliderA()->_collisions;
-	std::vector<Collision2D*>& collisionsB = collision->colliderB()->_collisions;
-	GameObject* objA = collision->colliderA()->gameObject();
-	GameObject* objB = collision->colliderB()->gameObject();
-	Collider2D* colliderA = collision->colliderA();
-	Collider2D* colliderB = collision->colliderB();
-
-	collisionsA.erase(std::remove(collisionsA.begin(), collisionsA.end(), collision), collisionsA.end());
-	collisionsB.erase(std::remove(collisionsB.begin(), collisionsB.end(), collision), collisionsB.end());
-	if (collision->_evt == E_GameObjectEvent::COLLISION_ENTER || collision->_evt == E_GameObjectEvent::COLLISION_STAY)
-	{
-		objA->broadcast(E_GameObjectEvent::COLLISION_EXIT, collision);
-		objB->broadcast(E_GameObjectEvent::COLLISION_EXIT, collision);
-	}
-	else if (collision->_evt == E_GameObjectEvent::TRIGGER_ENTER || collision->_evt == E_GameObjectEvent::TRIGGER_STAY)
-	{
-		objA->broadcast(E_GameObjectEvent::TRIGGER_EXIT, colliderB);
-		objB->broadcast(E_GameObjectEvent::TRIGGER_EXIT, colliderA);
-	}
-	ObjectPool::release(collision);
 }
 void CollisionDetector::update(const BroadPhase& broadPhase)
 {
@@ -52,7 +39,19 @@ void CollisionDetector::update(const BroadPhase& broadPhase)
 	this->importFromBroadPhase(broadPhase);
 	for (int i = 0; i < _collisions.size(); ++i)
 		this->update(_collisions[i]);
+	auto it = _collisions.begin();
+	while (it != _collisions.end())
+	{
+		const E_GameObjectEvent& evt = (*it)->_evt;
+		if (evt == E_GameObjectEvent::NONE || evt == E_GameObjectEvent::COLLISION_EXIT || evt == E_GameObjectEvent::TRIGGER_EXIT)
+			it = this->remove(it);
+		else
+			++it;
+	}
 }
+#pragma endregion
+
+#pragma region private
 void CollisionDetector::removeOldCollisions(const BroadPhase& broadPhase)
 {
 	for (int i = 0; i < _collisions.size(); ++i)
@@ -63,18 +62,18 @@ void CollisionDetector::removeOldCollisions(const BroadPhase& broadPhase)
 		RigidBody2D* rigidB = _collisions[i]->rigidB();
 
 		if (!ContactFilter::shouldCollide(*colliderA, *colliderB))
-			this->remove(_collisions[i]);
+			this->setExit(_collisions[i]);
 		if ((rigidA == nullptr || rigidA->type() == E_BodyType::STATIC) && (rigidB == nullptr || rigidB->type() == E_BodyType::STATIC))
-			this->remove(_collisions[i]);
+			this->setExit(_collisions[i]);
 		if ((!colliderA->isTrigger() && !colliderB->isTrigger()) &&
 			(rigidA == nullptr || rigidA->type() != E_BodyType::DYNAMIC) &&
 			(rigidB == nullptr || rigidB->type() != E_BodyType::DYNAMIC))
-			this->remove(_collisions[i]);
+			this->setExit(_collisions[i]);
 		//bool activeA = rigidA != nullptr && rigidA->isAwake() && rigidA->type() != E_BodyType::STATIC;
 		//bool activeB = rigidB != nullptr && rigidB->isAwake() && rigidB->type() != E_BodyType::STATIC;
 		//if (!activeA && !activeB) continue; // TODO : 왜 삭제안하지??
 		if (!broadPhase.getAABB(colliderA->key()).overlaps(broadPhase.getAABB(colliderB->key())))
-			this->remove(_collisions[i]);
+			this->setExit(_collisions[i]);
 	}
 }
 void CollisionDetector::importFromBroadPhase(const BroadPhase& broadPhase)
@@ -111,18 +110,36 @@ void CollisionDetector::update(Collision2D* collision)
 	Collider2D* colliderA = collision->colliderA();
 	Collider2D* colliderB = collision->colliderB();
 	bool trigger = colliderA->isTrigger() || colliderB->isTrigger();
+	E_GameObjectEvent& evt = collision->_evt;
 
 	if (!gjk(collision))
-		this->remove(collision);
+	{
+		if (evt == E_GameObjectEvent::NONE) return;
+		this->setExit(collision);
+	}
 	else
 	{
-		if (trigger) return;
-		this->epa(collision);
+		if (trigger)
+		{
+			if (evt == E_GameObjectEvent::COLLISION_ENTER || evt == E_GameObjectEvent::COLLISION_STAY)
+				this->setExit(collision);
+			if (evt != E_GameObjectEvent::TRIGGER_ENTER && evt != E_GameObjectEvent::TRIGGER_STAY)
+				evt = E_GameObjectEvent::TRIGGER_ENTER;
+			else
+				evt = E_GameObjectEvent::TRIGGER_STAY;
+		}
+		else
+		{
+			if (evt == E_GameObjectEvent::TRIGGER_ENTER || evt == E_GameObjectEvent::TRIGGER_STAY)
+				this->setExit(collision);
+			if (evt != E_GameObjectEvent::COLLISION_ENTER && evt != E_GameObjectEvent::COLLISION_STAY)
+				evt = E_GameObjectEvent::COLLISION_ENTER;
+			else
+				evt = E_GameObjectEvent::COLLISION_STAY;
+			this->epa(collision);
+		}
 	}
 }
-#pragma endregion
-
-#pragma region private
 bool CollisionDetector::gjk(Collision2D* collision)
 {
 	Collider2D* colliderA = collision->colliderA();
@@ -144,5 +161,37 @@ void CollisionDetector::epa(Collision2D* collision)
 	Polytope polytope(*collision, collision->_simplex.points());
 	collision->_depth = polytope.depth();
 	collision->_normal = polytope.normal();
+}
+void CollisionDetector::setExit(Collision2D* collision)
+{
+	Collider2D* colliderA = collision->colliderA();
+	Collider2D* colliderB = collision->colliderB();
+	GameObject* objA = colliderA->gameObject();
+	GameObject* objB = colliderB->gameObject();
+	E_GameObjectEvent& evt = collision->_evt;
+
+	if (evt == E_GameObjectEvent::COLLISION_ENTER || evt == E_GameObjectEvent::COLLISION_STAY)
+	{
+		evt = E_GameObjectEvent::COLLISION_EXIT;
+		objA->broadcast(evt, collision);
+		objB->broadcast(evt, collision);
+	}
+	else if (evt == E_GameObjectEvent::TRIGGER_ENTER || evt == E_GameObjectEvent::TRIGGER_STAY)
+	{
+		evt = E_GameObjectEvent::TRIGGER_EXIT;
+		objA->broadcast(evt, colliderB);
+		objB->broadcast(evt, colliderA);
+	}
+}
+std::vector<Collision2D*>::iterator CollisionDetector::remove(std::vector<Collision2D*>::iterator& it)
+{
+	Collision2D* collision = (*it);
+	std::vector<Collision2D*>& collisionsA = collision->colliderA()->_collisions;
+	std::vector<Collision2D*>& collisionsB = collision->colliderB()->_collisions;
+
+	collisionsA.erase(std::remove(collisionsA.begin(), collisionsA.end(), collision), collisionsA.end());
+	collisionsB.erase(std::remove(collisionsB.begin(), collisionsB.end(), collision), collisionsB.end());
+	ObjectPool::release(collision);
+	return _collisions.erase(it);
 }
 #pragma endregion
