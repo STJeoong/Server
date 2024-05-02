@@ -15,7 +15,6 @@ class Collider2D : public Behaviour
 public:
 	virtual AABB computeAABB() = 0;
 	virtual Point2D computeSupportPoint(const Vector2D& vec) = 0;
-	virtual void enabled(bool flag) override;
 	const Point2D& offset() const { return _offset; } // local offset
 	const float& density() const { return _density; }
 	const float& friction() const { return _friction; }
@@ -39,6 +38,8 @@ protected:
 	virtual void onInactiveGameObject() override;
 	virtual void onAddComponent(Component* component) override;
 	virtual void onRemoveComponent(Component* component) override;
+	virtual void onEnableComponent(Component* component) override;
+	virtual void onDisableComponent(Component* component) override;
 	virtual void onApplyReservation() override;
 
 	Point2D _offset;
@@ -53,7 +54,6 @@ protected:
 
 	// reservation ( executed next time step )
 	bool _needToToggleTriggerState = false; // have you reserved modification of trigger state?
-	bool _needToToggleEnabled = false;
 private:
 	void addToWorld();
 	void removeFromWorld();

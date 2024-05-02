@@ -4,16 +4,6 @@
 #include "GameObject.h"
 
 #pragma region public
-void Collider2D::enabled(bool flag)
-{
-	if (Behaviour::enabled() == flag) return;
-	if (_needToToggleEnabled) return;
-	_needToToggleEnabled = true;
-	Behaviour::enabled(flag);
-	if (!this->gameObject()->isActive()) return;
-	if (flag) this->addToWorld();
-	else this->removeFromWorld();
-}
 void Collider2D::isTrigger(bool flag)
 {
 	if (!_needToToggleTriggerState && flag != _isTrigger)
@@ -59,11 +49,23 @@ void Collider2D::onRemoveComponent(Component* component)
 	if (!this->gameObject()->isActive()) return;
 	this->removeFromWorld();
 }
+void Collider2D::onEnableComponent(Component* component)
+{
+	if (component != this) return;
+	if (!this->gameObject()->isActive()) return;
+	this->addToWorld();
+}
+void Collider2D::onDisableComponent(Component* component)
+{
+	if (component != this) return;
+	if (!this->gameObject()->isActive()) return;
+	this->removeFromWorld();
+}
 void Collider2D::onApplyReservation()
 {
+	Behaviour::onApplyReservation();
 	if (_needToToggleTriggerState) _isTrigger = !_isTrigger;
 	_needToToggleTriggerState = false;
-	_needToToggleEnabled = false;
 }
 void Collider2D::addToWorld() { _key = World::add(this); }
 void Collider2D::removeFromWorld()
