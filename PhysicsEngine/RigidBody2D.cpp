@@ -54,15 +54,7 @@ void RigidBody2D::onAddComponent(Component* component)
 {
 	if (component == this)
 	{
-		const std::vector<Component*>& components = this->gameObject()->components();
-		Collider2D* tmp = nullptr;
-		for (int i = 0; i < components.size(); ++i)
-		{
-			tmp = dynamic_cast<Collider2D*>(components[i]);
-			if (tmp == nullptr) continue;
-			_colliders.push_back(tmp);
-		}
-		this->resetMassData();
+		_wasAdded = true;
 		return;
 	}
 	Collider2D* collider = dynamic_cast<Collider2D*>(component);
@@ -74,8 +66,7 @@ void RigidBody2D::onRemoveComponent(Component* component)
 {
 	if (component == this)
 	{
-		for (int i = 0; i < _colliders.size(); ++i)
-			_colliders[i]->attachTo(nullptr);
+		_wasRemoved = true;
 		return;
 	}
 	Collider2D* collider = dynamic_cast<Collider2D*>(component);
@@ -99,7 +90,29 @@ void RigidBody2D::onDisableComponent(Component* component)
 	_colliders.erase(it);
 	this->resetMassData();
 }
-void RigidBody2D::onApplyReservation() { _type = _newType; }
+void RigidBody2D::onApplyReservation()
+{
+	_type = _newType;
+	if (_wasAdded && !_wasRemoved)
+	{
+		const std::vector<Component*>& components = this->gameObject()->components();
+		Collider2D* tmp = nullptr;
+		for (int i = 0; i < components.size(); ++i)
+		{
+			tmp = dynamic_cast<Collider2D*>(components[i]);
+			if (tmp == nullptr) continue;
+			_colliders.push_back(tmp);
+			tmp->attachTo(this);
+		}
+		this->resetMassData();
+	}
+	else if (!_wasAdded && _wasRemoved)
+		for (int i = 0; i < _colliders.size(); ++i)
+			_colliders[i]->attachTo(nullptr);
+	_wasAdded = false;
+	_wasRemoved = false;
+	// 만약 _wasAdded && _wasRemoved면 한 step안에서 추가 and 삭제된거라서 아무것도 해줄필요없음.
+}
 void RigidBody2D::resetMassData()
 {
 	_mass = 0.0f;

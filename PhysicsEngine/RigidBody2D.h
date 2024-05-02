@@ -54,4 +54,6 @@ private:
 
 	// reservation ( executed next time step )
 	E_BodyType _newType = E_BodyType::STATIC;
+	bool _wasAdded = false;
+	bool _wasRemoved = false;
 };
