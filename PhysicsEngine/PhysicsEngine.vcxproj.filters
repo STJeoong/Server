@@ -137,6 +137,9 @@
     <ClInclude Include="Solver.h">
       <Filter>소스 파일\Dynamics\Resolution</Filter>
     </ClInclude>
+    <ClInclude Include="MonoBehaviour.h">
+      <Filter>소스 파일\Dynamics\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

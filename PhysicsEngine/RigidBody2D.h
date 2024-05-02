@@ -9,7 +9,6 @@
 class Collider2D;
 class RigidBody2D : public Component
 {
-	friend class GameObject;
 public:
 	void addForce(const Vector2D& force) { _force += force; }
 	void addTorque(float torque) { _torque += torque; }

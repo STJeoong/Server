@@ -163,6 +163,7 @@
     <ClInclude Include="E_BodyType.h" />
     <ClInclude Include="E_Layer.h" />
     <ClInclude Include="Joint2D.h" />
+    <ClInclude Include="MonoBehaviour.h" />
     <ClInclude Include="Polytope.h" />
     <ClInclude Include="RigidBody2D.h" />
     <ClInclude Include="BoxCollider2D.h" />

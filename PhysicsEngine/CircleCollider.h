@@ -4,7 +4,6 @@
 #include "S_CircleDef.h"
 class CircleCollider : public Collider2D
 {
-	friend class GameObject;
 public:
 	virtual AABB computeAABB() override;
 	virtual Point2D computeSupportPoint(const Vector2D& vec) override;

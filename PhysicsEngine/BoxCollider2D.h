@@ -5,7 +5,6 @@
 #include "S_BoxDef.h"
 class BoxCollider2D : public Collider2D
 {
-	friend class GameObject;
 public:
 	virtual AABB computeAABB() override;
 	virtual Point2D computeSupportPoint(const Vector2D& vec) override;
