@@ -111,9 +111,9 @@ void GameObject::applyReservation()
 {
 	if (_needToToggleActiveState) _isActive = !_isActive;
 	_needToToggleActiveState = false;
-	this->broadcast(E_GameObjectEvent::APPLY_RESERVATION, nullptr);
 	for (Component* rigid : _removedRigids) // rigidbody는 삭제될때도 ApplyReservation해야 됨.
 		rigid->invoke(E_GameObjectEvent::APPLY_RESERVATION, nullptr);
+	this->broadcast(E_GameObjectEvent::APPLY_RESERVATION, nullptr);
 	_removedRigids.clear();
 	this->removeComponents();
 }
