@@ -42,59 +42,59 @@ int main()
 {
     World::init({ 0.0f, -9.8f });
     World::step(0.5f);
- //   GameObject* g = GameObject::instantiate();
- //   RigidBody2D* rigid = g->addComponent<RigidBody2D>();
- //   RigidBody2D* rigid2 = g->addComponent<RigidBody2D>();
- //   GameObject* g1 = GameObject::instantiate();
- //   GameObject* g2 = GameObject::instantiate(nullptr, g1);
- //   GameObject* g3 = GameObject::instantiate(nullptr, g2);
- //   g1->transform({ 400.0f, 300.0f });
- //   g2->transform({100.0f, 100.0f});
- //   g3->transform({ 50.0f, 0.0f });
- //   sf::CircleShape shape1(10.0f);
- //   sf::CircleShape shape2(10.0f);
- //   sf::CircleShape shape3(10.0f);
+    GameObject* g = World::instantiate();
+    RigidBody2D* rigid = g->addComponent<RigidBody2D>();
+    RigidBody2D* rigid2 = g->addComponent<RigidBody2D>();
+    GameObject* g1 = World::instantiate();
+    GameObject* g2 = World::instantiate(nullptr, g1);
+    GameObject* g3 = World::instantiate(nullptr, g2);
+    g1->transform({ 400.0f, 300.0f });
+    g2->transform({100.0f, 100.0f});
+    g3->transform({ 50.0f, 0.0f });
+    sf::CircleShape shape1(10.0f);
+    sf::CircleShape shape2(10.0f);
+    sf::CircleShape shape3(10.0f);
 
-	//sf::RenderWindow window(sf::VideoMode(800, 600), "2D Physics Engine");
- //   Body body(sf::Vector2f(400.0f, 300.0f));
- //   sf::Clock clock;
- //   float dt = 0.0f;
-	//while (window.isOpen())
-	//{
-	//	sf::Event evt;
-	//	while (window.pollEvent(evt))
-	//	{
-	//		if (evt.type == sf::Event::Closed)
-	//			window.close();
-	//	}
+	sf::RenderWindow window(sf::VideoMode(800, 600), "2D Physics Engine");
+    Body body(sf::Vector2f(400.0f, 300.0f));
+    sf::Clock clock;
+    float dt = 0.0f;
+	while (window.isOpen())
+	{
+		sf::Event evt;
+		while (window.pollEvent(evt))
+		{
+			if (evt.type == sf::Event::Closed)
+				window.close();
+		}
 
- //       dt = clock.restart().asSeconds();
+        dt = clock.restart().asSeconds();
 
- //       // 중력 적용
- //       //body.applyForce(sf::Vector2f(0.0f, 0.098f * body.mass));
+        // 중력 적용
+        //body.applyForce(sf::Vector2f(0.0f, 0.098f * body.mass));
 
- //       Motion motion({ 0, 0 }, 0.001f);
- //       Motion motion2({ -100.0f*dt, -100.0f*dt }, 0.01f);
- //       g1->transform(motion);
- //       g2->transform(motion2);
- //       printf("g1:(x : %f, y: %f), g2:(x: %f, y: %f)\n", g1->transform().position().x(), g1->transform().position().y(),
- //                                                       g2->transform().position().x(), g2->transform().position().y());
- //       // 업데이트
- //       //body.update(dt);
+        Motion motion({ 0, 0 }, 0.001f);
+        Motion motion2({ -100.0f*dt, -100.0f*dt }, 0.01f);
+        g1->transform(motion);
+        g2->transform(motion2);
+        /*printf("g1:(x : %f, y: %f), g2:(x: %f, y: %f)\n", g1->transform().position().x(), g1->transform().position().y(),
+                                                        g2->transform().position().x(), g2->transform().position().y());*/
+        // 업데이트
+        //body.update(dt);
 
- //       // 화면 그리기
- //       window.clear(sf::Color::Black);
- //       shape1.setPosition({g1->transform().position().x(), g1->transform().position().y()});
- //       shape2.setPosition({g2->transform().position().x(), g2->transform().position().y()});
- //       shape3.setPosition({g3->transform().position().x(), g3->transform().position().y()});
- //       shape1.setFillColor(sf::Color::Red);
- //       shape2.setFillColor(sf::Color::Blue);
- //       shape3.setFillColor(sf::Color::Yellow);
- //       window.draw(shape1);
- //       window.draw(shape2);
- //       window.draw(shape3);
- //       //body.draw(window);
- //       window.display();
-	//}
+        // 화면 그리기
+        window.clear(sf::Color::Black);
+        shape1.setPosition({g1->transform().position().x(), g1->transform().position().y()});
+        shape2.setPosition({g2->transform().position().x(), g2->transform().position().y()});
+        shape3.setPosition({g3->transform().position().x(), g3->transform().position().y()});
+        shape1.setFillColor(sf::Color::Red);
+        shape2.setFillColor(sf::Color::Blue);
+        shape3.setFillColor(sf::Color::Yellow);
+        window.draw(shape1);
+        window.draw(shape2);
+        window.draw(shape3);
+        //body.draw(window);
+        window.display();
+	}
 	return 0;
 }

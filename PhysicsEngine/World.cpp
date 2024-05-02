@@ -42,17 +42,20 @@ void World::init(const Vector2D& g)
 }
 void World::step(float dt)
 {
-	World::removeColliders();
 	for (int i = 0; i < s_gameObjects.size(); ++i)
 		if (s_gameObjects[i]->isActive())
 			s_gameObjects[i]->broadcast(E_GameObjectEvent::UPDATE, nullptr);
+
 	s_broadPhase.update();
 	s_detector.update(s_broadPhase);
 
 	World::invokeCollisionEvents();
 	World::invokeExitEvents();
-	World::removeCollisions();
+	
 	World::destroyObjects();
+	World::removeCollisions();
+	World::removeColliders();
+
 	for (int i = 0; i < s_gameObjects.size(); ++i)
 		if (s_gameObjects[i]->isActive())
 			s_gameObjects[i]->applyReservation();
