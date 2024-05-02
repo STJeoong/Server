@@ -35,7 +35,7 @@ private:
 	~GameObject();
 	void broadcast(E_GameObjectEvent evt, void* arg);
 	void removeChild(GameObject* child);
-	void update();
+	void applyReservation();
 	void removeComponents();
 
 
@@ -52,6 +52,7 @@ private:
 
 	// reservation ( executed next time step )
 	bool _needToToggleActiveState = false;
+	std::vector<Component*> _removedRigids;
 };
 
 #include "RigidBody2D.h"

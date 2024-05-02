@@ -45,7 +45,7 @@ void World::step(float dt)
 	World::removeColliders();
 	for (int i = 0; i < s_gameObjects.size(); ++i)
 		if (s_gameObjects[i]->isActive())
-			s_gameObjects[i]->update();
+			s_gameObjects[i]->broadcast(E_GameObjectEvent::UPDATE, nullptr);
 	s_broadPhase.update();
 	s_detector.update(s_broadPhase);
 
@@ -53,6 +53,9 @@ void World::step(float dt)
 	World::invokeExitEvents();
 	World::removeCollisions();
 	World::destroyObjects();
+	for (int i = 0; i < s_gameObjects.size(); ++i)
+		if (s_gameObjects[i]->isActive())
+			s_gameObjects[i]->applyReservation();
 }
 #pragma endregion
 
