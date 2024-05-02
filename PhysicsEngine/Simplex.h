@@ -16,6 +16,5 @@ private:
 
 	std::vector<Point2D> _points;
 	Vector2D _supportVec; // next support function's direction
-	int _state = 0; // n-simplex
 	bool _containsOrigin = false;
 };
