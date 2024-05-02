@@ -8,7 +8,9 @@
 void GameObject::removeComponent(Component* component)
 {
 	this->broadcast(E_GameObjectEvent::REMOVE_COMPONENT, component);
-	
+	if (typeid(*component) == typeid(RigidBody2D))
+		_isRigid = false;
+
 	auto it = std::find(_components.begin(), _components.end(), component);
 	_components.erase(it);
 	_thingsToBeRemoved.push(*it);
