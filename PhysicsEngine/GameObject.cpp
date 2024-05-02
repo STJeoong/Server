@@ -88,6 +88,7 @@ GameObject::~GameObject()
 		delete com;
 		com = nullptr;
 	}
+	this->removeComponents();
 	for (int i = 0; i < _children.size(); ++i)
 		World::destroy(_children[i]);
 }
@@ -105,8 +106,8 @@ void GameObject::update()
 {
 	if (_needToToggleActiveState) _isActive = !_isActive;
 	_needToToggleActiveState = false;
-	this->removeComponents();
 	this->broadcast(E_GameObjectEvent::APPLY_RESERVATION, nullptr);
+	this->removeComponents();
 	this->broadcast(E_GameObjectEvent::UPDATE, nullptr);
 }
 void GameObject::removeComponents()
