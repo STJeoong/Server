@@ -17,6 +17,19 @@ public:
 protected:
 	Behaviour() = default;
 	virtual ~Behaviour() = default;
+	virtual void onUpdate() override final
+	{
+		if (!_enabled) return;
+		if (_isFirstUpdate)
+		{
+			_isFirstUpdate = false;
+			this->start();
+		}
+		else
+			this->update();
+	}
+	virtual void start() {}
+	virtual void update() {}
 	virtual void onApplyReservation() override
 	{
 		if (_needToToggleEnabled) _enabled = !_enabled;
@@ -24,6 +37,7 @@ protected:
 	}
 private:
 	bool _enabled = true;
+	bool _isFirstUpdate = true;
 
 	// reservation
 	bool _needToToggleEnabled = false;

@@ -38,16 +38,4 @@ void Component::invoke(const E_GameObjectEvent& evt, void* arg)
 	case E_GameObjectEvent::APPLY_RESERVATION: this->onApplyReservation(); break;
 	}
 }
-void Component::onUpdate()
-{
-	if (!_gameObject->isActive())
-		return;
-	if (!_isStart)
-	{
-		_isStart = true;
-		this->start();
-	}
-	else
-		this->update();
-}
 #pragma endregion

@@ -19,9 +19,8 @@ protected:
 	// this is made for inner component. if caller was component, you can use this.
 	// only component can use this when they want to trigger event
 	void invokeAll(const E_GameObjectEvent& evt, void* arg);
-	virtual void start() {}
+	virtual void onUpdate() {}
 	virtual void onDestroy() {}
-	virtual void update() {}
 	virtual void onActiveGameObject() {}
 	virtual void onInactiveGameObject() {}
 	virtual void onCollisionEnter(const Collision2D& collision) {}
@@ -40,9 +39,7 @@ private:
 	void setGameObject(GameObject* obj) { _gameObject = obj; }
 	// used to invoke just one component's invoke()
 	void invoke(const E_GameObjectEvent& evt, void* arg);
-	void onUpdate();
 
-	bool _isStart = false;
 	GameObject* _gameObject = nullptr;
 };
 
