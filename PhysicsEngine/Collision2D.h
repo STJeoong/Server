@@ -24,7 +24,6 @@ private:
 	Collider2D* _colliderB = nullptr;
 	RigidBody2D* _rigidA = nullptr;
 	RigidBody2D* _rigidB = nullptr;
-	bool _isTouching = false;
 	float _depth = 0.0f;
 	Vector2D _normal;
 	Simplex _simplex;
