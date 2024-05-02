@@ -17,10 +17,9 @@ GameObject* World::instantiate(GameObject* obj, GameObject* parent, bool active)
 	if (s_root == nullptr) s_root = new GameObject();
 	GameObject* ret = new GameObject();
 	ret->isActive(active);
-	*ret = *obj;
-	if (parent == nullptr) ret->setParent(*s_root);
-	else ret->setParent(*parent);
-	s_root->_children.push_back(ret);
+	if (obj != nullptr) *ret = *obj;
+	if (parent != nullptr) ret->setParent(*parent);
+	else ret->setParent(*s_root);
 	s_gameObjects.push_back(ret);
 	return ret;
 }
