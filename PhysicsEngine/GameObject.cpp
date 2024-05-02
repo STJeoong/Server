@@ -9,7 +9,10 @@ void GameObject::removeComponent(Component* component)
 {
 	this->broadcast(E_GameObjectEvent::REMOVE_COMPONENT, component);
 	if (typeid(*component) == typeid(RigidBody2D))
+	{
 		_isRigid = false;
+		_removedRigids.push_back(component);
+	}
 
 	auto it = std::find(_components.begin(), _components.end(), component);
 	_components.erase(it);
@@ -104,13 +107,15 @@ void GameObject::removeChild(GameObject* child)
 	auto it = std::find(_children.begin(), _children.end(), child);
 	_children.erase(it);
 }
-void GameObject::update()
+void GameObject::applyReservation()
 {
 	if (_needToToggleActiveState) _isActive = !_isActive;
 	_needToToggleActiveState = false;
 	this->broadcast(E_GameObjectEvent::APPLY_RESERVATION, nullptr);
+	for (Component* rigid : _removedRigids) // rigidbody는 삭제될때도 ApplyReservation해야 됨.
+		rigid->invoke(E_GameObjectEvent::APPLY_RESERVATION, nullptr);
+	_removedRigids.clear();
 	this->removeComponents();
-	this->broadcast(E_GameObjectEvent::UPDATE, nullptr);
 }
 void GameObject::removeComponents()
 {
