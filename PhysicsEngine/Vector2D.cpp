@@ -38,7 +38,7 @@ Vector2D Vector2D::operator-(const Vector2D& obj) const { return { _x - obj._x, 
 Vector2D& Vector2D::operator+=(const Vector2D& obj) { _x += obj._x; _y += obj._y; return *this; }
 bool Vector2D::operator==(const Vector2D& obj) const
 {
-	if (std::abs(_x - obj._x) < FLT_EPSILON && std::abs(_y - obj._y) < FLT_EPSILON) return true;
+	if (std::abs(_x - obj._x) < 10.0f * FLT_EPSILON && std::abs(_y - obj._y) < 10.0f * FLT_EPSILON) return true;
 	return false;
 }
 #pragma endregion
