@@ -5,7 +5,7 @@ class Line
 {
 public:
 	Line(const Point2D& a, const Point2D& b);
-	float distance(const Point2D& p) const;
+	float distanceFrom(const Point2D& p) const;
 private:
 
 	Point2D _pass;
