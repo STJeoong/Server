@@ -181,6 +181,7 @@ void CollisionDetector::epa(Collision2D* collision)
 	collision->_rA = polytope.contactA() - collision->colliderA()->position();
 	collision->_rB = polytope.contactB() - collision->colliderB()->position();
 	collision->_normalImpulseSum = 0.0f;
+	collision->_tangentImpulseSum = 0.0f;
 
 	float bounceA = collision->colliderA()->bounciness();
 	float bounceB = collision->colliderB()->bounciness();

@@ -59,7 +59,8 @@ int main()
 
     S_BoxDef def2;
     def2.halfSize = { 10.0f, 10.0f };
-    def2.bounciness = 0.8f;
+    def2.friction = 0.01f;
+    //def2.bounciness = 0.8f;
     RigidBody2D* rigid1 = g1->addComponent<RigidBody2D>();
     BoxCollider2D* c1 = g1->addComponent<BoxCollider2D>(def2);
     g1->addComponent<Test>();
@@ -69,13 +70,14 @@ int main()
     S_CircleDef circleDef;
     circleDef.radius = 10.0f;
     circleDef.bounciness = 0.5f;
-    g2->addComponent<RigidBody2D>();
+    //g2->addComponent<RigidBody2D>();
     CircleCollider* c2 = g2->addComponent<CircleCollider>(circleDef);
     //BoxCollider2D* c2 = g2->addComponent<BoxCollider2D>(def3);
 
 
-    g1->moveTo({ 480.0f, 100.0f });
+    g1->moveTo({ 500.0f, 400.0f });
     //g1->setRotation(1);
+    rigid1->velocity({ -100,0 });
     g2->moveTo({400.0f, 100.0f});
     g3->moveTo({ 400.0f, 500.0f });
     sf::RectangleShape shape1({ 20.0f, 20.0f });
@@ -84,6 +86,7 @@ int main()
     //sf::RectangleShape shape2({ 20.0f, 20.0f });
     shape2.setOrigin({ 10.0f,10.0f });
     sf::RectangleShape shape3({ 200.0f, 20.0f });
+    shape3.setOrigin({ 100,10 });
     World::init({ 0.0f, 500.0f });
 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "2D Physics Engine");
@@ -111,13 +114,13 @@ int main()
 
 
         //dt = clock.restart().asSeconds();
-        World::step(0.00020f, 1, 0);
+        World::step(0.00020f, 3, 0);
         // 화면 그리기
         window.clear(sf::Color::Black);
         shape1.setRotation(g1->transform().rotation().radian() * 180 / PI);
         shape1.setPosition({ g1->transform().position().x(), g1->transform().position().y() });
         shape2.setPosition({g2->transform().position().x(), g2->transform().position().y()});
-        shape3.setPosition({ g3->transform().position().x() - c3->halfSize().x(), g3->transform().position().y() - c3->halfSize().y() });
+        shape3.setPosition({ g3->transform().position().x(), g3->transform().position().y()});
         shape3.setRotation(g3->transform().rotation().radian() * 180 / PI);
         shape1.setFillColor(sf::Color::Red);
         shape2.setFillColor(sf::Color::Red);

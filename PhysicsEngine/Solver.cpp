@@ -44,13 +44,17 @@ void Solver::solveVelocityConstraints(const std::vector<Collision2D*>& collision
 		Collision2D& c = *(collisions[i]);
 		if (c._isTrigger) continue;
 
-		// TODO : tangent impulse
+		float tLambda = this->computeLambda(c, _tangentJacobians[i], _effMasses[i], 0);
+		if (std::abs(c._tangentImpulseSum + tLambda) > c._friction * c._normalImpulseSum)
+			tLambda -= (std::abs(c._tangentImpulseSum + tLambda) - (c._friction * c._normalImpulseSum)) * (tLambda > 0.0f ? 1.0f : -1.0f);
+		c._tangentImpulseSum += tLambda;
+		this->impulse(c, _tangentJacobians[i], _masses[i], tLambda);
 
-		float lambda = this->computeLambda(c, _jacobians[i], _effMasses[i], _biases[i]);
-		if (lambda < 0.0f)
-			lambda = std::min(std::abs(lambda), std::abs(c._normalImpulseSum)) * -1.0f;
-		c._normalImpulseSum += lambda;
-		this->normalImpulse(c, _jacobians[i], _masses[i], lambda);
+		float nLambda = this->computeLambda(c, _normalJacobians[i], _effMasses[i], _biases[i]);
+		if (nLambda < 0.0f)
+			nLambda = std::min(std::abs(nLambda), std::abs(c._normalImpulseSum)) * -1.0f;
+		c._normalImpulseSum += nLambda;
+		this->impulse(c, _normalJacobians[i], _masses[i], nLambda);
 	}
 }
 void Solver::solvePositionConstraints(const std::vector<Collision2D*>& collisions)
@@ -67,7 +71,8 @@ void Solver::solvePositionConstraints(const std::vector<Collision2D*>& collision
 void Solver::init(const std::vector<Collision2D*>& collisions)
 {
 	_isFirstVelocityIter = false;
-	_jacobians.resize(collisions.size());
+	_normalJacobians.resize(collisions.size());
+	_tangentJacobians.resize(collisions.size());
 	_biases.resize(collisions.size());
 	_masses.resize(collisions.size());
 	_effMasses.resize(collisions.size());
@@ -76,13 +81,16 @@ void Solver::init(const std::vector<Collision2D*>& collisions)
 		const Collision2D& c = *(collisions[i]);
 		if (c._isTrigger) continue;
 
-		_jacobians[i] = { -c.normal().x(), -c.normal().y(), -Vector2D::cross(c._rA, c.normal()), c.normal().x(), c.normal().y(), Vector2D::cross(c._rB, c.normal()) };
+		_normalJacobians[i] = { -c.normal().x(), -c.normal().y(), -Vector2D::cross(c._rA, c.normal()),
+								c.normal().x(), c.normal().y(), Vector2D::cross(c._rB, c.normal()) };
+		_tangentJacobians[i] = { -c.tangent().x(), -c.tangent().y(), -Vector2D::cross(c._rA, c.tangent()),
+								c.tangent().x(), c.tangent().y(), Vector2D::cross(c._rB, c.tangent()) };
 		_biases[i] = this->computeBias(c);
 		this->getMassAndInertia(c, std::get<0>(_masses[i]), std::get<1>(_masses[i]), std::get<2>(_masses[i]), std::get<3>(_masses[i]));
-		_effMasses[i] = this->computeEffectiveMass(_jacobians[i], std::get<0>(_masses[i]), std::get<1>(_masses[i]), std::get<2>(_masses[i]), std::get<3>(_masses[i]));
+		_effMasses[i] = this->computeEffectiveMass(_normalJacobians[i], std::get<0>(_masses[i]), std::get<1>(_masses[i]), std::get<2>(_masses[i]), std::get<3>(_masses[i]));
 	}
 }
-void Solver::normalImpulse(const Collision2D& c, const std::vector<float>& jaco, const std::tuple<float, float, float, float>& mass, float lambda)
+void Solver::impulse(const Collision2D& c, const std::vector<float>& jaco, const std::tuple<float, float, float, float>& mass, float lambda)
 {
 	float invMassA = std::get<0>(mass), invMassB = std::get<1>(mass), invInertiaA = std::get<2>(mass), invInertiaB = std::get<3>(mass);
 	Vector2D dvA = { invMassA * jaco[0] * lambda, invMassA * jaco[1] * lambda };
