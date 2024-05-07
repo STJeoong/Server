@@ -6,19 +6,24 @@
 #include "Collision2D.h"
 class Polytope
 {
+	static const int MAX_ITERATION = 20;
 public:
-	Polytope(const Collision2D& collision, const std::vector<Point2D>& points);
+	Polytope(const Collision2D& collision, const std::vector<Point2D>& points, const std::vector<std::pair<Point2D, Point2D>>& sources);
 	float depth() const { return _depth; }
-	const Vector2D& normal() const { return _normal; }
+	const Vector2D& normal() const { return _normal; } // A to B
+	const Point2D& contactA() const { return _contactA; }
+	const Point2D& contactB() const { return _contactB; }
 private:
 	void initPQ();
 	void expand(const Collision2D& collision);
-	// 두 점을 지나는 직선과 원점 사이의 거리
-	float computeDistance(const Point2D& A, const Point2D& B);
+	void computeClosestPoints(size_t idxA, size_t idxB);
 
 	std::vector<Point2D> _points;
+	std::vector<std::pair<Point2D, Point2D>> _sources;
 	std::priority_queue<std::tuple<float, size_t, size_t>, std::vector<std::tuple<float, size_t, size_t>>,
 		std::greater<std::tuple<float, size_t, size_t>>> _pq;
 	float _depth = 0.0f;
 	Vector2D _normal;
+	Point2D _contactA;
+	Point2D _contactB;
 };

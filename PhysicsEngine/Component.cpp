@@ -36,6 +36,7 @@ void Component::invoke(const E_GameObjectEvent& evt, void* arg)
 	case E_GameObjectEvent::ENABLE_COMPONENT: { Component* comp = reinterpret_cast<Component*>(arg); this->onEnableComponent(comp); break; }
 	case E_GameObjectEvent::DISABLE_COMPONENT: { Component* comp = reinterpret_cast<Component*>(arg); this->onDisableComponent(comp); break; }
 	case E_GameObjectEvent::APPLY_RESERVATION: this->onApplyReservation(); break;
+	case E_GameObjectEvent::MOVE_OBJECT: this->onMove(); break;
 	}
 }
 #pragma endregion

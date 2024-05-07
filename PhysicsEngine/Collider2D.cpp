@@ -19,6 +19,13 @@ Point2D Collider2D::position() const
 
 	return worldCenter;
 }
+Point2D Collider2D::toLocal(const Point2D& p) const
+{
+	Point2D ret = p - this->position();
+	const Matrix22& worldObjRot = this->gameObject()->transform().rotation();
+	ret = worldObjRot.transpose() * ret;
+	return ret;
+}
 #pragma endregion
 
 #pragma region protected
@@ -66,6 +73,11 @@ void Collider2D::onApplyReservation()
 	Behaviour::onApplyReservation();
 	if (_needToToggleTriggerState) _isTrigger = !_isTrigger;
 	_needToToggleTriggerState = false;
+}
+void Collider2D::onMove()
+{
+	if (!this->gameObject()->isActive() || !Behaviour::enabled() || _key == -1) return;
+	World::moveCollider(_key, this->computeAABB(), { 0.0f, 0.0f });
 }
 void Collider2D::addToWorld() { _key = World::add(this); }
 void Collider2D::removeFromWorld()

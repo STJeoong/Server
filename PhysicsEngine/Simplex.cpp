@@ -1,16 +1,34 @@
 #include "pch.h"
 #include "Simplex.h"
+#include "Utils.h"
 
 #pragma region public
-void Simplex::init(const Point2D& p)
+void Simplex::init(const Point2D& pointFromA, const Point2D& pointFromB)
 {
 	_points.clear();
-	_points.push_back(p);
+	_sources.clear();
+	_containsOrigin = false;
+	_points.push_back(pointFromA - pointFromB);
+	_sources.push_back({ pointFromA, pointFromB });
 	_supportVec = _points[0] * -1;
 }
-bool Simplex::insert(const Point2D& p)
+bool Simplex::insert(const Point2D& pointFromA, const Point2D& pointFromB)
 {
-	_points.push_back(p);
+	if (_points.size() == 3)
+	{
+		_points[0] = _points[1];
+		_points[1] = _points[2];
+		_points[2] = pointFromA - pointFromB;
+
+		_sources[0] = _sources[1];
+		_sources[1] = _sources[2];
+		_sources[2] = { pointFromA, pointFromB };
+	}
+	else
+	{
+		_points.push_back(pointFromA - pointFromB);
+		_sources.push_back({ pointFromA, pointFromB });
+	}
 	return this->check();
 }
 #pragma endregion
@@ -31,14 +49,16 @@ bool Simplex::check()
 		return true;
 	}
 	
-	const Point2D& A = _points[_points.size() - 3];
-	const Point2D& B = _points[_points.size() - 2];
+	Point2D& A = _points[0];
+	Point2D& B = _points[1];
 	Vector2D CA = A - newPoint;
 	Vector2D CB = B - newPoint;
 	Vector2D CO = newPoint * -1;
 	_supportVec = Vector2D::cross(Vector2D::cross(CA, CB), CB);
 	if (Vector2D::dot(_supportVec, CO) > 0.0f) return true; // check Rbc. TODO : 여기에 0.0f 대신에 FLT_EPSILON쓰면 원점이 약간 삐져나가있어도 ok함
 	_supportVec = Vector2D::cross(Vector2D::cross(CB, CA), CA);
+	Utils::swap(_points[0], _points[1]);
+	Utils::swap(_sources[0], _sources[1]);
 	if (Vector2D::dot(_supportVec, CO) > 0.0f) return true; // check Rac
 	_containsOrigin = true;
 	return true;

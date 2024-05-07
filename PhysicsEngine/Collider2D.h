@@ -19,6 +19,7 @@ public:
 	const float& density() const { return _density; }
 	const float& friction() const { return _friction; }
 	const float& bounciness() const { return _bounciness; }
+	const float& bouncinessThreshold() const { return _bouncinessThreshold; }
 	const float& mass() const { return _mass; }
 	const float& inertia() const { return _inertia; }
 	const bool& isTrigger() const { return _isTrigger; }
@@ -29,6 +30,8 @@ public:
 	const std::vector<Collision2D*>& collisions() const { return _collisions; }
 	// get world position of collider's center
 	Point2D position() const;
+	// compute local position from given point
+	Point2D toLocal(const Point2D& p) const;
 	// TODO : offset, density, trigger 바뀌면 rigidbody에 이벤트 보내도록
 protected:
 	Collider2D() = default;
@@ -41,11 +44,13 @@ protected:
 	virtual void onEnableComponent(Component* component) override;
 	virtual void onDisableComponent(Component* component) override;
 	virtual void onApplyReservation() override;
+	virtual void onMove() override;
 
 	Point2D _offset;
 	float _density = 1.0f;
 	float _friction = 0.4f;
 	float _bounciness = 0.0f;
+	float _bouncinessThreshold = 1.0f;
 	float _mass = 0.0f; // you need to keep this value up to date. update this whenever related to mass is changed.
 	float _inertia = 0.0f; // you need to keep this value up to date. update this whenever related to inertia is changed.
 	bool _isTrigger = false;

@@ -36,30 +36,11 @@ void GameObject::setChild(GameObject& obj)
 	obj._localTF.position() = obj._worldTF.position() - _worldTF.position();
 	obj._localTF.rotation() = obj._worldTF.rotation() * _worldTF.rotation().transpose();
 }
-void GameObject::transform(const Motion& motionInWorld)
-{
-	// 로컬 위치는 displacement.position()을 부모 오브젝트의 회전값의 반대방향으로 돌려서 더해주면 된다.
-	Matrix22 rot = _parent->_worldTF.rotation().transpose();
-	Vector2D localDisplacement = rot * motionInWorld.displacement();
-	_localTF.move(localDisplacement);
-	_localTF.rotate(motionInWorld.rotation());
-	_worldTF.move(motionInWorld.displacement());
-	_worldTF.rotate(motionInWorld.rotation());
-
-	std::stack<GameObject*> stk;
-	for (int i = 0; i < _children.size(); ++i) stk.push(_children[i]);
-	while (!stk.empty())
-	{
-		GameObject& obj = *(stk.top());
-		GameObject& parent = *(obj._parent);
-		stk.pop();
-		obj._worldTF.position() = parent._worldTF.position() + parent._worldTF.rotation() * obj._localTF.position();
-		obj._worldTF.rotation() = parent._worldTF.rotation() * obj._localTF.rotation();
-		for (int i = 0; i < obj._children.size(); ++i) stk.push(obj._children[i]);
-	}
-}
-void GameObject::transform(const Vector2D& displacement) { Motion motion{ displacement,0.0f }; this->transform(motion); }
-void GameObject::transform(float radian) { Motion motion{ {0.0f, 0.0f}, radian }; this->transform(motion); }
+void GameObject::transform(const Motion& motionInWorld) { if (!_isActive) return; _arrivalTF += motionInWorld; _needToModifyTF = true; }
+void GameObject::move(const Vector2D& displacement) { if (!_isActive) return; _arrivalTF.move(displacement); _needToModifyTF = true; }
+void GameObject::moveTo(const Point2D& p) { if (!_isActive) return; _arrivalTF.position() = p; _needToModifyTF = true; }
+void GameObject::rotate(float radian) { if (!_isActive) return; _arrivalTF.rotate(radian); _needToModifyTF = true; }
+void GameObject::setRotation(float radian) { if (!_isActive) return; _arrivalTF.rotation() = Matrix22(radian); _needToModifyTF = true; }
 void GameObject::isActive(bool flag)
 {
 	if (_isActive == flag) return;
@@ -76,6 +57,7 @@ void GameObject::isActive(bool flag)
 GameObject& GameObject::operator=(const GameObject& obj)
 {
 	_worldTF = obj._worldTF;
+	_arrivalTF = _worldTF;
 	_name = obj._name;
 	_isRigid = obj._isRigid;
 	for (Component* otherComponent : obj._components)
@@ -109,7 +91,16 @@ void GameObject::removeChild(GameObject* child)
 }
 void GameObject::applyReservation()
 {
-	if (_needToToggleActiveState) _isActive = !_isActive;
+	if (_needToModifyTF)
+	{
+		this->processTransform(_arrivalTF - _worldTF);
+		_arrivalTF = _worldTF;
+		this->broadcast(E_GameObjectEvent::MOVE_OBJECT, nullptr);
+	}
+
+	if (_needToToggleActiveState)
+		_isActive = !_isActive;
+	_needToModifyTF = false;
 	_needToToggleActiveState = false;
 	for (Component* rigid : _removedRigids) // rigidbody는 삭제될때도 ApplyReservation해야 됨.
 		rigid->invoke(E_GameObjectEvent::APPLY_RESERVATION, nullptr);
@@ -124,6 +115,28 @@ void GameObject::removeComponents()
 		Component* c = _thingsToBeRemoved.front();
 		_thingsToBeRemoved.pop();
 		delete c;
+	}
+}
+void GameObject::processTransform(const Motion& motionInWorld)
+{
+	// 로컬 위치는 displacement.position()을 부모 오브젝트의 회전값의 반대방향으로 돌려서 더해주면 된다.
+	Matrix22 rot = _parent->_worldTF.rotation().transpose();
+	Vector2D localDisplacement = rot * motionInWorld.displacement();
+	_localTF.move(localDisplacement);
+	_localTF.rotate(motionInWorld.rotation());
+	_worldTF.move(motionInWorld.displacement());
+	_worldTF.rotate(motionInWorld.rotation());
+
+	std::stack<GameObject*> stk;
+	for (int i = 0; i < _children.size(); ++i) stk.push(_children[i]);
+	while (!stk.empty())
+	{
+		GameObject& obj = *(stk.top());
+		GameObject& parent = *(obj._parent);
+		stk.pop();
+		obj._worldTF.position() = parent._worldTF.position() + parent._worldTF.rotation() * obj._localTF.position();
+		obj._worldTF.rotation() = parent._worldTF.rotation() * obj._localTF.rotation();
+		for (int i = 0; i < obj._children.size(); ++i) stk.push(obj._children[i]);
 	}
 }
 #pragma endregion

@@ -1,11 +1,16 @@
 #pragma once
 #include "Vector2D.h"
-#include <utility>
+
+// ax + by + c = 0
 class Line
 {
 public:
 	Line(const Point2D& a, const Point2D& b);
 	float distanceFrom(const Point2D& p) const;
+	bool isPoint() const { return _isPoint; }
+	float a() const { return _a; }
+	float b() const { return _b; }	
+	float c() const { return _c; }
 private:
 
 	Point2D _pass;

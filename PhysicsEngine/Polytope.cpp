@@ -1,9 +1,11 @@
 #include "pch.h"
 #include "Polytope.h"
 #include "Collider2D.h"
+#include "Line.h"
 
 #pragma region public
-Polytope::Polytope(const Collision2D& collision, const std::vector<Point2D>& points) : _points(points)
+Polytope::Polytope(const Collision2D& collision, const std::vector<Point2D>& points, const std::vector<std::pair<Point2D, Point2D>>& sources)
+	: _points(points), _sources(sources)
 {
 	this->initPQ();
 	this->expand(collision);
@@ -15,7 +17,8 @@ void Polytope::initPQ()
 {
 	for (size_t i = 0; i < _points.size(); ++i)
 	{
-		float distance = this->computeDistance(_points[i], _points[(i + 1) % _points.size()]);
+		Line line(_points[i], _points[(i + 1) % _points.size()]);
+		float distance = line.distanceFrom({ 0.0f, 0.0f });
 		_pq.push({ distance, i, (i + 1) % _points.size() });
 	}
 }
@@ -23,6 +26,7 @@ void Polytope::expand(const Collision2D& collision)
 {
 	Collider2D* colliderA = collision.colliderA();
 	Collider2D* colliderB = collision.colliderB();
+	int i = 0;
 	while (!_pq.empty())
 	{
 		float distance;
@@ -30,35 +34,109 @@ void Polytope::expand(const Collision2D& collision)
 		std::tie(distance, idxA, idxB) = _pq.top();
 		_pq.pop();
 
-		const Point2D& A = _points[idxA];
-		const Point2D& B = _points[idxB];
-		Vector2D AB = B - A;
-		Vector2D AO = A * -1;
+		// TODO : 왜 const Point2D& A = _points[idxA] 이렇게 하면 값이 이상하게 나오지??
+		Vector2D AB = _points[idxB] - _points[idxA];
+		Vector2D AO = _points[idxA] * -1;
 		Vector2D supportVec = Vector2D::cross(Vector2D::cross(AO, AB), AB);
-		Point2D minkowskiPoint = colliderA->computeSupportPoint(supportVec) - colliderB->computeSupportPoint(supportVec * -1);
-		if (A == minkowskiPoint || B == minkowskiPoint)
+
+		Point2D pointFromA = colliderA->computeSupportPoint(supportVec);
+		Point2D pointFromB = colliderB->computeSupportPoint(supportVec * -1);
+		Point2D minkowskiPoint = pointFromA - pointFromB;
+		if (_points[idxA] == minkowskiPoint || _points[idxB] == minkowskiPoint || i == Polytope::MAX_ITERATION)
 		{
 			_depth = distance;
 			_normal = supportVec;
+			this->computeClosestPoints(idxA, idxB);
 			return;
 		}
 
 		_points.push_back(minkowskiPoint);
+		_sources.push_back({ pointFromA, pointFromB });
 		{
-			float computedValue = this->computeDistance(A, minkowskiPoint);
+			Line line(_points[idxA], minkowskiPoint);
+			float computedValue = line.distanceFrom({ 0.0f, 0.0f });
 			_pq.push({ computedValue, idxA, _points.size() - 1 });
 		}
 		{
-			float computedValue = this->computeDistance(B, minkowskiPoint);
+			Line line(_points[idxB], minkowskiPoint);
+			float computedValue = line.distanceFrom({ 0.0f, 0.0f });
 			_pq.push({ computedValue, idxB, _points.size() - 1 });
 		}
+		++i;
 	}
 }
-float Polytope::computeDistance(const Point2D& A, const Point2D& B)
+void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 {
-	if (A == B) return A.len();
-	// ax + by + c = 0 직선 방정식 만들기
-	Vector2D AB = B - A;
-	return std::abs(AB.x() * A.y() - AB.y() * A.x()) / std::sqrtf(AB.x() * AB.x() + AB.y() * AB.y());
+	Point2D A[2] = { _sources[idxA].first, _sources[idxB].first };
+	Point2D B[2] = { _sources[idxA].second, _sources[idxB].second };
+
+	// check if it contacts to collider's edge
+	bool isVertexA = A[0] == A[1];
+	bool isVertexB = B[0] == B[1];
+
+	if (!isVertexA && !isVertexB) // 면 대 면 접촉
+	{
+		bool isParallelToY = false;
+		if (std::abs(A[0].x() - A[1].x()) < 10.0f * FLT_EPSILON) // y축에 평행한 면에 접촉
+		{
+			isParallelToY = true;
+			Utils::swap(A[0].x(), A[0].y());
+			Utils::swap(A[1].x(), A[1].y());
+			Utils::swap(B[0].x(), B[0].y());
+			Utils::swap(B[1].x(), B[1].y());
+		}
+
+		// get x coordinate
+		if (A[0].x() > A[1].x()) Utils::swap(A[0], A[1]);
+		if (B[0].x() > B[1].x()) Utils::swap(B[0], B[1]);
+		float leftX = std::max(A[0].x(), B[0].x());
+		float rightX = std::min(A[1].x(), B[1].x());
+		float result = (leftX + rightX) * 0.5f; // 중간점 선택
+		_contactA.x() = result;
+		_contactB.x() = result;
+
+		// get each collider's y coordinate from x
+		_contactA.y() = ((A[1].x() - result) / (A[1].x() - A[0].x())) * A[0].y() + ((result - A[0].x()) / (A[1].x() - A[0].x())) * A[1].y();
+		_contactB.y() = ((B[1].x() - result) / (B[1].x() - B[0].x())) * B[0].y() + ((result - B[0].x()) / (B[1].x() - B[0].x())) * B[1].y();
+
+		if (isParallelToY)
+		{
+			Utils::swap(_contactA.x(), _contactA.y());
+			Utils::swap(_contactB.x(), _contactB.y());
+		}
+	}
+	else // 면 대 점 접촉
+	{
+		if (isVertexA) // A는 점 접촉, B는 면 접촉
+		{
+			_contactA = A[0];
+
+			// project A[0] to B's edge
+			// ax + by + c = 0
+			Line line(B[1], B[0]);
+			float a = line.a();
+			float b = line.b();
+			float c = line.c();
+			float k = -1.0f * (a * A[0].x() + b * A[0].y() + c) / (a * a + b * b);
+
+			_contactB.x() = A[0].x() + a * k;
+			_contactB.y() = A[0].y() + b * k;
+		}
+		else // A는 면 접촉, B는 점 접촉
+		{
+			_contactB = B[0];
+
+			// project B[0] to A's edge
+			// ax + by + c = 0
+			Line line(A[1], A[0]);
+			float a = line.a();
+			float b = line.b();
+			float c = line.c();
+			float k = -1.0f * (a * B[0].x() + b * B[0].y() + c) / (a * a + b * b);
+
+			_contactA.x() = B[0].x() + a * k;
+			_contactB.y() = B[0].y() + b * k;
+		}
+	}
 }
 #pragma endregion

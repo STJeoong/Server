@@ -17,14 +17,22 @@ void BroadPhase::remove(int id)
 bool BroadPhase::move(int id, const AABB& sweepAABB, const Vector2D& displacement)
 {
 	bool wasMoved = _tree.move(id, sweepAABB, displacement);
-	if (wasMoved) _thingsToBeUpdated.push_back(id);
+	if (wasMoved)
+	{
+		auto it = std::find(_thingsToBeUpdated.begin(), _thingsToBeUpdated.end(), id);
+		if (it == _thingsToBeUpdated.end())
+			_thingsToBeUpdated.push_back(id);
+	}
 	return wasMoved;
 }
 void BroadPhase::update()
 {
 	_candidates.clear();
-	_tree.makeCandidates(_thingsToBeUpdated, _candidates);
-	_thingsToBeUpdated.clear();
+	if (!_thingsToBeUpdated.empty())
+	{
+		_tree.makeCandidates(_thingsToBeUpdated, _candidates);
+		_thingsToBeUpdated.clear();
+	}
 }
 #pragma endregion
 

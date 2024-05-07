@@ -2,6 +2,8 @@
 #include "World.h"
 #include "Collider2D.h"
 #include "GameObject.h"
+#include "Solver.h"
+#include "ContactFilter.h"
 #include <ObjectPool.h>
 
 #pragma region public
@@ -12,12 +14,12 @@ GameObject* World::find(const std::string& name)
 			return obj;
 	return nullptr;
 }
-GameObject* World::instantiate(GameObject* obj, GameObject* parent, bool active)
+GameObject* World::instantiate(GameObject* copy, GameObject* parent, bool active)
 {
 	if (s_root == nullptr) s_root = new GameObject();
 	GameObject* ret = new GameObject();
 	ret->isActive(active);
-	if (obj != nullptr) *ret = *obj;
+	if (copy != nullptr) *ret = *copy;
 	if (parent != nullptr) ret->setParent(*parent);
 	else ret->setParent(*s_root);
 	s_gameObjects.push_back(ret);
@@ -34,12 +36,11 @@ void World::destroy(GameObject*& obj)
 void World::init(const Vector2D& g)
 {
 	s_gravity = g;
+	ContactFilter::reset();
 	ObjectPool::makePool<Collision2D>(World::COLLISION_POOL_SIZE, []{ return new Collision2D(); },
 		[](void* collision) {}, [](void* collision) { Collision2D* p = reinterpret_cast<Collision2D*>(collision); p->onDestroy(); });
-	ObjectPool::makePool<Contact2D>(World::CONTACT_POOL_SIZE, [] { return new Contact2D(); },
-		[](void* contact) {}, [](void* contact) {});
 }
-void World::step(float dt)
+void World::step(float dt, int velocityIter, int positionIter)
 {
 	for (int i = 0; i < s_gameObjects.size(); ++i)
 		if (s_gameObjects[i]->isActive())
@@ -48,9 +49,21 @@ void World::step(float dt)
 	s_broadPhase.update();
 	s_detector.update(s_broadPhase);
 
+	Solver solver;
+	solver.integrateVelocity(s_rigids, s_gravity, dt);
+	for (int i = 0; i < velocityIter; ++i)
+		solver.solveVelocityConstraints(s_detector.collisions());
+	solver.integratePosition(s_rigids, dt);
+	for (int i = 0; i < positionIter; ++i)
+		solver.solvePositionConstraints(s_detector.collisions());
+
+	for (RigidBody2D* rigid : s_rigids)
+		rigid->sync();
+	// TODO : continuous collision
+	// update broad-phase
+
 	World::invokeCollisionEvents();
 	World::invokeExitEvents();
-	
 	World::destroyObjects();
 	World::removeCollisions();
 	World::removeColliders();
@@ -63,6 +76,9 @@ void World::step(float dt)
 
 #pragma region private
 int World::add(Collider2D* collider) { return s_broadPhase.insert(collider, collider->computeAABB()); }
+int World::add(RigidBody2D* rigid) { s_rigids.push_back(rigid); return s_rigids.size() - 1; }
+void World::moveCollider(int key, const AABB& sweepAABB, const Vector2D& displacement) { s_broadPhase.move(key, sweepAABB, displacement); }
+void World::removeRigid(int key) { s_rigids.erase(s_rigids.begin() + key); }
 void World::removalReq(int key)
 {
 	//s_broadPhase.remove(key); TODO : 바로 삭제해도 되나? 나중에 시뮬레이션할때 문제 생기나? 아니면 바로 지워도 될거같은데
@@ -171,6 +187,7 @@ GameObject* World::s_root;
 
 Vector2D World::s_gravity;
 BroadPhase World::s_broadPhase;
+std::vector<RigidBody2D*> World::s_rigids;
 CollisionDetector World::s_detector;
 std::queue<int> World::s_removals;
 std::vector<Collision2D*> World::s_exits;

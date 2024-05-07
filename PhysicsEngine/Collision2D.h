@@ -1,31 +1,44 @@
 #pragma once
 #include <vector>
-#include "Contact2D.h"
 #include "E_GameObjectEvent.h"
 #include "Simplex.h"
+class Collider2D;
+class RigidBody2D;
 class Collision2D
 {
 	friend class World;
 	friend class CollisionDetector;
+	friend class Solver;
 public:
-	size_t contactCount() const { return _contacts.size(); }
-	const Contact2D& getContact(size_t idx) const { return *_contacts[idx]; }
+	//size_t contactCount() const { return _contacts.size(); }
+	//const Contact2D& getContact(size_t idx) const { return *_contacts[idx]; }
 	Collider2D* const& colliderA() const { return _colliderA; }
 	Collider2D* const& colliderB() const { return _colliderB; }
-	RigidBody2D* const& rigidA() const { return _rigidA; }
-	RigidBody2D* const& rigidB() const { return _rigidB; }
 	float depth() const { return _depth; }
 	const Vector2D& normal() const { return _normal; }
+	const Vector2D& tangent() const { return _tangent; }
 private:
 	void onDestroy();
 
-	std::vector<Contact2D*> _contacts;
+	Point2D _contactA;
+	Point2D _contactB;
+	Vector2D _rA; // from center of A to contactA
+	Vector2D _rB; // from center of B to contactB
+	Point2D _localA; // local position of contactA
+	Point2D _localB; // local position of contactB
+
 	Collider2D* _colliderA = nullptr;
 	Collider2D* _colliderB = nullptr;
-	RigidBody2D* _rigidA = nullptr;
-	RigidBody2D* _rigidB = nullptr;
+	float _bounciness = 0.0f;
+	float _bouncinessThreshold = 1.0f;
+	float _friction = 0.0f;
 	float _depth = 0.0f;
+	bool _isTrigger = false;
 	Vector2D _normal;
+	Vector2D _tangent;
+	float _normalImpulseSum = 0.0f;
+	float _tangentImpulseSum = 0.0f;
+
 	Simplex _simplex;
 	E_GameObjectEvent _evt = E_GameObjectEvent::NONE;
 };

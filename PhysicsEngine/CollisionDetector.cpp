@@ -72,8 +72,8 @@ void CollisionDetector::pruneOldCollisions(const BroadPhase& broadPhase)
 	{
 		Collider2D* colliderA = _collisions[i]->colliderA();
 		Collider2D* colliderB = _collisions[i]->colliderB();
-		RigidBody2D* rigidA = _collisions[i]->rigidA();
-		RigidBody2D* rigidB = _collisions[i]->rigidB();
+		RigidBody2D* rigidA = _collisions[i]->colliderA()->attachedRigidBody();
+		RigidBody2D* rigidB = _collisions[i]->colliderB()->attachedRigidBody();
 
 		if (!ContactFilter::shouldCollide(*colliderA, *colliderB))
 			this->setExit(_collisions[i]);
@@ -114,8 +114,6 @@ void CollisionDetector::importFromBroadPhase(const BroadPhase& broadPhase)
 		Collision2D* collision = ObjectPool::get<Collision2D>();
 		collision->_colliderA = colliderA;
 		collision->_colliderB = colliderB;
-		collision->_rigidA = rigidA;
-		collision->_rigidB = rigidB;
 		_collisions.push_back(collision);
 	}
 }
@@ -130,28 +128,28 @@ void CollisionDetector::narrowPhase(Collision2D* collision)
 	{
 		if (evt == E_GameObjectEvent::NONE) return;
 		this->setExit(collision);
+		return;
+	}
+	if (trigger)
+	{
+		if (evt == E_GameObjectEvent::COLLISION_ENTER || evt == E_GameObjectEvent::COLLISION_STAY)
+			this->setExit(collision);
+		if (evt != E_GameObjectEvent::TRIGGER_ENTER && evt != E_GameObjectEvent::TRIGGER_STAY)
+			evt = E_GameObjectEvent::TRIGGER_ENTER;
+		else
+			evt = E_GameObjectEvent::TRIGGER_STAY;
+		collision->_isTrigger = true;
 	}
 	else
 	{
-		if (trigger)
-		{
-			if (evt == E_GameObjectEvent::COLLISION_ENTER || evt == E_GameObjectEvent::COLLISION_STAY)
-				this->setExit(collision);
-			if (evt != E_GameObjectEvent::TRIGGER_ENTER && evt != E_GameObjectEvent::TRIGGER_STAY)
-				evt = E_GameObjectEvent::TRIGGER_ENTER;
-			else
-				evt = E_GameObjectEvent::TRIGGER_STAY;
-		}
+		if (evt == E_GameObjectEvent::TRIGGER_ENTER || evt == E_GameObjectEvent::TRIGGER_STAY)
+			this->setExit(collision);
+		if (evt != E_GameObjectEvent::COLLISION_ENTER && evt != E_GameObjectEvent::COLLISION_STAY)
+			evt = E_GameObjectEvent::COLLISION_ENTER;
 		else
-		{
-			if (evt == E_GameObjectEvent::TRIGGER_ENTER || evt == E_GameObjectEvent::TRIGGER_STAY)
-				this->setExit(collision);
-			if (evt != E_GameObjectEvent::COLLISION_ENTER && evt != E_GameObjectEvent::COLLISION_STAY)
-				evt = E_GameObjectEvent::COLLISION_ENTER;
-			else
-				evt = E_GameObjectEvent::COLLISION_STAY;
-			this->epa(collision);
-		}
+			evt = E_GameObjectEvent::COLLISION_STAY;
+		collision->_isTrigger = false;
+		this->epa(collision);
 	}
 }
 bool CollisionDetector::gjk(Collision2D* collision)
@@ -161,20 +159,38 @@ bool CollisionDetector::gjk(Collision2D* collision)
 	Point2D pointA = colliderA->computeSupportPoint({ 1.0f,0.0f });
 	Point2D pointB = colliderB->computeSupportPoint({ -1.0f,0.0f });
 
-	collision->_simplex.init(pointA - pointB);
+	collision->_simplex.init(pointA, pointB);
 	while (true)
 	{
 		pointA = colliderA->computeSupportPoint(collision->_simplex.supportVec());
 		pointB = colliderB->computeSupportPoint(collision->_simplex.supportVec() * -1);
-		if (!collision->_simplex.insert(pointA - pointB)) return false;
+		if (!collision->_simplex.insert(pointA, pointB)) return false;
 		if (collision->_simplex.containsOrigin()) return true;
 	}
 }
 void CollisionDetector::epa(Collision2D* collision)
 {
-	Polytope polytope(*collision, collision->_simplex.points());
+	Polytope polytope(*collision, collision->_simplex.points(), collision->_simplex.sources());
 	collision->_depth = polytope.depth();
 	collision->_normal = polytope.normal();
+	collision->_contactA = polytope.contactA();
+	collision->_contactB = polytope.contactB();
+	collision->_localA = collision->colliderA()->toLocal(polytope.contactA());
+	collision->_localB = collision->colliderB()->toLocal(polytope.contactB());
+	collision->_tangent = Vector2D::cross(collision->_normal, 1.0f);
+	collision->_rA = polytope.contactA() - collision->colliderA()->position();
+	collision->_rB = polytope.contactB() - collision->colliderB()->position();
+	collision->_normalImpulseSum = 0.0f;
+
+	float bounceA = collision->colliderA()->bounciness();
+	float bounceB = collision->colliderB()->bounciness();
+	float thresholdA = collision->colliderA()->bouncinessThreshold();
+	float thresholdB = collision->colliderB()->bouncinessThreshold();
+	float fricA = collision->colliderA()->friction();
+	float fricB = collision->colliderB()->friction();
+	collision->_bounciness = bounceA > bounceB ? bounceA : bounceB;
+	collision->_friction = std::sqrtf(fricA * fricB);
+	collision->_bouncinessThreshold = thresholdA > thresholdB ? thresholdB : thresholdA;
 }
 void CollisionDetector::setExit(Collision2D* collision)
 {

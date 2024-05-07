@@ -14,17 +14,23 @@ void Collision2D::onDestroy()
 {
 	Collider2D* c1 = _colliderA;
 	Collider2D* c2 = _colliderB;
-	if (this->contactCount() > 0 && !c1->isTrigger() && !c2->isTrigger())
+	if (!c1->isTrigger() && !c2->isTrigger() && _evt != E_GameObjectEvent::NONE)
 	{
-		c1->attachedRigidBody()->wakeUp();
-		c2->attachedRigidBody()->wakeUp();
+		if (c1->attachedRigidBody() != nullptr)
+			c1->attachedRigidBody()->wakeUp();
+		if (c2->attachedRigidBody() != nullptr)
+			c2->attachedRigidBody()->wakeUp();
 	}
-	for (int i = 0; i < _contacts.size(); ++i)
-		ObjectPool::release(_contacts[i]);
+	_contactA = {};
+	_contactB = {};
 	_colliderA = nullptr;
 	_colliderB = nullptr;
-	_rigidA = nullptr;
-	_rigidB = nullptr;
+	_depth = 0.0f;
+	_normalImpulseSum = 0.0f;
+	_tangentImpulseSum = 0.0f;
+	_bounciness = 0.0f;
+	_bouncinessThreshold = 1.0f;
+	_friction = 0.0f;
+
 	_evt = E_GameObjectEvent::NONE;
-	_contacts.clear();
 }

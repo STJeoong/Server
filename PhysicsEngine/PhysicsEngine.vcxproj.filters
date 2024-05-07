@@ -110,9 +110,6 @@
     <ClInclude Include="E_BodyFlag.h">
       <Filter>소스 파일\Body\RigidyBody</Filter>
     </ClInclude>
-    <ClInclude Include="Contact2D.h">
-      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
-    </ClInclude>
     <ClInclude Include="Collision2D.h">
       <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
     </ClInclude>
@@ -139,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="MonoBehaviour.h">
       <Filter>소스 파일\Dynamics\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>소스 파일\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -184,9 +184,6 @@
     <ClCompile Include="Collider2D.cpp">
       <Filter>소스 파일\Body\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="Contact2D.cpp">
-      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
-    </ClCompile>
     <ClCompile Include="Collision2D.cpp">
       <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
     </ClCompile>
@@ -204,6 +201,9 @@
     </ClCompile>
     <ClCompile Include="Solver.cpp">
       <Filter>소스 파일\Dynamics\Resolution</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>소스 파일\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

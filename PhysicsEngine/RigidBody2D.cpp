@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "RigidBody2D.h"
 #include "Collider2D.h"
+#include "World.h"
 
 #pragma region public
 RigidBody2D* RigidBody2D::clone()
@@ -57,6 +58,7 @@ void RigidBody2D::onAddComponent(Component* component)
 		_wasAdded = true;
 		return;
 	}
+	if (_wasAdded || _wasRemoved) return;
 	Collider2D* collider = dynamic_cast<Collider2D*>(component);
 	if (collider == nullptr) return;
 	_colliders.push_back(collider);
@@ -69,6 +71,7 @@ void RigidBody2D::onRemoveComponent(Component* component)
 		_wasRemoved = true;
 		return;
 	}
+	if (_wasAdded || _wasRemoved) return;
 	Collider2D* collider = dynamic_cast<Collider2D*>(component);
 	if (collider == nullptr) return;
 	auto it = std::find(_colliders.begin(), _colliders.end(), component);
@@ -92,8 +95,25 @@ void RigidBody2D::onDisableComponent(Component* component)
 }
 void RigidBody2D::onApplyReservation()
 {
-	_type = _newType;
-	if (_wasAdded && !_wasRemoved)
+	// 만약 _wasAdded && _wasRemoved면 한 step안에서 추가 and 삭제된거라서 아무것도 해줄필요없음.
+	if (_wasAdded && _wasRemoved) return;
+	if (_type != _newType)
+	{
+		this->resetMassData();
+		if (_newType == E_BodyType::STATIC)
+		{
+			_velocity = {};
+			_angularVelocity = 0.0f;
+		}
+		if (_newType != E_BodyType::DYNAMIC)
+		{
+			_force = {};
+			_torque = 0.0f;
+		}
+		_type = _newType;
+	}
+	if (!_wasAdded && !_wasRemoved) return;
+	if (_wasAdded)
 	{
 		const std::vector<Component*>& components = this->gameObject()->components();
 		Collider2D* tmp = nullptr;
@@ -105,13 +125,22 @@ void RigidBody2D::onApplyReservation()
 			tmp->attachTo(this);
 		}
 		this->resetMassData();
+		_key = World::add(this);
 	}
-	else if (!_wasAdded && _wasRemoved)
+	else if (_wasRemoved)
+	{
 		for (int i = 0; i < _colliders.size(); ++i)
 			_colliders[i]->attachTo(nullptr);
+		if (_key != -1)
+			World::removeRigid(_key);
+	}
 	_wasAdded = false;
 	_wasRemoved = false;
-	// 만약 _wasAdded && _wasRemoved면 한 step안에서 추가 and 삭제된거라서 아무것도 해줄필요없음.
+}
+void RigidBody2D::sync()
+{
+	for (Collider2D* c : _colliders)
+		World::moveCollider(c->key(), c->computeAABB(), { 0.0f, 0.0f }); // TODO : sweepAABB로
 }
 void RigidBody2D::resetMassData()
 {

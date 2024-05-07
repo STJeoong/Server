@@ -6,8 +6,10 @@
 #include "Transform.h"
 #include "E_Layer.h"
 class Component;
+// 게임 오브젝트의 초기 위치는 월드 좌표로 (0,0)이거나 복사한 게임 오브젝트의 월드 좌표와 같다.
 class GameObject
 {
+	friend class Solver;
 	friend class CollisionDetector;
 	friend class World;
 public:
@@ -22,8 +24,10 @@ public:
 	const std::vector<Component*>& components() const { return _components; }
 	const Transform& transform() const { return _worldTF; }
 	void transform(const Motion& motionInWorld);
-	void transform(const Vector2D& displacement);
-	void transform(float radian);
+	void move(const Vector2D& displacement);
+	void moveTo(const Point2D& p);
+	void rotate(float radian);
+	void setRotation(float radian);
 	const std::string& name() const { return _name; }
 	std::string& name() { return _name; }
 	void isActive(bool flag);
@@ -37,6 +41,7 @@ private:
 	void removeChild(GameObject* child);
 	void applyReservation();
 	void removeComponents();
+	void processTransform(const Motion& motionInWorld);
 
 
 	std::vector<Component*> _components;
@@ -53,6 +58,8 @@ private:
 	// reservation ( executed next time step )
 	bool _needToToggleActiveState = false;
 	std::vector<Component*> _removedRigids;
+	bool _needToModifyTF = false;
+	Transform _arrivalTF;
 };
 
 #include "RigidBody2D.h"

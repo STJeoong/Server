@@ -9,11 +9,22 @@
 class Collider2D;
 class RigidBody2D : public Component
 {
+	friend class GameObject;
+	friend class Solver;
+	friend class World;
 public:
-	void addForce(const Vector2D& force) { _force += force; }
-	void addTorque(float torque) { _torque += torque; }
+	void addForce(const Vector2D& force) { if (_type != E_BodyType::DYNAMIC) return; _force += force; }
+	void addTorque(float torque) { if (_type != E_BodyType::DYNAMIC) return; _torque += torque; }
+	const Vector2D& velocity() const { return _velocity; }
+	float angularVelocity() const { return _angularVelocity; }
+	void velocity(const Vector2D& v) { if (_type == E_BodyType::STATIC) return; _velocity = v; }
+	void angularVelocity(float w) { if (_type == E_BodyType::STATIC) return; _angularVelocity = w; }
+	float& gravityScale() { return _gravityScale; }
+	const float& gravityScale() const { return _gravityScale; }
 	const float& mass() const { return _mass; }
 	const float& invMass() const { return _invMass; }
+	const float& inerita() const { return _inertia; }
+	const float& invInertia() const { return _invInertia; }
 	const E_BodyType& type() const { return _type; }
 	bool fixedRotation() const { return _flags & (int)E_BodyFlag::FIXED_ROTATION; }
 	void fixedRotation(bool flag);
@@ -31,6 +42,7 @@ private:
 	void onEnableComponent(Component* component) override;
 	void onDisableComponent(Component* component) override;
 	void onApplyReservation() override;
+	void sync();
 	void resetMassData();
 
 	Point2D _localCOM; // local center of mass
@@ -44,15 +56,17 @@ private:
 	float _inertia = 0.0f;
 	float _invInertia = FLT_MAX;
 
-	E_BodyType _type = E_BodyType::STATIC;
+	E_BodyType _type = E_BodyType::DYNAMIC;
 	float _gravityScale = 1.0f;
 	UINT8 _flags = 1; // default : awake start
 	float _sleepTime = 0.0f;
 
 	std::vector<Collider2D*> _colliders;
 
+	int _key = -1; // world key
+
 	// reservation ( executed next time step )
-	E_BodyType _newType = E_BodyType::STATIC;
+	E_BodyType _newType = E_BodyType::DYNAMIC;
 	bool _wasAdded = false;
 	bool _wasRemoved = false;
 };

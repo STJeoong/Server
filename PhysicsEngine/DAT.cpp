@@ -17,6 +17,7 @@ int DAT::insert(void* userData, const AABB& aabb)
     int node = this->allocate();
     // fatten aabb
     Vector2D r{ DAT::FATTEN_AABB, DAT::FATTEN_AABB };
+    _nodes[node].aabb = aabb;
     _nodes[node].aabb += r;
     _nodes[node].aabb -= r;
     _nodes[node].userData = userData;
@@ -80,8 +81,9 @@ void DAT::makeCandidates(const std::vector<int>& queryId, std::vector<std::pair<
             if (_nodes[id].moved && _nodes[queryId[i]].moved && id < queryId[i]) continue;
             candidates.push_back({ std::min(id, queryId[i]), std::max(id, queryId[i]) });
         }
-        _nodes[queryId[i]].moved = false;
     }
+    for (int i = 0; i < queryId.size(); ++i)
+        _nodes[queryId[i]].moved = false;
 }
 #pragma endregion
 

@@ -34,6 +34,7 @@ protected:
 	virtual void onEnableComponent(Component* component) {}
 	virtual void onDisableComponent(Component* component) {}
 	virtual void onApplyReservation() {}
+	virtual void onMove() {}
 private:
 	virtual Component* clone() = 0;
 	void setGameObject(GameObject* obj) { _gameObject = obj; }

@@ -14,17 +14,20 @@ class GameObject;
 class World
 {
 	friend class Collider2D;
-	static const size_t CONTACT_POOL_SIZE = 10000;
+	friend class RigidBody2D;
 	static const size_t COLLISION_POOL_SIZE = 2000;
 public:
 	static GameObject* find(const std::string& name);
-	static GameObject* instantiate(GameObject* obj = nullptr, GameObject* parent = nullptr, bool active = true);
+	static GameObject* instantiate(GameObject* copy = nullptr, GameObject* parent = nullptr, bool active = true);
 	static void destroy(GameObject*& obj);
 
 	static void init(const Vector2D& g);
-	static void step(float dt);
+	static void step(float dt, int velocityIter = 5, int positionIter = 3);
 private:
 	static int add(Collider2D* collider);
+	static int add(RigidBody2D* rigid);
+	static void moveCollider(int key, const AABB& sweepAABB, const Vector2D& displacement);
+	static void removeRigid(int key);
 	static void removalReq(int key); // request removal of collider
 	static void invokeCollisionEvents();
 	static void invokeExitEvents();
@@ -39,6 +42,7 @@ private:
 
 	static Vector2D s_gravity;
 	static BroadPhase s_broadPhase;
+	static std::vector<RigidBody2D*> s_rigids;
 	static CollisionDetector s_detector;
 	static std::queue<int> s_removals;
 	static std::vector<Collision2D*> s_exits;
