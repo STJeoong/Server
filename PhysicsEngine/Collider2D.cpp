@@ -44,11 +44,12 @@ void Collider2D::onInactiveGameObject()
 	if (!Behaviour::enabled()) return;
 	this->removeFromWorld();
 }
-void Collider2D::onAddComponent(Component* component)
+bool Collider2D::onAddComponent(Component* component)
 {
-	if (component != this) return;
-	if (!this->gameObject()->isActive()) return;
+	if (component != this) return true;
+	if (!this->gameObject()->isActive()) return true;
 	this->addToWorld();
+	return true;
 }
 void Collider2D::onRemoveComponent(Component* component)
 {

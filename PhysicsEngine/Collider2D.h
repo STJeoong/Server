@@ -39,7 +39,7 @@ protected:
 	virtual void onDestroy() override;
 	virtual void onActiveGameObject() override;
 	virtual void onInactiveGameObject() override;
-	virtual void onAddComponent(Component* component) override;
+	virtual bool onAddComponent(Component* component) override;
 	virtual void onRemoveComponent(Component* component) override;
 	virtual void onEnableComponent(Component* component) override;
 	virtual void onDisableComponent(Component* component) override;

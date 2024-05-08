@@ -37,7 +37,7 @@ private:
 	RigidBody2D(const S_RigidDef& def);
 	~RigidBody2D();
 	virtual RigidBody2D* clone() override;
-	void onAddComponent(Component* component) override;
+	bool onAddComponent(Component* component) override;
 	void onRemoveComponent(Component* component) override;
 	void onEnableComponent(Component* component) override;
 	void onDisableComponent(Component* component) override;
@@ -68,5 +68,4 @@ private:
 	// reservation ( executed next time step )
 	E_BodyType _newType = E_BodyType::DYNAMIC;
 	bool _wasAdded = false;
-	bool _wasRemoved = false;
 };

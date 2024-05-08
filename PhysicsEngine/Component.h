@@ -29,7 +29,7 @@ protected:
 	virtual void onTriggerEnter(const Collider2D& other) {}
 	virtual void onTriggerStay(const Collider2D& other) {}
 	virtual void onTriggerExit(const Collider2D& other) {}
-	virtual void onAddComponent(Component* component) {}
+	virtual bool onAddComponent(Component* component) { return true; }
 	virtual void onRemoveComponent(Component* component) {}
 	virtual void onEnableComponent(Component* component) {}
 	virtual void onDisableComponent(Component* component) {}
@@ -39,7 +39,7 @@ private:
 	virtual Component* clone() = 0;
 	void setGameObject(GameObject* obj) { _gameObject = obj; }
 	// used to invoke just one component's invoke()
-	void invoke(const E_GameObjectEvent& evt, void* arg);
+	bool invoke(const E_GameObjectEvent& evt, void* arg);
 
 	GameObject* _gameObject = nullptr;
 };

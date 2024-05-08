@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "GameObject.h"
 #include "Component.h"
-#include "RigidBody2D.h"
 #include "World.h"
 
 #pragma region public
@@ -10,8 +9,9 @@ void GameObject::removeComponent(Component* component)
 	this->broadcast(E_GameObjectEvent::REMOVE_COMPONENT, component);
 
 	auto it = std::find(_components.begin(), _components.end(), component);
-	_components.erase(it);
+	if (it == _components.end()) return;
 	_thingsToBeRemoved.push(*it);
+	_components.erase(it);
 }
 void GameObject::setParent(GameObject& obj)
 {
@@ -54,7 +54,6 @@ GameObject& GameObject::operator=(const GameObject& obj)
 	_worldTF = obj._worldTF;
 	_arrivalTF = _worldTF;
 	_name = obj._name;
-	_isRigid = obj._isRigid;
 	for (Component* otherComponent : obj._components)
 	{
 		Component* component = otherComponent->clone();
@@ -74,10 +73,13 @@ GameObject::~GameObject()
 	for (int i = 0; i < _children.size(); ++i)
 		World::destroy(_children[i]);
 }
-void GameObject::broadcast(E_GameObjectEvent evt, void* arg)
+bool GameObject::broadcast(E_GameObjectEvent evt, void* arg)
 {
+	bool ret = true;
 	for (Component*& com : _components)
-		com->invoke(evt, arg);
+		if (!com->invoke(evt, arg))
+			ret = false;
+	return ret;
 }
 void GameObject::removeChild(GameObject* child)
 {
@@ -97,8 +99,8 @@ void GameObject::applyReservation()
 		_isActive = !_isActive;
 	_needToModifyTF = false;
 	_needToToggleActiveState = false;
-	this->broadcast(E_GameObjectEvent::APPLY_RESERVATION, nullptr);
 	this->removeComponents();
+	this->broadcast(E_GameObjectEvent::APPLY_RESERVATION, nullptr);
 }
 void GameObject::removeComponents()
 {

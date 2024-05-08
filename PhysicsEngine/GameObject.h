@@ -37,7 +37,7 @@ private:
 	GameObject() = default; // RigidBody는 추가하면 추가되도록하자.
 	GameObject& operator=(const GameObject& obj);
 	~GameObject();
-	void broadcast(E_GameObjectEvent evt, void* arg);
+	bool broadcast(E_GameObjectEvent evt, void* arg);
 	void removeChild(GameObject* child);
 	void applyReservation();
 	void removeComponents();
@@ -51,7 +51,6 @@ private:
 	Transform _localTF; // local transform
 	std::string _name;
 	bool _isActive = true;
-	bool _isRigid = false;
 	E_Layer _layer = E_Layer::DEFAULT;
 
 	// reservation ( executed next time step )
@@ -61,18 +60,17 @@ private:
 	Transform _arrivalTF;
 };
 
-#include "RigidBody2D.h"
 template<typename T, typename... Args>
 inline T* GameObject::addComponent(Args&&... args)
 {
-	if (typeid(T) == typeid(RigidBody2D))
-	{
-		if (_isRigid) return nullptr;
-		_isRigid = true;
-	}
 	Component* ret = new T(std::forward<Args>(args)...);
 	ret->setGameObject(this);
 	_components.push_back(ret);
-	this->broadcast(E_GameObjectEvent::ADD_COMPONENT, ret);
+	if (!this->broadcast(E_GameObjectEvent::ADD_COMPONENT, ret))
+	{
+		_components.erase(_components.end() - 1);
+		delete ret;
+		return nullptr;
+	}
 	return dynamic_cast<T*>(ret);
 }

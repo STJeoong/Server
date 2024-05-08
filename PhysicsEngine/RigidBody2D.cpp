@@ -58,29 +58,33 @@ RigidBody2D::~RigidBody2D()
 	if (_key != -1)
 		World::removeRigid(_key);
 }
-void RigidBody2D::onAddComponent(Component* component)
+bool RigidBody2D::onAddComponent(Component* component)
 {
 	if (component == this)
 	{
 		_wasAdded = true;
-		return;
+		return true;
 	}
-	if (_wasAdded || _wasRemoved) return;
+	if (typeid(*component) == typeid(RigidBody2D))
+		return false;
+	if (_wasAdded)
+		return true;
 	Collider2D* collider = dynamic_cast<Collider2D*>(component);
-	if (collider == nullptr) return;
+	if (collider == nullptr)
+		return true;
 	_colliders.push_back(collider);
 	this->resetMassData();
+	return true;
 }
 void RigidBody2D::onRemoveComponent(Component* component)
 {
 	if (component == this)
-	{
-		_wasRemoved = true;
 		return;
-	}
-	if (_wasAdded || _wasRemoved) return;
+	if (_wasAdded)
+		return;
 	Collider2D* collider = dynamic_cast<Collider2D*>(component);
-	if (collider == nullptr) return;
+	if (collider == nullptr)
+		return;
 	auto it = std::find(_colliders.begin(), _colliders.end(), component);
 	_colliders.erase(it);
 	this->resetMassData();
@@ -132,7 +136,6 @@ void RigidBody2D::onApplyReservation()
 		_key = World::add(this);
 	}
 	_wasAdded = false;
-	_wasRemoved = false;
 }
 void RigidBody2D::sync()
 {

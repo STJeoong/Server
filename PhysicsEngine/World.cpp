@@ -2,6 +2,7 @@
 #include "World.h"
 #include "Collider2D.h"
 #include "GameObject.h"
+#include "RigidBody2D.h"
 #include "Solver.h"
 #include "ContactFilter.h"
 #include <ObjectPool.h>

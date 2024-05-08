@@ -17,26 +17,27 @@ void Component::invokeAll(const E_GameObjectEvent& evt, void* arg)
 #pragma endregion
 
 #pragma region private
-void Component::invoke(const E_GameObjectEvent& evt, void* arg)
+bool Component::invoke(const E_GameObjectEvent& evt, void* arg)
 {
 	switch (evt)
 	{
-	case E_GameObjectEvent::ACTIVE: this->onActiveGameObject(); break;
-	case E_GameObjectEvent::INACTIVE: this->onInactiveGameObject(); break;
-	case E_GameObjectEvent::UPDATE: this->onUpdate(); break;
-	case E_GameObjectEvent::DESTROY: this->onDestroy(); break;
-	case E_GameObjectEvent::COLLISION_ENTER: { Collision2D* p = reinterpret_cast<Collision2D*>(arg); this->onCollisionEnter(*p); break; }
-	case E_GameObjectEvent::COLLISION_STAY: { Collision2D* p = reinterpret_cast<Collision2D*>(arg); this->onCollisionStay(*p); break; }
-	case E_GameObjectEvent::COLLISION_EXIT: { Collision2D* p = reinterpret_cast<Collision2D*>(arg); this->onCollisionExit(*p); break; }
-	case E_GameObjectEvent::TRIGGER_ENTER: { Collider2D* p = reinterpret_cast<Collider2D*>(arg); this->onTriggerEnter(*p); break; }
-	case E_GameObjectEvent::TRIGGER_STAY: { Collider2D* p = reinterpret_cast<Collider2D*>(arg); this->onTriggerStay(*p); break; }
-	case E_GameObjectEvent::TRIGGER_EXIT: { Collider2D* p = reinterpret_cast<Collider2D*>(arg); this->onTriggerExit(*p); break; }
-	case E_GameObjectEvent::ADD_COMPONENT: { Component* comp = reinterpret_cast<Component*>(arg); this->onAddComponent(comp); break; }
-	case E_GameObjectEvent::REMOVE_COMPONENT: { Component* comp = reinterpret_cast<Component*>(arg); this->onRemoveComponent(comp); break; }
-	case E_GameObjectEvent::ENABLE_COMPONENT: { Component* comp = reinterpret_cast<Component*>(arg); this->onEnableComponent(comp); break; }
-	case E_GameObjectEvent::DISABLE_COMPONENT: { Component* comp = reinterpret_cast<Component*>(arg); this->onDisableComponent(comp); break; }
-	case E_GameObjectEvent::APPLY_RESERVATION: this->onApplyReservation(); break;
-	case E_GameObjectEvent::MOVE_OBJECT: this->onMove(); break;
+	case E_GameObjectEvent::ACTIVE: this->onActiveGameObject(); return true;
+	case E_GameObjectEvent::INACTIVE: this->onInactiveGameObject(); return true;
+	case E_GameObjectEvent::UPDATE: this->onUpdate(); return true;
+	case E_GameObjectEvent::DESTROY: this->onDestroy(); return true;
+	case E_GameObjectEvent::COLLISION_ENTER: { Collision2D* p = reinterpret_cast<Collision2D*>(arg); this->onCollisionEnter(*p); return true; }
+	case E_GameObjectEvent::COLLISION_STAY: { Collision2D* p = reinterpret_cast<Collision2D*>(arg); this->onCollisionStay(*p); return true; }
+	case E_GameObjectEvent::COLLISION_EXIT: { Collision2D* p = reinterpret_cast<Collision2D*>(arg); this->onCollisionExit(*p); return true; }
+	case E_GameObjectEvent::TRIGGER_ENTER: { Collider2D* p = reinterpret_cast<Collider2D*>(arg); this->onTriggerEnter(*p); return true; }
+	case E_GameObjectEvent::TRIGGER_STAY: { Collider2D* p = reinterpret_cast<Collider2D*>(arg); this->onTriggerStay(*p); return true; }
+	case E_GameObjectEvent::TRIGGER_EXIT: { Collider2D* p = reinterpret_cast<Collider2D*>(arg); this->onTriggerExit(*p); return true; }
+	case E_GameObjectEvent::ADD_COMPONENT: { Component* comp = reinterpret_cast<Component*>(arg); return this->onAddComponent(comp); }
+	case E_GameObjectEvent::REMOVE_COMPONENT: { Component* comp = reinterpret_cast<Component*>(arg); this->onRemoveComponent(comp); return true; }
+	case E_GameObjectEvent::ENABLE_COMPONENT: { Component* comp = reinterpret_cast<Component*>(arg); this->onEnableComponent(comp); return true; }
+	case E_GameObjectEvent::DISABLE_COMPONENT: { Component* comp = reinterpret_cast<Component*>(arg); this->onDisableComponent(comp); return true; }
+	case E_GameObjectEvent::APPLY_RESERVATION: this->onApplyReservation(); return true;
+	case E_GameObjectEvent::MOVE_OBJECT: this->onMove(); return true;
 	}
+	return true;
 }
 #pragma endregion
