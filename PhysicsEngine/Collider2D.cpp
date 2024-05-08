@@ -26,6 +26,13 @@ Point2D Collider2D::toLocal(const Point2D& p) const
 	ret = worldObjRot.transpose() * ret;
 	return ret;
 }
+Point2D Collider2D::toWorld(const Point2D& p) const
+{
+	Point2D ret = this->position();
+	const Matrix22& worldObjRot = this->gameObject()->transform().rotation();
+	ret += worldObjRot * p;
+	return ret;
+}
 #pragma endregion
 
 #pragma region protected

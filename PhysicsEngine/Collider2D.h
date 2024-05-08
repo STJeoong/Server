@@ -30,8 +30,10 @@ public:
 	const std::vector<Collision2D*>& collisions() const { return _collisions; }
 	// get world position of collider's center
 	Point2D position() const;
-	// compute local position from given point
+	// compute local position from given world point
 	Point2D toLocal(const Point2D& p) const;
+	// compute world position from given local point
+	Point2D toWorld(const Point2D& p) const;
 	// TODO : offset, density, trigger 바뀌면 rigidbody에 이벤트 보내도록
 protected:
 	Collider2D() = default;
