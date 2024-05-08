@@ -51,6 +51,13 @@ RigidBody2D::RigidBody2D(const S_RigidDef& def)
 	if (def.fixedRotation) _flags |= (int)E_BodyFlag::FIXED_ROTATION;
 	if (def.autoSleep) _flags |= (int)E_BodyFlag::AUTO_SLEEP;
 }
+RigidBody2D::~RigidBody2D()
+{
+	for (Collider2D* c : _colliders)
+		c->attachTo(nullptr);
+	if (_key != -1)
+		World::removeRigid(_key);
+}
 void RigidBody2D::onAddComponent(Component* component)
 {
 	if (component == this)
@@ -95,8 +102,6 @@ void RigidBody2D::onDisableComponent(Component* component)
 }
 void RigidBody2D::onApplyReservation()
 {
-	// 만약 _wasAdded && _wasRemoved면 한 step안에서 추가 and 삭제된거라서 아무것도 해줄필요없음.
-	if (_wasAdded && _wasRemoved) return;
 	if (_type != _newType)
 	{
 		this->resetMassData();
@@ -112,7 +117,6 @@ void RigidBody2D::onApplyReservation()
 		}
 		_type = _newType;
 	}
-	if (!_wasAdded && !_wasRemoved) return;
 	if (_wasAdded)
 	{
 		const std::vector<Component*>& components = this->gameObject()->components();
@@ -126,13 +130,6 @@ void RigidBody2D::onApplyReservation()
 		}
 		this->resetMassData();
 		_key = World::add(this);
-	}
-	else if (_wasRemoved)
-	{
-		for (int i = 0; i < _colliders.size(); ++i)
-			_colliders[i]->attachTo(nullptr);
-		if (_key != -1)
-			World::removeRigid(_key);
 	}
 	_wasAdded = false;
 	_wasRemoved = false;

@@ -45,7 +45,6 @@ private:
 
 
 	std::vector<Component*> _components;
-	std::queue<Component*> _thingsToBeRemoved; // 다음 step에서 사라질 component들
 	GameObject* _parent = nullptr;
 	std::vector<GameObject*> _children;
 	Transform _worldTF; // world transform
@@ -57,8 +56,8 @@ private:
 
 	// reservation ( executed next time step )
 	bool _needToToggleActiveState = false;
-	std::vector<Component*> _removedRigids;
 	bool _needToModifyTF = false;
+	std::queue<Component*> _thingsToBeRemoved; // 다음 step에서 사라질 component들
 	Transform _arrivalTF;
 };
 

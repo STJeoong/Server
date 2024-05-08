@@ -35,7 +35,7 @@ public:
 private:
 	RigidBody2D() = default;
 	RigidBody2D(const S_RigidDef& def);
-	~RigidBody2D() = default;
+	~RigidBody2D();
 	virtual RigidBody2D* clone() override;
 	void onAddComponent(Component* component) override;
 	void onRemoveComponent(Component* component) override;
