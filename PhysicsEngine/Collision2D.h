@@ -10,11 +10,8 @@ class Collision2D
 	friend class CollisionDetector;
 	friend class Solver;
 public:
-	//size_t contactCount() const { return _contacts.size(); }
-	//const Contact2D& getContact(size_t idx) const { return *_contacts[idx]; }
 	Collider2D* const& colliderA() const { return _colliderA; }
 	Collider2D* const& colliderB() const { return _colliderB; }
-	float depth() const { return _depth; }
 	const Vector2D& normal() const { return _normal; }
 	const Vector2D& tangent() const { return _tangent; }
 private:
@@ -32,7 +29,6 @@ private:
 	float _bounciness = 0.0f;
 	float _bouncinessThreshold = 1.0f;
 	float _friction = 0.0f;
-	float _depth = 0.0f;
 	bool _isTrigger = false;
 	Vector2D _normal;
 	Vector2D _tangent;

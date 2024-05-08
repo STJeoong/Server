@@ -25,7 +25,6 @@ void Collision2D::onDestroy()
 	_contactB = {};
 	_colliderA = nullptr;
 	_colliderB = nullptr;
-	_depth = 0.0f;
 	_normalImpulseSum = 0.0f;
 	_tangentImpulseSum = 0.0f;
 	_bounciness = 0.0f;

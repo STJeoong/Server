@@ -171,7 +171,6 @@ bool CollisionDetector::gjk(Collision2D* collision)
 void CollisionDetector::epa(Collision2D* collision)
 {
 	Polytope polytope(*collision, collision->_simplex.points(), collision->_simplex.sources());
-	collision->_depth = polytope.depth();
 	collision->_normal = polytope.normal();
 	collision->_contactA = polytope.contactA();
 	collision->_contactB = polytope.contactB();

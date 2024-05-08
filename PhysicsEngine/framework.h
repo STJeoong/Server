@@ -16,3 +16,4 @@
 // define
 #define PI 3.14159265359f
 #define MIN_SIZE 0.0001f // minimum size of circle, box
+#define BAUMGART 0.2f // how fast you want to recover violation. 0~1. the bigger this value is, the faster it recovers violation.

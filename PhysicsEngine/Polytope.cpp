@@ -18,7 +18,8 @@ void Polytope::initPQ()
 	for (size_t i = 0; i < _points.size(); ++i)
 	{
 		Line line(_points[i], _points[(i + 1) % _points.size()]);
-		float distance = line.distanceFrom({ 0.0f, 0.0f });
+		// TODO : 값이 너무 커질 수 있나?
+		float distance = line.squaredDistanceFrom({ 0.0f, 0.0f });
 		_pq.push({ distance, i, (i + 1) % _points.size() });
 	}
 }
@@ -55,12 +56,12 @@ void Polytope::expand(const Collision2D& collision)
 
 		{
 			Line line(A, minkowskiPoint);
-			float computedValue = line.distanceFrom({ 0.0f, 0.0f });
+			float computedValue = line.squaredDistanceFrom({ 0.0f, 0.0f });
 			_pq.push({ computedValue, idxA, _points.size() });
 		}
 		{
 			Line line(B, minkowskiPoint);
-			float computedValue = line.distanceFrom({ 0.0f, 0.0f });
+			float computedValue = line.squaredDistanceFrom({ 0.0f, 0.0f });
 			_pq.push({ computedValue, idxB, _points.size() });
 		}
 		_points.push_back(minkowskiPoint);
