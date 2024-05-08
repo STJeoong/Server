@@ -5,7 +5,7 @@
 class Behaviour : public Component
 {
 public:
-	const bool& enabled() const { return _enabled; }
+	bool enabled() const { return _enabled; }
 	void enabled(bool flag)
 	{
 		if (_enabled == flag) return;

@@ -21,7 +21,7 @@ public:
 		return ret;
 	}
 	void operator*=(const Matrix22& obj) { (*this) = (*this) * obj; _radian += obj._radian; }
-	const float& radian() const { return _radian; }
+	float radian() const { return _radian; }
 private:
 	Matrix22(float m00, float m01, float m10, float m11) : _m00(m00), _m01(m01), _m10(m10), _m11(m11) {}
 

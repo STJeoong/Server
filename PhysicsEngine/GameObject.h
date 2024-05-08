@@ -32,7 +32,7 @@ public:
 	std::string& name() { return _name; }
 	void isActive(bool flag);
 	bool isActive() const { return _isActive; }
-	const E_Layer& layer() const { return _layer; }
+	E_Layer layer() const { return _layer; }
 private:
 	GameObject() = default; // RigidBody는 추가하면 추가되도록하자.
 	GameObject& operator=(const GameObject& obj);

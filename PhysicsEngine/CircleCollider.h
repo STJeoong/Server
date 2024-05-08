@@ -8,7 +8,7 @@ class CircleCollider : public Collider2D
 public:
 	virtual AABB computeAABB() override;
 	virtual Point2D computeSupportPoint(const Vector2D& vec) override;
-	const float& radius() const { return _radius; }
+	float radius() const { return _radius; }
 	float& radius() { return _radius; }
 private:
 	CircleCollider() { this->compute(); }

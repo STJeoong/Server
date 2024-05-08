@@ -10,8 +10,8 @@ class Collision2D
 	friend class CollisionDetector;
 	friend class Solver;
 public:
-	Collider2D* const& colliderA() const { return _colliderA; }
-	Collider2D* const& colliderB() const { return _colliderB; }
+	Collider2D* colliderA() const { return _colliderA; }
+	Collider2D* colliderB() const { return _colliderB; }
 	const Vector2D& normal() const { return _normal; }
 	const Vector2D& tangent() const { return _tangent; }
 private:

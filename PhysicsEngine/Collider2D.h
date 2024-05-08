@@ -16,13 +16,13 @@ public:
 	virtual AABB computeAABB() = 0;
 	virtual Point2D computeSupportPoint(const Vector2D& vec) = 0;
 	const Point2D& offset() const { return _offset; } // local offset
-	const float& density() const { return _density; }
-	const float& friction() const { return _friction; }
-	const float& bounciness() const { return _bounciness; }
-	const float& bouncinessThreshold() const { return _bouncinessThreshold; }
-	const float& mass() const { return _mass; }
-	const float& inertia() const { return _inertia; }
-	const bool& isTrigger() const { return _isTrigger; }
+	float density() const { return _density; }
+	float friction() const { return _friction; }
+	float bounciness() const { return _bounciness; }
+	float bouncinessThreshold() const { return _bouncinessThreshold; }
+	float mass() const { return _mass; }
+	float inertia() const { return _inertia; }
+	bool isTrigger() const { return _isTrigger; }
 	void isTrigger(bool flag);
 	RigidBody2D* attachedRigidBody() const { return _attachedRigidBody; }
 	void friction(float f) { _friction = Utils::clamp(f, 100000.0f, 0.0f); }

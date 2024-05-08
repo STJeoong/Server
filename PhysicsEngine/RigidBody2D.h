@@ -20,11 +20,11 @@ public:
 	void velocity(const Vector2D& v) { if (_type == E_BodyType::STATIC) return; _velocity = v; }
 	void angularVelocity(float w) { if (_type == E_BodyType::STATIC) return; _angularVelocity = w; }
 	float& gravityScale() { return _gravityScale; }
-	const float& gravityScale() const { return _gravityScale; }
-	const float& mass() const { return _mass; }
-	const float& invMass() const { return _invMass; }
-	const float& inerita() const { return _inertia; }
-	const float& invInertia() const { return _invInertia; }
+	float gravityScale() const { return _gravityScale; }
+	float mass() const { return _mass; }
+	float invMass() const { return _invMass; }
+	float inerita() const { return _inertia; }
+	float invInertia() const { return _invInertia; }
 	const E_BodyType& type() const { return _type; }
 	bool fixedRotation() const { return _flags & (int)E_BodyFlag::FIXED_ROTATION; }
 	void fixedRotation(bool flag);
