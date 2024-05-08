@@ -5,8 +5,8 @@
 Line::Line(const Point2D& a, const Point2D& b) : _pass(a)
 {
 	if (a == b) _isPoint = true;
-	_a = b.x() - a.x();
-	_b = -1.0f * (b.y() - a.y());
+	_a = -(b.y() - a.y());
+	_b = b.x() - a.x();
 	_c = (b.y() - a.y()) * a.x() - (b.x() - a.x()) * a.y();
 }
 float Line::distanceFrom(const Point2D& p) const
