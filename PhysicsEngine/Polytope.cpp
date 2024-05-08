@@ -35,14 +35,17 @@ void Polytope::expand(const Collision2D& collision)
 		_pq.pop();
 
 		// TODO : 왜 const Point2D& A = _points[idxA] 이렇게 하면 값이 이상하게 나오지??
-		Vector2D AB = _points[idxB] - _points[idxA];
-		Vector2D AO = _points[idxA] * -1;
+		// capacity를 초과해서 기존 원소들을 지우기 때문에 해당 레퍼런스는 dangling 레퍼런스가 된거임.
+		const Point2D& A = _points[idxA];
+		const Point2D& B = _points[idxB];
+		Vector2D AB = B - A;
+		Vector2D AO = A * -1;
 		Vector2D supportVec = Vector2D::cross(Vector2D::cross(AO, AB), AB);
 
 		Point2D pointFromA = colliderA->computeSupportPoint(supportVec);
 		Point2D pointFromB = colliderB->computeSupportPoint(supportVec * -1);
 		Point2D minkowskiPoint = pointFromA - pointFromB;
-		if (_points[idxA] == minkowskiPoint || _points[idxB] == minkowskiPoint || i == Polytope::MAX_ITERATION)
+		if (A == minkowskiPoint || B == minkowskiPoint || i == Polytope::MAX_ITERATION)
 		{
 			_depth = distance;
 			_normal = supportVec;
@@ -50,18 +53,18 @@ void Polytope::expand(const Collision2D& collision)
 			return;
 		}
 
+		{
+			Line line(A, minkowskiPoint);
+			float computedValue = line.distanceFrom({ 0.0f, 0.0f });
+			_pq.push({ computedValue, idxA, _points.size() });
+		}
+		{
+			Line line(B, minkowskiPoint);
+			float computedValue = line.distanceFrom({ 0.0f, 0.0f });
+			_pq.push({ computedValue, idxB, _points.size() });
+		}
 		_points.push_back(minkowskiPoint);
 		_sources.push_back({ pointFromA, pointFromB });
-		{
-			Line line(_points[idxA], minkowskiPoint);
-			float computedValue = line.distanceFrom({ 0.0f, 0.0f });
-			_pq.push({ computedValue, idxA, _points.size() - 1 });
-		}
-		{
-			Line line(_points[idxB], minkowskiPoint);
-			float computedValue = line.distanceFrom({ 0.0f, 0.0f });
-			_pq.push({ computedValue, idxB, _points.size() - 1 });
-		}
 		++i;
 	}
 }
