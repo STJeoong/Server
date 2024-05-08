@@ -9,7 +9,6 @@ class Polytope
 	static const int MAX_ITERATION = 20;
 public:
 	Polytope(const Collision2D& collision, const std::vector<Point2D>& points, const std::vector<std::pair<Point2D, Point2D>>& sources);
-	float depth() const { return _depth; }
 	const Vector2D& normal() const { return _normal; } // A to B
 	const Point2D& contactA() const { return _contactA; }
 	const Point2D& contactB() const { return _contactB; }
@@ -22,7 +21,6 @@ private:
 	std::vector<std::pair<Point2D, Point2D>> _sources;
 	std::priority_queue<std::tuple<float, size_t, size_t>, std::vector<std::tuple<float, size_t, size_t>>,
 		std::greater<std::tuple<float, size_t, size_t>>> _pq;
-	float _depth = 0.0f;
 	Vector2D _normal;
 	Point2D _contactA;
 	Point2D _contactB;

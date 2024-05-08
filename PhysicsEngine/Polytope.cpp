@@ -48,7 +48,6 @@ void Polytope::expand(const Collision2D& collision)
 		Point2D minkowskiPoint = pointFromA - pointFromB;
 		if (A == minkowskiPoint || B == minkowskiPoint || i == Polytope::MAX_ITERATION)
 		{
-			_depth = distance;
 			_normal = supportVec;
 			this->computeClosestPoints(idxA, idxB);
 			return;
