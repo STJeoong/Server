@@ -14,6 +14,11 @@ float Line::distanceFrom(const Point2D& p) const
 	if (_isPoint) return (p - _pass).len();
 	return std::abs(_a * p.x() + _b * p.y() + _c) / std::sqrtf(_a * _a + _b * _b);
 }
+float Line::squaredDistanceFrom(const Point2D& p) const
+{
+	if (_isPoint) return (p - _pass).squaredLen();
+	return ((_a * p.x() + _b * p.y() + _c) * (_a * p.x() + _b * p.y() + _c)) / (_a * _a + _b * _b);
+}
 #pragma endregion
 
 #pragma region private
