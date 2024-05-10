@@ -171,16 +171,17 @@ bool CollisionDetector::gjk(Collision2D* collision)
 void CollisionDetector::epa(Collision2D* collision)
 {
 	Polytope polytope(*collision, collision->_simplex.points(), collision->_simplex.sources());
-	collision->_normal = polytope.normal();
+	collision->_normal = polytope.normal().normalized();
 	collision->_contactA = polytope.contactA();
 	collision->_contactB = polytope.contactB();
-	collision->_localA = collision->colliderA()->toLocal(polytope.contactA());
-	collision->_localB = collision->colliderB()->toLocal(polytope.contactB());
+	collision->_depth = polytope.depth(); // TODO : 왜 아래 tmp값이랑 다르지?
+	//collision->_depth = Vector2D::dot(polytope.contactA() - polytope.contactB(), collision->_normal);
+	float tmp = Vector2D::dot(polytope.contactA() - polytope.contactB(), collision->_normal);
+	collision->_localContactA = collision->colliderA()->toLocal(polytope.contactA());
+	collision->_localContactB = collision->colliderB()->toLocal(polytope.contactB());
 	collision->_tangent = Vector2D::cross(collision->_normal, 1.0f);
 	collision->_rA = polytope.contactA() - collision->colliderA()->position();
 	collision->_rB = polytope.contactB() - collision->colliderB()->position();
-	collision->_normalImpulseSum = 0.0f;
-	collision->_tangentImpulseSum = 0.0f;
 
 	float bounceA = collision->colliderA()->bounciness();
 	float bounceB = collision->colliderB()->bounciness();

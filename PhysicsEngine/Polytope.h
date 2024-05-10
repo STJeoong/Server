@@ -12,6 +12,7 @@ public:
 	const Vector2D& normal() const { return _normal; } // A to B
 	const Point2D& contactA() const { return _contactA; }
 	const Point2D& contactB() const { return _contactB; }
+	float depth() const { return _depth; }
 private:
 	void initPQ();
 	void expand(const Collision2D& collision);
@@ -24,4 +25,5 @@ private:
 	Vector2D _normal;
 	Point2D _contactA;
 	Point2D _contactB;
+	float _depth;
 };

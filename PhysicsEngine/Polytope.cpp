@@ -41,7 +41,16 @@ void Polytope::expand(const Collision2D& collision)
 		const Point2D& B = _points[idxB];
 		Vector2D AB = B - A;
 		Vector2D AO = A * -1;
-		Vector2D supportVec = Vector2D::cross(Vector2D::cross(AO, AB), AB);
+		Vector2D supportVec = Vector2D::cross(Vector2D::cross(AO, AB), AB); // FIX: supportVec°¡ {0.0f, 0.0f}¿´À½
+		if (supportVec == Vector2D{0.0f, 0.0f})
+		{
+			Point2D barycentric = { 0.0f,0.0f };
+			for (int i = 0; i < _points.size(); ++i)
+				barycentric += _points[i];
+			barycentric *= 1.0f / _points.size();
+			AO = barycentric - A;
+			supportVec = Vector2D::cross(Vector2D::cross(AO, AB), AB);
+		}
 
 		Point2D pointFromA = colliderA->computeSupportPoint(supportVec);
 		Point2D pointFromB = colliderB->computeSupportPoint(supportVec * -1);
@@ -49,6 +58,7 @@ void Polytope::expand(const Collision2D& collision)
 		if (A == minkowskiPoint || B == minkowskiPoint || i == Polytope::MAX_ITERATION)
 		{
 			_normal = supportVec;
+			_depth = std::sqrtf(distance);
 			this->computeClosestPoints(idxA, idxB);
 			return;
 		}
@@ -138,7 +148,7 @@ void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 			float k = -1.0f * (a * B[0].x() + b * B[0].y() + c) / (a * a + b * b);
 
 			_contactA.x() = B[0].x() + a * k;
-			_contactB.y() = B[0].y() + b * k;
+			_contactA.y() = B[0].y() + b * k;
 		}
 	}
 }

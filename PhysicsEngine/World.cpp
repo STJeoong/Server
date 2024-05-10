@@ -50,13 +50,11 @@ void World::step(float dt, int velocityIter, int positionIter)
 	s_broadPhase.update();
 	s_detector.update(s_broadPhase);
 
-	Solver solver;
+	Solver solver(s_detector.collisions(), dt);
 	solver.integrateVelocity(s_rigids, s_gravity, dt);
 	for (int i = 0; i < velocityIter; ++i)
-		solver.solveVelocityConstraints(s_detector.collisions());
+		solver.resolve(s_detector.collisions());
 	solver.integratePosition(s_rigids, dt);
-	for (int i = 0; i < positionIter; ++i)
-		solver.solvePositionConstraints(s_detector.collisions());
 
 	for (RigidBody2D* rigid : s_rigids)
 		rigid->sync();
@@ -77,7 +75,7 @@ void World::step(float dt, int velocityIter, int positionIter)
 
 #pragma region private
 int World::add(Collider2D* collider) { return s_broadPhase.insert(collider, collider->computeAABB()); }
-int World::add(RigidBody2D* rigid) { s_rigids.push_back(rigid); return s_rigids.size() - 1; }
+int World::add(RigidBody2D* rigid) { s_rigids.push_back(rigid); return (int)s_rigids.size() - 1; }
 void World::moveCollider(int key, const AABB& sweepAABB, const Vector2D& displacement) { s_broadPhase.move(key, sweepAABB, displacement); }
 void World::removeRigid(int key) { s_rigids.erase(s_rigids.begin() + key); }
 void World::removalReq(int key)

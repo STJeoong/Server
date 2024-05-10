@@ -12,6 +12,11 @@ class Collision2D
 public:
 	Collider2D* colliderA() const { return _colliderA; }
 	Collider2D* colliderB() const { return _colliderB; }
+	const Point2D& contactA() const { return _contactA; }
+	const Point2D& contactB() const { return _contactB; }
+	const Point2D& localContactA() const { return _localContactA; }
+	const Point2D& localContactB() const { return _localContactB; }
+	float depth() const { return _depth; }
 	const Vector2D& normal() const { return _normal; }
 	const Vector2D& tangent() const { return _tangent; }
 private:
@@ -21,8 +26,9 @@ private:
 	Point2D _contactB;
 	Vector2D _rA; // from center of A to contactA
 	Vector2D _rB; // from center of B to contactB
-	Point2D _localA; // local position of contactA
-	Point2D _localB; // local position of contactB
+	Point2D _localContactA; // local position of contactA
+	Point2D _localContactB; // local position of contactB
+	float _depth = 0.0f;
 
 	Collider2D* _colliderA = nullptr;
 	Collider2D* _colliderB = nullptr;
@@ -37,4 +43,6 @@ private:
 
 	Simplex _simplex;
 	E_GameObjectEvent _evt = E_GameObjectEvent::NONE;
+
+	float _bouncinessBias = 0.0f;
 };
