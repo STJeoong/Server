@@ -45,6 +45,7 @@ bool Simplex::check()
 	if (_points.size() == 2)
 	{
 		Vector2D AB = _points[1] - _points[0];
+		// TODO : supportVec∞° {0,0}¿Ã∏È?
 		_supportVec = Vector2D::cross(Vector2D::cross(AB, _supportVec), AB);
 		return true;
 	}

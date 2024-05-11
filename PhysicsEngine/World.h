@@ -16,13 +16,14 @@ class World
 	friend class Collider2D;
 	friend class RigidBody2D;
 	static const size_t COLLISION_POOL_SIZE = 2000;
+	static const size_t CONTACT_POOL_SIZE = 10000;
 public:
 	static GameObject* find(const std::string& name);
 	static GameObject* instantiate(GameObject* copy = nullptr, GameObject* parent = nullptr, bool active = true);
 	static void destroy(GameObject*& obj);
 
 	static void init(const Vector2D& g);
-	static void step(float dt, int velocityIter = 5, int positionIter = 3);
+	static void step(float dt, int iteration = 5);
 private:
 	static int add(Collider2D* collider);
 	static int add(RigidBody2D* rigid);

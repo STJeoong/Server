@@ -5,6 +5,7 @@
 #include "RigidBody2D.h"
 #include "Solver.h"
 #include "ContactFilter.h"
+#include "Contact2D.h"
 #include <ObjectPool.h>
 
 #pragma region public
@@ -40,8 +41,10 @@ void World::init(const Vector2D& g)
 	ContactFilter::reset();
 	ObjectPool::makePool<Collision2D>(World::COLLISION_POOL_SIZE, []{ return new Collision2D(); },
 		[](void* collision) {}, [](void* collision) { Collision2D* p = reinterpret_cast<Collision2D*>(collision); p->onDestroy(); });
+	ObjectPool::makePool<Contact2D>(World::CONTACT_POOL_SIZE, [] { return new Contact2D(); },
+		[](void* contact) {}, [](void* contact) { Contact2D* c = reinterpret_cast<Contact2D*>(contact); c->onDestroy(); });
 }
-void World::step(float dt, int velocityIter, int positionIter)
+void World::step(float dt, int iteration)
 {
 	for (int i = 0; i < s_gameObjects.size(); ++i)
 		if (s_gameObjects[i]->isActive())
@@ -52,7 +55,7 @@ void World::step(float dt, int velocityIter, int positionIter)
 
 	Solver solver(s_detector.collisions(), dt);
 	solver.integrateVelocity(s_rigids, s_gravity, dt);
-	for (int i = 0; i < velocityIter; ++i)
+	for (int i = 0; i < iteration; ++i)
 		solver.resolve(s_detector.collisions());
 	solver.integratePosition(s_rigids, dt);
 

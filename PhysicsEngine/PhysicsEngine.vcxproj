@@ -157,6 +157,7 @@
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="BroadPhase.h" />
     <ClInclude Include="Collision2D.h" />
+    <ClInclude Include="Contact2D.h" />
     <ClInclude Include="ContactFilter.h" />
     <ClInclude Include="E_BodyFlag.h" />
     <ClInclude Include="E_BodyType.h" />
@@ -192,6 +193,7 @@
     <ClCompile Include="BroadPhase.cpp" />
     <ClCompile Include="Collider2D.cpp" />
     <ClCompile Include="Collision2D.cpp" />
+    <ClCompile Include="Contact2D.cpp" />
     <ClCompile Include="ContactFilter.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="Polytope.cpp" />

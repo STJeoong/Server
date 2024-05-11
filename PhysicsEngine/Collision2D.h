@@ -4,42 +4,32 @@
 #include "Simplex.h"
 class Collider2D;
 class RigidBody2D;
+class Contact2D;
 class Collision2D
 {
 	friend class World;
 	friend class CollisionDetector;
 	friend class Solver;
+	static const float PERSISTENT_THRESHOLD_SQUARED;
 public:
+	bool isTrigger() const { return _isTrigger; }
 	Collider2D* colliderA() const { return _colliderA; }
 	Collider2D* colliderB() const { return _colliderB; }
-	const Point2D& contactA() const { return _contactA; }
-	const Point2D& contactB() const { return _contactB; }
-	const Point2D& localContactA() const { return _localContactA; }
-	const Point2D& localContactB() const { return _localContactB; }
-	float depth() const { return _depth; }
-	const Vector2D& normal() const { return _normal; }
-	const Vector2D& tangent() const { return _tangent; }
+	const std::vector<Contact2D*>& contacts() const { return _contacts; }
 private:
+	void validateOldContacts();
+	bool importNewContact(Contact2D* contact);
+	bool isValid(Contact2D* contact);
 	void onDestroy();
 
-	Point2D _contactA;
-	Point2D _contactB;
-	Vector2D _rA; // from center of A to contactA
-	Vector2D _rB; // from center of B to contactB
-	Point2D _localContactA; // local position of contactA
-	Point2D _localContactB; // local position of contactB
-	float _depth = 0.0f;
 
-	Collider2D* _colliderA = nullptr;
-	Collider2D* _colliderB = nullptr;
+	Collider2D* _colliderA;
+	Collider2D* _colliderB;
+	std::vector<Contact2D*> _contacts;
 	float _bounciness = 0.0f;
 	float _bouncinessThreshold = 1.0f;
 	float _friction = 0.0f;
 	bool _isTrigger = false;
-	Vector2D _normal;
-	Vector2D _tangent;
-	float _normalImpulseSum = 0.0f;
-	float _tangentImpulseSum = 0.0f;
 
 	Simplex _simplex;
 	E_GameObjectEvent _evt = E_GameObjectEvent::NONE;

@@ -7,6 +7,7 @@
 #include "Simplex.h"
 #include "Polytope.h"
 #include "GameObject.h"
+#include "Contact2D.h"
 #include <ObjectPool.h>
 
 #pragma region public
@@ -162,6 +163,10 @@ bool CollisionDetector::gjk(Collision2D* collision)
 	collision->_simplex.init(pointA, pointB);
 	while (true)
 	{
+		if (collision->_simplex.supportVec() == Vector2D(0.0f, 0.0f))
+		{
+			int a = 1;
+		}
 		pointA = colliderA->computeSupportPoint(collision->_simplex.supportVec());
 		pointB = colliderB->computeSupportPoint(collision->_simplex.supportVec() * -1);
 		if (!collision->_simplex.insert(pointA, pointB)) return false;
@@ -171,17 +176,23 @@ bool CollisionDetector::gjk(Collision2D* collision)
 void CollisionDetector::epa(Collision2D* collision)
 {
 	Polytope polytope(*collision, collision->_simplex.points(), collision->_simplex.sources());
-	collision->_normal = polytope.normal().normalized();
-	collision->_contactA = polytope.contactA();
-	collision->_contactB = polytope.contactB();
-	collision->_depth = polytope.depth(); // TODO : 왜 아래 tmp값이랑 다르지?
-	//collision->_depth = Vector2D::dot(polytope.contactA() - polytope.contactB(), collision->_normal);
-	float tmp = Vector2D::dot(polytope.contactA() - polytope.contactB(), collision->_normal);
-	collision->_localContactA = collision->colliderA()->toLocal(polytope.contactA());
-	collision->_localContactB = collision->colliderB()->toLocal(polytope.contactB());
-	collision->_tangent = Vector2D::cross(collision->_normal, 1.0f);
-	collision->_rA = polytope.contactA() - collision->colliderA()->position();
-	collision->_rB = polytope.contactB() - collision->colliderB()->position();
+	Contact2D* newContact = ObjectPool::get<Contact2D>();
+	newContact->_contactA = polytope.contactA();
+	newContact->_contactB = polytope.contactB();
+	newContact->_localContactA = collision->colliderA()->toLocal(polytope.contactA());
+	newContact->_localContactB = collision->colliderB()->toLocal(polytope.contactB());
+	newContact->_rA = polytope.contactA() - collision->colliderA()->position();
+	newContact->_rB = polytope.contactB() - collision->colliderB()->position();
+	newContact->_colliderA = collision->colliderA();
+	newContact->_colliderB = collision->colliderB();
+	newContact->_normal = polytope.normal().normalized();
+	newContact->_tangent = Vector2D::cross(newContact->_normal, 1.0f);
+	newContact->_depth = polytope.depth(); // TODO : 왜 아래 tmp 값이랑 다르지?
+	// float tmp = Vector2D::dot(polytope.contactA() - polytope.contactB(), collision->_normal);
+
+	collision->validateOldContacts();
+	if (!collision->importNewContact(newContact))
+		ObjectPool::release(newContact);
 
 	float bounceA = collision->colliderA()->bounciness();
 	float bounceB = collision->colliderB()->bounciness();
