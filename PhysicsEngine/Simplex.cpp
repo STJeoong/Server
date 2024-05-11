@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Simplex.h"
 #include "Utils.h"
+#include "Matrix22.h"
 
 #pragma region public
 void Simplex::init(const Point2D& pointFromA, const Point2D& pointFromB)
@@ -11,6 +12,8 @@ void Simplex::init(const Point2D& pointFromA, const Point2D& pointFromB)
 	_points.push_back(pointFromA - pointFromB);
 	_sources.push_back({ pointFromA, pointFromB });
 	_supportVec = _points[0] * -1;
+	if (_supportVec == Vector2D(0.0f, 0.0f))
+		_containsOrigin = true;
 }
 bool Simplex::insert(const Point2D& pointFromA, const Point2D& pointFromB)
 {
@@ -45,8 +48,10 @@ bool Simplex::check()
 	if (_points.size() == 2)
 	{
 		Vector2D AB = _points[1] - _points[0];
-		// TODO : supportVec가 {0,0}이면?
+		// TODO : supportVec가 {0,0}이면? // 원점 포함임
 		_supportVec = Vector2D::cross(Vector2D::cross(AB, _supportVec), AB);
+		if (_supportVec == Vector2D(0.0f, 0.0f))
+			_containsOrigin = true;
 		return true;
 	}
 	

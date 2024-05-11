@@ -7,12 +7,43 @@
 Polytope::Polytope(const Collision2D& collision, const std::vector<Point2D>& points, const std::vector<std::pair<Point2D, Point2D>>& sources)
 	: _points(points), _sources(sources)
 {
+	if (_points.size() < 3)
+		this->setMinimumPoints(collision);
 	this->initPQ();
 	this->expand(collision);
 }
 #pragma endregion
 
 #pragma region private
+void Polytope::setMinimumPoints(const Collision2D& collision)
+{
+	Collider2D* colliderA = collision.colliderA();
+	Collider2D* colliderB = collision.colliderB();
+
+	Vector2D supportVectorCandidates[4] = { {1.0f,0.0f}, {-1.0f,0.0f}, {0.0f,1.0f}, {0.0f,-1.0f} };
+	while (_points.size() < 3)
+	{
+		for (int i = 0; i < 4; ++i)
+		{
+			bool valid = true;
+			Point2D pointFromA = colliderA->computeSupportPoint(supportVectorCandidates[i]);
+			Point2D pointFromB = colliderB->computeSupportPoint(supportVectorCandidates[i] * -1);
+			Point2D newPoint = pointFromA - pointFromB;
+			for (int j = 0; j < _points.size(); ++j)
+				if (newPoint == _points[j])
+				{
+					valid = false;
+					break;
+				}
+			if (valid)
+			{
+				_points.push_back(newPoint);
+				_sources.push_back({ pointFromA, pointFromB });
+				break;
+			}
+		}
+	}
+}
 void Polytope::initPQ()
 {
 	for (size_t i = 0; i < _points.size(); ++i)
@@ -89,6 +120,7 @@ void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 
 	if (!isVertexA && !isVertexB) // ¸é ´ë ¸é Á¢ÃË
 	{
+		_isEdgeA = _isEdgeB = true;
 		bool isParallelToY = false;
 		if (std::abs(A[0].x() - A[1].x()) < 10.0f * FLT_EPSILON) // yÃà¿¡ ÆòÇàÇÑ ¸é¿¡ Á¢ÃË
 		{
@@ -122,6 +154,8 @@ void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 	{
 		if (isVertexA) // A´Â Á¡ Á¢ÃË, B´Â ¸é Á¢ÃË
 		{
+			_isEdgeA = false;
+			_isEdgeB = true;
 			_contactA = A[0];
 
 			// project A[0] to B's edge
@@ -137,6 +171,8 @@ void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 		}
 		else // A´Â ¸é Á¢ÃË, B´Â Á¡ Á¢ÃË
 		{
+			_isEdgeA = true;
+			_isEdgeB = false;
 			_contactB = B[0];
 
 			// project B[0] to A's edge

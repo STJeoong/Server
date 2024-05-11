@@ -13,7 +13,10 @@ public:
 	const Point2D& contactA() const { return _contactA; }
 	const Point2D& contactB() const { return _contactB; }
 	float depth() const { return _depth; }
+	bool isEdgeA() const { return _isEdgeA; }
+	bool isEdgeB() const { return _isEdgeB; }
 private:
+	void setMinimumPoints(const Collision2D& collision);
 	void initPQ();
 	void expand(const Collision2D& collision);
 	void computeClosestPoints(size_t idxA, size_t idxB);
@@ -26,4 +29,6 @@ private:
 	Point2D _contactA;
 	Point2D _contactB;
 	float _depth;
+	bool _isEdgeA = false;
+	bool _isEdgeB = false;
 };
