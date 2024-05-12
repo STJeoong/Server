@@ -20,6 +20,8 @@ private:
 	void validateOldContacts();
 	bool importNewContact(Contact2D* contact);
 	bool isValid(Contact2D* contact);
+	void prune();
+	void clearContacts();
 	void onDestroy();
 
 

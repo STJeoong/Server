@@ -6,6 +6,8 @@ class RigidBody2D;
 class Contact2D;
 class Solver
 {
+	static const float LINEAR_DAMPING;
+	static const float ANGULAR_DAMPING;
 	static const float PENETRATION_SLOP;
 public:
 	Solver(const std::vector<Collision2D*>& collisions, float dt);

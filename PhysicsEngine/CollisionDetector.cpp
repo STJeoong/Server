@@ -52,6 +52,8 @@ void CollisionDetector::update(const BroadPhase& broadPhase)
 	while (it != _collisions.end())
 	{
 		const E_GameObjectEvent& evt = (*it)->_evt;
+		if (evt == E_GameObjectEvent::TRIGGER_ENTER || evt == E_GameObjectEvent::TRIGGER_STAY)
+			(*it)->clearContacts();
 		if (evt == E_GameObjectEvent::COLLISION_STAY || evt == E_GameObjectEvent::TRIGGER_STAY)
 		{
 			++it;
@@ -161,17 +163,13 @@ bool CollisionDetector::gjk(Collision2D* collision)
 	Point2D pointB = colliderB->computeSupportPoint({ -1.0f,0.0f });
 
 	collision->_simplex.init(pointA, pointB);
-	while (true)
+	while (!collision->_simplex.containsOrigin())
 	{
-		if (collision->_simplex.supportVec() == Vector2D(0.0f, 0.0f))
-		{
-			int a = 1;
-		}
 		pointA = colliderA->computeSupportPoint(collision->_simplex.supportVec());
 		pointB = colliderB->computeSupportPoint(collision->_simplex.supportVec() * -1);
 		if (!collision->_simplex.insert(pointA, pointB)) return false;
-		if (collision->_simplex.containsOrigin()) return true;
 	}
+	return true;
 }
 void CollisionDetector::epa(Collision2D* collision)
 {
@@ -188,6 +186,10 @@ void CollisionDetector::epa(Collision2D* collision)
 	newContact->_normal = polytope.normal().normalized();
 	newContact->_tangent = Vector2D::cross(newContact->_normal, 1.0f);
 	newContact->_depth = polytope.depth(); // TODO : 왜 아래 tmp 값이랑 다르지?
+	newContact->_isEdgeA = polytope.isEdgeA();
+	newContact->_isEdgeB = polytope.isEdgeB();
+	newContact->_rotationA = collision->colliderA()->gameObject()->transform().rotation().radian();
+	newContact->_rotationB = collision->colliderB()->gameObject()->transform().rotation().radian();
 	// float tmp = Vector2D::dot(polytope.contactA() - polytope.contactB(), collision->_normal);
 
 	collision->validateOldContacts();

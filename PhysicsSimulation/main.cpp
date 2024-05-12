@@ -1,100 +1,101 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <Simplex.h>
 #include <GameObject.h>
-#include <queue>
 #include <World.h>
 #include <BoxCollider2D.h>
-#include <Line.h>
-#include <tuple>
 #include <RigidBody2D.h>
 #include <CircleCollider.h>
-#include <MonoBehaviour.h>
-class Test : public MonoBehaviour
-{
-    friend class GameObject;
-public:
-    virtual void start() override
-    {
-        //std::cout << "start\n";
-    }
-    virtual void update() override
-    {
-        //std::cout << "update\n";
-        //this->enabled(true);
-    }
-    virtual void onCollisionEnter(const Collision2D& collision) override
-    {
-        //std::cout << "collision enter!\n";
-    }
-    virtual void onCollisionExit(const Collision2D& collision) override
-    {
-        //std::cout << "collision exit!\n";
-    }
-    virtual void onCollisionStay(const Collision2D& collision) override
-    {
-        //std::cout << "collision stay!\n";
-    }
-private:
-    Test() = default;
-    ~Test() = default;
-    virtual Component* clone() override
-    {
-        return new Test();
-    }
-};
 #define PI 3.14159265359f
+sf::RenderWindow window(sf::VideoMode(800, 600), "2D Physics Engine");
+#include "Renderer.h"
 int main()
 {
     std::ios_base::sync_with_stdio(false); std::cin.tie(0); std::cout.tie(0);
 
-    /*RigidBody2D* rigid = g->addComponent<RigidBody2D>();
-    RigidBody2D* rigid2 = g->addComponent<RigidBody2D>();*/
-    GameObject* g1 = World::instantiate();
-    GameObject* g2 = World::instantiate();
+#pragma region instantiate
+    S_BoxDef def3;
+    def3.halfSize = { 250.0f, 10.0f };
     GameObject* g3 = World::instantiate(); // floor
+    BoxCollider2D* c3 = g3->addComponent<BoxCollider2D>(def3);
+    g3->addComponent<Renderder>(new sf::RectangleShape({ def3.halfSize.x() * 2, def3.halfSize.y() * 2 }), def3.halfSize, sf::Color::Yellow );
 
-    S_BoxDef def;
-    def.halfSize = { 100.0f, 10.0f };
-    BoxCollider2D* c3 = g3->addComponent<BoxCollider2D>(def);
+    S_BoxDef def4;
+    def4.halfSize = { 10.0f, 10.0f };
+    //def4.bounciness = 0.4f;
+    GameObject* g4 = World::instantiate();
+    RigidBody2D* rigid4 = g4->addComponent<RigidBody2D>();
+    BoxCollider2D* c4 = g4->addComponent<BoxCollider2D>(def4);
+    g4->addComponent<Renderder>(new sf::RectangleShape({ def4.halfSize.x() * 2, def4.halfSize.y() * 2 }), def4.halfSize, sf::Color::White);
 
-    S_BoxDef def2;
-    def2.halfSize = { 10.0f, 10.0f };
-    def2.friction = 0.01f;
-    //def2.bounciness = 0.8f;
+    S_BoxDef def5;
+    def5.halfSize = { 10.0f, 10.0f };
+    //def5.bounciness = 0.5f;
+    GameObject* g5 = World::instantiate();
+    RigidBody2D* rigid5 = g5->addComponent<RigidBody2D>(); 
+    BoxCollider2D* c5 = g5->addComponent<BoxCollider2D>(def5);
+    g5->addComponent<Renderder>(new sf::RectangleShape({ def5.halfSize.x() * 2, def5.halfSize.y() * 2 }), def5.halfSize, sf::Color::Green);
+
+    S_BoxDef def6;
+    def6.halfSize = { 10.0f, 10.0f };
+    //def6.bounciness = 0.6f;
+    GameObject* g6 = World::instantiate();
+    RigidBody2D* rigid6 = g6->addComponent<RigidBody2D>();
+    BoxCollider2D* c6 = g6->addComponent<BoxCollider2D>(def6);
+    g6->addComponent<Renderder>(new sf::RectangleShape({ def6.halfSize.x() * 2, def6.halfSize.y() * 2 }), def6.halfSize, sf::Color::Magenta);
+
+    S_BoxDef def7;
+    def7.halfSize = { 10.0f, 10.0f };
+    //def6.bounciness = 0.6f;
+    GameObject* g7 = World::instantiate();
+    RigidBody2D* rigid7 = g7->addComponent<RigidBody2D>();
+    BoxCollider2D* c7 = g7->addComponent<BoxCollider2D>(def7);
+    g7->addComponent<Renderder>(new sf::RectangleShape({ def7.halfSize.x() * 2, def7.halfSize.y() * 2 }), def7.halfSize, sf::Color::Yellow);
+
+    S_BoxDef def8;
+    def8.halfSize = { 10.0f, 10.0f };
+    //def6.bounciness = 0.6f;
+    GameObject* g8 = World::instantiate();
+    RigidBody2D* rigid8 = g8->addComponent<RigidBody2D>();
+    BoxCollider2D* c8 = g8->addComponent<BoxCollider2D>(def8);
+    g8->addComponent<Renderder>(new sf::RectangleShape({ def8.halfSize.x() * 2, def8.halfSize.y() * 2 }), def8.halfSize, sf::Color::Red);
+
+    S_BoxDef def9;
+    def9.halfSize = { 10.0f, 10.0f };
+    //def6.bounciness = 0.6f;
+    GameObject* g9 = World::instantiate();
+    RigidBody2D* rigid9 = g9->addComponent<RigidBody2D>();
+    BoxCollider2D* c9 = g9->addComponent<BoxCollider2D>(def9);
+    g9->addComponent<Renderder>(new sf::RectangleShape({ def9.halfSize.x() * 2, def9.halfSize.y() * 2 }), def9.halfSize, sf::Color::White);
+
+#pragma endregion
+
+    S_BoxDef def1;
+    def1.halfSize = { 10.0f, 10.0f };
+    //def1.bounciness = 0.6f;
+    GameObject* g1 = World::instantiate();
     RigidBody2D* rigid1 = g1->addComponent<RigidBody2D>();
-    BoxCollider2D* c1 = g1->addComponent<BoxCollider2D>(def2);
-    g1->addComponent<Test>();
-
-    /*S_BoxDef def3;
-    def3.halfSize = { 10.0f, 10.0f };*/
-    S_CircleDef circleDef;
-    circleDef.radius = 10.0f;
-    circleDef.bounciness = 0.5f;
-    //g2->addComponent<RigidBody2D>();
-    CircleCollider* c2 = g2->addComponent<CircleCollider>(circleDef);
-    //BoxCollider2D* c2 = g2->addComponent<BoxCollider2D>(def3);
-
-
-    g1->moveTo({ 500.0f, 400.0f });
+    BoxCollider2D* c1 = g1->addComponent<BoxCollider2D>(def1);
+    g1->addComponent<Renderder>(new sf::RectangleShape({ def1.halfSize.x() * 2, def1.halfSize.y() * 2 }), def1.halfSize, sf::Color::Red);
+    g1->moveTo({ 418.0f, 450.0f });
+    g1->setRotation(1);
+    //rigid1->velocity({ -400,0 });
+    //rigid1->fixedRotation(true);
+    g4->moveTo({ 420.0f, 320.0f }); 
+    g5->moveTo({ 418.0f, 350.0f });
+    g6->moveTo({ 421.0f, 400.0f });
+    g7->moveTo({ 418.0f, 290.0f });
+    g8->moveTo({ 418.0f, 250.0f });
+    g9->moveTo({ 421.0f, 200.0f });
+    //rigid6->velocity({ -50,0 });
     //g1->setRotation(1);
-    rigid1->velocity({ -100,0 });
-    g2->moveTo({400.0f, 100.0f});
+    //rigid1->velocity({ -100,0 });
     g3->moveTo({ 400.0f, 500.0f });
-    sf::RectangleShape shape1({ 20.0f, 20.0f });
-    shape1.setOrigin({ 10, 10 });
-    sf::CircleShape shape2(10.0f);
-    //sf::RectangleShape shape2({ 20.0f, 20.0f });
-    shape2.setOrigin({ 10.0f,10.0f });
-    sf::RectangleShape shape3({ 200.0f, 20.0f });
-    shape3.setOrigin({ 100,10 });
-    World::init({ 0.0f, 500.0f });
 
-	sf::RenderWindow window(sf::VideoMode(800, 600), "2D Physics Engine");
+    World::init({ 0.0f, 400.0f });
+	
     sf::Clock clock;
-    float dt = 0.0f;
     bool pause = false;
-    float deg = 0.0f;
+    float dt = 0.0f;
 	while (window.isOpen())
 	{
 		sf::Event evt;
@@ -106,30 +107,12 @@ int main()
                 pause = !pause;
 		}
         if (pause) continue;
-        //Motion motion({ 0, 0 }, 0.001f);
-        //Motion motion2({ 100.0f*dt, -100.0f*dt }, 0.001f);
-        //g1->transform(motion);
-        //g2->transform(motion2);
-        //printf("g1:(x : %f, y : %f, degree : %f)\n", g1->transform().position().x(), g1->transform().position().y(), g1->transform().rotation().radian() * 180 / PI);
-
-
-
-        //dt = clock.restart().asSeconds();
-        World::step(0.00020f, 3, 0);
-        // 화면 그리기
+        /*dt += clock.restart().asSeconds();
+        if (dt < 0.02f) continue;
+        dt -= 0.02f;*/
         window.clear(sf::Color::Black);
-        shape1.setRotation(g1->transform().rotation().radian() * 180 / PI);
-        shape1.setPosition({ g1->transform().position().x(), g1->transform().position().y() });
-        shape2.setPosition({g2->transform().position().x(), g2->transform().position().y()});
-        shape3.setPosition({ g3->transform().position().x(), g3->transform().position().y()});
-        shape3.setRotation(g3->transform().rotation().radian() * 180 / PI);
-        shape1.setFillColor(sf::Color::Red);
-        shape2.setFillColor(sf::Color::Red);
-        shape3.setFillColor(sf::Color::Yellow);
-        window.draw(shape1);
-        window.draw(shape2);
-        window.draw(shape3);
-        //body.draw(window);
+        //dt = clock.restart().asSeconds();
+        World::step(0.00020f, 10);
         window.display();
 	}
 	return 0;

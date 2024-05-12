@@ -55,6 +55,8 @@ void Solver::integrateVelocity(const std::vector<RigidBody2D*>& rigids, const Ve
 			float torque = rigid->_torque;
 			rigid->_velocity += {(force.x()* invMass + g.x() * gScale)* dt, (force.y()* invMass + g.y() * gScale)* dt};
 			rigid->_angularVelocity += torque * invI;
+			//rigid->_velocity *= 1.0f / (1.0f + dt * Solver::LINEAR_DAMPING);
+			//rigid->_angularVelocity *= 1.0f / (1.0f + dt * Solver::ANGULAR_DAMPING);
 
 			// clear force and torque
 			rigid->_force = {};
@@ -227,4 +229,6 @@ float Solver::computeLambda(const Contact2D& c, const std::vector<float>& jaco, 
 }
 #pragma endregion
 
-const float Solver::PENETRATION_SLOP = 0.005f;
+const float Solver::LINEAR_DAMPING = 0.98f;
+const float Solver::ANGULAR_DAMPING = 0.98f;
+const float Solver::PENETRATION_SLOP = 0.01f;

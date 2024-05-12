@@ -151,7 +151,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BombUpdater.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameServerBroadcaster.cpp" />
     <ClCompile Include="game_protocol.pb.cc" />
@@ -162,7 +161,6 @@
     <ClCompile Include="Serializer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BombUpdater.h" />
     <ClInclude Include="E_EngineType.h" />
     <ClInclude Include="E_TimerEvent.h" />
     <ClInclude Include="GameManager.h" />

@@ -1,6 +1,5 @@
 #include "GameServerBroadcaster.h"
 #include "PlayerMoveUpdater.h"
-#include "BombUpdater.h"
 #include "GameManager.h"
 #include "E_TimerEvent.h"
 #include <S_PacketHeader.h>
@@ -33,7 +32,6 @@ void GameServerBroadcaster::broadcastMessage(const S_EngineEvent& evt)
 	switch ((E_PacketID)header->id)
 	{
 	case E_PacketID::MOVE_REQ: { Move_Req req = {}; req.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader)); s_onMoveReq(evt.serial, req); } break;
-	case E_PacketID::PLANT_BOMB_REQ: { s_onBombPlantReq(evt.serial); } break;
 	}
 }
 #pragma endregion

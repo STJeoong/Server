@@ -36,6 +36,10 @@ private:
 	float _normalImpulse = 0.0f;
 	float _tangentImpulse = 0.0f;
 	float _depth = 0.0f;
+	bool _isEdgeA = false; // A의 면에 접촉
+	bool _isEdgeB = false; // B의 면에 접촉
+	float _rotationA = 0.0f; // 초기 A의 회전상태
+	float _rotationB = 0.0f; // 초기 B의 회전상태
 	
 	float _bouncinessBias = 0.0f;
 };

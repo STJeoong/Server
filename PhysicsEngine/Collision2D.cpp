@@ -1,9 +1,10 @@
 #include "pch.h"
 #include "Collision2D.h"
 #include "Collider2D.h"
-#include "RigidBody2D.h"
 #include <ObjectPool.h>
 #include "Contact2D.h"
+#include "RigidBody2D.h"
+#include "Line.h"
 
 #pragma region public
 #pragma endregion
@@ -27,12 +28,31 @@ bool Collision2D::importNewContact(Contact2D* contact)
 {
 	for (Contact2D* c : _contacts)
 	{
+		bool closeEnoughA = (contact->contactA() - c->contactA()).squaredLen() <= Collision2D::PERSISTENT_THRESHOLD_SQUARED;
+		bool closeEnoughB = (contact->contactB() - c->contactB()).squaredLen() <= Collision2D::PERSISTENT_THRESHOLD_SQUARED;
 		bool farEnoughA = (contact->contactA() - c->contactA()).squaredLen() > Collision2D::PERSISTENT_THRESHOLD_SQUARED;
 		bool farEnoughB = (contact->contactB() - c->contactB()).squaredLen() > Collision2D::PERSISTENT_THRESHOLD_SQUARED;
-		if (!farEnoughA || !farEnoughB) // TODO : 맞는지
+		if (closeEnoughA && closeEnoughB) // TODO : 맞는지
+		{
+			c->_contactA = contact->contactA();
+			c->_contactB = contact->contactB();
+			c->_depth = contact->_depth;
+			c->_localContactA = contact->localContactA();
+			c->_localContactB = contact->localContactB();
+			c->_normal = contact->_normal;
+			c->_tangent = contact->_tangent;
+			c->_rA = contact->_rA;
+			c->_rB = contact->_rB;
+			c->_rotationA = contact->_rotationA;
+			c->_rotationB = contact->_rotationB;
+			return false;
+		}
+		if (!farEnoughA || !farEnoughB)
 			return false;
 	}
 	_contacts.push_back(contact);
+	if (_contacts.size() > 3)
+		this->prune();
 	return true;
 }
 bool Collision2D::isValid(Contact2D* contact)
@@ -40,11 +60,12 @@ bool Collision2D::isValid(Contact2D* contact)
 	Point2D globalPointA = _colliderA->toWorld(contact->localContactA());
 	Point2D globalPointB = _colliderB->toWorld(contact->localContactB());
 
-	if (Vector2D::dot(globalPointB - globalPointA, contact->normal()) > 0.0f)
+	// depth <= 0
+	if (Vector2D::dot(globalPointA - globalPointB, contact->normal()) <= 0.0f)
 		return false;
-	bool closeEnoughA = (contact->contactA() - globalPointA).squaredLen() < Collision2D::PERSISTENT_THRESHOLD_SQUARED;
-	bool closeEounghB = (contact->contactB() - globalPointB).squaredLen() < Collision2D::PERSISTENT_THRESHOLD_SQUARED;
-	if (!closeEnoughA || !closeEounghB)
+	bool closeEnoughA = (contact->contactA() - globalPointA).squaredLen() <= Collision2D::PERSISTENT_THRESHOLD_SQUARED;
+	bool closeEnoughB = (contact->contactB() - globalPointB).squaredLen() <= Collision2D::PERSISTENT_THRESHOLD_SQUARED;
+	if (!closeEnoughA || !closeEnoughB)
 		return false;
 	contact->_contactA = globalPointA;
 	contact->_contactB = globalPointB;
@@ -52,6 +73,56 @@ bool Collision2D::isValid(Contact2D* contact)
 	contact->_rA = globalPointA - contact->colliderA()->position();
 	contact->_rB = globalPointB - contact->colliderB()->position();
 	return true;
+}
+void Collision2D::prune()
+{
+	Contact2D* deepest = _contacts[0];
+	for (int i = 1; i < _contacts.size(); ++i)
+		if (deepest->depth() < _contacts[i]->depth())
+			deepest = _contacts[i];
+
+	Contact2D* furthestFromDeepest = _contacts[0];
+	{
+		float distanceSq = (furthestFromDeepest->contactA() - deepest->contactA()).squaredLen();
+		for (int i = 1; i < _contacts.size(); ++i)
+		{
+			float dist = (_contacts[i]->contactA() - deepest->contactA()).squaredLen();
+			if (dist > distanceSq)
+			{
+				distanceSq = dist;
+				furthestFromDeepest = _contacts[i];
+			}
+		}
+	}
+
+	Contact2D* furtestFromLine = _contacts[0];
+	Line line(deepest->contactA(), furthestFromDeepest->contactA());
+	{
+		float distanceSq = line.squaredDistanceFrom(furtestFromLine->contactA());
+		for (int i = 1; i < _contacts.size(); ++i)
+		{
+			float dist = line.squaredDistanceFrom(_contacts[i]->contactA());
+			if (dist > distanceSq)
+			{
+				distanceSq = dist;
+				furtestFromLine = _contacts[i];
+			}
+		}
+	}
+
+	auto it = std::find_if(_contacts.begin(), _contacts.end(),
+		[deepest, furthestFromDeepest, furtestFromLine](Contact2D* c) { return c != deepest && c != furthestFromDeepest && c != furtestFromLine; });
+	ObjectPool::release(*it);
+	_contacts.erase(it);
+}
+void Collision2D::clearContacts()
+{
+	auto it = _contacts.begin();
+	while (it != _contacts.end())
+	{
+		ObjectPool::release(*it);
+		it = _contacts.erase(it);
+	}
 }
 void Collision2D::onDestroy()
 {

@@ -17,8 +17,8 @@ using namespace protocol;
 #pragma region public
 LobbyServerHandler::LobbyServerHandler()
 {
-	LobbyServerBroadcaster::onConnect(true, [](int serial) { printf("client(%d) connected\n", serial); });
-	LobbyServerBroadcaster::onDisconnect(true, [](int serial) { printf("client(%d) disconnected\n", serial); });
+	LobbyServerBroadcaster::onConnect(true, [](int serial) { printf("client(%d) connected\n", serial); UserManager::getInstance().getUser(serial).state = E_UserState::CONNECTED; });
+	LobbyServerBroadcaster::onDisconnect(true, [](int serial) { printf("client(%d) disconnected\n", serial); UserManager::getInstance().disconnect(serial); });
 	LobbyServerBroadcaster::onLoginReq(true, std::bind(&LobbyServerHandler::onLoginReq, this, std::placeholders::_1, std::placeholders::_2));
 	LobbyServerBroadcaster::onChatLobbyReq(true, std::bind(&LobbyServerHandler::broadcastLobby, this, std::placeholders::_1, std::placeholders::_2));
 	LobbyServerBroadcaster::onMatchReq(true, std::bind(&LobbyServerHandler::onMatchReq, this, std::placeholders::_1));

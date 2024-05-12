@@ -2,7 +2,6 @@
 #include "E_EngineType.h"
 #include "GameServerBroadcaster.h"
 #include "GameManager.h"
-#include "BombUpdater.h"
 #include "PlayerMoveUpdater.h"
 
 static void setEngine(char* argv[])
@@ -19,11 +18,10 @@ static void setEngine(char* argv[])
 int main(int argc, char* argv[])
 {
 	Engine::setLogFolder(argv[0]);
-	Engine::setServerMode(E_ServerMode::PHYSICS_MODE);
+	Engine::setServerMode(E_ServerMode::PASSIVE_MODE);
 	setEngine(argv);
 
 	GameManager gameManager;
-	BombUpdater bombUpdater;
 	PlayerMoveUpdater moveUpdater;
 	Engine::runEngine();
 	Engine::runServer();

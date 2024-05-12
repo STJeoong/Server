@@ -53,9 +53,6 @@
     <ClCompile Include="game_protocol.pb.cc">
       <Filter>소스 파일\Protocol</Filter>
     </ClCompile>
-    <ClCompile Include="BombUpdater.cpp">
-      <Filter>소스 파일\Update</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="E_EngineType.h">
@@ -87,9 +84,6 @@
     </ClInclude>
     <ClInclude Include="game_protocol.pb.h">
       <Filter>소스 파일\Protocol</Filter>
-    </ClInclude>
-    <ClInclude Include="BombUpdater.h">
-      <Filter>소스 파일\Update</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
