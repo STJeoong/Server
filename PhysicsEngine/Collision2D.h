@@ -35,6 +35,4 @@ private:
 
 	Simplex _simplex;
 	E_GameObjectEvent _evt = E_GameObjectEvent::NONE;
-
-	float _bouncinessBias = 0.0f;
 };

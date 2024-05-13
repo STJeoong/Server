@@ -32,26 +32,26 @@ bool Collision2D::importNewContact(Contact2D* contact)
 		bool closeEnoughB = (contact->contactB() - c->contactB()).squaredLen() <= Collision2D::PERSISTENT_THRESHOLD_SQUARED;
 		bool farEnoughA = (contact->contactA() - c->contactA()).squaredLen() > Collision2D::PERSISTENT_THRESHOLD_SQUARED;
 		bool farEnoughB = (contact->contactB() - c->contactB()).squaredLen() > Collision2D::PERSISTENT_THRESHOLD_SQUARED;
-		if (closeEnoughA && closeEnoughB) // TODO : 맞는지
-		{
-			c->_contactA = contact->contactA();
-			c->_contactB = contact->contactB();
-			c->_depth = contact->_depth;
-			c->_localContactA = contact->localContactA();
-			c->_localContactB = contact->localContactB();
-			c->_normal = contact->_normal;
-			c->_tangent = contact->_tangent;
-			c->_rA = contact->_rA;
-			c->_rB = contact->_rB;
-			c->_rotationA = contact->_rotationA;
-			c->_rotationB = contact->_rotationB;
-			return false;
-		}
+		//if (closeEnoughA && closeEnoughB) // TODO : 맞는지
+		//{
+		//	c->_contactA = contact->contactA();
+		//	c->_contactB = contact->contactB();
+		//	c->_depth = contact->_depth;
+		//	c->_localContactA = contact->localContactA();
+		//	c->_localContactB = contact->localContactB();
+		//	c->_normal = contact->_normal;
+		//	c->_tangent = contact->_tangent;
+		//	c->_rA = contact->_rA;
+		//	c->_rB = contact->_rB;
+		//	c->_rotationA = contact->_rotationA;
+		//	c->_rotationB = contact->_rotationB;
+		//	return false;
+		//}
 		if (!farEnoughA || !farEnoughB)
 			return false;
 	}
 	_contacts.push_back(contact);
-	if (_contacts.size() > 3)
+	if (_contacts.size() > 2)
 		this->prune();
 	return true;
 }
@@ -67,11 +67,11 @@ bool Collision2D::isValid(Contact2D* contact)
 	bool closeEnoughB = (contact->contactB() - globalPointB).squaredLen() <= Collision2D::PERSISTENT_THRESHOLD_SQUARED;
 	if (!closeEnoughA || !closeEnoughB)
 		return false;
-	contact->_contactA = globalPointA;
+	/*contact->_contactA = globalPointA;
 	contact->_contactB = globalPointB;
 	contact->_depth = Vector2D::dot(globalPointA - globalPointB, contact->normal());
 	contact->_rA = globalPointA - contact->colliderA()->position();
-	contact->_rB = globalPointB - contact->colliderB()->position();
+	contact->_rB = globalPointB - contact->colliderB()->position();*/
 	return true;
 }
 void Collision2D::prune()
@@ -95,23 +95,8 @@ void Collision2D::prune()
 		}
 	}
 
-	Contact2D* furtestFromLine = _contacts[0];
-	Line line(deepest->contactA(), furthestFromDeepest->contactA());
-	{
-		float distanceSq = line.squaredDistanceFrom(furtestFromLine->contactA());
-		for (int i = 1; i < _contacts.size(); ++i)
-		{
-			float dist = line.squaredDistanceFrom(_contacts[i]->contactA());
-			if (dist > distanceSq)
-			{
-				distanceSq = dist;
-				furtestFromLine = _contacts[i];
-			}
-		}
-	}
-
 	auto it = std::find_if(_contacts.begin(), _contacts.end(),
-		[deepest, furthestFromDeepest, furtestFromLine](Contact2D* c) { return c != deepest && c != furthestFromDeepest && c != furtestFromLine; });
+		[deepest, furthestFromDeepest](Contact2D* c) { return c != deepest && c != furthestFromDeepest; });
 	ObjectPool::release(*it);
 	_contacts.erase(it);
 }
@@ -145,8 +130,6 @@ void Collision2D::onDestroy()
 	_friction = 0.0f;
 
 	_evt = E_GameObjectEvent::NONE;
-
-	_bouncinessBias = 0.0f;
 }
 #pragma endregion
 

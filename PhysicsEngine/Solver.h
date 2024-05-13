@@ -9,6 +9,7 @@ class Solver
 	static const float LINEAR_DAMPING;
 	static const float ANGULAR_DAMPING;
 	static const float PENETRATION_SLOP;
+	static const float MINIMUM_DT;
 public:
 	Solver(const std::vector<Collision2D*>& collisions, float dt);
 	void integrateVelocity(const std::vector<RigidBody2D*>& rigids, const Vector2D& g, float dt);

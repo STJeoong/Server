@@ -133,6 +133,7 @@ void CollisionDetector::narrowPhase(Collision2D* collision)
 		this->setExit(collision);
 		return;
 	}
+
 	if (trigger)
 	{
 		if (evt == E_GameObjectEvent::COLLISION_ENTER || evt == E_GameObjectEvent::COLLISION_STAY)
@@ -142,18 +143,17 @@ void CollisionDetector::narrowPhase(Collision2D* collision)
 		else
 			evt = E_GameObjectEvent::TRIGGER_STAY;
 		collision->_isTrigger = true;
+		return;
 	}
+
+	if (evt == E_GameObjectEvent::TRIGGER_ENTER || evt == E_GameObjectEvent::TRIGGER_STAY)
+		this->setExit(collision);
+	if (evt != E_GameObjectEvent::COLLISION_ENTER && evt != E_GameObjectEvent::COLLISION_STAY)
+		evt = E_GameObjectEvent::COLLISION_ENTER;
 	else
-	{
-		if (evt == E_GameObjectEvent::TRIGGER_ENTER || evt == E_GameObjectEvent::TRIGGER_STAY)
-			this->setExit(collision);
-		if (evt != E_GameObjectEvent::COLLISION_ENTER && evt != E_GameObjectEvent::COLLISION_STAY)
-			evt = E_GameObjectEvent::COLLISION_ENTER;
-		else
-			evt = E_GameObjectEvent::COLLISION_STAY;
-		collision->_isTrigger = false;
-		this->epa(collision);
-	}
+		evt = E_GameObjectEvent::COLLISION_STAY;
+	collision->_isTrigger = false;
+	this->epa(collision);
 }
 bool CollisionDetector::gjk(Collision2D* collision)
 {
@@ -174,37 +174,33 @@ bool CollisionDetector::gjk(Collision2D* collision)
 void CollisionDetector::epa(Collision2D* collision)
 {
 	Polytope polytope(*collision, collision->_simplex.points(), collision->_simplex.sources());
+	Collider2D* colliderA = collision->colliderA();
+	Collider2D* colliderB = collision->colliderB();
 	Contact2D* newContact = ObjectPool::get<Contact2D>();
+
 	newContact->_contactA = polytope.contactA();
 	newContact->_contactB = polytope.contactB();
-	newContact->_localContactA = collision->colliderA()->toLocal(polytope.contactA());
-	newContact->_localContactB = collision->colliderB()->toLocal(polytope.contactB());
-	newContact->_rA = polytope.contactA() - collision->colliderA()->position();
-	newContact->_rB = polytope.contactB() - collision->colliderB()->position();
-	newContact->_colliderA = collision->colliderA();
-	newContact->_colliderB = collision->colliderB();
+	newContact->_localContactA = colliderA->toLocal(polytope.contactA());
+	newContact->_localContactB = colliderB->toLocal(polytope.contactB());
+	newContact->_rA = polytope.contactA() - colliderA->position();
+	newContact->_rB = polytope.contactB() - colliderB->position();
+	newContact->_colliderA = colliderA;
+	newContact->_colliderB = colliderB;
 	newContact->_normal = polytope.normal().normalized();
 	newContact->_tangent = Vector2D::cross(newContact->_normal, 1.0f);
-	newContact->_depth = polytope.depth(); // TODO : 왜 아래 tmp 값이랑 다르지?
+	newContact->_depth = polytope.depth(); // TODO : 왜 아래 tmp 값이랑 다르지? float 연산이라 그런듯
 	newContact->_isEdgeA = polytope.isEdgeA();
 	newContact->_isEdgeB = polytope.isEdgeB();
-	newContact->_rotationA = collision->colliderA()->gameObject()->transform().rotation().radian();
-	newContact->_rotationB = collision->colliderB()->gameObject()->transform().rotation().radian();
-	// float tmp = Vector2D::dot(polytope.contactA() - polytope.contactB(), collision->_normal);
+	newContact->_rotationA = colliderA->gameObject()->transform().rotation().radian();
+	newContact->_rotationB = colliderB->gameObject()->transform().rotation().radian();
 
 	collision->validateOldContacts();
 	if (!collision->importNewContact(newContact))
 		ObjectPool::release(newContact);
 
-	float bounceA = collision->colliderA()->bounciness();
-	float bounceB = collision->colliderB()->bounciness();
-	float thresholdA = collision->colliderA()->bouncinessThreshold();
-	float thresholdB = collision->colliderB()->bouncinessThreshold();
-	float fricA = collision->colliderA()->friction();
-	float fricB = collision->colliderB()->friction();
-	collision->_bounciness = bounceA > bounceB ? bounceA : bounceB;
-	collision->_friction = std::sqrtf(fricA * fricB);
-	collision->_bouncinessThreshold = thresholdA > thresholdB ? thresholdB : thresholdA;
+	collision->_bounciness = std::max(colliderA->bounciness(), colliderB->bounciness());
+	collision->_friction = std::sqrtf(colliderA->friction() * colliderB->friction());
+	collision->_bouncinessThreshold = std::min(colliderA->bouncinessThreshold(), colliderB->bouncinessThreshold());
 }
 void CollisionDetector::setExit(Collision2D* collision)
 {

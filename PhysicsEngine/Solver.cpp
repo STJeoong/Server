@@ -55,8 +55,6 @@ void Solver::integrateVelocity(const std::vector<RigidBody2D*>& rigids, const Ve
 			float torque = rigid->_torque;
 			rigid->_velocity += {(force.x()* invMass + g.x() * gScale)* dt, (force.y()* invMass + g.y() * gScale)* dt};
 			rigid->_angularVelocity += torque * invI;
-			//rigid->_velocity *= 1.0f / (1.0f + dt * Solver::LINEAR_DAMPING);
-			//rigid->_angularVelocity *= 1.0f / (1.0f + dt * Solver::ANGULAR_DAMPING);
 
 			// clear force and torque
 			rigid->_force = {};
@@ -66,12 +64,11 @@ void Solver::integrateVelocity(const std::vector<RigidBody2D*>& rigids, const Ve
 void Solver::integratePosition(const std::vector<RigidBody2D*>& rigids, float dt)
 {
 	for (RigidBody2D* rigid : rigids)
-		if (rigid->type() != E_BodyType::STATIC)
-		{
-			GameObject* obj = rigid->gameObject();
-			Motion motion = { rigid->velocity() * dt, rigid->angularVelocity() * dt };
-			obj->processTransform(motion);
-		}
+	{
+		GameObject* obj = rigid->gameObject();
+		Motion motion = { rigid->velocity() * dt, rigid->angularVelocity() * dt };
+		obj->processTransform(motion);
+	}
 }
 void Solver::resolve(const std::vector<Collision2D*>& collisions)
 {
@@ -135,12 +132,12 @@ void Solver::warmStart(const std::vector<Collision2D*>& collisions)
 
 			RigidBody2D* rigidA = collision.colliderA()->attachedRigidBody();
 			RigidBody2D* rigidB = collision.colliderB()->attachedRigidBody();
-			if (rigidA != nullptr && rigidA->type() == E_BodyType::STATIC) // TODO : KINEMATIC도 적용시키나? ㄴㄴ 애초에 invMass, invInertia 0임.
+			if (rigidA != nullptr)
 			{
 				rigidA->_velocity -= v * rigidA->invMass();
 				rigidA->_angularVelocity -= Vector2D::cross(contact._rA, v) * rigidA->invInertia();
 			}
-			if (rigidB != nullptr && rigidB->type() == E_BodyType::STATIC)
+			if (rigidB != nullptr)
 			{
 				rigidB->_velocity += v * rigidB->invMass();
 				rigidB->_angularVelocity += Vector2D::cross(contact._rB, v) * rigidB->invInertia();
@@ -151,7 +148,8 @@ void Solver::warmStart(const std::vector<Collision2D*>& collisions)
 float Solver::computePenetrationBias(const Contact2D& c, float dt)
 {
 	float depth = c.depth();
-	return -(BAUMGART / dt) * std::max(depth - Solver::PENETRATION_SLOP, 0.0f);
+	float h = std::max(dt, Solver::MINIMUM_DT);
+	return -(BAUMGART / h) * std::max(depth - Solver::PENETRATION_SLOP, 0.0f);
 }
 void Solver::computeBouncinessBias(Contact2D& contact, float bounciness, float bouncinessThreshold)
 {
@@ -169,44 +167,23 @@ void Solver::computeBouncinessBias(Contact2D& contact, float bounciness, float b
 
 	if (-normalVel > bouncinessThreshold)
 		contact._bouncinessBias = bounciness * normalVel;
-	/*if (normalVel < 0.0f && -normalVel <= bouncinessThreshold)
-		contact._bouncinessBias = 0.0f;
-	else if (contact._bouncinessBias == 0.0f && normalVel < 0.0f && -normalVel > bouncinessThreshold)
-		contact._bouncinessBias = bounciness * normalVel;*/
 }
 float Solver::computeEffectiveMass(const std::vector<float>& jaco, const std::tuple<float, float, float, float>& mass)
 {
 	float invMassA = std::get<0>(mass), invMassB = std::get<1>(mass), invInertiaA = std::get<2>(mass), invInertiaB = std::get<3>(mass);
-	float val = (jaco[0] * jaco[0] + jaco[1] * jaco[1]) * invMassA + (jaco[2] * jaco[2]) * invInertiaA +
+	float effMass = (jaco[0] * jaco[0] + jaco[1] * jaco[1]) * invMassA + (jaco[2] * jaco[2]) * invInertiaA +
 		(jaco[3] * jaco[3] + jaco[4] * jaco[4]) * invMassB + (jaco[5] * jaco[5]) * invInertiaB;
-	return val > 0.0f ? 1.0f / val : 0.0f;
+	return effMass > 0.0f ? 1.0f / effMass : 0.0f;
 }
 void Solver::getMassAndInertia(const Collision2D& c, float& invMassA, float& invMassB, float& invInertiaA, float& invInertiaB)
 {
 	RigidBody2D* rigidA = c.colliderA()->attachedRigidBody();
 	RigidBody2D* rigidB = c.colliderB()->attachedRigidBody();
 
-	if (rigidA == nullptr || rigidA->type() != E_BodyType::DYNAMIC)
-	{
-		invMassA = 0.0f;
-		invInertiaA = 0.0f;
-	}
-	else
-	{
-		invMassA = rigidA->invMass();
-		invInertiaA = rigidA->invInertia();
-	}
-
-	if (rigidB == nullptr || rigidB->type() != E_BodyType::DYNAMIC)
-	{
-		invMassB = 0.0f;
-		invInertiaB = 0.0f;
-	}
-	else
-	{
-		invMassB = rigidB->invMass();
-		invInertiaB = rigidB->invInertia();
-	}
+	invMassA = rigidA == nullptr ? 0.0f : rigidA->invMass();
+	invMassB = rigidB == nullptr ? 0.0f : rigidB->invMass();
+	invInertiaA = rigidA == nullptr ? 0.0f : rigidA->invInertia();
+	invInertiaB = rigidB == nullptr ? 0.0f : rigidB->invInertia();
 }
 float Solver::computeLambda(const Contact2D& c, const std::vector<float>& jaco, float effMass, float bias)
 {
@@ -232,3 +209,4 @@ float Solver::computeLambda(const Contact2D& c, const std::vector<float>& jaco, 
 const float Solver::LINEAR_DAMPING = 0.98f;
 const float Solver::ANGULAR_DAMPING = 0.98f;
 const float Solver::PENETRATION_SLOP = 0.01f;
+const float Solver::MINIMUM_DT = 0.01f;

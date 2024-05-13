@@ -76,16 +76,16 @@ int main()
     RigidBody2D* rigid1 = g1->addComponent<RigidBody2D>();
     BoxCollider2D* c1 = g1->addComponent<BoxCollider2D>(def1);
     g1->addComponent<Renderder>(new sf::RectangleShape({ def1.halfSize.x() * 2, def1.halfSize.y() * 2 }), def1.halfSize, sf::Color::Red);
-    g1->moveTo({ 418.0f, 450.0f });
-    g1->setRotation(1);
-    //rigid1->velocity({ -400,0 });
+    g1->moveTo({ 618.0f, 450.0f });
+    //g1->setRotation(1);
+    rigid1->velocity({ -400,0 });
     //rigid1->fixedRotation(true);
-    g4->moveTo({ 420.0f, 320.0f }); 
-    g5->moveTo({ 418.0f, 350.0f });
-    g6->moveTo({ 421.0f, 400.0f });
-    g7->moveTo({ 418.0f, 290.0f });
-    g8->moveTo({ 418.0f, 250.0f });
-    g9->moveTo({ 421.0f, 200.0f });
+    //g4->moveTo({ 420.0f, 320.0f }); 
+    //g5->moveTo({ 418.0f, 350.0f });
+    //g6->moveTo({ 421.0f, 400.0f });
+    //g7->moveTo({ 418.0f, 290.0f });
+    //g8->moveTo({ 418.0f, 250.0f });
+    //g9->moveTo({ 421.0f, 200.0f });
     //rigid6->velocity({ -50,0 });
     //g1->setRotation(1);
     //rigid1->velocity({ -100,0 });
@@ -112,7 +112,7 @@ int main()
         dt -= 0.02f;*/
         window.clear(sf::Color::Black);
         //dt = clock.restart().asSeconds();
-        World::step(0.00020f, 10);
+        World::step(0.00020f, 6);
         window.display();
 	}
 	return 0;
