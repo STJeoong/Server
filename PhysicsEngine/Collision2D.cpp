@@ -28,25 +28,8 @@ bool Collision2D::importNewContact(Contact2D* contact)
 {
 	for (Contact2D* c : _contacts)
 	{
-		bool closeEnoughA = (contact->contactA() - c->contactA()).squaredLen() <= Collision2D::PERSISTENT_THRESHOLD_SQUARED;
-		bool closeEnoughB = (contact->contactB() - c->contactB()).squaredLen() <= Collision2D::PERSISTENT_THRESHOLD_SQUARED;
 		bool farEnoughA = (contact->contactA() - c->contactA()).squaredLen() > Collision2D::PERSISTENT_THRESHOLD_SQUARED;
 		bool farEnoughB = (contact->contactB() - c->contactB()).squaredLen() > Collision2D::PERSISTENT_THRESHOLD_SQUARED;
-		//if (closeEnoughA && closeEnoughB) // TODO : ¸Â´ÂÁö
-		//{
-		//	c->_contactA = contact->contactA();
-		//	c->_contactB = contact->contactB();
-		//	c->_depth = contact->_depth;
-		//	c->_localContactA = contact->localContactA();
-		//	c->_localContactB = contact->localContactB();
-		//	c->_normal = contact->_normal;
-		//	c->_tangent = contact->_tangent;
-		//	c->_rA = contact->_rA;
-		//	c->_rB = contact->_rB;
-		//	c->_rotationA = contact->_rotationA;
-		//	c->_rotationB = contact->_rotationB;
-		//	return false;
-		//}
 		if (!farEnoughA || !farEnoughB)
 			return false;
 	}
@@ -67,11 +50,6 @@ bool Collision2D::isValid(Contact2D* contact)
 	bool closeEnoughB = (contact->contactB() - globalPointB).squaredLen() <= Collision2D::PERSISTENT_THRESHOLD_SQUARED;
 	if (!closeEnoughA || !closeEnoughB)
 		return false;
-	/*contact->_contactA = globalPointA;
-	contact->_contactB = globalPointB;
-	contact->_depth = Vector2D::dot(globalPointA - globalPointB, contact->normal());
-	contact->_rA = globalPointA - contact->colliderA()->position();
-	contact->_rB = globalPointB - contact->colliderB()->position();*/
 	return true;
 }
 void Collision2D::prune()
@@ -82,16 +60,14 @@ void Collision2D::prune()
 			deepest = _contacts[i];
 
 	Contact2D* furthestFromDeepest = _contacts[0];
+	float distanceSq = (furthestFromDeepest->contactA() - deepest->contactA()).squaredLen();
+	for (int i = 1; i < _contacts.size(); ++i)
 	{
-		float distanceSq = (furthestFromDeepest->contactA() - deepest->contactA()).squaredLen();
-		for (int i = 1; i < _contacts.size(); ++i)
+		float dist = (_contacts[i]->contactA() - deepest->contactA()).squaredLen();
+		if (dist > distanceSq)
 		{
-			float dist = (_contacts[i]->contactA() - deepest->contactA()).squaredLen();
-			if (dist > distanceSq)
-			{
-				distanceSq = dist;
-				furthestFromDeepest = _contacts[i];
-			}
+			distanceSq = dist;
+			furthestFromDeepest = _contacts[i];
 		}
 	}
 

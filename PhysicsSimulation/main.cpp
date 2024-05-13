@@ -76,7 +76,7 @@ int main()
     RigidBody2D* rigid1 = g1->addComponent<RigidBody2D>();
     BoxCollider2D* c1 = g1->addComponent<BoxCollider2D>(def1);
     g1->addComponent<Renderder>(new sf::RectangleShape({ def1.halfSize.x() * 2, def1.halfSize.y() * 2 }), def1.halfSize, sf::Color::Red);
-    g1->moveTo({ 618.0f, 450.0f });
+    g1->moveTo({ 418.0f, 450.0f });
     //g1->setRotation(1);
     rigid1->velocity({ -400,0 });
     //rigid1->fixedRotation(true);

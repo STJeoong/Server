@@ -120,7 +120,6 @@ void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 
 	if (!isVertexA && !isVertexB) // ∏È ¥Î ∏È ¡¢√À
 	{
-		_isEdgeA = _isEdgeB = true;
 		bool isParallelToY = false;
 		if (std::abs(A[0].x() - A[1].x()) < 10.0f * FLT_EPSILON) // y√‡ø° ∆Ú«‡«— ∏Èø° ¡¢√À
 		{
@@ -154,8 +153,6 @@ void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 	{
 		if (isVertexA) // A¥¬ ¡° ¡¢√À, B¥¬ ∏È ¡¢√À
 		{
-			_isEdgeA = false;
-			_isEdgeB = true;
 			_contactA = A[0];
 
 			// project A[0] to B's edge
@@ -171,8 +168,6 @@ void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 		}
 		else // A¥¬ ∏È ¡¢√À, B¥¬ ¡° ¡¢√À
 		{
-			_isEdgeA = true;
-			_isEdgeB = false;
 			_contactB = B[0];
 
 			// project B[0] to A's edge
