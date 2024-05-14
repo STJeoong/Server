@@ -15,6 +15,7 @@ class Collider2D : public Behaviour
 public:
 	virtual AABB computeAABB() = 0;
 	virtual Point2D computeSupportPoint(const Vector2D& vec) = 0;
+	float size() const { return _size; } // collider's size
 	const Point2D& offset() const { return _offset; } // local offset
 	float density() const { return _density; }
 	float friction() const { return _friction; }
@@ -35,6 +36,7 @@ public:
 	// compute world position from given local point
 	Point2D toWorld(const Point2D& p) const;
 	// TODO : offset, density, trigger 바뀌면 rigidbody에 이벤트 보내도록
+	// TODO : collider size가 바뀔 수도 있음.
 protected:
 	Collider2D() = default;
 	virtual ~Collider2D() = default;
@@ -56,6 +58,7 @@ protected:
 	float _mass = 0.0f; // you need to keep this value up to date. update this whenever related to mass is changed.
 	float _inertia = 0.0f; // you need to keep this value up to date. update this whenever related to inertia is changed.
 	bool _isTrigger = false;
+	float _size = 0.0f;
 	RigidBody2D* _attachedRigidBody = nullptr;
 	std::vector<Collision2D*> _collisions;
 

@@ -30,6 +30,19 @@ bool Collision2D::importNewContact(Contact2D* contact)
 	{
 		bool farEnoughA = (contact->contactA() - c->contactA()).squaredLen() > Collision2D::PERSISTENT_THRESHOLD_SQUARED;
 		bool farEnoughB = (contact->contactB() - c->contactB()).squaredLen() > Collision2D::PERSISTENT_THRESHOLD_SQUARED;
+		if (c->contactA() == contact->contactA() && c->contactB() == contact->contactB())
+		{
+			c->_contactA = contact->contactA();
+			c->_contactB = contact->contactB();
+			c->_depth = contact->_depth;
+			c->_localContactA = contact->localContactA();
+			c->_localContactB = contact->localContactB();
+			c->_normal = contact->_normal;
+			c->_tangent = contact->_tangent;
+			c->_rA = contact->_rA;
+			c->_rB = contact->_rB;
+			return false;
+		}
 		if (!farEnoughA || !farEnoughB)
 			return false;
 	}
@@ -50,6 +63,11 @@ bool Collision2D::isValid(Contact2D* contact)
 	bool closeEnoughB = (contact->contactB() - globalPointB).squaredLen() <= Collision2D::PERSISTENT_THRESHOLD_SQUARED;
 	if (!closeEnoughA || !closeEnoughB)
 		return false;
+	contact->_contactA = globalPointA;
+	contact->_contactB = globalPointB;
+	contact->_depth = Vector2D::dot(globalPointA - globalPointB, contact->normal());
+	contact->_rA = globalPointA - contact->colliderA()->position();
+	contact->_rB = globalPointB - contact->colliderB()->position();
 	return true;
 }
 void Collision2D::prune()

@@ -11,7 +11,7 @@ public:
 	float radius() const { return _radius; }
 	float& radius() { return _radius; }
 private:
-	CircleCollider() { this->compute(); }
+	CircleCollider() { _size = _radius; this->compute(); }
 	CircleCollider(const S_CircleDef& def);
 	~CircleCollider() = default;
 	virtual CircleCollider* clone() override;

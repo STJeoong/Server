@@ -53,6 +53,7 @@ BoxCollider2D::BoxCollider2D(const S_BoxDef& def)
 
 	if (_halfSize.x() < MIN_SIZE) _halfSize.x() = MIN_SIZE;
 	if (_halfSize.y() < MIN_SIZE) _halfSize.y() = MIN_SIZE;
+	_size = _halfSize.len();
 	this->compute();
 }
 void BoxCollider2D::compute()
