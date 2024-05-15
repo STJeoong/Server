@@ -33,7 +33,7 @@ Solver::Solver(const std::vector<Collision2D*>& collisions, float dt)
 		{
 			Contact2D& contact = *(contacts[j]);
 			this->computeBouncinessBias(contact, collision._bounciness, collision._bouncinessThreshold);
-			_biases[i][j] = contact._bouncinessBias + this->computePenetrationBias(contact, dt);
+			_biases[i][j] = 0.0f;// contact._bouncinessBias + this->computePenetrationBias(contact, dt);
 			_normalJacobians[i][j] = { -contact.normal().x(), -contact.normal().y(), -Vector2D::cross(contact._rA, contact.normal()),
 						contact.normal().x(), contact.normal().y(), Vector2D::cross(contact._rB, contact.normal()) };
 			_tangentJacobians[i][j] = { -contact.tangent().x(), -contact.tangent().y(), -Vector2D::cross(contact._rA, contact.tangent()),
@@ -82,9 +82,12 @@ void Solver::resolve(const std::vector<Collision2D*>& collisions)
 			Contact2D& contact = *(contacts[j]);
 			
 			float tLambda = this->computeLambda(contact, _tangentJacobians[i][j], _tangentEffMasses[i][j], 0);
-			if (std::abs(contact._tangentImpulse + tLambda) > collision._friction * contact._normalImpulse)
-				tLambda -= (std::abs(contact._tangentImpulse + tLambda) - (collision._friction * contact._normalImpulse)) * (tLambda > 0.0f ? 1.0f : -1.0f);
-			contact._tangentImpulse += tLambda;
+			/*if (std::abs(contact._tangentImpulse + tLambda) > collision._friction * contact._normalImpulse)
+				tLambda -= (std::abs(contact._tangentImpulse + tLambda) - (collision._friction * contact._normalImpulse)) * (tLambda > 0.0f ? 1.0f : -1.0f);*/
+			float oldTangentImpulse = contact._tangentImpulse;
+			float maxTangentImpulse = contact._normalImpulse * collision._friction;
+			contact._tangentImpulse = Utils::clamp(oldTangentImpulse + tLambda, maxTangentImpulse, -maxTangentImpulse);
+			tLambda = contact._tangentImpulse - oldTangentImpulse;
 			this->impulse(contact, _tangentJacobians[i][j], _masses[i], tLambda);
 
 			float nLambda = this->computeLambda(contact, _normalJacobians[i][j], _normalEffMasses[i][j], _biases[i][j]);

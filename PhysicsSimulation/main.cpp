@@ -76,26 +76,39 @@ int main()
     RigidBody2D* rigid1 = g1->addComponent<RigidBody2D>();
     BoxCollider2D* c1 = g1->addComponent<BoxCollider2D>(def1);
     g1->addComponent<Renderder>(new sf::RectangleShape({ def1.halfSize.x() * 2, def1.halfSize.y() * 2 }), def1.halfSize, sf::Color::Red);
-    g1->moveTo({ 418.0f, 450.0f });
+    //g1->moveTo({ 398.0f, 300.0f });
+    g1->moveTo({ 398.0f, 450.0f });
     //g1->setRotation(1);
-    rigid1->velocity({ -400,0 });
+    //rigid1->velocity({ -400,0 });
     //rigid1->fixedRotation(true);
-    //g4->moveTo({ 420.0f, 320.0f }); 
-    //g5->moveTo({ 418.0f, 350.0f });
-    //g6->moveTo({ 421.0f, 400.0f });
-    //g7->moveTo({ 418.0f, 290.0f });
-    //g8->moveTo({ 418.0f, 250.0f });
-    //g9->moveTo({ 421.0f, 200.0f });
+    /*g4->moveTo({ 401.0f, 250.0f });
+    g5->moveTo({ 400.0f, 290.0f });
+    g6->moveTo({ 399.0f, 295.0f });
+    g7->moveTo({ 400.0f, 285.0f });
+    g8->moveTo({ 400.5f, 275.0f });
+    g9->moveTo({ 400.0f, 270.0f });*/
+    g4->moveTo({ 649.5f, 480.0f });
+    g5->moveTo({ 402.0f, 200.0f });
+    g6->moveTo({ 399.0f, 350.0f });
+    g7->moveTo({ 401.0f, 400.0f });
+    g8->moveTo({ 398.5f, 250.0f });
+    g9->moveTo({ 397.0f, 300.0f });
     //rigid6->velocity({ -50,0 });
     //g1->setRotation(1);
     //rigid1->velocity({ -100,0 });
+    //g3->moveTo({ 400.0f, 320.0f });
     g3->moveTo({ 400.0f, 500.0f });
 
-    World::init({ 0.0f, 400.0f });
-	
+    World::init({ 0.0f, 1000.0f });
+
     sf::Clock clock;
     bool pause = false;
     float dt = 0.0f;
+    sf::View originalView = window.getDefaultView();
+    sf::View zoomedView = window.getDefaultView();
+    zoomedView.zoom(1.0f / 1.5f);
+    float zoomFactor = 2.0f;
+
 	while (window.isOpen())
 	{
 		sf::Event evt;
@@ -112,7 +125,8 @@ int main()
         dt -= 0.02f;*/
         window.clear(sf::Color::Black);
         //dt = clock.restart().asSeconds();
-        World::step(0.00020f, 6);
+        World::step(0.0002f, 100);
+        window.setView(zoomedView);
         window.display();
 	}
 	return 0;
