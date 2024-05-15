@@ -212,5 +212,5 @@ float Solver::computeLambda(const Contact2D& c, const std::vector<float>& jaco, 
 }
 #pragma endregion
 
-const float Solver::PENETRATION_SLOP = 0.01f;
+const float Solver::PENETRATION_SLOP = 0.02f;
 const float Solver::MAX_LINEAR_CORRECTION = 0.2f;
