@@ -15,6 +15,7 @@ int main()
 #pragma region instantiate
     S_BoxDef def3;
     def3.halfSize = { 250.0f, 10.0f };
+    def3.bouncinessThreshold = 50.0f;
     GameObject* g3 = World::instantiate(); // floor
     BoxCollider2D* c3 = g3->addComponent<BoxCollider2D>(def3);
     g3->addComponent<Renderder>(new sf::RectangleShape({ def3.halfSize.x() * 2, def3.halfSize.y() * 2 }), def3.halfSize, sf::Color::Yellow );
@@ -67,11 +68,18 @@ int main()
     BoxCollider2D* c9 = g9->addComponent<BoxCollider2D>(def9);
     g9->addComponent<Renderder>(new sf::RectangleShape({ def9.halfSize.x() * 2, def9.halfSize.y() * 2 }), def9.halfSize, sf::Color::White);
 
+    S_CircleDef def10;
+    def10.radius = 10.0f;
+    GameObject* g10 = World::instantiate();
+    RigidBody2D* rigid10 = g10->addComponent<RigidBody2D>();
+    CircleCollider* c10 = g10->addComponent<CircleCollider>(def10);
+    g10->addComponent<Renderder>(new sf::CircleShape(def10.radius), Vector2D{ def10.radius, def10.radius }, sf::Color::Red);
 #pragma endregion
 
     S_BoxDef def1;
     def1.halfSize = { 10.0f, 10.0f };
-    //def1.bounciness = 0.6f;
+    //def1.bounciness = 0.8f;
+    //def1.bouncinessThreshold = 50.0f;
     GameObject* g1 = World::instantiate();
     RigidBody2D* rigid1 = g1->addComponent<RigidBody2D>();
     BoxCollider2D* c1 = g1->addComponent<BoxCollider2D>(def1);
@@ -87,19 +95,21 @@ int main()
     g7->moveTo({ 400.0f, 285.0f });
     g8->moveTo({ 400.5f, 275.0f });
     g9->moveTo({ 400.0f, 270.0f });*/
-    g4->moveTo({ 649.5f, 480.0f });
+    g4->moveTo({ 400.0f, 100.0f });
+    g4->setRotation(1);
     g5->moveTo({ 402.0f, 200.0f });
     g6->moveTo({ 399.0f, 350.0f });
     g7->moveTo({ 401.0f, 400.0f });
     g8->moveTo({ 398.5f, 250.0f });
     g9->moveTo({ 397.0f, 300.0f });
+    g10->move({ 400.0f, 325.0f });
     //rigid6->velocity({ -50,0 });
     //g1->setRotation(1);
     //rigid1->velocity({ -100,0 });
     //g3->moveTo({ 400.0f, 320.0f });
     g3->moveTo({ 400.0f, 500.0f });
 
-    World::init({ 0.0f, 1000.0f });
+    World::init({ 0.0f, 200.0f });
 
     sf::Clock clock;
     bool pause = false;
@@ -120,12 +130,12 @@ int main()
                 pause = !pause;
 		}
         if (pause) continue;
-        /*dt += clock.restart().asSeconds();
+        dt += clock.restart().asSeconds();
         if (dt < 0.02f) continue;
-        dt -= 0.02f;*/
+        dt -= 0.02f;
         window.clear(sf::Color::Black);
         //dt = clock.restart().asSeconds();
-        World::step(0.0002f, 100);
+        World::step(0.02f);
         window.setView(zoomedView);
         window.display();
 	}

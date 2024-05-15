@@ -33,7 +33,7 @@ Solver::Solver(const std::vector<Collision2D*>& collisions, float dt)
 		{
 			Contact2D& contact = *(contacts[j]);
 			this->computeBouncinessBias(contact, collision._bounciness, collision._bouncinessThreshold);
-			_biases[i][j] = 0.0f;// contact._bouncinessBias + this->computePenetrationBias(contact, dt);
+			_biases[i][j] = contact._bouncinessBias + this->computePenetrationBias(contact, dt);
 			_normalJacobians[i][j] = { -contact.normal().x(), -contact.normal().y(), -Vector2D::cross(contact._rA, contact.normal()),
 						contact.normal().x(), contact.normal().y(), Vector2D::cross(contact._rB, contact.normal()) };
 			_tangentJacobians[i][j] = { -contact.tangent().x(), -contact.tangent().y(), -Vector2D::cross(contact._rA, contact.tangent()),
@@ -82,8 +82,6 @@ void Solver::resolve(const std::vector<Collision2D*>& collisions)
 			Contact2D& contact = *(contacts[j]);
 			
 			float tLambda = this->computeLambda(contact, _tangentJacobians[i][j], _tangentEffMasses[i][j], 0);
-			/*if (std::abs(contact._tangentImpulse + tLambda) > collision._friction * contact._normalImpulse)
-				tLambda -= (std::abs(contact._tangentImpulse + tLambda) - (collision._friction * contact._normalImpulse)) * (tLambda > 0.0f ? 1.0f : -1.0f);*/
 			float oldTangentImpulse = contact._tangentImpulse;
 			float maxTangentImpulse = contact._normalImpulse * collision._friction;
 			contact._tangentImpulse = Utils::clamp(oldTangentImpulse + tLambda, maxTangentImpulse, -maxTangentImpulse);
@@ -92,7 +90,7 @@ void Solver::resolve(const std::vector<Collision2D*>& collisions)
 
 			float nLambda = this->computeLambda(contact, _normalJacobians[i][j], _normalEffMasses[i][j], _biases[i][j]);
 			if (nLambda < 0.0f)
-				nLambda = std::min(std::abs(nLambda), contact._normalImpulse) * -1.0f;
+				nLambda = -std::min(std::abs(nLambda), contact._normalImpulse);
 			contact._normalImpulse += nLambda;
 			this->impulse(contact, _normalJacobians[i][j], _masses[i], nLambda);
 		}
@@ -155,8 +153,9 @@ float Solver::computePenetrationBias(const Contact2D& c, float dt)
 	Collider2D* colliderB = c.colliderB();
 	float slop = Solver::PENETRATION_SLOP * std::min(colliderA->size(), colliderB->size());
 	float maxCorrection = Solver::MAX_LINEAR_CORRECTION * std::min(colliderA->size(), colliderB->size());
+	return -std::max(BAUMGART * (depth - slop) / dt, 0.0f);
 	//return -Utils::clamp(BAUMGART * (depth - slop) / dt, maxCorrection, 0.0f);
-	return -Utils::clamp(BAUMGART * (depth - slop), Solver::MAX_LINEAR_CORRECTION, 0.0f);
+	//return -Utils::clamp(BAUMGART * (depth - slop), Solver::MAX_LINEAR_CORRECTION, 0.0f);
 }
 void Solver::computeBouncinessBias(Contact2D& contact, float bounciness, float bouncinessThreshold)
 {
