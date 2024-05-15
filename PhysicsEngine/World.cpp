@@ -54,6 +54,17 @@ void World::step(float dt, int iteration)
 	s_detector.update(s_broadPhase);
 
 	Solver solver(s_detector.collisions(), dt);
+	if (!s_detector.collisions().empty())
+	{
+		const std::vector<Collision2D*> collisions = s_detector.collisions();
+		auto it = std::find_if(collisions.begin(), collisions.end(), [](Collision2D* c)
+			{ return (c->colliderA()->gameObject()->name() == "g8" && c->colliderB()->gameObject()->name() == "g9") ||
+			(c->colliderA()->gameObject()->name() == "g9" && c->colliderB()->gameObject()->name() == "g8"); });
+		if (it != collisions.end())
+		{
+			int a = 1;
+		}
+	}
 	solver.integrateVelocity(s_rigids, s_gravity, dt);
 	for (int i = 0; i < iteration; ++i)
 		solver.resolve(s_detector.collisions());

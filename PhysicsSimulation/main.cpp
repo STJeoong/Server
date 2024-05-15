@@ -101,8 +101,11 @@ int main()
     g6->moveTo({ 399.0f, 350.0f });
     g7->moveTo({ 401.0f, 400.0f });
     g8->moveTo({ 398.5f, 250.0f });
+    g8->name() = "g8";
     g9->moveTo({ 397.0f, 300.0f });
+    g9->name() = "g9";
     g10->move({ 400.0f, 325.0f });
+    g10->name() = "circle";
     //rigid6->velocity({ -50,0 });
     //g1->setRotation(1);
     //rigid1->velocity({ -100,0 });
@@ -110,7 +113,7 @@ int main()
     g3->moveTo({ 400.0f, 500.0f });
 
     World::init({ 0.0f, 200.0f });
-
+	
     sf::Clock clock;
     bool pause = false;
     float dt = 0.0f;
