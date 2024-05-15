@@ -9,7 +9,8 @@ public:
 	virtual AABB computeAABB() override;
 	virtual Point2D computeSupportPoint(const Vector2D& vec) override;
 	float radius() const { return _radius; }
-	float& radius() { return _radius; }
+	// TODO : radius ¹Ù²î¸é massÁ¤º¸µµ ¹Ù²ñ
+	void radius(float r) { _radius = r; }
 private:
 	CircleCollider() { _size = _radius; this->compute(); }
 	CircleCollider(const S_CircleDef& def);

@@ -29,7 +29,7 @@ public:
 	void rotate(float radian);
 	void setRotation(float radian);
 	const std::string& name() const { return _name; }
-	std::string& name() { return _name; }
+	void name(const std::string& str) { _name = str; }
 	void isActive(bool flag);
 	bool isActive() const { return _isActive; }
 	E_Layer layer() const { return _layer; }

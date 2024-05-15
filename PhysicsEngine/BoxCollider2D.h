@@ -10,7 +10,8 @@ public:
 	virtual AABB computeAABB() override;
 	virtual Point2D computeSupportPoint(const Vector2D& vec) override;
 	const Vector2D& halfSize() const { return _halfSize; }
-	Vector2D& halfSize() { return _halfSize; }
+	// TODO : halfSize ¹Ù²î¸é massµµ ¹Ù²ñ.
+	void halfSize(const Vector2D& hs) { _halfSize = hs; }
 private:
 	// if you want to make BoxCollider's value default, use default constructor
 	// default halfSize is (0.5f, 0.5f)

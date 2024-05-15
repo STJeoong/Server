@@ -124,10 +124,20 @@ void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 		if (std::abs(A[0].x() - A[1].x()) < 10.0f * FLT_EPSILON) // y축에 평행한 면에 접촉
 		{
 			isParallelToY = true;
-			Utils::swap(A[0].x(), A[0].y());
-			Utils::swap(A[1].x(), A[1].y());
-			Utils::swap(B[0].x(), B[0].y());
-			Utils::swap(B[1].x(), B[1].y());
+			// swap
+			float tmp = A[0].x();
+			A[0].x(A[0].y());
+			A[0].y(tmp);
+			tmp = A[1].x();
+			A[1].x(A[1].y());
+			A[1].y(tmp);
+
+			tmp = B[0].x();
+			B[0].x(B[0].y());
+			B[0].y(tmp);
+			tmp = B[1].x();
+			B[1].x(B[1].y());
+			B[1].y(tmp);
 		}
 
 		// get x coordinate
@@ -136,23 +146,28 @@ void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 		float leftX = std::max(A[0].x(), B[0].x());
 		float rightX = std::min(A[1].x(), B[1].x());
 		float result = (leftX + rightX) * 0.5f; // 중간점 선택
-		_contactA.x() = result;
-		_contactB.x() = result;
+		_contactA.x(result);
+		_contactB.x(result);
 
 		// get each collider's y coordinate from x
 		if (std::abs(A[1].x() - A[0].x()) < 10 * FLT_EPSILON) // if colliderA is circle, it is possible
 			_contactA = A[0];
 		else
-			_contactA.y() = ((A[1].x() - result) / (A[1].x() - A[0].x())) * A[0].y() + ((result - A[0].x()) / (A[1].x() - A[0].x())) * A[1].y();
+			_contactA.y(((A[1].x() - result) / (A[1].x() - A[0].x())) * A[0].y() + ((result - A[0].x()) / (A[1].x() - A[0].x())) * A[1].y());
 		if (std::abs(B[1].x() - B[0].x()) < 10 * FLT_EPSILON)
 			_contactB = B[0];
 		else
-			_contactB.y() = ((B[1].x() - result) / (B[1].x() - B[0].x())) * B[0].y() + ((result - B[0].x()) / (B[1].x() - B[0].x())) * B[1].y();
+			_contactB.y(((B[1].x() - result) / (B[1].x() - B[0].x())) * B[0].y() + ((result - B[0].x()) / (B[1].x() - B[0].x())) * B[1].y());
 
 		if (isParallelToY)
 		{
-			Utils::swap(_contactA.x(), _contactA.y());
-			Utils::swap(_contactB.x(), _contactB.y());
+			float tmp = _contactA.x();
+			_contactA.x(_contactA.y());
+			_contactA.y(tmp);
+
+			tmp = _contactB.x();
+			_contactB.x(_contactB.y());
+			_contactB.y(tmp);
 		}
 	}
 	else // 면 대 점 접촉
@@ -169,8 +184,8 @@ void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 			float c = line.c();
 			float k = -1.0f * (a * A[0].x() + b * A[0].y() + c) / (a * a + b * b);
 
-			_contactB.x() = A[0].x() + a * k;
-			_contactB.y() = A[0].y() + b * k;
+			_contactB.x(A[0].x() + a * k);
+			_contactB.y(A[0].y() + b * k);
 		}
 		else // A는 면 접촉, B는 점 접촉
 		{
@@ -184,8 +199,8 @@ void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 			float c = line.c();
 			float k = -1.0f * (a * B[0].x() + b * B[0].y() + c) / (a * a + b * b);
 
-			_contactA.x() = B[0].x() + a * k;
-			_contactA.y() = B[0].y() + b * k;
+			_contactA.x(B[0].x() + a * k);
+			_contactA.y(B[0].y() + b * k);
 		}
 	}
 }

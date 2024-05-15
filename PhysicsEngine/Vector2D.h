@@ -29,8 +29,8 @@ public:
 	bool operator==(const Vector2D& obj) const;
 	float x() const { return _x; }
 	float y() const { return _y; }
-	float& x() { return _x; }
-	float& y() { return _y; }
+	void x(float val) { _x = val; }
+	void y(float val) { _y = val; }
 private:
 	float _x = 0.0f;
 	float _y = 0.0f;

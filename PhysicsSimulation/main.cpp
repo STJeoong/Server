@@ -69,12 +69,12 @@ int main()
     BoxCollider2D* c9 = g9->addComponent<BoxCollider2D>(def9);
     g9->addComponent<Renderder>(new sf::RectangleShape({ def9.halfSize.x() * 2, def9.halfSize.y() * 2 }), def9.halfSize, sf::Color::White);
 
-    /*S_CircleDef def10;
+    S_CircleDef def10;
     def10.radius = 1.0f;
     GameObject* g10 = World::instantiate();
     RigidBody2D* rigid10 = g10->addComponent<RigidBody2D>();
     CircleCollider* c10 = g10->addComponent<CircleCollider>(def10);
-    g10->addComponent<Renderder>(new sf::CircleShape(def10.radius), Vector2D{ def10.radius, def10.radius }, sf::Color::Red);*/
+    g10->addComponent<Renderder>(new sf::CircleShape(def10.radius), Vector2D{ def10.radius, def10.radius }, sf::Color::Red);
 #pragma endregion
 
     S_BoxDef def1;
@@ -104,7 +104,8 @@ int main()
     rigid6->angularVelocity(-1.1f);
     g7->moveTo({ 402.0f, 180.0f });
     g8->moveTo({ 415.0f, 260.0f });
-    //g9->moveTo({ 400.0f, 270.0f });
+    g9->moveTo({ 400.0f, 270.0f });
+    g10->moveTo({ 403.0f, 300.0f });
     /*g4->moveTo({ 400.0f, 100.0f });
     g5->moveTo({ 402.0f, 200.0f });
     g6->moveTo({ 399.0f, 350.0f });

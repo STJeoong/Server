@@ -16,8 +16,8 @@ public:
 	AABB operator-(const Vector2D& v) const;
 	const Point2D& mini() const;
 	const Point2D& maxi() const;
-	Point2D& mini();
-	Point2D& maxi();
+	void mini(const Point2D& p);
+	void maxi(const Point2D& p);
 private:
 	Point2D _min;
 	Point2D _max;

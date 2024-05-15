@@ -16,10 +16,10 @@ AABB BoxCollider2D::computeAABB()
 	Point2D maxi = _points[0];
 	for (int i = 1; i < 4; ++i)
 	{
-		mini.x() = std::min(mini.x(), _points[i].x());
-		mini.y() = std::min(mini.y(), _points[i].y());
-		maxi.x() = std::max(maxi.x(), _points[i].x());
-		maxi.y() = std::max(maxi.y(), _points[i].y());
+		mini.x(std::min(mini.x(), _points[i].x()));
+		mini.y(std::min(mini.y(), _points[i].y()));
+		maxi.x(std::max(maxi.x(), _points[i].x()));
+		maxi.y(std::max(maxi.y(), _points[i].y()));
 	}
 	return { mini, maxi };
 }
@@ -51,8 +51,8 @@ BoxCollider2D::BoxCollider2D(const S_BoxDef& def)
 	_isTrigger = def.isTrigger;
 	_offset = def.offset;
 
-	if (_halfSize.x() < MIN_SIZE) _halfSize.x() = MIN_SIZE;
-	if (_halfSize.y() < MIN_SIZE) _halfSize.y() = MIN_SIZE;
+	if (_halfSize.x() < MIN_SIZE) _halfSize.x(MIN_SIZE);
+	if (_halfSize.y() < MIN_SIZE) _halfSize.y(MIN_SIZE);
 	_size = _halfSize.len();
 	this->compute();
 }
