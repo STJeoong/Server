@@ -8,10 +8,10 @@
 #include "GameObject.h"
 
 #pragma region public
-Solver::Solver(const std::vector<Collision2D*>& collisions, float dt)
+Solver::Solver(const std::vector<Collision2D*>& collisions)
 {
 	this->warmStart(collisions);
-	_biases.resize(collisions.size());
+	_velocityBiases.resize(collisions.size());
 	_normalJacobians.resize(collisions.size());
 	_tangentJacobians.resize(collisions.size());
 	_masses.resize(collisions.size());
@@ -24,7 +24,7 @@ Solver::Solver(const std::vector<Collision2D*>& collisions, float dt)
 		const std::vector<Contact2D*>& contacts = collision.contacts();
 
 		this->getMassAndInertia(collision, std::get<0>(_masses[i]), std::get<1>(_masses[i]), std::get<2>(_masses[i]), std::get<3>(_masses[i]));
-		_biases[i].resize(contacts.size());
+		_velocityBiases[i].resize(contacts.size());
 		_normalJacobians[i].resize(contacts.size());
 		_tangentJacobians[i].resize(contacts.size());
 		_normalEffMasses[i].resize(contacts.size());
@@ -33,7 +33,7 @@ Solver::Solver(const std::vector<Collision2D*>& collisions, float dt)
 		{
 			Contact2D& contact = *(contacts[j]);
 			this->computeBouncinessBias(contact, collision._bounciness, collision._bouncinessThreshold);
-			_biases[i][j] = contact._bouncinessBias + this->computePenetrationBias(contact, dt);
+			_velocityBiases[i][j] = contact._bouncinessBias;
 			_normalJacobians[i][j] = { -contact.normal().x(), -contact.normal().y(), -Vector2D::cross(contact._rA, contact.normal()),
 						contact.normal().x(), contact.normal().y(), Vector2D::cross(contact._rB, contact.normal()) };
 			_tangentJacobians[i][j] = { -contact.tangent().x(), -contact.tangent().y(), -Vector2D::cross(contact._rA, contact.tangent()),
@@ -70,7 +70,7 @@ void Solver::integratePosition(const std::vector<RigidBody2D*>& rigids, float dt
 		obj->processTransform(motion);
 	}
 }
-void Solver::resolve(const std::vector<Collision2D*>& collisions)
+void Solver::solveVelocityConstraints(const std::vector<Collision2D*>& collisions)
 {
 	for (int i = 0; i < collisions.size(); ++i)
 	{
@@ -80,7 +80,7 @@ void Solver::resolve(const std::vector<Collision2D*>& collisions)
 		for (int j = 0; j < contacts.size(); ++j)
 		{
 			Contact2D& contact = *(contacts[j]);
-			
+
 			float tLambda = this->computeLambda(contact, _tangentJacobians[i][j], _tangentEffMasses[i][j], 0);
 			float oldTangentImpulse = contact._tangentImpulse;
 			float maxTangentImpulse = contact._normalImpulse * collision._friction;
@@ -88,7 +88,7 @@ void Solver::resolve(const std::vector<Collision2D*>& collisions)
 			tLambda = contact._tangentImpulse - oldTangentImpulse;
 			this->impulse(contact, _tangentJacobians[i][j], _masses[i], tLambda);
 
-			float nLambda = this->computeLambda(contact, _normalJacobians[i][j], _normalEffMasses[i][j], _biases[i][j]);
+			float nLambda = this->computeLambda(contact, _normalJacobians[i][j], _normalEffMasses[i][j], _velocityBiases[i][j]);
 			if (nLambda < 0.0f)
 				nLambda = -std::min(std::abs(nLambda), contact._normalImpulse);
 			contact._normalImpulse += nLambda;
@@ -96,10 +96,49 @@ void Solver::resolve(const std::vector<Collision2D*>& collisions)
 		}
 	}
 }
+void Solver::solvePositionConstraints(const std::vector<Collision2D*>& collisions)
+{
+	for (int i = 0; i < collisions.size(); ++i)
+	{
+		Collision2D& collision = *(collisions[i]);
+		if (collision._isTrigger) continue;
+		const std::vector<Contact2D*>& contacts = collision.contacts();
+		for (int j = 0; j < contacts.size(); ++j)
+		{
+			Contact2D& contact = *(contacts[j]);
+
+			Collider2D* colliderA = contact.colliderA();
+			Collider2D* colliderB = contact.colliderB();
+			Point2D globalPointA = colliderA->toWorld(contact.localContactA());
+			Point2D globalPointB = colliderB->toWorld(contact.localContactB());
+
+			float depth = Vector2D::dot(globalPointA - globalPointB, contact.normal());
+			float bias = this->computePenetrationBias(contact, depth);
+			float nLambda = this->computeLambda(contact, { 0.0f,0.0f,0.0f,0.0f,0.0f,0.0f, }, _normalEffMasses[i][j], bias);
+			
+			GameObject* objA = colliderA->gameObject();
+			GameObject* objB = colliderB->gameObject();
+			float invMassA = std::get<0>(_masses[i]), invMassB = std::get<1>(_masses[i]);
+			float invInertiaA = std::get<2>(_masses[i]), invInertiaB = std::get<3>(_masses[i]);
+			{
+				Vector2D dv = Vector2D{ invMassA * _normalJacobians[i][j][0] * nLambda, invMassA * _normalJacobians[i][j][1] * nLambda };
+				float dw = invInertiaA * _normalJacobians[i][j][2] * nLambda;
+				Motion motion = { dv, dw};
+				objA->processTransform(motion);
+			}
+			{
+				Vector2D dv = Vector2D{ invMassB * _normalJacobians[i][j][3] * nLambda, invMassB * _normalJacobians[i][j][4] * nLambda };
+				float dw = invInertiaB * _normalJacobians[i][j][5] * nLambda;
+				Motion motion = { dv, dw };
+				objB->processTransform(motion);
+			}
+		}
+	}
+}
 #pragma endregion
 
 #pragma region private
-void Solver::impulse(const Contact2D& c, const std::vector<float>& jaco, const std::tuple<float, float, float, float>& mass, float lambda)
+void Solver::impulse(const Contact2D& contact, const std::vector<float>& jaco, const std::tuple<float, float, float, float>& mass, float lambda)
 {
 	float invMassA = std::get<0>(mass), invMassB = std::get<1>(mass), invInertiaA = std::get<2>(mass), invInertiaB = std::get<3>(mass);
 	Vector2D dvA = Vector2D{ invMassA * jaco[0] * lambda, invMassA * jaco[1] * lambda };
@@ -107,8 +146,8 @@ void Solver::impulse(const Contact2D& c, const std::vector<float>& jaco, const s
 	Vector2D dvB = Vector2D{ invMassB * jaco[3] * lambda, invMassB * jaco[4] * lambda };
 	float dwB = invInertiaB * jaco[5] * lambda;
 
-	RigidBody2D* rigidA = c.colliderA()->attachedRigidBody();
-	RigidBody2D* rigidB = c.colliderB()->attachedRigidBody();
+	RigidBody2D* rigidA = contact.colliderA()->attachedRigidBody();
+	RigidBody2D* rigidB = contact.colliderB()->attachedRigidBody();
 	if (rigidA != nullptr)
 	{
 		rigidA->_velocity += dvA;
@@ -146,15 +185,13 @@ void Solver::warmStart(const std::vector<Collision2D*>& collisions)
 		}
 	}
 }
-float Solver::computePenetrationBias(const Contact2D& c, float dt)
+float Solver::computePenetrationBias(const Contact2D& contact, float depth)
 {
-	float depth = c.depth();
-	Collider2D* colliderA = c.colliderA();
-	Collider2D* colliderB = c.colliderB();
+	Collider2D* colliderA = contact.colliderA();
+	Collider2D* colliderB = contact.colliderB();
 	float slop = Solver::PENETRATION_SLOP * std::min(colliderA->size(), colliderB->size());
-	float maxCorrection = Solver::MAX_LINEAR_CORRECTION * std::min(colliderA->size(), colliderB->size());
-	return -std::max(BAUMGART * (depth - slop) / dt, 0.0f);
-	//return -Utils::clamp(BAUMGART * (depth - slop) / dt, maxCorrection, 0.0f);
+	return -std::max(BAUMGART * (depth - slop), 0.0f);
+	//return -Utils::clamp(BAUMGART * (depth - slop), maxCorrection, 0.0f);
 	//return -Utils::clamp(BAUMGART * (depth - slop), Solver::MAX_LINEAR_CORRECTION, 0.0f);
 }
 void Solver::computeBouncinessBias(Contact2D& contact, float bounciness, float bouncinessThreshold)
@@ -181,22 +218,22 @@ float Solver::computeEffectiveMass(const std::vector<float>& jaco, const std::tu
 		(jaco[3] * jaco[3] + jaco[4] * jaco[4]) * invMassB + (jaco[5] * jaco[5]) * invInertiaB;
 	return effMass > 0.0f ? 1.0f / effMass : 0.0f;
 }
-void Solver::getMassAndInertia(const Collision2D& c, float& invMassA, float& invMassB, float& invInertiaA, float& invInertiaB)
+void Solver::getMassAndInertia(const Collision2D& collision, float& invMassA, float& invMassB, float& invInertiaA, float& invInertiaB)
 {
-	RigidBody2D* rigidA = c.colliderA()->attachedRigidBody();
-	RigidBody2D* rigidB = c.colliderB()->attachedRigidBody();
+	RigidBody2D* rigidA = collision.colliderA()->attachedRigidBody();
+	RigidBody2D* rigidB = collision.colliderB()->attachedRigidBody();
 
 	invMassA = rigidA == nullptr ? 0.0f : rigidA->invMass();
 	invMassB = rigidB == nullptr ? 0.0f : rigidB->invMass();
 	invInertiaA = rigidA == nullptr ? 0.0f : rigidA->invInertia();
 	invInertiaB = rigidB == nullptr ? 0.0f : rigidB->invInertia();
 }
-float Solver::computeLambda(const Contact2D& c, const std::vector<float>& jaco, float effMass, float bias)
+float Solver::computeLambda(const Contact2D& contact, const std::vector<float>& jaco, float effMass, float bias)
 {
 	Vector2D vA, vB;
 	float wA = 0.0f, wB = 0.0f;
-	RigidBody2D* rigidA = c.colliderA()->attachedRigidBody();
-	RigidBody2D* rigidB = c.colliderB()->attachedRigidBody();
+	RigidBody2D* rigidA = contact.colliderA()->attachedRigidBody();
+	RigidBody2D* rigidB = contact.colliderB()->attachedRigidBody();
 
 	if (rigidA != nullptr)
 	{
@@ -212,5 +249,4 @@ float Solver::computeLambda(const Contact2D& c, const std::vector<float>& jaco, 
 }
 #pragma endregion
 
-const float Solver::PENETRATION_SLOP = 0.02f;
-const float Solver::MAX_LINEAR_CORRECTION = 0.2f;
+const float Solver::PENETRATION_SLOP = 0.01f;

@@ -23,7 +23,7 @@ public:
 	static void destroy(GameObject*& obj);
 
 	static void init(const Vector2D& g);
-	static void step(float dt, int iteration = 5);
+	static void step(float dt, int velocityIter = 5, int positionIter = 3);
 private:
 	static int add(Collider2D* collider);
 	static int add(RigidBody2D* rigid);

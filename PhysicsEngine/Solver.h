@@ -7,22 +7,22 @@ class Contact2D;
 class Solver
 {
 	static const float PENETRATION_SLOP;
-	static const float MAX_LINEAR_CORRECTION;
 public:
-	Solver(const std::vector<Collision2D*>& collisions, float dt);
+	Solver(const std::vector<Collision2D*>& collisions);
 	void integrateVelocity(const std::vector<RigidBody2D*>& rigids, const Vector2D& g, float dt);
 	void integratePosition(const std::vector<RigidBody2D*>& rigids, float dt);
-	void resolve(const std::vector<Collision2D*>& collisions);
+	void solveVelocityConstraints(const std::vector<Collision2D*>& collisions);
+	void solvePositionConstraints(const std::vector<Collision2D*>& collisions);
 private:
 	void impulse(const Contact2D& contact, const std::vector<float>& jaco, const std::tuple<float, float, float, float>& mass, float lambda);
 	void warmStart(const std::vector<Collision2D*>& collisions);
-	float computePenetrationBias(const Contact2D& contact, float dt);
+	float computePenetrationBias(const Contact2D& contact, float depth);
 	void computeBouncinessBias(Contact2D& contact, float bounciness, float bouncinessThreshold);
 	float computeEffectiveMass(const std::vector<float>& jaco, const std::tuple<float, float, float, float>& mass);
-	void getMassAndInertia(const Collision2D& c, float& invMassA, float& invMassB, float& invInertiaA, float& invInertiaB);
-	float computeLambda(const Contact2D& c, const std::vector<float>& jaco, float effMass, float bias);
+	void getMassAndInertia(const Collision2D& collision, float& invMassA, float& invMassB, float& invInertiaA, float& invInertiaB);
+	float computeLambda(const Contact2D& contact, const std::vector<float>& jaco, float effMass, float bias);
 
-	std::vector<std::vector<float>> _biases;
+	std::vector<std::vector<float>> _velocityBiases;
 	std::vector<std::vector<float>> _normalEffMasses;
 	std::vector<std::vector<float>> _tangentEffMasses;
 	std::vector<std::vector<std::vector<float>>> _normalJacobians;

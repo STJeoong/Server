@@ -188,7 +188,7 @@ void CollisionDetector::epa(Collision2D* collision)
 	newContact->_colliderB = colliderB;
 	newContact->_normal = polytope.normal().normalized();
 	newContact->_tangent = Vector2D::cross(newContact->_normal, 1.0f);
-	newContact->_depth = polytope.depth(); // TODO : 왜 아래 tmp 값이랑 다르지? float 연산이라 그런듯
+	newContact->_depth = polytope.depth();
 
 	collision->validateOldContacts();
 	if (!collision->importNewContact(newContact))
