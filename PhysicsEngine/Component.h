@@ -34,7 +34,7 @@ protected:
 	virtual void onEnableComponent(Component* component) {}
 	virtual void onDisableComponent(Component* component) {}
 	virtual void onApplyReservation() {}
-	virtual void onMove() {}
+	virtual void onMove() {} // when gameObject is moved without physics simulation using transform() function, this function is called.
 private:
 	virtual Component* clone() = 0;
 	void setGameObject(GameObject* obj) { _gameObject = obj; }

@@ -3,7 +3,7 @@
 
 struct S_RigidDef
 {
-	E_BodyType type = E_BodyType::STATIC;
+	E_BodyType type = E_BodyType::DYNAMIC;
 	float gravityScale = 1.0f;
 	bool awake = true;
 	bool fixedRotation = false;

@@ -8,6 +8,7 @@
 #define PI 3.14159265359f
 sf::RenderWindow window(sf::VideoMode(800, 600), "2D Physics Engine");
 #include "Renderer.h"
+
 int main()
 {
     std::ios_base::sync_with_stdio(false); std::cin.tie(0); std::cout.tie(0);
@@ -94,11 +95,15 @@ int main()
     g6->moveTo({ 399.0f, 295.0f });
     g7->moveTo({ 400.0f, 285.0f });
     g8->moveTo({ 400.5f, 275.0f });*/
-    g4->moveTo({ 410.0f, 315.0f });
-    g5->moveTo({ 400.0f, 315.0f });
-    g6->moveTo({ 405.0f, 315.0f });
-    g7->moveTo({ 402.0f, 315.0f });
-    g8->moveTo({ 415.0f, 315.0f });
+    g4->moveTo({ 410.0f, 200.0f });
+    g4->setRotation(0.5f);
+    rigid4->velocity({ 0, 100 });
+    g5->moveTo({ 400.0f, 250.0f });
+    rigid5->angularVelocity(1.1f);
+    g6->moveTo({ 405.0f, 230.0f });
+    rigid6->angularVelocity(-1.1f);
+    g7->moveTo({ 402.0f, 180.0f });
+    g8->moveTo({ 415.0f, 260.0f });
     //g9->moveTo({ 400.0f, 270.0f });
     /*g4->moveTo({ 400.0f, 100.0f });
     g5->moveTo({ 402.0f, 200.0f });
@@ -113,7 +118,7 @@ int main()
     //rigid6->velocity({ -50,0 });
     //g1->setRotation(1);
     //rigid1->velocity({ -100,0 });
-    g3->moveTo({ 400.0f, 320.0f });
+    g3->moveTo({ 400.0f, 330.0f });
     //g3->moveTo({ 400.0f, 500.0f });
 
     World::init({ 0.0f, 10.0f });
@@ -123,7 +128,7 @@ int main()
     float dt = 0.0f;
     sf::View originalView = window.getDefaultView();
     sf::View zoomedView = window.getDefaultView();
-    zoomedView.zoom(1.0f / 16.0f);
+    zoomedView.zoom(1.0f / 12.0f);
     float zoomFactor = 2.0f;
 
 	while (window.isOpen())
@@ -138,11 +143,11 @@ int main()
 		}
         if (pause) continue;
         dt += clock.restart().asSeconds();
-        if (dt < 0.01f) continue;
-        dt -= 0.01f;
+        if (dt < 0.02f) continue;
+        dt -= 0.02f;
         window.clear(sf::Color::Black);
         //dt = clock.restart().asSeconds();
-        World::step(0.01f, 5, 3);
+        World::step(0.02f, 5, 3);
         window.setView(zoomedView);
         window.display();
 	}
