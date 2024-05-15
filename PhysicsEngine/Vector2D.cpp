@@ -7,6 +7,7 @@ float Vector2D::dot(const Vector2D& a, const Vector2D& b) { return a._x * b._x +
 float Vector2D::cross(const Vector2D& a, const Vector2D& b) { return a._x * b._y - a._y * b._x; }
 Vector2D Vector2D::cross(const Vector2D& v, float z) { return { v._y * z, v._x * z * -1 }; }
 Vector2D Vector2D::cross(float z, const Vector2D& v) { return { v._y * z * -1, v._x * z }; }
+Vector2D operator*(float val, const Vector2D& v) { return v * val; }
 
 Vector2D::Vector2D(float x, float y) { _x = x; _y = y; }
 float Vector2D::len() const { return std::sqrtf(_x * _x + _y * _y); }

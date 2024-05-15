@@ -36,4 +36,5 @@ private:
 	float _y = 0.0f;
 };
 
+Vector2D operator*(float val, const Vector2D& v);
 using Point2D = Vector2D;

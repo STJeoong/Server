@@ -76,7 +76,6 @@ int main()
     CircleCollider* c10 = g10->addComponent<CircleCollider>(def10);
     g10->addComponent<Renderder>(new sf::CircleShape(def10.radius), Vector2D{ def10.radius, def10.radius }, sf::Color::Red);
 #pragma endregion
-
     S_BoxDef def1;
     def1.halfSize = { 1.0f, 1.0f };
     //def1.bounciness = 0.8f;

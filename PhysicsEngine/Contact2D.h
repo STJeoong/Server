@@ -4,7 +4,6 @@
 class Collider2D;
 class Contact2D
 {
-	friend class Collision2D;
 	friend class CollisionDetector;
 	friend class Solver;
 	friend class World;
