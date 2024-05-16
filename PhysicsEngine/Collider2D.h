@@ -11,10 +11,9 @@ class Collider2D : public Behaviour
 {
 	friend class RigidBody2D;
 	friend class CollisionDetector;
+	friend class Polytope;
 	friend class World;
 public:
-	virtual AABB computeAABB() = 0;
-	virtual Point2D computeSupportPoint(const Vector2D& vec) = 0;
 	float size() const { return _size; } // collider's size
 	const Point2D& offset() const { return _offset; } // local offset
 	float density() const { return _density; }
@@ -65,6 +64,8 @@ protected:
 	// reservation ( executed next time step )
 	bool _needToToggleTriggerState = false; // have you reserved modification of trigger state?
 private:
+	virtual AABB computeAABB() = 0;
+	virtual Point2D computeSupportPoint(const Vector2D& vec) = 0;
 	void addToWorld();
 	void removeFromWorld();
 	void attachTo(RigidBody2D* rigid) { _attachedRigidBody = rigid; }

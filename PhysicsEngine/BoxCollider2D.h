@@ -5,10 +5,9 @@
 #include "S_BoxDef.h"
 class BoxCollider2D : public Collider2D
 {
+	friend class Polytope;
 	friend class GameObject;
 public:
-	virtual AABB computeAABB() override;
-	virtual Point2D computeSupportPoint(const Vector2D& vec) override;
 	const Vector2D& halfSize() const { return _halfSize; }
 	// TODO : halfSize ¹Ù²î¸é massµµ ¹Ù²ñ.
 	void halfSize(const Vector2D& hs) { _halfSize = hs; }
@@ -19,6 +18,8 @@ private:
 	BoxCollider2D(const S_BoxDef& def);
 	~BoxCollider2D() = default;
 	virtual BoxCollider2D* clone() override;
+	virtual AABB computeAABB() override;
+	virtual Point2D computeSupportPoint(const Vector2D& vec) override;
 	void compute(); // compute mass and inerita. call this when definition of collider is changed.
 	void computePoints();
 

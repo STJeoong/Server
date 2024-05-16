@@ -4,10 +4,9 @@
 #include "S_CircleDef.h"
 class CircleCollider : public Collider2D
 {
+	friend class Polytope;
 	friend class GameObject;
 public:
-	virtual AABB computeAABB() override;
-	virtual Point2D computeSupportPoint(const Vector2D& vec) override;
 	float radius() const { return _radius; }
 	// TODO : radius πŸ≤Ó∏È mass¡§∫∏µµ πŸ≤Ò
 	void radius(float r) { _radius = r; }
@@ -16,6 +15,8 @@ private:
 	CircleCollider(const S_CircleDef& def);
 	~CircleCollider() = default;
 	virtual CircleCollider* clone() override;
+	virtual AABB computeAABB() override;
+	virtual Point2D computeSupportPoint(const Vector2D& vec) override;
 	void compute(); // compute mass and inerita. call this when definition of collider is changed.
 
 

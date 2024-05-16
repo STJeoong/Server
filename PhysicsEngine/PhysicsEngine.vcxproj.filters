@@ -12,12 +12,6 @@
     <Filter Include="소스 파일\Utils">
       <UniqueIdentifier>{5d6c359c-01d9-497f-ba48-439a5809bde3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Dynamics">
-      <UniqueIdentifier>{3e8438f7-424c-4502-87ac-366dc7e2a6bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Dynamics\World">
-      <UniqueIdentifier>{7a4579fe-519a-4aa2-8884-f29dd8d007d7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Joint">
       <UniqueIdentifier>{5c6a6937-a3f0-4f2f-851b-72c0174a538b}</UniqueIdentifier>
     </Filter>
@@ -30,14 +24,20 @@
     <Filter Include="소스 파일\Body\RigidyBody">
       <UniqueIdentifier>{e9220302-2c93-4eef-8f61-b3645e5b99e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\GameObject">
+      <UniqueIdentifier>{358bcf2d-cf93-4369-96e1-84d9a97f026d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Dynamics">
+      <UniqueIdentifier>{3e8438f7-424c-4502-87ac-366dc7e2a6bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Dynamics\World">
+      <UniqueIdentifier>{7a4579fe-519a-4aa2-8884-f29dd8d007d7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="소스 파일\Dynamics\CollisionDectection">
       <UniqueIdentifier>{cd78b1b9-7042-44cc-87d1-dd0e7fb1f40f}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Dynamics\Resolution">
       <UniqueIdentifier>{9f13d13b-fb20-4c0b-a985-0dc669bd9479}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\GameObject">
-      <UniqueIdentifier>{358bcf2d-cf93-4369-96e1-84d9a97f026d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
