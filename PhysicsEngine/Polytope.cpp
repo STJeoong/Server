@@ -46,6 +46,7 @@ void Polytope::setMinimumPoints(const Collision2D& collision)
 			}
 			_points.push_back(newPoint);
 			_sources.push_back({ pointFromA, pointFromB });
+			break;
 		}
 	}
 }
