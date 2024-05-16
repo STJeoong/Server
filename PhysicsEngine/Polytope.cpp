@@ -15,6 +15,7 @@ Polytope::Polytope(const Collision2D& collision, const std::vector<Point2D>& poi
 #pragma endregion
 
 #pragma region private
+// 0-simplex가 원점이거나, 1-simplex가 원점을 지나는 선일 때
 void Polytope::setMinimumPoints(const Collision2D& collision)
 {
 	Collider2D* colliderA = collision.colliderA();
@@ -35,12 +36,16 @@ void Polytope::setMinimumPoints(const Collision2D& collision)
 					valid = false;
 					break;
 				}
-			if (valid)
+			if (!valid)
+				continue;
+			if (_points.size() == 2)
 			{
-				_points.push_back(newPoint);
-				_sources.push_back({ pointFromA, pointFromB });
-				break;
+				Line line(_points[0], _points[1]);
+				if (line.isPointOnTheLine(newPoint))
+					continue;
 			}
+			_points.push_back(newPoint);
+			_sources.push_back({ pointFromA, pointFromB });
 		}
 	}
 }
@@ -86,7 +91,8 @@ void Polytope::expand(const Collision2D& collision)
 		Point2D pointFromA = colliderA->computeSupportPoint(supportVec);
 		Point2D pointFromB = colliderB->computeSupportPoint(supportVec * -1);
 		Point2D minkowskiPoint = pointFromA - pointFromB;
-		if (A == minkowskiPoint || B == minkowskiPoint || i == Polytope::MAX_ITERATION)
+		Line line(A, B);
+		if (A == minkowskiPoint || B == minkowskiPoint || line.isPointOnTheLine(minkowskiPoint) || i == Polytope::MAX_ITERATION)
 		{
 			_normal = supportVec;
 			_depth = std::sqrtf(distance);

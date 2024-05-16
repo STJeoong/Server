@@ -8,6 +8,7 @@ public:
 	Line(const Point2D& a, const Point2D& b);
 	float distanceFrom(const Point2D& p) const;
 	float squaredDistanceFrom(const Point2D& p) const;
+	bool isPointOnTheLine(const Point2D& p) const; // 점이 선 위에 있는지
 	bool isPoint() const { return _isPoint; }
 	float a() const { return _a; }
 	float b() const { return _b; }	

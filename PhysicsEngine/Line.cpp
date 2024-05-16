@@ -19,6 +19,10 @@ float Line::squaredDistanceFrom(const Point2D& p) const
 	if (_isPoint) return (p - _pass).squaredLen();
 	return ((_a * p.x() + _b * p.y() + _c) * (_a * p.x() + _b * p.y() + _c)) / (_a * _a + _b * _b);
 }
+bool Line::isPointOnTheLine(const Point2D& p) const
+{
+	return std::abs(_a * p.x() + _b * p.y() + _c) < FLT_EPSILON;
+}
 #pragma endregion
 
 #pragma region private
