@@ -4,6 +4,7 @@
 #include "Collision2D.h"
 #include "BroadPhase.h"
 #include "CollisionDetector.h"
+#include "Solver.h"
 
 // 일단은 월드는 한개만 존재할 수 있음.
 // simulate physics
@@ -45,6 +46,7 @@ private:
 	static BroadPhase s_broadPhase;
 	static std::vector<RigidBody2D*> s_rigids;
 	static CollisionDetector s_detector;
+	static Solver s_solver;
 	static std::queue<int> s_removals;
 	static std::vector<Collision2D*> s_exits;
 };

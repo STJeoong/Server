@@ -9,7 +9,7 @@
 
 #include "AABB.h"
 #pragma region public
-Solver::Solver(const std::vector<Collision2D*>& collisions)
+void Solver::init(const std::vector<Collision2D*>& collisions)
 {
 	this->warmStart(collisions);
 	_velocityBiases.resize(collisions.size());

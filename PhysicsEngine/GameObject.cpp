@@ -19,8 +19,8 @@ void GameObject::setParent(GameObject& obj)
 		_parent->removeChild(this);
 	_parent = &obj;
 	obj._children.push_back(this);
-	_localTF.position() = _worldTF.position() - obj._worldTF.position();
-	_localTF.rotation() = _worldTF.rotation() * obj._worldTF.rotation().transpose();
+	_localTF.position(_worldTF.position() - obj._worldTF.position());
+	_localTF.rotation(_worldTF.rotation() * obj._worldTF.rotation().transpose());
 }
 void GameObject::setChild(GameObject& obj)
 {
@@ -28,14 +28,14 @@ void GameObject::setChild(GameObject& obj)
 	if (obj._parent != nullptr)
 		obj._parent->removeChild(&obj);
 	obj._parent = this;
-	obj._localTF.position() = obj._worldTF.position() - _worldTF.position();
-	obj._localTF.rotation() = obj._worldTF.rotation() * _worldTF.rotation().transpose();
+	obj._localTF.position(obj._worldTF.position() - _worldTF.position());
+	obj._localTF.rotation(obj._worldTF.rotation() * _worldTF.rotation().transpose());
 }
 void GameObject::transform(const Motion& motionInWorld) { if (!_isActive) return; _arrivalTF += motionInWorld; _needToModifyTF = true; }
 void GameObject::move(const Vector2D& displacement) { if (!_isActive) return; _arrivalTF.move(displacement); _needToModifyTF = true; }
-void GameObject::moveTo(const Point2D& p) { if (!_isActive) return; _arrivalTF.position() = p; _needToModifyTF = true; }
+void GameObject::moveTo(const Point2D& p) { if (!_isActive) return; _arrivalTF.position(p); _needToModifyTF = true; }
 void GameObject::rotate(float radian) { if (!_isActive) return; _arrivalTF.rotate(radian); _needToModifyTF = true; }
-void GameObject::setRotation(float radian) { if (!_isActive) return; _arrivalTF.rotation() = Matrix22(radian); _needToModifyTF = true; }
+void GameObject::setRotation(float radian) { if (!_isActive) return; _arrivalTF.rotation(Matrix22(radian)); _needToModifyTF = true; }
 void GameObject::isActive(bool flag)
 {
 	if (_isActive == flag) return;
@@ -134,8 +134,8 @@ void GameObject::processTransform(const Motion& motionInWorld)
 		GameObject& obj = *(stk.top());
 		GameObject& parent = *(obj._parent);
 		stk.pop();
-		obj._worldTF.position() = parent._worldTF.position() + parent._worldTF.rotation() * obj._localTF.position();
-		obj._worldTF.rotation() = parent._worldTF.rotation() * obj._localTF.rotation();
+		obj._worldTF.position(parent._worldTF.position() + parent._worldTF.rotation() * obj._localTF.position());
+		obj._worldTF.rotation(parent._worldTF.rotation() * obj._localTF.rotation());
 		for (int i = 0; i < obj._children.size(); ++i) stk.push(obj._children[i]);
 	}
 }

@@ -8,7 +8,7 @@ class Solver
 {
 	static const float PENETRATION_SLOP;
 public:
-	Solver(const std::vector<Collision2D*>& collisions);
+	void init(const std::vector<Collision2D*>& collisions);
 	void integrateVelocity(const std::vector<RigidBody2D*>& rigids, const Vector2D& g, float dt);
 	void integratePosition(const std::vector<RigidBody2D*>& rigids, float dt);
 	void solveVelocityConstraints(const std::vector<Collision2D*>& collisions);

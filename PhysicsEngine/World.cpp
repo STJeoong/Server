@@ -55,13 +55,13 @@ void World::step(float dt, int velocityIter, int positionIter)
 	s_broadPhase.update();
 	s_detector.update(s_broadPhase);
 
-	Solver solver(s_detector.collisions());
-	solver.integrateVelocity(s_rigids, s_gravity, dt);
+	s_solver.init(s_detector.collisions());
+	s_solver.integrateVelocity(s_rigids, s_gravity, dt);
 	for (int i = 0; i < velocityIter; ++i)
-		solver.solveVelocityConstraints(s_detector.collisions());
-	solver.integratePosition(s_rigids, dt);
+		s_solver.solveVelocityConstraints(s_detector.collisions());
+	s_solver.integratePosition(s_rigids, dt);
 	for (int i = 0; i < positionIter; ++i)
-		solver.solvePositionConstraints(s_detector.collisions());
+		s_solver.solvePositionConstraints(s_detector.collisions());
 
 	for (RigidBody2D* rigid : s_rigids)
 		rigid->sync();
@@ -195,5 +195,6 @@ Vector2D World::s_gravity;
 BroadPhase World::s_broadPhase;
 std::vector<RigidBody2D*> World::s_rigids;
 CollisionDetector World::s_detector;
+Solver World::s_solver;
 std::queue<int> World::s_removals;
 std::vector<Collision2D*> World::s_exits;

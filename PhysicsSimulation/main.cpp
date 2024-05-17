@@ -351,7 +351,7 @@ int main()
         dt -= 0.017f;
         window.clear(sf::Color::Black);
         //dt = clock.restart().asSeconds();
-        World::step(0.017f, 30,8);
+        World::step(0.017f, 30,30);
         window.setView(zoomedView);
         window.display();
         //std::this_thread::sleep_for(std::chrono::milliseconds(10));
