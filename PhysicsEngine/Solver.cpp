@@ -7,6 +7,7 @@
 #include "Contact2D.h"
 #include "GameObject.h"
 
+#include "AABB.h"
 #pragma region public
 Solver::Solver(const std::vector<Collision2D*>& collisions)
 {
@@ -111,19 +112,44 @@ void Solver::solvePositionConstraints(const std::vector<Collision2D*>& collision
 			Collider2D* colliderB = contact.colliderB();
 			Point2D globalPointA = colliderA->toWorld(contact.localContactA());
 			Point2D globalPointB = colliderB->toWorld(contact.localContactB());
-
+			Vector2D rA = globalPointA - colliderA->position();
+			Vector2D rB = globalPointB - colliderB->position();
+			/*Vector2D normal;
+			if (contact._isEdgeA)
+				normal = Matrix22(colliderA->gameObject()->transform().rotation().radian() - contact._rotationA) * contact.normal();
+			else if (contact._isEdgeB)
+				normal = Matrix22(colliderB->gameObject()->transform().rotation().radian() - contact._rotationB) * contact.normal();
+			std::vector<float> jacobian = { -normal.x(), -normal.y(), -Vector2D::cross(rA, normal),
+						normal.x(), normal.y(), Vector2D::cross(rB, normal) };*/
+			std::vector<float> jacobian = { -contact.normal().x(), -contact.normal().y(), -Vector2D::cross(rA, contact.normal()),
+						contact.normal().x(), contact.normal().y(), Vector2D::cross(rB, contact.normal()) };
+			float effMass = this->computeEffectiveMass(jacobian, _masses[i]);
 			float depth = Vector2D::dot(globalPointA - globalPointB, contact.normal());
 			float bias = this->computePenetrationBias(contact, depth);
-			float nLambda = this->computeLambda(contact, { 0.0f,0.0f,0.0f,0.0f,0.0f,0.0f, }, _normalEffMasses[i][j], bias);
+			float nLambda = -bias * effMass;
 			
 			GameObject* objA = colliderA->gameObject();
 			GameObject* objB = colliderB->gameObject();
 			float invMassA = std::get<0>(_masses[i]), invMassB = std::get<1>(_masses[i]);
 			float invInertiaA = std::get<2>(_masses[i]), invInertiaB = std::get<3>(_masses[i]);
+
 			{
+				Vector2D dv = Vector2D{ invMassA * jacobian[0] * nLambda, invMassA * jacobian[1] * nLambda };
+				float dw = invInertiaA * jacobian[2] * nLambda;
+				Motion motion = { dv, dw };
+				objA->processTransform(motion);
+			}
+			{
+				Vector2D dv = Vector2D{ invMassB * jacobian[3] * nLambda, invMassB * jacobian[4] * nLambda };
+				float dw = invInertiaB * jacobian[5] * nLambda;
+				Motion motion = { dv, dw };
+				objB->processTransform(motion);
+			}
+
+			/*{
 				Vector2D dv = Vector2D{ invMassA * _normalJacobians[i][j][0] * nLambda, invMassA * _normalJacobians[i][j][1] * nLambda };
 				float dw = invInertiaA * _normalJacobians[i][j][2] * nLambda;
-				Motion motion = { dv, dw};
+				Motion motion = { dv, dw };
 				objA->processTransform(motion);
 			}
 			{
@@ -131,7 +157,7 @@ void Solver::solvePositionConstraints(const std::vector<Collision2D*>& collision
 				float dw = invInertiaB * _normalJacobians[i][j][5] * nLambda;
 				Motion motion = { dv, dw };
 				objB->processTransform(motion);
-			}
+			}*/
 		}
 	}
 }
@@ -190,7 +216,7 @@ float Solver::computePenetrationBias(const Contact2D& contact, float depth)
 	Collider2D* colliderA = contact.colliderA();
 	Collider2D* colliderB = contact.colliderB();
 	float slop = Solver::PENETRATION_SLOP * std::min(colliderA->size(), colliderB->size());
-	return -std::max(BAUMGART * (depth - slop), 0.0f);
+	return -std::max(BAUMGART * (depth - Solver::PENETRATION_SLOP), 0.0f);
 	//return -Utils::clamp(BAUMGART * (depth - slop), maxCorrection, 0.0f);
 	//return -Utils::clamp(BAUMGART * (depth - slop), Solver::MAX_LINEAR_CORRECTION, 0.0f);
 }

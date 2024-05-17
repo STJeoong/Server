@@ -46,10 +46,15 @@ bool Collision2D::isValid(Contact2D* contact)
 	float depth = Vector2D::dot(globalPointA - globalPointB, contact->normal());
 	if (depth <= 0.0f)
 		return false;
-	bool closeEnoughA = (contact->contactA() - globalPointA).squaredLen() <= Collision2D::PERSISTENT_THRESHOLD_SQUARED;
+	/*bool closeEnoughA = (contact->contactA() - globalPointA).squaredLen() <= Collision2D::PERSISTENT_THRESHOLD_SQUARED;
 	bool closeEnoughB = (contact->contactB() - globalPointB).squaredLen() <= Collision2D::PERSISTENT_THRESHOLD_SQUARED;
 	if (!closeEnoughA || !closeEnoughB)
-		return false;
+		return false;*/
+	contact->_depth = depth;
+	contact->_contactA = globalPointA;
+	contact->_contactB = globalPointB;
+	contact->_rA = globalPointA - contact->colliderA()->position();
+	contact->_rB = globalPointB - contact->colliderB()->position();
 	return true;
 }
 void Collision2D::prune()

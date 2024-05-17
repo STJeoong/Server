@@ -8,6 +8,8 @@
 #include "Contact2D.h"
 #include <ObjectPool.h>
 
+#include <SFML/Graphics.hpp>
+extern sf::RenderWindow window;
 #pragma region public
 GameObject* World::find(const std::string& name)
 {

@@ -189,6 +189,10 @@ void CollisionDetector::epa(Collision2D* collision)
 	newContact->_normal = polytope.normal().normalized();
 	newContact->_tangent = Vector2D::cross(newContact->_normal, 1.0f);
 	newContact->_depth = polytope.depth();
+	newContact->_isEdgeA = polytope.isEdgeA();
+	newContact->_isEdgeB = polytope.isEdgeB();
+	newContact->_rotationA = colliderA->gameObject()->transform().rotation().radian();
+	newContact->_rotationB = colliderB->gameObject()->transform().rotation().radian();
 
 	collision->validateOldContacts();
 	if (!collision->importNewContact(newContact))

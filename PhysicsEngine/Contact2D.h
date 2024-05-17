@@ -7,6 +7,9 @@ class Contact2D
 	friend class CollisionDetector;
 	friend class Solver;
 	friend class World;
+
+	// test
+	friend class Collision2D;
 public:
 	const Point2D& contactA() const { return _contactA; }
 	const Point2D& contactB() const { return _contactB; }
@@ -35,6 +38,11 @@ private:
 	float _normalImpulse = 0.0f;
 	float _tangentImpulse = 0.0f;
 	float _depth = 0.0f;
+
+	bool _isEdgeA;
+	bool _isEdgeB;
+	float _rotationA = 0.0f;
+	float _rotationB = 0.0f;
 	
 	float _bouncinessBias = 0.0f;
 };
