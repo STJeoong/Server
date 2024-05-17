@@ -121,7 +121,13 @@ void GameObject::processTransform(const Motion& motionInWorld)
 	_worldTF.move(motionInWorld.displacement());
 	_worldTF.rotate(motionInWorld.rotation());
 
-	std::stack<GameObject*> stk;
+	if (_children.empty())
+		return;
+
+	// for performance, stk is static. So, all gameobject share this stk.
+	static std::stack<GameObject*> stk;
+	while (!stk.empty())
+		stk.pop();
 	for (int i = 0; i < _children.size(); ++i) stk.push(_children[i]);
 	while (!stk.empty())
 	{

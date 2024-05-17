@@ -13,9 +13,6 @@ Solver::Solver(const std::vector<Collision2D*>& collisions)
 {
 	this->warmStart(collisions);
 	_velocityBiases.resize(collisions.size());
-	_normalJacobians.resize(collisions.size());
-	_tangentJacobians.resize(collisions.size());
-	_masses.resize(collisions.size());
 	_normalEffMasses.resize(collisions.size());
 	_tangentEffMasses.resize(collisions.size());
 	for (int i = 0; i < collisions.size(); ++i)
@@ -24,10 +21,7 @@ Solver::Solver(const std::vector<Collision2D*>& collisions)
 		if (collision._isTrigger) continue;
 		const std::vector<Contact2D*>& contacts = collision.contacts();
 
-		this->getMassAndInertia(collision, std::get<0>(_masses[i]), std::get<1>(_masses[i]), std::get<2>(_masses[i]), std::get<3>(_masses[i]));
 		_velocityBiases[i].resize(contacts.size());
-		_normalJacobians[i].resize(contacts.size());
-		_tangentJacobians[i].resize(contacts.size());
 		_normalEffMasses[i].resize(contacts.size());
 		_tangentEffMasses[i].resize(contacts.size());
 		for (int j = 0; j < contacts.size(); ++j)
@@ -35,12 +29,8 @@ Solver::Solver(const std::vector<Collision2D*>& collisions)
 			Contact2D& contact = *(contacts[j]);
 			this->computeBouncinessBias(contact, collision._bounciness, collision._bouncinessThreshold);
 			_velocityBiases[i][j] = contact._bouncinessBias;
-			_normalJacobians[i][j] = { -contact.normal().x(), -contact.normal().y(), -Vector2D::cross(contact._rA, contact.normal()),
-						contact.normal().x(), contact.normal().y(), Vector2D::cross(contact._rB, contact.normal()) };
-			_tangentJacobians[i][j] = { -contact.tangent().x(), -contact.tangent().y(), -Vector2D::cross(contact._rA, contact.tangent()),
-						contact.tangent().x(), contact.tangent().y(), Vector2D::cross(contact._rB, contact.tangent()) };
-			_normalEffMasses[i][j] = this->computeEffectiveMass(_normalJacobians[i][j], _masses[i]);
-			_tangentEffMasses[i][j] = this->computeEffectiveMass(_tangentJacobians[i][j], _masses[i]);
+			_normalEffMasses[i][j] = this->computeEffectiveMass(contact, contact.normal());
+			_tangentEffMasses[i][j] = this->computeEffectiveMass(contact, contact.tangent());
 		}
 	}
 }
@@ -82,18 +72,18 @@ void Solver::solveVelocityConstraints(const std::vector<Collision2D*>& collision
 		{
 			Contact2D& contact = *(contacts[j]);
 
-			float tLambda = this->computeLambda(contact, _tangentJacobians[i][j], _tangentEffMasses[i][j], 0);
+			float tLambda = -this->computeJV(contact, contact.tangent()) * _tangentEffMasses[i][j];
 			float oldTangentImpulse = contact._tangentImpulse;
 			float maxTangentImpulse = contact._normalImpulse * collision._friction;
 			contact._tangentImpulse = Utils::clamp(oldTangentImpulse + tLambda, maxTangentImpulse, -maxTangentImpulse);
 			tLambda = contact._tangentImpulse - oldTangentImpulse;
-			this->impulse(contact, _tangentJacobians[i][j], _masses[i], tLambda);
+			this->impulse(contact, contact.tangent(), tLambda);
 
-			float nLambda = this->computeLambda(contact, _normalJacobians[i][j], _normalEffMasses[i][j], _velocityBiases[i][j]);
+			float nLambda = -(this->computeJV(contact, contact.normal()) + _velocityBiases[i][j]) * _normalEffMasses[i][j];
 			if (nLambda < 0.0f)
 				nLambda = -std::min(std::abs(nLambda), contact._normalImpulse);
 			contact._normalImpulse += nLambda;
-			this->impulse(contact, _normalJacobians[i][j], _masses[i], nLambda);
+			this->impulse(contact, contact.normal(), nLambda);
 		}
 	}
 }
@@ -108,6 +98,8 @@ void Solver::solvePositionConstraints(const std::vector<Collision2D*>& collision
 		{
 			Contact2D& contact = *(contacts[j]);
 
+			RigidBody2D* rigidA = contact.colliderA()->attachedRigidBody();
+			RigidBody2D* rigidB = contact.colliderB()->attachedRigidBody();
 			Collider2D* colliderA = contact.colliderA();
 			Collider2D* colliderB = contact.colliderB();
 			Point2D globalPointA = colliderA->toWorld(contact.localContactA());
@@ -120,18 +112,20 @@ void Solver::solvePositionConstraints(const std::vector<Collision2D*>& collision
 			
 			GameObject* objA = colliderA->gameObject();
 			GameObject* objB = colliderB->gameObject();
-			float invMassA = std::get<0>(_masses[i]), invMassB = std::get<1>(_masses[i]);
-			float invInertiaA = std::get<2>(_masses[i]), invInertiaB = std::get<3>(_masses[i]);
-
+			float invMassA = rigidA == nullptr ? 0.0f : rigidA->invMass();
+			float invMassB = rigidB == nullptr ? 0.0f : rigidB->invMass();
+			float invInertiaA = rigidA == nullptr ? 0.0f : rigidA->invInertia();
+			float invInertiaB = rigidB == nullptr ? 0.0f : rigidB->invInertia();
+			Vector2D p = nLambda * contact.normal();
 			{
-				Vector2D dv = Vector2D{ invMassA * _normalJacobians[i][j][0] * nLambda, invMassA * _normalJacobians[i][j][1] * nLambda };
-				float dw = invInertiaA * _normalJacobians[i][j][2] * nLambda;
+				Vector2D dv = -invMassA * p;
+				float dw = -invInertiaA * Vector2D::cross(contact._rA, p);
 				Motion motion = { dv, dw };
 				objA->processTransform(motion);
 			}
 			{
-				Vector2D dv = Vector2D{ invMassB * _normalJacobians[i][j][3] * nLambda, invMassB * _normalJacobians[i][j][4] * nLambda };
-				float dw = invInertiaB * _normalJacobians[i][j][5] * nLambda;
+				Vector2D dv = invMassB * p;
+				float dw = invInertiaB * Vector2D::cross(contact._rB, p);
 				Motion motion = { dv, dw };
 				objB->processTransform(motion);
 			}
@@ -141,25 +135,25 @@ void Solver::solvePositionConstraints(const std::vector<Collision2D*>& collision
 #pragma endregion
 
 #pragma region private
-void Solver::impulse(const Contact2D& contact, const std::vector<float>& jaco, const std::tuple<float, float, float, float>& mass, float lambda)
+void Solver::impulse(const Contact2D& contact, const Vector2D& dir, float lambda)
 {
-	float invMassA = std::get<0>(mass), invMassB = std::get<1>(mass), invInertiaA = std::get<2>(mass), invInertiaB = std::get<3>(mass);
-	Vector2D dvA = Vector2D{ invMassA * jaco[0] * lambda, invMassA * jaco[1] * lambda };
-	float dwA = invInertiaA * jaco[2] * lambda;
-	Vector2D dvB = Vector2D{ invMassB * jaco[3] * lambda, invMassB * jaco[4] * lambda };
-	float dwB = invInertiaB * jaco[5] * lambda;
-
 	RigidBody2D* rigidA = contact.colliderA()->attachedRigidBody();
 	RigidBody2D* rigidB = contact.colliderB()->attachedRigidBody();
+	float invMassA = rigidA == nullptr ? 0.0f : rigidA->invMass();
+	float invMassB = rigidB == nullptr ? 0.0f : rigidB->invMass();
+	float invInertiaA = rigidA == nullptr ? 0.0f : rigidA->invInertia();
+	float invInertiaB = rigidB == nullptr ? 0.0f : rigidB->invInertia();
+
+	Vector2D p = dir * lambda;
 	if (rigidA != nullptr)
 	{
-		rigidA->_velocity += dvA;
-		rigidA->_angularVelocity += dwA;
+		rigidA->_velocity -= invMassA * p;
+		rigidA->_angularVelocity -= invInertiaA * Vector2D::cross(contact._rA, p);
 	}
 	if (rigidB != nullptr)
 	{
-		rigidB->_velocity += dvB;
-		rigidB->_angularVelocity += dwB;
+		rigidB->_velocity += invMassB * p;
+		rigidB->_angularVelocity += invInertiaB * Vector2D::cross(contact._rB, p);
 	}
 }
 void Solver::warmStart(const std::vector<Collision2D*>& collisions)
@@ -213,41 +207,36 @@ void Solver::computeBouncinessBias(Contact2D& contact, float bounciness, float b
 	if (-normalVel > bouncinessThreshold)
 		contact._bouncinessBias = bounciness * normalVel;
 }
-float Solver::computeEffectiveMass(const std::vector<float>& jaco, const std::tuple<float, float, float, float>& mass)
+float Solver::computeEffectiveMass(const Contact2D& contact, const Vector2D& dir)
 {
-	float invMassA = std::get<0>(mass), invMassB = std::get<1>(mass), invInertiaA = std::get<2>(mass), invInertiaB = std::get<3>(mass);
-	float effMass = (jaco[0] * jaco[0] + jaco[1] * jaco[1]) * invMassA + (jaco[2] * jaco[2]) * invInertiaA +
-		(jaco[3] * jaco[3] + jaco[4] * jaco[4]) * invMassB + (jaco[5] * jaco[5]) * invInertiaB;
-	return effMass > 0.0f ? 1.0f / effMass : 0.0f;
-}
-void Solver::getMassAndInertia(const Collision2D& collision, float& invMassA, float& invMassB, float& invInertiaA, float& invInertiaB)
-{
-	RigidBody2D* rigidA = collision.colliderA()->attachedRigidBody();
-	RigidBody2D* rigidB = collision.colliderB()->attachedRigidBody();
-
-	invMassA = rigidA == nullptr ? 0.0f : rigidA->invMass();
-	invMassB = rigidB == nullptr ? 0.0f : rigidB->invMass();
-	invInertiaA = rigidA == nullptr ? 0.0f : rigidA->invInertia();
-	invInertiaB = rigidB == nullptr ? 0.0f : rigidB->invInertia();
-}
-float Solver::computeLambda(const Contact2D& contact, const std::vector<float>& jaco, float effMass, float bias)
-{
-	Vector2D vA, vB;
-	float wA = 0.0f, wB = 0.0f;
 	RigidBody2D* rigidA = contact.colliderA()->attachedRigidBody();
 	RigidBody2D* rigidB = contact.colliderB()->attachedRigidBody();
+	float invMassA = rigidA == nullptr ? 0.0f : rigidA->invMass();
+	float invMassB = rigidB == nullptr ? 0.0f : rigidB->invMass();
+	float invInertiaA = rigidA == nullptr ? 0.0f : rigidA->invInertia();
+	float invInertiaB = rigidB == nullptr ? 0.0f : rigidB->invInertia();
 
+	float rdA = Vector2D::cross(contact._rA, dir);
+	float rdB = Vector2D::cross(contact._rB, dir);
+	float ret = invMassA + invMassB + invInertiaA * rdA * rdA + invInertiaB * rdB * rdB;
+	return ret > 0.0f ? 1 / ret : 0.0f;
+}
+float Solver::computeJV(const Contact2D& contact, const Vector2D& dir)
+{
+	RigidBody2D* rigidA = contact.colliderA()->attachedRigidBody();
+	RigidBody2D* rigidB = contact.colliderB()->attachedRigidBody();
+	Vector2D relativeVelocity;
 	if (rigidA != nullptr)
 	{
-		vA = rigidA->velocity();
-		wA = rigidA->angularVelocity();
+		relativeVelocity -= rigidA->velocity();
+		relativeVelocity -= Vector2D::cross(rigidA->angularVelocity(), contact._rA);
 	}
 	if (rigidB != nullptr)
 	{
-		vB = rigidB->velocity();
-		wB = rigidB->angularVelocity();
+		relativeVelocity += rigidB->velocity();
+		relativeVelocity += Vector2D::cross(rigidB->angularVelocity(), contact._rB);
 	}
-	return -(jaco[0] * vA.x() + jaco[1] * vA.y() + jaco[2] * wA + jaco[3] * vB.x() + jaco[4] * vB.y() + jaco[5] * wB + bias) * effMass;
+	return Vector2D::dot(relativeVelocity, dir);
 }
 #pragma endregion
 
