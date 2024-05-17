@@ -6,6 +6,8 @@
 #include "RigidBody2D.h"
 #include "Line.h"
 
+#include "GameObject.h"
+
 #pragma region public
 #pragma endregion
 
@@ -42,19 +44,36 @@ bool Collision2D::isValid(Contact2D* contact)
 {
 	Point2D globalPointA = _colliderA->toWorld(contact->localContactA());
 	Point2D globalPointB = _colliderB->toWorld(contact->localContactB());
-
+	Collider2D* colliderA = contact->colliderA();
+	Collider2D* colliderB = contact->colliderB();
+	Vector2D normal;
+	if (contact->_isEdgeA)
+		normal = Matrix22(colliderA->gameObject()->transform().rotation().radian() - contact->_rotationA) * contact->normal();
+	else if (contact->_isEdgeB)
+		normal = Matrix22(colliderB->gameObject()->transform().rotation().radian() - contact->_rotationB) * contact->normal();
 	float depth = Vector2D::dot(globalPointA - globalPointB, contact->normal());
 	if (depth <= 0.0f)
+	{
+		contact->_normalImpulse = 0.0f;
+		contact->_tangentImpulse = 0.0f;
+	}
+	contact->_depth = depth;
+	contact->_contactA = globalPointA;
+	contact->_contactB = globalPointB;
+
+	bool flag = contact->_isUsed;
+	contact->_isUsed = false;
+	if (!flag && depth <= 0.0f)
 		return false;
+	return true;
 	/*bool closeEnoughA = (contact->contactA() - globalPointA).squaredLen() <= Collision2D::PERSISTENT_THRESHOLD_SQUARED;
 	bool closeEnoughB = (contact->contactB() - globalPointB).squaredLen() <= Collision2D::PERSISTENT_THRESHOLD_SQUARED;
 	if (!closeEnoughA || !closeEnoughB)
 		return false;*/
-	contact->_depth = depth;
+	/*contact->_depth = depth;
 	contact->_contactA = globalPointA;
-	contact->_contactB = globalPointB;
-	contact->_rA = globalPointA - contact->colliderA()->position();
-	contact->_rB = globalPointB - contact->colliderB()->position();
+	contact->_contactB = globalPointB;*/
+	//contact->_depth = depth;
 	return true;
 }
 void Collision2D::prune()

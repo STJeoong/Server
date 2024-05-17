@@ -14,7 +14,6 @@ class Collider2D : public Behaviour
 	friend class Polytope;
 	friend class World;
 public:
-	float size() const { return _size; } // collider's size
 	const Point2D& offset() const { return _offset; } // local offset
 	float density() const { return _density; }
 	float friction() const { return _friction; }
@@ -57,7 +56,6 @@ protected:
 	float _mass = 0.0f; // you need to keep this value up to date. update this whenever related to mass is changed.
 	float _inertia = 0.0f; // you need to keep this value up to date. update this whenever related to inertia is changed.
 	bool _isTrigger = false;
-	float _size = 0.0f;
 	RigidBody2D* _attachedRigidBody = nullptr;
 	std::vector<Collision2D*> _collisions;
 

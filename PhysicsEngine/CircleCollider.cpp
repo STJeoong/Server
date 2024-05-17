@@ -35,7 +35,6 @@ CircleCollider::CircleCollider(const S_CircleDef& def)
 	_radius = def.radius;
 
 	if (_radius < MIN_SIZE) _radius = MIN_SIZE;
-	_size = _radius;
 	this->compute();
 }
 void CircleCollider::compute()

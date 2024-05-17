@@ -11,7 +11,7 @@ public:
 	// TODO : radius ¹Ù²î¸é massÁ¤º¸µµ ¹Ù²ñ
 	void radius(float r) { _radius = r; }
 private:
-	CircleCollider() { _size = _radius; this->compute(); }
+	CircleCollider() { this->compute(); }
 	CircleCollider(const S_CircleDef& def);
 	~CircleCollider() = default;
 	virtual CircleCollider* clone() override;

@@ -43,6 +43,8 @@ private:
 	bool _isEdgeB;
 	float _rotationA = 0.0f;
 	float _rotationB = 0.0f;
+
+	bool _isUsed = true;
 	
 	float _bouncinessBias = 0.0f;
 };

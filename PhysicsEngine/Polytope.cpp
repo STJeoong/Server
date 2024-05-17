@@ -158,11 +158,11 @@ void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 		_contactB.x(result);
 
 		// get each collider's y coordinate from x
-		if (std::abs(A[1].x() - A[0].x()) < 10 * FLT_EPSILON) // if colliderA is circle, it is possible
+		if (std::abs(A[1].x() - A[0].x()) < FLT_EPSILON) // if colliderA is circle, it is possible
 			_contactA = A[0];
 		else
 			_contactA.y(((A[1].x() - result) / (A[1].x() - A[0].x())) * A[0].y() + ((result - A[0].x()) / (A[1].x() - A[0].x())) * A[1].y());
-		if (std::abs(B[1].x() - B[0].x()) < 10 * FLT_EPSILON)
+		if (std::abs(B[1].x() - B[0].x()) < FLT_EPSILON)
 			_contactB = B[0];
 		else
 			_contactB.y(((B[1].x() - result) / (B[1].x() - B[0].x())) * B[0].y() + ((result - B[0].x()) / (B[1].x() - B[0].x())) * B[1].y());
