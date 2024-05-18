@@ -173,7 +173,8 @@ bool CollisionDetector::gjk(Collision2D* collision)
 }
 void CollisionDetector::epa(Collision2D* collision)
 {
-	Polytope polytope(*collision, collision->_simplex.points(), collision->_simplex.sources());
+	static Polytope polytope;
+	polytope.init(*collision, collision->_simplex.points(), collision->_simplex.sources());
 	Collider2D* colliderA = collision->colliderA();
 	Collider2D* colliderB = collision->colliderB();
 	Contact2D* newContact = ObjectPool::get<Contact2D>();
@@ -188,9 +189,7 @@ void CollisionDetector::epa(Collision2D* collision)
 	newContact->_colliderB = colliderB;
 	newContact->_normal = polytope.normal().normalized();
 	newContact->_tangent = Vector2D::cross(newContact->_normal, 1.0f);
-	newContact->_depth = polytope.depth();
-	newContact->_isEdgeA = polytope.isEdgeA();
-	newContact->_isEdgeB = polytope.isEdgeB();
+	newContact->_depth = Vector2D::dot(newContact->_contactA - newContact->_contactB, newContact->_normal);
 	newContact->_rotationA = colliderA->gameObject()->transform().rotation().radian();
 	newContact->_rotationB = colliderB->gameObject()->transform().rotation().radian();
 

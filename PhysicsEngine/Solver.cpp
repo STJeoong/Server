@@ -187,8 +187,6 @@ float Solver::computePenetrationBias(const Contact2D& contact, float depth)
 	Collider2D* colliderA = contact.colliderA();
 	Collider2D* colliderB = contact.colliderB();
 	return -std::max(BAUMGART * (depth - Solver::PENETRATION_SLOP), 0.0f);
-	//return -Utils::clamp(BAUMGART * (depth - slop), maxCorrection, 0.0f);
-	//return -Utils::clamp(BAUMGART * (depth - slop), Solver::MAX_LINEAR_CORRECTION, 0.0f);
 }
 void Solver::computeBouncinessBias(Contact2D& contact, float bounciness, float bouncinessThreshold)
 {
@@ -240,4 +238,4 @@ float Solver::computeJV(const Contact2D& contact, const Vector2D& dir)
 }
 #pragma endregion
 
-const float Solver::PENETRATION_SLOP = 0.03f;
+const float Solver::PENETRATION_SLOP = 0.01f;

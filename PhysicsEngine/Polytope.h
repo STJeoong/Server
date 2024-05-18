@@ -8,27 +8,21 @@ class Polytope
 {
 	static const int MAX_ITERATION = 20;
 public:
-	Polytope(const Collision2D& collision, const std::vector<Point2D>& points, const std::vector<std::pair<Point2D, Point2D>>& sources);
+	void init(const Collision2D& collision, const std::vector<Point2D>& points, const std::vector<std::pair<Point2D, Point2D>>& sources);
 	const Vector2D& normal() const { return _normal; } // A to B
 	const Point2D& contactA() const { return _contactA; }
 	const Point2D& contactB() const { return _contactB; }
-	float depth() const { return _depth; }
-	bool isEdgeA() const { return _isEdgeA; }
-	bool isEdgeB() const { return _isEdgeB; }
 private:
 	void setMinimumPoints(const Collision2D& collision);
-	void initPQ();
+	void initDistances();
 	void expand(const Collision2D& collision);
-	void computeClosestPoints(size_t idxA, size_t idxB);
+	void computeClosestPoints(Collider2D* colliderA, Collider2D* colliderB, size_t idxA, size_t idxB);
+	void getMinDistance(float& distance, size_t& idxA, size_t& idxB);
 
 	std::vector<Point2D> _points;
 	std::vector<std::pair<Point2D, Point2D>> _sources;
-	std::priority_queue<std::tuple<float, size_t, size_t>, std::vector<std::tuple<float, size_t, size_t>>,
-		std::greater<std::tuple<float, size_t, size_t>>> _pq;
+	std::vector<std::tuple<bool, float, size_t, size_t>> _distances;
 	Vector2D _normal;
 	Point2D _contactA;
 	Point2D _contactB;
-	float _depth;
-	bool _isEdgeA;
-	bool _isEdgeB;
 };

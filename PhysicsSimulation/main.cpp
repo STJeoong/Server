@@ -126,15 +126,15 @@ void demo2()
     GameObject* g3 = World::instantiate(); // floor
     BoxCollider2D* c3 = g3->addComponent<BoxCollider2D>(def3);
     g3->addComponent<Renderder>(new sf::RectangleShape({ def3.halfSize.x() * 2, def3.halfSize.y() * 2 }), def3.halfSize);
-    g3->moveTo({ 400.0f, 328.0f });
+    g3->moveTo({ 400.0f, 335.0f });
 
-    Point2D startPoint = { 380.0f, 306.5f };
+    Point2D startPoint = { 372.0f, 320.5f };
     Vector2D dx = { 2.15f, 0.0f };
     Vector2D dy = { 0.0f, 2.25f };
-    for (int i = 0; i < 22; ++i)
+    for (int i = 0; i < 20; ++i)
     {
         Point2D from = startPoint + Vector2D(1.0f, 0.0f) * (float)i;
-        for (int j = 0; j < 22 - i; ++j)
+        for (int j = 0; j < 20 - i; ++j)
         {
             S_BoxDef def;
             def.halfSize = { 1.0f,1.0f };
@@ -268,7 +268,7 @@ void demo7()
     g3->moveTo({ 400.0f, 328.0f });
 
     Vector2D dy = { 0, 2.0f };
-    Point2D from = { 390.0f, 316.0f };
+    Point2D from = { 390.0f, 318.0f };
     for (int i = 0; i < 10; ++i)
     {
         S_CircleDef def;
@@ -308,6 +308,8 @@ void demo8()
             sf::Color color = sf::Color::Red;
             color.a = 130;
             renderer->fillColor(color);
+            obj->name("Box" + std::to_string(i));
+            std::cout << obj->name() << " is created" << '\n';
         }
         else
         {
@@ -318,14 +320,47 @@ void demo8()
             sf::Color color = sf::Color::Red;
             color.a = 130;
             renderer->fillColor(color);
+            obj->name("Circle" + std::to_string(i));
+            std::cout << obj->name() << " is created" << '\n';
         }
         obj->moveTo(from - dy * (float)i);
+    }
+}
+void demo9()
+{
+    S_BoxDef def3;
+    def3.halfSize = { 250.0f, 10.0f };
+    def3.bouncinessThreshold = 50.0f;
+    GameObject* g3 = World::instantiate(); // floor
+    BoxCollider2D* c3 = g3->addComponent<BoxCollider2D>(def3);
+    g3->addComponent<Renderder>(new sf::RectangleShape({ def3.halfSize.x() * 2, def3.halfSize.y() * 2 }), def3.halfSize);
+    g3->moveTo({ 400.0f, 335.0f });
+
+    Point2D startPoint = { 372.0f, 320.5f };
+    Vector2D dx = { 2.15f, 0.0f };
+    Vector2D dy = { 0.0f, 2.25f };
+    for (int i = 0; i < 20; ++i)
+    {
+        Point2D from = startPoint + Vector2D(1.0f, 0.0f) * (float)i;
+        for (int j = 0; j < 20 - i; ++j)
+        {
+            S_CircleDef def;
+            def.radius = 1.0f;
+            GameObject* obj = World::instantiate();
+            RigidBody2D* rigid = obj->addComponent<RigidBody2D>();
+            obj->addComponent<CircleCollider>(def);
+            Renderder* renderer = obj->addComponent<Renderder>(new sf::CircleShape(def.radius), Vector2D{def.radius, def.radius});
+            sf::Color color = sf::Color::Red;
+            color.a = 130;
+            renderer->fillColor(color);
+            obj->moveTo(from + dx * (float)j - dy * (float)i);
+        }
     }
 }
 int main()
 {
     std::ios_base::sync_with_stdio(false); std::cin.tie(0); std::cout.tie(0);
-    demo2();
+    demo9();
     World::init({ 0.0f, 10.0f });
 	
     sf::Clock clock;
@@ -333,7 +368,7 @@ int main()
     float dt = 0.0f;
     sf::View originalView = window.getDefaultView();
     sf::View zoomedView = window.getDefaultView();
-    zoomedView.zoom(1.0f / 12.0f);
+    zoomedView.zoom(1.0f / 8.0f);
 
 	while (window.isOpen())
 	{
@@ -351,10 +386,9 @@ int main()
         dt -= 0.017f;
         window.clear(sf::Color::Black);
         //dt = clock.restart().asSeconds();
-        World::step(0.017f, 30,30);
+        World::step(0.017f, 8,3);
         window.setView(zoomedView);
         window.display();
-        //std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	}
 	return 0;
 }

@@ -4,12 +4,17 @@
 #include "Line.h"
 
 #pragma region public
-Polytope::Polytope(const Collision2D& collision, const std::vector<Point2D>& points, const std::vector<std::pair<Point2D, Point2D>>& sources)
-	: _points(points), _sources(sources)
+void Polytope::init(const Collision2D& collision, const std::vector<Point2D>& points, const std::vector<std::pair<Point2D, Point2D>>& sources)
 {
+	_points.clear();
+	_sources.clear();
+	_distances.clear();
+	_points = points;
+	_sources = sources;
+
 	if (_points.size() < 3)
 		this->setMinimumPoints(collision);
-	this->initPQ();
+	this->initDistances();
 	this->expand(collision);
 }
 #pragma endregion
@@ -50,14 +55,15 @@ void Polytope::setMinimumPoints(const Collision2D& collision)
 		}
 	}
 }
-void Polytope::initPQ()
+void Polytope::initDistances()
 {
 	for (size_t i = 0; i < _points.size(); ++i)
 	{
 		Line line(_points[i], _points[(i + 1) % _points.size()]);
 		// TODO : 값이 너무 커질 수 있나?
 		float distance = line.squaredDistanceFrom({ 0.0f, 0.0f });
-		_pq.push({ distance, i, (i + 1) % _points.size() });
+		_distances.push_back({ false, distance, i, (i + 1) % _points.size() });
+		//_pq.push({ distance, i, (i + 1) % _points.size() });
 	}
 }
 void Polytope::expand(const Collision2D& collision)
@@ -65,21 +71,17 @@ void Polytope::expand(const Collision2D& collision)
 	Collider2D* colliderA = collision.colliderA();
 	Collider2D* colliderB = collision.colliderB();
 	int i = 0;
-	while (!_pq.empty())
+	while (true)
 	{
 		float distance;
 		size_t idxA, idxB;
-		std::tie(distance, idxA, idxB) = _pq.top();
-		_pq.pop();
-
-		// TODO : 왜 const Point2D& A = _points[idxA] 이렇게 하면 값이 이상하게 나오지??
-		// capacity를 초과해서 기존 원소들을 지우기 때문에 해당 레퍼런스는 dangling 레퍼런스가 된거임.
+		this->getMinDistance(distance, idxA, idxB);
 		const Point2D& A = _points[idxA];
 		const Point2D& B = _points[idxB];
 		Vector2D AB = B - A;
 		Vector2D AO = A * -1;
 		Vector2D supportVec = Vector2D::cross(Vector2D::cross(AO, AB), AB); // FIX: supportVec가 {0.0f, 0.0f}였음
-		if (supportVec == Vector2D{0.0f, 0.0f})
+		if (supportVec == Vector2D{ 0.0f, 0.0f })
 		{
 			Point2D barycentric = { 0.0f,0.0f };
 			for (int i = 0; i < _points.size(); ++i)
@@ -96,40 +98,42 @@ void Polytope::expand(const Collision2D& collision)
 		if (A == minkowskiPoint || B == minkowskiPoint || line.isPointOnTheLine(minkowskiPoint) || i == Polytope::MAX_ITERATION)
 		{
 			_normal = supportVec;
-			_depth = std::sqrtf(distance);
-			this->computeClosestPoints(idxA, idxB);
+			this->computeClosestPoints(colliderA, colliderB, idxA, idxB);
 			return;
 		}
 
 		{
 			Line line(A, minkowskiPoint);
 			float computedValue = line.squaredDistanceFrom({ 0.0f, 0.0f });
-			_pq.push({ computedValue, idxA, _points.size() });
+			_distances.push_back({ false, computedValue, idxA, _points.size() });
 		}
 		{
 			Line line(B, minkowskiPoint);
 			float computedValue = line.squaredDistanceFrom({ 0.0f, 0.0f });
-			_pq.push({ computedValue, idxB, _points.size() });
+			_distances.push_back({ false, computedValue, idxB, _points.size() });
 		}
 		_points.push_back(minkowskiPoint);
 		_sources.push_back({ pointFromA, pointFromB });
 		++i;
 	}
 }
-void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
+void Polytope::computeClosestPoints(Collider2D* colliderA, Collider2D* colliderB, size_t idxA, size_t idxB)
 {
 	Point2D A[2] = { _sources[idxA].first, _sources[idxB].first };
 	Point2D B[2] = { _sources[idxA].second, _sources[idxB].second };
 
 	// check if it contacts to collider's edge
 	bool isVertexA = A[0] == A[1];
+	if (colliderA->isCircle())
+		isVertexA = true;
 	bool isVertexB = B[0] == B[1];
+	if (colliderB->isCircle())
+		isVertexB = true;
 
 	if (!isVertexA && !isVertexB) // 면 대 면 접촉
 	{
-		_isEdgeA = _isEdgeB = true;
 		bool isParallelToY = false;
-		if (std::abs(A[0].x() - A[1].x()) < 10.0f * FLT_EPSILON) // y축에 평행한 면에 접촉
+		if (std::abs(A[0].x() - A[1].x()) < FLT_EPSILON) // y축에 평행한 면에 접촉
 		{
 			isParallelToY = true;
 			// swap
@@ -158,15 +162,8 @@ void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 		_contactB.x(result);
 
 		// get each collider's y coordinate from x
-		if (std::abs(A[1].x() - A[0].x()) < FLT_EPSILON) // if colliderA is circle, it is possible
-			_contactA = A[0];
-		else
-			_contactA.y(((A[1].x() - result) / (A[1].x() - A[0].x())) * A[0].y() + ((result - A[0].x()) / (A[1].x() - A[0].x())) * A[1].y());
-		if (std::abs(B[1].x() - B[0].x()) < FLT_EPSILON)
-			_contactB = B[0];
-		else
-			_contactB.y(((B[1].x() - result) / (B[1].x() - B[0].x())) * B[0].y() + ((result - B[0].x()) / (B[1].x() - B[0].x())) * B[1].y());
-
+		_contactA.y(((A[1].x() - result) / (A[1].x() - A[0].x())) * A[0].y() + ((result - A[0].x()) / (A[1].x() - A[0].x())) * A[1].y());
+		_contactB.y(((B[1].x() - result) / (B[1].x() - B[0].x())) * B[0].y() + ((result - B[0].x()) / (B[1].x() - B[0].x())) * B[1].y());
 		if (isParallelToY)
 		{
 			float tmp = _contactA.x();
@@ -180,10 +177,17 @@ void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 	}
 	else // 면 대 점 접촉
 	{
-		if (isVertexA) // A는 점 접촉, B는 면 접촉
+		if (isVertexA && isVertexB) // (사각형 꼭짓점, 원), (원, 원) 충돌일 때 가능
 		{
-			_isEdgeA = false;
-			_isEdgeB = true;
+			_contactA = A[0];
+			_contactB = B[0];
+			if (colliderA->isCircle())
+				_normal = A[0] - colliderA->position();
+			else if (colliderB->isCircle())
+				_normal = colliderB->position() - B[0];
+		}
+		else if (isVertexA) // A는 점 접촉, B는 면 접촉
+		{
 			_contactA = A[0];
 
 			// project A[0] to B's edge
@@ -199,8 +203,6 @@ void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 		}
 		else // A는 면 접촉, B는 점 접촉
 		{
-			_isEdgeA = true;
-			_isEdgeB = false;
 			_contactB = B[0];
 
 			// project B[0] to A's edge
@@ -215,5 +217,28 @@ void Polytope::computeClosestPoints(size_t idxA, size_t idxB)
 			_contactA.y(B[0].y() + b * k);
 		}
 	}
+}
+void Polytope::getMinDistance(float& distance, size_t& idxA, size_t& idxB)
+{
+	int wh = 0;
+	for (int i = 0; i < _distances.size(); ++i)
+		if (!std::get<0>(_distances[i]))
+		{
+			distance = std::get<1>(_distances[i]);
+			idxA = std::get<2>(_distances[i]);
+			idxB = std::get<3>(_distances[i]);
+			wh = i;
+			break;
+		}
+	
+	for (int i = 0; i < _distances.size(); ++i)
+		if (!std::get<0>(_distances[i]) && distance > std::get<1>(_distances[i]))
+		{
+			distance = std::get<1>(_distances[i]);
+			idxA = std::get<2>(_distances[i]);
+			idxB = std::get<3>(_distances[i]);
+			wh = i;
+		}
+	std::get<0>(_distances[wh]) = true;
 }
 #pragma endregion
