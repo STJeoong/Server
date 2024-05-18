@@ -64,6 +64,7 @@ protected:
 private:
 	virtual AABB computeAABB() = 0;
 	virtual Point2D computeSupportPoint(const Vector2D& vec) = 0;
+	virtual bool isCircle() const { return false; }
 	void addToWorld();
 	void removeFromWorld();
 	void attachTo(RigidBody2D* rigid) { _attachedRigidBody = rigid; }
