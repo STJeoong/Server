@@ -27,6 +27,8 @@ void Solver::init(const std::vector<Collision2D*>& collisions)
 		for (int j = 0; j < contacts.size(); ++j)
 		{
 			Contact2D& contact = *(contacts[j]);
+			if (contact.depth() <= 0.0f)
+				continue;
 			this->computeBouncinessBias(contact, collision._bounciness, collision._bouncinessThreshold);
 			_velocityBiases[i][j] = contact._bouncinessBias;
 			_normalEffMasses[i][j] = this->computeEffectiveMass(contact, contact.normal());
@@ -71,6 +73,8 @@ void Solver::solveVelocityConstraints(const std::vector<Collision2D*>& collision
 		for (int j = 0; j < contacts.size(); ++j)
 		{
 			Contact2D& contact = *(contacts[j]);
+			if (contact.depth() <= 0.0f)
+				continue;
 
 			float tLambda = -this->computeJV(contact, contact.tangent()) * _tangentEffMasses[i][j];
 			float oldTangentImpulse = contact._tangentImpulse;

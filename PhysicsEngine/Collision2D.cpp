@@ -47,6 +47,7 @@ bool Collision2D::isValid(Contact2D* contact)
 	Collider2D* colliderA = contact->colliderA();
 	Collider2D* colliderB = contact->colliderB();
 	float depth = Vector2D::dot(globalPointA - globalPointB, contact->normal());
+
 	if (depth <= 0.0f)
 	{
 		contact->_normalImpulse = 0.0f;
@@ -60,7 +61,6 @@ bool Collision2D::isValid(Contact2D* contact)
 	contact->_isUsed = false;
 	if (!flag && depth <= 0.0f)
 		return false;
-	return true;
 	return true;
 }
 void Collision2D::prune()
