@@ -330,16 +330,27 @@ void demo9()
 {
     S_BoxDef def3;
     def3.halfSize = { 250.0f, 10.0f };
-    def3.bouncinessThreshold = 50.0f;
+    S_BoxDef def4;
+    def4.halfSize = { 1.0f, 250.0f };
+    S_BoxDef def5;
+    def5.halfSize = { 1.0f, 250.0f };
     GameObject* g3 = World::instantiate(); // floor
-    BoxCollider2D* c3 = g3->addComponent<BoxCollider2D>(def3);
+    GameObject* g4 = World::instantiate(); // floor
+    GameObject* g5 = World::instantiate(); // floor
+    g3->addComponent<BoxCollider2D>(def3);
+    g4->addComponent<BoxCollider2D>(def4);
+    g5->addComponent<BoxCollider2D>(def5);
     g3->addComponent<Renderder>(new sf::RectangleShape({ def3.halfSize.x() * 2, def3.halfSize.y() * 2 }), def3.halfSize);
+    g4->addComponent<Renderder>(new sf::RectangleShape({ def4.halfSize.x() * 2, def4.halfSize.y() * 2 }), def4.halfSize);
+    g5->addComponent<Renderder>(new sf::RectangleShape({ def5.halfSize.x() * 2, def5.halfSize.y() * 2 }), def5.halfSize);
     g3->moveTo({ 400.0f, 335.0f });
+    g4->moveTo({ 420.0f, 155.0f });
+    g5->moveTo({ 360.0f, 155.0f });
 
     Point2D startPoint = { 372.0f, 320.5f };
     Vector2D dx = { 2.15f, 0.0f };
     Vector2D dy = { 0.0f, 2.25f };
-    for (int i = 0; i < 20; ++i)
+    for (int i = 0; i < 1; ++i)
     {
         Point2D from = startPoint + Vector2D(1.0f, 0.0f) * (float)i;
         for (int j = 0; j < 20 - i; ++j)
@@ -360,7 +371,7 @@ void demo9()
 int main()
 {
     std::ios_base::sync_with_stdio(false); std::cin.tie(0); std::cout.tie(0);
-    demo9();
+    demo2();
     World::init({ 0.0f, 10.0f });
 	
     sf::Clock clock;
@@ -382,11 +393,11 @@ int main()
 		}
         if (pause) continue;
         dt += clock.restart().asSeconds();
-        if (dt < 0.017f) continue;
-        dt -= 0.017f;
+        if (dt < 0.02f) continue;
+        dt -= 0.02f;
         window.clear(sf::Color::Black);
         //dt = clock.restart().asSeconds();
-        World::step(0.017f, 8,3);
+        World::step(0.02f, 8, 50);
         window.setView(zoomedView);
         window.display();
 	}
