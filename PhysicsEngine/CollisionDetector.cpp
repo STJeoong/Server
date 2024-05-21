@@ -127,12 +127,13 @@ void CollisionDetector::narrowPhase(Collision2D* collision)
 	bool trigger = colliderA->isTrigger() || colliderB->isTrigger();
 	E_GameObjectEvent& evt = collision->_evt;
 
-	if (!this->gjk(collision))
+	if (!this->marginGjk(collision))
 	{
 		if (evt == E_GameObjectEvent::NONE) return;
 		this->setExit(collision);
 		return;
 	}
+
 
 	if (trigger)
 	{
@@ -153,7 +154,27 @@ void CollisionDetector::narrowPhase(Collision2D* collision)
 	else
 		evt = E_GameObjectEvent::COLLISION_STAY;
 	collision->_isTrigger = false;
+	if (!this->gjk(collision))
+		return;
+	
 	this->epa(collision);
+}
+bool CollisionDetector::marginGjk(Collision2D* collision)
+{
+	Collider2D* colliderA = collision->colliderA();
+	Collider2D* colliderB = collision->colliderB();
+	Point2D pointA = colliderA->computeMarginSupportPoint({ 1.0f,0.0f });
+	Point2D pointB = colliderB->computeMarginSupportPoint({ -1.0f,0.0f });
+
+	collision->_simplex.init(pointA, pointB);
+	while (!collision->_simplex.containsOrigin())
+	{
+		pointA = colliderA->computeMarginSupportPoint(collision->_simplex.supportVec());
+		pointB = colliderB->computeMarginSupportPoint(collision->_simplex.supportVec() * -1);
+		if (!collision->_simplex.insert(pointA, pointB))
+			return false;
+	}
+	return true;
 }
 bool CollisionDetector::gjk(Collision2D* collision)
 {
@@ -161,13 +182,13 @@ bool CollisionDetector::gjk(Collision2D* collision)
 	Collider2D* colliderB = collision->colliderB();
 	Point2D pointA = colliderA->computeSupportPoint({ 1.0f,0.0f });
 	Point2D pointB = colliderB->computeSupportPoint({ -1.0f,0.0f });
-
 	collision->_simplex.init(pointA, pointB);
 	while (!collision->_simplex.containsOrigin())
 	{
 		pointA = colliderA->computeSupportPoint(collision->_simplex.supportVec());
 		pointB = colliderB->computeSupportPoint(collision->_simplex.supportVec() * -1);
-		if (!collision->_simplex.insert(pointA, pointB)) return false;
+		if (!collision->_simplex.insert(pointA, pointB))
+			return false;
 	}
 	return true;
 }

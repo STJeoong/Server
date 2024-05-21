@@ -17,6 +17,7 @@ private:
 	virtual CircleCollider* clone() override;
 	virtual AABB computeAABB() override;
 	virtual Point2D computeSupportPoint(const Vector2D& vec) override;
+	virtual Point2D computeMarginSupportPoint(const Vector2D& vec) override;
 	virtual bool isCircle() const { return true; }
 	void compute(); // compute mass and inerita. call this when definition of collider is changed.
 

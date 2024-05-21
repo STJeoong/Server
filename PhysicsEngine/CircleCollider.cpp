@@ -22,6 +22,13 @@ Point2D CircleCollider::computeSupportPoint(const Vector2D& vec)
 
 	return worldCenter + dirVec * _radius;
 }
+Point2D CircleCollider::computeMarginSupportPoint(const Vector2D& vec)
+{
+	Point2D worldCenter = this->position();
+	Vector2D dirVec = vec.normalized();
+
+	return worldCenter + dirVec * (_radius + COLLIDER_MARGIN);
+}
 #pragma endregion
 
 #pragma region private

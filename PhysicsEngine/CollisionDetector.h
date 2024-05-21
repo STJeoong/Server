@@ -14,6 +14,7 @@ private:
 	void pruneOldCollisions(const BroadPhase& broadPhase);
 	void importFromBroadPhase(const BroadPhase& broadPhase);
 	void narrowPhase(Collision2D* collision);
+	bool marginGjk(Collision2D* collision);
 	bool gjk(Collision2D* collision);
 	void epa(Collision2D* collision);
 	void setExit(Collision2D* collision);

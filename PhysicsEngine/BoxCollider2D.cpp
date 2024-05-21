@@ -39,6 +39,22 @@ Point2D BoxCollider2D::computeSupportPoint(const Vector2D& vec)
 	}
 	return _points[maxIdx];
 }
+Point2D BoxCollider2D::computeMarginSupportPoint(const Vector2D& vec)
+{
+	this->computeMarginPoints();
+	float maxVal = Vector2D::dot(vec, _points[0]);
+	int maxIdx = 0;
+	for (int i = 1; i < 4; ++i)
+	{
+		float val = Vector2D::dot(vec, _points[i]);
+		if (val > maxVal)
+		{
+			maxVal = val;
+			maxIdx = i;
+		}
+	}
+	return _points[maxIdx];
+}
 #pragma endregion
 
 #pragma region private
@@ -72,6 +88,25 @@ void BoxCollider2D::computePoints()
 	beforeRot[1] = { _halfSize.x() * -1, _halfSize.y() };
 	beforeRot[2] = { _halfSize.x() * -1, _halfSize.y() * -1 };
 	beforeRot[3] = { _halfSize.x(), _halfSize.y() * -1 };
+
+	// after rotation. be careful! you have to add worldCenter after rotation.
+	_points = { worldObjRot * beforeRot[0], worldObjRot * beforeRot[1],
+				worldObjRot * beforeRot[2], worldObjRot * beforeRot[3] };
+	for (int i = 0; i < 4; ++i)
+		_points[i] += worldCenter;
+}
+void BoxCollider2D::computeMarginPoints()
+{
+	Point2D worldCenter = this->position();
+	const Matrix22& worldObjRot = this->gameObject()->transform().rotation();
+
+	// before rotation
+	Point2D beforeRot[4];
+	Vector2D marginSize = _halfSize + Vector2D(COLLIDER_MARGIN, COLLIDER_MARGIN);
+	beforeRot[0] = marginSize;
+	beforeRot[1] = { marginSize.x() * -1, marginSize.y() };
+	beforeRot[2] = { marginSize.x() * -1, marginSize.y() * -1 };
+	beforeRot[3] = { marginSize.x(), marginSize.y() * -1 };
 
 	// after rotation. be careful! you have to add worldCenter after rotation.
 	_points = { worldObjRot * beforeRot[0], worldObjRot * beforeRot[1],

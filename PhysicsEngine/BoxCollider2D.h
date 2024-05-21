@@ -20,8 +20,10 @@ private:
 	virtual BoxCollider2D* clone() override;
 	virtual AABB computeAABB() override;
 	virtual Point2D computeSupportPoint(const Vector2D& vec) override;
+	virtual Point2D computeMarginSupportPoint(const Vector2D& vec) override;
 	void compute(); // compute mass and inerita. call this when definition of collider is changed.
 	void computePoints();
+	void computeMarginPoints();
 
 
 	Vector2D _halfSize; // 회전이 적용되지 않은 값
