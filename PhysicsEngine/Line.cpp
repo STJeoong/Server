@@ -23,6 +23,12 @@ bool Line::isPointOnTheLine(const Point2D& p) const
 {
 	return std::abs(_a * p.x() + _b * p.y() + _c) < FLT_EPSILON;
 }
+Point2D Line::project(const Point2D& p) const
+{
+	float k = -(_a * p.x() + _b * p.y() + _c) / (_a * _a + _b * _b);
+
+	return { p.x() + _a * k, p.y() + _b * k };
+}
 #pragma endregion
 
 #pragma region private
