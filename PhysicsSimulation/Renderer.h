@@ -13,7 +13,7 @@ class ContactDebug : public MonoBehaviour
 public:
     virtual void start() override
     {
-        _collider = this->gameObject()->getComponent<BoxCollider2D>();
+        _collider = this->gameObject()->getComponent<Collider2D>();
     }
     virtual void update() override
     {
@@ -24,11 +24,20 @@ public:
             for (int j = 0; j < contacts.size(); ++j)
             {
                 const Contact2D& c = *(contacts[j]);
-                sf::CircleShape point(0.2f);
-                point.setOrigin({ 0.2f,0.2f });
-                point.setFillColor(sf::Color::Red);
-                point.setPosition({ c.contactA().x(), c.contactA().y() });
-                window.draw(point);
+                {
+                    sf::CircleShape point(0.2f);
+                    point.setOrigin({ 0.2f,0.2f });
+                    point.setFillColor(sf::Color::Red);
+                    point.setPosition({ c.contactA().x(), c.contactA().y() });
+                    window.draw(point);
+                }
+                {
+                    sf::CircleShape point(0.2f);
+                    point.setOrigin({ 0.2f,0.2f });
+                    point.setFillColor(sf::Color::Blue);
+                    point.setPosition({ c.contactB().x(), c.contactB().y() });
+                    window.draw(point);
+                }
                 //sf::Vertex point({ c.contactA().x(), c.contactA().y() }, sf::Color::White);
                 //window.draw(&point, 1, sf::Points);
             }
