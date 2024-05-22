@@ -126,6 +126,7 @@ void CollisionDetector::narrowPhase(Collision2D* collision)
 	Collider2D* colliderB = collision->colliderB();
 	bool trigger = colliderA->isTrigger() || colliderB->isTrigger();
 	E_GameObjectEvent& evt = collision->_evt;
+	E_GameObjectEvent oldEvt = evt;
 
 	if (!this->marginGjk(collision))
 	{
@@ -155,7 +156,11 @@ void CollisionDetector::narrowPhase(Collision2D* collision)
 		evt = E_GameObjectEvent::COLLISION_STAY;
 	collision->_isTrigger = false;
 	if (!this->gjk(collision))
+	{
+		if (oldEvt == E_GameObjectEvent::NONE)
+			evt = oldEvt;
 		return;
+	}
 	
 	this->epa(collision);
 }
