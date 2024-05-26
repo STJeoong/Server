@@ -15,7 +15,7 @@ int ThreadPool::enqueue(std::function<void()> func)
 	s_allocateIdx = (s_allocateIdx + 1) % ThreadPool::MAX_KEY;
 	return ret;
 }
-void ThreadPool::wait(int key)
+void ThreadPool::join(int key)
 {
 	while (!s_finished[key]);
 }

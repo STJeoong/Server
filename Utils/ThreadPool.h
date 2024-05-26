@@ -11,7 +11,7 @@ class ThreadPool
 	static const int MAX_KEY = 50000;
 public:
 	static int enqueue(std::function<void()> func);
-	static void wait(int key);
+	static void join(int key);
 	static void terminate();
 private:
 	ThreadPool() = default;
