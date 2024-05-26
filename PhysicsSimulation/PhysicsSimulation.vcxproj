@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\taejeong\source\repos\ServerFramework\PhysicsEngine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\taejeong\source\repos\ServerFramework\PhysicsEngine;C:\Users\taejeong\source\repos\ServerFramework\Utils</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,7 +131,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\taejeong\source\repos\ServerFramework\PhysicsEngine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\taejeong\source\repos\ServerFramework\PhysicsEngine;C:\Users\taejeong\source\repos\ServerFramework\Utils</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,6 +147,9 @@
   <ItemGroup>
     <ProjectReference Include="..\PhysicsEngine\PhysicsEngine.vcxproj">
       <Project>{0f827c70-fbf6-4293-9f9d-15c8c36b2a29}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.vcxproj">
+      <Project>{e560e68a-e943-4fb0-9c1a-66d546ee8aef}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

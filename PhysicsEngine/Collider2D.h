@@ -71,7 +71,6 @@ private:
 	virtual bool isCircle() const { return false; }
 	virtual bool perpendicularToTheSide(const Vector2D& vec) const = 0;
 	virtual bool project(const Vector2D& oldNormal, bool isA, const Point2D& otherGlobalPoint, const Point2D& myGlobalPoint, Point2D localEdgePoints[2]) = 0;
-	virtual bool containsPoint(const Point2D& p) = 0;
 	virtual void updatePoints() = 0;
 	void addToWorld();
 	void removeFromWorld();

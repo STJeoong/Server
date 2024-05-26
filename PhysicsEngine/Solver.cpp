@@ -12,7 +12,6 @@
 void Solver::init(const std::vector<Collision2D*>& collisions)
 {
 	this->warmStart(collisions);
-	_velocityBiases.resize(collisions.size());
 	_normalEffMasses.resize(collisions.size());
 	_tangentEffMasses.resize(collisions.size());
 	for (int i = 0; i < collisions.size(); ++i)
@@ -21,16 +20,12 @@ void Solver::init(const std::vector<Collision2D*>& collisions)
 		if (collision._isTrigger) continue;
 		const std::vector<Contact2D*>& contacts = collision.contacts();
 
-		_velocityBiases[i].resize(contacts.size());
+		collision.computeBouncinessBias();
 		_normalEffMasses[i].resize(contacts.size());
 		_tangentEffMasses[i].resize(contacts.size());
 		for (int j = 0; j < contacts.size(); ++j)
 		{
 			Contact2D& contact = *(contacts[j]);
-			if (contact.depth() <= 0.0f)
-				continue;
-			this->computeBouncinessBias(contact, collision._bounciness, collision._bouncinessThreshold);
-			_velocityBiases[i][j] = contact._bouncinessBias;
 			_normalEffMasses[i][j] = this->computeEffectiveMass(contact, contact.normal());
 			_tangentEffMasses[i][j] = this->computeEffectiveMass(contact, contact.tangent());
 		}
@@ -73,19 +68,16 @@ void Solver::solveVelocityConstraints(const std::vector<Collision2D*>& collision
 		for (int j = 0; j < contacts.size(); ++j)
 		{
 			Contact2D& contact = *(contacts[j]);
-			if (contact.depth() <= 0.0f)
-				continue;
-
 			float tLambda = -this->computeJV(contact, contact.tangent()) * _tangentEffMasses[i][j];
-			float oldTangentImpulse = contact._tangentImpulse;
-			float maxTangentImpulse = contact._normalImpulse * collision._friction;
+			float oldTangentImpulse = contact.tangentImpulse();
+			float maxTangentImpulse = contact.normalImpulse() * collision._friction;
 			contact._tangentImpulse = Utils::clamp(oldTangentImpulse + tLambda, maxTangentImpulse, -maxTangentImpulse);
-			tLambda = contact._tangentImpulse - oldTangentImpulse;
+			tLambda = contact.tangentImpulse() - oldTangentImpulse;
 			this->impulse(contact, contact.tangent(), tLambda);
 
-			float nLambda = -(this->computeJV(contact, contact.normal()) + _velocityBiases[i][j]) * _normalEffMasses[i][j];
+			float nLambda = -(this->computeJV(contact, contact.normal()) + contact.bouncinessBias()) * _normalEffMasses[i][j];
 			if (nLambda < 0.0f)
-				nLambda = -std::min(std::abs(nLambda), contact._normalImpulse);
+				nLambda = -std::min(std::abs(nLambda), contact.normalImpulse());
 			contact._normalImpulse += nLambda;
 			this->impulse(contact, contact.normal(), nLambda);
 		}
@@ -98,6 +90,7 @@ void Solver::solvePositionConstraints(const std::vector<Collision2D*>& collision
 		Collision2D& collision = *(collisions[i]);
 		if (collision._isTrigger) continue;
 		const std::vector<Contact2D*>& contacts = collision.contacts();
+		collision.updateContacts();
 		for (int j = 0; j < contacts.size(); ++j)
 		{
 			Contact2D& contact = *(contacts[j]);
@@ -106,30 +99,32 @@ void Solver::solvePositionConstraints(const std::vector<Collision2D*>& collision
 			RigidBody2D* rigidB = contact.colliderB()->attachedRigidBody();
 			Collider2D* colliderA = contact.colliderA();
 			Collider2D* colliderB = contact.colliderB();
-			Point2D globalPointA = colliderA->toWorld(contact.localContactA());
-			Point2D globalPointB = colliderB->toWorld(contact.localContactB());
-			float depth = Vector2D::dot(globalPointA - globalPointB, contact.normal());
-			float bias = this->computePenetrationBias(contact, depth);
-			if (bias < 0.0f)
-				contact._isUsed = true;
-			float nLambda = -bias * _normalEffMasses[i][j];
-			
-			GameObject* objA = colliderA->gameObject();
-			GameObject* objB = colliderB->gameObject();
 			float invMassA = rigidA == nullptr ? 0.0f : rigidA->invMass();
 			float invMassB = rigidB == nullptr ? 0.0f : rigidB->invMass();
 			float invInertiaA = rigidA == nullptr ? 0.0f : rigidA->invInertia();
 			float invInertiaB = rigidB == nullptr ? 0.0f : rigidB->invInertia();
+			float bias = this->computePenetrationBias(contact.depth());
+
+			float rnA = Vector2D::cross(contact.rA(), contact.normal());
+			float rnB = Vector2D::cross(contact.rB(), contact.normal());
+			float val = invMassA + invMassB + invInertiaA * rnA * rnA + invInertiaB * rnB * rnB;
+			float effMass = 0.0f;
+			if (val > 0.0f)
+				effMass = 1 / val;
+			float nLambda = -bias * effMass;
+			
+			GameObject* objA = colliderA->gameObject();
+			GameObject* objB = colliderB->gameObject();
 			Vector2D p = nLambda * contact.normal();
 			{
 				Vector2D dv = -invMassA * p;
-				float dw = -invInertiaA * Vector2D::cross(contact._rA, p);
+				float dw = -invInertiaA * Vector2D::cross(contact.rA(), p);
 				Motion motion = { dv, dw };
 				objA->processTransform(motion);
 			}
 			{
 				Vector2D dv = invMassB * p;
-				float dw = invInertiaB * Vector2D::cross(contact._rB, p);
+				float dw = invInertiaB * Vector2D::cross(contact.rB(), p);
 				Motion motion = { dv, dw };
 				objB->processTransform(motion);
 			}
@@ -152,12 +147,12 @@ void Solver::impulse(const Contact2D& contact, const Vector2D& dir, float lambda
 	if (rigidA != nullptr)
 	{
 		rigidA->_velocity -= invMassA * p;
-		rigidA->_angularVelocity -= invInertiaA * Vector2D::cross(contact._rA, p);
+		rigidA->_angularVelocity -= invInertiaA * Vector2D::cross(contact.rA(), p);
 	}
 	if (rigidB != nullptr)
 	{
 		rigidB->_velocity += invMassB * p;
-		rigidB->_angularVelocity += invInertiaB * Vector2D::cross(contact._rB, p);
+		rigidB->_angularVelocity += invInertiaB * Vector2D::cross(contact.rB(), p);
 	}
 }
 void Solver::warmStart(const std::vector<Collision2D*>& collisions)
@@ -176,38 +171,22 @@ void Solver::warmStart(const std::vector<Collision2D*>& collisions)
 			if (rigidA != nullptr)
 			{
 				rigidA->_velocity -= v * rigidA->invMass();
-				rigidA->_angularVelocity -= Vector2D::cross(contact._rA, v) * rigidA->invInertia();
+				rigidA->_angularVelocity -= Vector2D::cross(contact.rA(), v) * rigidA->invInertia();
 			}
 			if (rigidB != nullptr)
 			{
 				rigidB->_velocity += v * rigidB->invMass();
-				rigidB->_angularVelocity += Vector2D::cross(contact._rB, v) * rigidB->invInertia();
+				rigidB->_angularVelocity += Vector2D::cross(contact.rB(), v) * rigidB->invInertia();
 			}
 		}
 	}
 }
-float Solver::computePenetrationBias(const Contact2D& contact, float depth)
+float Solver::computePenetrationBias(float depth)
 {
-	Collider2D* colliderA = contact.colliderA();
-	Collider2D* colliderB = contact.colliderB();
 	return -std::max(BAUMGART * (depth - Solver::PENETRATION_SLOP), 0.0f);
-}
-void Solver::computeBouncinessBias(Contact2D& contact, float bounciness, float bouncinessThreshold)
-{
-	RigidBody2D* rigidA = contact.colliderA()->attachedRigidBody();
-	RigidBody2D* rigidB = contact.colliderB()->attachedRigidBody();
-
-	Vector2D relativeVel = {};
-	float normalVel = 0.0f;
-
-	if (rigidA != nullptr && rigidA->type() != E_BodyType::STATIC)
-		relativeVel -= rigidA->velocity() + Vector2D::cross(rigidA->angularVelocity(), contact._rA);
-	if (rigidB != nullptr && rigidB->type() != E_BodyType::STATIC)
-		relativeVel += rigidB->velocity() + Vector2D::cross(rigidB->angularVelocity(), contact._rB);
-	normalVel = Vector2D::dot(relativeVel, contact.normal());
-
-	if (-normalVel > bouncinessThreshold)
-		contact._bouncinessBias = bounciness * normalVel;
+	float bias = -std::max(BAUMGART * (depth - Solver::PENETRATION_SLOP), 0.0f);
+	bias = std::max(bias, -Solver::MAX_LINEAR_CORRECTION);
+	return bias;
 }
 float Solver::computeEffectiveMass(const Contact2D& contact, const Vector2D& dir)
 {
@@ -218,8 +197,8 @@ float Solver::computeEffectiveMass(const Contact2D& contact, const Vector2D& dir
 	float invInertiaA = rigidA == nullptr ? 0.0f : rigidA->invInertia();
 	float invInertiaB = rigidB == nullptr ? 0.0f : rigidB->invInertia();
 
-	float rdA = Vector2D::cross(contact._rA, dir);
-	float rdB = Vector2D::cross(contact._rB, dir);
+	float rdA = Vector2D::cross(contact.rA(), dir);
+	float rdB = Vector2D::cross(contact.rB(), dir);
 	float ret = invMassA + invMassB + invInertiaA * rdA * rdA + invInertiaB * rdB * rdB;
 	return ret > 0.0f ? 1 / ret : 0.0f;
 }
@@ -242,4 +221,5 @@ float Solver::computeJV(const Contact2D& contact, const Vector2D& dir)
 }
 #pragma endregion
 
+const float Solver::MAX_LINEAR_CORRECTION = 0.2f;
 const float Solver::PENETRATION_SLOP = 0.01f;

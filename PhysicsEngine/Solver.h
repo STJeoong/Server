@@ -6,6 +6,7 @@ class RigidBody2D;
 class Contact2D;
 class Solver
 {
+	static const float MAX_LINEAR_CORRECTION;
 	static const float PENETRATION_SLOP;
 public:
 	void init(const std::vector<Collision2D*>& collisions);
@@ -16,12 +17,10 @@ public:
 private:
 	void impulse(const Contact2D& contact, const Vector2D& dir, float lambda);
 	void warmStart(const std::vector<Collision2D*>& collisions);
-	float computePenetrationBias(const Contact2D& contact, float depth);
-	void computeBouncinessBias(Contact2D& contact, float bounciness, float bouncinessThreshold);
+	float computePenetrationBias(float depth);
 	float computeEffectiveMass(const Contact2D& contact, const Vector2D& dir);
 	float computeJV(const Contact2D& contact, const Vector2D& dir);
 
-	std::vector<std::vector<float>> _velocityBiases;
 	std::vector<std::vector<float>> _normalEffMasses;
 	std::vector<std::vector<float>> _tangentEffMasses;
 };

@@ -39,6 +39,9 @@
     <Filter Include="소스 파일\Dynamics\Resolution">
       <UniqueIdentifier>{9f13d13b-fb20-4c0b-a985-0dc669bd9479}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Dynamics\Manifold">
+      <UniqueIdentifier>{fd8a53dc-b158-4b89-9f5a-07c874c69f53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -110,9 +113,6 @@
     <ClInclude Include="E_BodyFlag.h">
       <Filter>소스 파일\Body\RigidyBody</Filter>
     </ClInclude>
-    <ClInclude Include="Collision2D.h">
-      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
-    </ClInclude>
     <ClInclude Include="S_RigidDef.h">
       <Filter>소스 파일\Body\RigidyBody</Filter>
     </ClInclude>
@@ -140,10 +140,15 @@
     <ClInclude Include="Line.h">
       <Filter>소스 파일\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Contact2D.h">
-      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
+    <ClInclude Include="Collision2D.h">
+      <Filter>소스 파일\Dynamics\Manifold</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\APPDATA\LOCAL\TEMP\TMPBFD1.TMP.H" />
+    <ClInclude Include="Contact2D.h">
+      <Filter>소스 파일\Dynamics\Manifold</Filter>
+    </ClInclude>
+    <ClInclude Include="ContactGenerator.h">
+      <Filter>소스 파일\Dynamics\Manifold</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -188,9 +193,6 @@
     <ClCompile Include="Collider2D.cpp">
       <Filter>소스 파일\Body\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="Collision2D.cpp">
-      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
-    </ClCompile>
     <ClCompile Include="ContactFilter.cpp">
       <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
     </ClCompile>
@@ -209,8 +211,17 @@
     <ClCompile Include="Line.cpp">
       <Filter>소스 파일\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Collision2D.cpp">
+      <Filter>소스 파일\Dynamics\Manifold</Filter>
+    </ClCompile>
     <ClCompile Include="Contact2D.cpp">
-      <Filter>소스 파일\Dynamics\CollisionDectection</Filter>
+      <Filter>소스 파일\Dynamics\Manifold</Filter>
+    </ClCompile>
+    <ClCompile Include="ContactGenerator.cpp">
+      <Filter>소스 파일\Dynamics\Manifold</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>소스 파일\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

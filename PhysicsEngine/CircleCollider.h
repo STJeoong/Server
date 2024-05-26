@@ -22,7 +22,6 @@ private:
 	virtual Point2D computeMarginSupportPoint(const Vector2D& vec) const override;
 	virtual bool perpendicularToTheSide(const Vector2D& vec) const override;
 	virtual bool project(const Vector2D& oldNormal, bool isA, const Vector2D& otherGlobalPoint, const Point2D& myGlobalPoint, Point2D localEdgePoints[2]) override;
-	virtual bool containsPoint(const Point2D& p) override;
 	virtual void updatePoints() override {}
 	virtual bool isCircle() const { return true; }
 	void compute(); // compute mass and inerita. call this when definition of collider is changed.

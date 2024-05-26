@@ -56,11 +56,6 @@ bool CircleCollider::project(const Vector2D& oldNormal, bool isA, const Point2D&
 	localEdgePoints[0] = localEdgePoints[1] = dir * _radius;
 	return true;
 }
-bool CircleCollider::containsPoint(const Point2D& p)
-{
-	Point2D worldCenter = this->position();
-	return (worldCenter - p).squaredLen() <= _radius * _radius + FLT_EPSILON;
-}
 void CircleCollider::compute()
 {
 	_mass = _density * PI * _radius * _radius;

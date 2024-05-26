@@ -6,6 +6,7 @@
 #include "RigidBody2D.h"
 #include "Simplex.h"
 #include "Polytope.h"
+#include "ContactGenerator.h"
 #include "GameObject.h"
 #include "Contact2D.h"
 #include <ObjectPool.h>
@@ -128,6 +129,8 @@ void CollisionDetector::narrowPhase(Collision2D* collision)
 	E_GameObjectEvent& evt = collision->_evt;
 	E_GameObjectEvent oldEvt = evt;
 
+	colliderA->updatePoints();
+	colliderB->updatePoints();
 	if (!this->marginGjk(collision))
 	{
 		if (evt == E_GameObjectEvent::NONE) return;
@@ -200,28 +203,20 @@ bool CollisionDetector::gjk(Collision2D* collision)
 void CollisionDetector::epa(Collision2D* collision)
 {
 	static Polytope polytope;
-	polytope.init(*collision, collision->_simplex.points(), collision->_simplex.sources());
+	polytope.init(*collision, collision->_simplex.points());
+	polytope.expand(*collision);
+	ContactGenerator generator(*collision, polytope.normal());
 	Collider2D* colliderA = collision->colliderA();
 	Collider2D* colliderB = collision->colliderB();
-	Contact2D* newContact = ObjectPool::get<Contact2D>();
 
-	newContact->_contactA = polytope.contactA();
-	newContact->_contactB = polytope.contactB();
-	newContact->_localContactA = colliderA->toLocal(polytope.contactA());
-	newContact->_localContactB = colliderB->toLocal(polytope.contactB());
-	newContact->_rA = polytope.contactA() - colliderA->position();
-	newContact->_rB = polytope.contactB() - colliderB->position();
-	newContact->_colliderA = colliderA;
-	newContact->_colliderB = colliderB;
-	newContact->_normal = polytope.normal().normalized();
-	newContact->_tangent = Vector2D::cross(newContact->_normal, 1.0f);
-	newContact->_depth = Vector2D::dot(newContact->_contactA - newContact->_contactB, newContact->_normal);
-	newContact->_rotationA = colliderA->gameObject()->transform().rotation().radian();
-	newContact->_rotationB = colliderB->gameObject()->transform().rotation().radian();
-
+	collision->updateContacts();
 	collision->validateOldContacts();
-	if (!collision->importNewContact(newContact))
-		ObjectPool::release(newContact);
+	for (int i = 0; i < generator.contactNum(); ++i)
+	{
+		Contact2D* newContact = generator.generate(*collision, i);
+		if (!collision->importNewContact(newContact))
+			ObjectPool::release(newContact);
+	}
 
 	collision->_bounciness = std::max(colliderA->bounciness(), colliderB->bounciness());
 	collision->_friction = std::sqrtf(colliderA->friction() * colliderB->friction());

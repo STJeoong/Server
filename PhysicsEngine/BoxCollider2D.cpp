@@ -179,14 +179,6 @@ bool BoxCollider2D::project(const Vector2D& oldNormal, bool isA, const Point2D& 
 	}
 	return true;
 }
-bool BoxCollider2D::containsPoint(const Point2D& p)
-{
-	static const float TOLERANCE = 0.0001f;
-	Point2D localPoint = this->toLocal(p);
-
-	return (-_halfSize.x() - TOLERANCE < p.x() && p.x() < _halfSize.x() + TOLERANCE) &&
-		(-_halfSize.y() - TOLERANCE < p.y() && p.y() < _halfSize.y() + TOLERANCE);
-}
 void BoxCollider2D::updatePoints()
 {
 	this->computePoints(_points, this->gameObject()->transform());

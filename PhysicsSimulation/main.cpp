@@ -118,6 +118,7 @@ void demo1()
     g3->moveTo({ 400.0f, 330.0f });
     //g3->moveTo({ 400.0f, 500.0f });
 }
+// square pyramid
 void demo2()
 {
     S_BoxDef def3;
@@ -130,7 +131,7 @@ void demo2()
     g3->moveTo({ 400.0f, 335.0f });
 
     //Point2D startPoint = { 402.0f, 290.5f };
-    Point2D startPoint = { 372.0f, 290.5f };
+    Point2D startPoint = { 372.0f, 300.5f };
     Vector2D dx = { 2.15f, 0.0f };
     Vector2D dy = { 0.0f, 2.25f };
     for (int i = 0; i < 20; ++i)
@@ -143,7 +144,7 @@ void demo2()
             GameObject* obj = World::instantiate();
             RigidBody2D* rigid = obj->addComponent<RigidBody2D>();
             obj->addComponent<BoxCollider2D>(def);
-            obj->addComponent<ContactDebug>();
+            //obj->addComponent<ContactDebug>();
             Renderder* renderer = obj->addComponent<Renderder>(new sf::RectangleShape({ def.halfSize.x() * 2, def.halfSize.y() * 2 }), def.halfSize);
             sf::Color color = sf::Color::Red;
             color.a = 130;
@@ -154,33 +155,8 @@ void demo2()
         }
     }
 }
+// 100g
 void demo3()
-{
-    S_BoxDef def3;
-    def3.halfSize = { 250.0f, 10.0f };
-    def3.bouncinessThreshold = 50.0f;
-    GameObject* g3 = World::instantiate(); // floor
-    BoxCollider2D* c3 = g3->addComponent<BoxCollider2D>(def3);
-    g3->addComponent<Renderder>(new sf::RectangleShape({ def3.halfSize.x() * 2, def3.halfSize.y() * 2 }), def3.halfSize);
-    g3->moveTo({ 400.0f, 318.0f });
-
-    GameObject* g = World::instantiate();
-    S_BoxDef def;
-    def.halfSize = { 1.0f,1.0f };
-    g->addComponent<RigidBody2D>();
-    g->addComponent<BoxCollider2D>(def);
-    g->addComponent<Renderder>(new sf::RectangleShape({ def.halfSize.x() * 2, def.halfSize.y() * 2 }), def.halfSize);
-    g->moveTo({ 395.0f, 300.0f });
-
-    GameObject* g2 = World::instantiate();
-    S_BoxDef def2;
-    def2.halfSize = { 1.0f,1.0f };
-    g2->addComponent<RigidBody2D>();
-    g2->addComponent<BoxCollider2D>(def);
-    g2->addComponent<Renderder>(new sf::RectangleShape({ def.halfSize.x() * 2, def.halfSize.y() * 2 }), def.halfSize);
-    g2->moveTo({ 395.0f, 300.0f });
-}
-void demo4()
 {
     S_BoxDef def3;
     def3.halfSize = { 250.0f, 10.0f };
@@ -217,22 +193,8 @@ void demo4()
     renderer2->outlineThickness(0.07f);
     g2->moveTo({ 409.0f, 290.0f });
 }
-void demo5()
-{
-    GameObject* g = World::instantiate();
-    S_BoxDef def;
-    def.halfSize = { 1.0f,1.0f };
-    RigidBody2D* rigid = g->addComponent<RigidBody2D>();
-    rigid->gravityScale(0.0f);
-    g->setRotation(-7.96f);
-    g->addComponent<BoxCollider2D>(def);
-    Renderder* renderer = g->addComponent<Renderder>(new sf::RectangleShape({ def.halfSize.x() * 2, def.halfSize.y() * 2 }), def.halfSize);
-    renderer->fillColor(sf::Color::Black);
-    renderer->outlineColor(sf::Color::White);
-    renderer->outlineThickness(0.07f);
-    g->moveTo({ 379.0f, 300.0f });
-}
-void demo6()
+// stacking vertical box (version 1)
+void demo4()
 {
     S_BoxDef def3;
     def3.halfSize = { 250.0f, 10.0f };
@@ -258,7 +220,8 @@ void demo6()
         obj->moveTo(from - dy * (float)i);
     }
 }
-void demo7()
+// stacking vertical circle
+void demo5()
 {
     S_BoxDef def3;
     def3.halfSize = { 250.0f, 10.0f };
@@ -268,8 +231,8 @@ void demo7()
     g3->addComponent<Renderder>(new sf::RectangleShape({ def3.halfSize.x() * 2, def3.halfSize.y() * 2 }), def3.halfSize);
     g3->moveTo({ 400.0f, 328.0f });
 
-    Vector2D dy = { 0, 2.0f };
-    Point2D from = { 390.0f, 318.0f };
+    Vector2D dy = { 0, 2.2f };
+    Point2D from = { 390.0f, 310.0f };
     for (int i = 0; i < 10; ++i)
     {
         S_CircleDef def;
@@ -281,10 +244,11 @@ void demo7()
         sf::Color color = sf::Color::Red;
         color.a = 130;
         renderer->fillColor(color);
-        obj->moveTo(from - dy * i);
+        obj->moveTo(from - dy * (float)i);
     }
 }
-void demo8()
+// stacking vertical circle and box
+void demo6()
 {
     S_BoxDef def3;
     def3.halfSize = { 250.0f, 10.0f };
@@ -328,7 +292,8 @@ void demo8()
         obj->moveTo(from - dy * (float)i);
     }
 }
-void demo9()
+// circle pyramid
+void demo7()
 {
     S_BoxDef def3;
     def3.halfSize = { 250.0f, 10.0f };
@@ -362,16 +327,18 @@ void demo9()
             GameObject* obj = World::instantiate();
             RigidBody2D* rigid = obj->addComponent<RigidBody2D>();
             obj->addComponent<CircleCollider>(def);
-            //obj->addComponent<ContactDebug>();
+            obj->addComponent<ContactDebug>();
             Renderder* renderer = obj->addComponent<Renderder>(new sf::CircleShape(def.radius), Vector2D{def.radius, def.radius});
             sf::Color color = sf::Color::Red;
             color.a = 130;
             renderer->fillColor(color);
             obj->moveTo(from + dx * (float)j - dy * (float)i);
+            //obj->moveTo(startPoint + dx * (float)j - dy * (float)i);
         }
     }
 }
-void demo10()
+// box sliding ( long road )
+void demo8()
 {
     S_BoxDef def3;
     def3.halfSize = { 250.0f, 10.0f };
@@ -395,7 +362,8 @@ void demo10()
     renderer->fillColor(color);
     obj->moveTo({ 420.0f, 320.0f });
 }
-void demo11()
+// stacking vertical box (version 2)
+void demo9()
 {
     S_BoxDef def3;
     def3.halfSize = { 250.0f, 10.0f };
@@ -404,11 +372,11 @@ void demo11()
     BoxCollider2D* c3 = g3->addComponent<BoxCollider2D>(def3);
     g3->addComponent<Renderder>(new sf::RectangleShape({ def3.halfSize.x() * 2, def3.halfSize.y() * 2 }), def3.halfSize);
     //g3->moveTo({ 400.0f, 305.0f });
-    g3->moveTo({ 400.0f, 335.0f });
+    g3->moveTo({ 400.0f, 320.0f });
 
-    Point2D startPoint = { 372.0f, 322.5f };
-    Vector2D dy = { 0.0f, 2.25f };
-    for (int i = 0; i < 20; ++i)
+    Point2D startPoint = { 402.0f, 312.5f };
+    Vector2D dy = { 0.0f, 1.55f };
+    for (int i = 0; i < 10; ++i)
     {
         S_BoxDef def;
         def.halfSize = { 1.0f,1.0f };
@@ -422,17 +390,162 @@ void demo11()
         renderer->fillColor(color);
         obj->moveTo(startPoint - dy * (float)i);
         obj->name(std::to_string(i));
+        /*if (i == 2)
+            rigid->velocity({ 0,-20 });*/
     }
 }
+// horizontal box
+void demo10()
+{
+    S_BoxDef def3;
+    def3.halfSize = { 250.0f, 10.0f };
+    def3.bouncinessThreshold = 50.0f;
+    GameObject* g3 = World::instantiate(); // floor
+    BoxCollider2D* c3 = g3->addComponent<BoxCollider2D>(def3);
+    g3->addComponent<Renderder>(new sf::RectangleShape({ def3.halfSize.x() * 2, def3.halfSize.y() * 2 }), def3.halfSize);
+    //g3->moveTo({ 400.0f, 305.0f });
+    g3->moveTo({ 400.0f, 335.0f });
+
+    Point2D startPoint = { 372.0f, 312.5f };
+    Vector2D dx = { 0.0f, 0.0f };
+    for (int i = 0; i < 10; ++i)
+    {
+        S_BoxDef def;
+        def.halfSize = { 1.0f,1.0f };
+        GameObject* obj = World::instantiate();
+        RigidBody2D* rigid = obj->addComponent<RigidBody2D>();
+        obj->addComponent<BoxCollider2D>(def);
+        obj->addComponent<ContactDebug>();
+        Renderder* renderer = obj->addComponent<Renderder>(new sf::RectangleShape({ def.halfSize.x() * 2, def.halfSize.y() * 2 }), def.halfSize);
+        sf::Color color = sf::Color::Red;
+        color.a = 130;
+        renderer->fillColor(color);
+        //obj->moveTo(startPoint + dx * (float)i);
+        obj->moveTo(startPoint);
+        obj->name(std::to_string(i));
+    }
+}
+// box sliding ( short road )
+void demo11()
+{
+    S_BoxDef def3;
+    def3.halfSize = { 20.0f, 2.0f };
+    def3.bouncinessThreshold = 50.0f;
+    GameObject* g3 = World::instantiate(); // floor
+    BoxCollider2D* c3 = g3->addComponent<BoxCollider2D>(def3);
+    g3->addComponent<Renderder>(new sf::RectangleShape({ def3.halfSize.x() * 2, def3.halfSize.y() * 2 }), def3.halfSize);
+    //g3->moveTo({ 400.0f, 305.0f });
+    g3->moveTo({ 400.0f, 315.0f });
+
+    S_BoxDef def;
+    def.halfSize = { 1.0f,1.0f };
+    GameObject* obj = World::instantiate();
+    RigidBody2D* rigid = obj->addComponent<RigidBody2D>();
+    rigid->velocity({ 16.3f,0 });
+    obj->addComponent<BoxCollider2D>(def);
+    obj->addComponent<ContactDebug>();
+    Renderder* renderer = obj->addComponent<Renderder>(new sf::RectangleShape({ def.halfSize.x() * 2, def.halfSize.y() * 2 }), def.halfSize);
+    sf::Color color = sf::Color::Red;
+    color.a = 130;
+    renderer->fillColor(color);
+    obj->moveTo({390, 300});
+}
+// circle sliding
+void demo12()
+{
+    S_BoxDef def3;
+    def3.halfSize = { 20.0f, 2.0f };
+    def3.bouncinessThreshold = 50.0f;
+    GameObject* g3 = World::instantiate(); // floor
+    BoxCollider2D* c3 = g3->addComponent<BoxCollider2D>(def3);
+    g3->addComponent<Renderder>(new sf::RectangleShape({ def3.halfSize.x() * 2, def3.halfSize.y() * 2 }), def3.halfSize);
+    //g3->moveTo({ 400.0f, 305.0f });
+    g3->moveTo({ 400.0f, 315.0f });
+
+    S_CircleDef def;
+    def.radius = 1.0f;
+    GameObject* obj = World::instantiate();
+    RigidBody2D* rigid = obj->addComponent<RigidBody2D>();
+    rigid->velocity({ -4,0 });
+    obj->addComponent<CircleCollider>(def);
+    obj->addComponent<ContactDebug>();
+    Renderder* renderer = obj->addComponent<Renderder>(new sf::CircleShape(def.radius), Vector2D{ def.radius, def.radius });
+    sf::Color color = sf::Color::Red;
+    color.a = 130;
+    renderer->fillColor(color);
+    obj->moveTo({ 390, 310 });
+}
+// test bounciness (box)
+void demo13()
+{
+    S_BoxDef def3;
+    def3.halfSize = { 250.0f, 10.0f };
+    def3.bouncinessThreshold = 50.0f;
+    GameObject* g3 = World::instantiate(); // floor
+    BoxCollider2D* c3 = g3->addComponent<BoxCollider2D>(def3);
+    g3->addComponent<Renderder>(new sf::RectangleShape({ def3.halfSize.x() * 2, def3.halfSize.y() * 2 }), def3.halfSize);
+    g3->moveTo({ 400.0f, 330.0f });
+
+    Vector2D dx = { 3.0f, 0.0f };
+    Point2D from = { 390.0f, 280.0f };
+    for (int i = 0; i < 5; ++i)
+    {
+        S_BoxDef def;
+        def.halfSize = { 1.0f,1.0f };
+        def.bounciness = 0.1f * i;
+        GameObject* obj = World::instantiate();
+        obj->addComponent<RigidBody2D>();
+        obj->addComponent<BoxCollider2D>(def);
+        obj->addComponent<ContactDebug>();
+        Renderder* renderer = obj->addComponent<Renderder>(new sf::RectangleShape({ def.halfSize.x() * 2, def.halfSize.y() * 2 }), def.halfSize);
+        sf::Color color = sf::Color::Red;
+        color.a = 130;
+        renderer->fillColor(color);
+        obj->moveTo(from + dx * (float)i);
+    }
+}
+// test bounciness (circle)
+void demo14()
+{
+    S_BoxDef def3;
+    def3.halfSize = { 250.0f, 10.0f };
+    def3.bouncinessThreshold = 50000.0f;
+    GameObject* g3 = World::instantiate(); // floor
+    BoxCollider2D* c3 = g3->addComponent<BoxCollider2D>(def3);
+    g3->addComponent<Renderder>(new sf::RectangleShape({ def3.halfSize.x() * 2, def3.halfSize.y() * 2 }), def3.halfSize);
+    g3->moveTo({ 400.0f, 330.0f });
+
+    Vector2D dx = { 3.0f, 0.0f };
+    Point2D from = { 390.0f, 300.0f };
+    for (int i = 0; i < 11; ++i)
+    {
+        S_CircleDef def;
+        def.radius = 1.0f;
+        def.bounciness = 0.1f * i;
+        GameObject* obj = World::instantiate();
+        obj->addComponent<RigidBody2D>();
+        obj->addComponent<CircleCollider>(def);
+        //obj->addComponent<ContactDebug>();
+        Renderder* renderer = obj->addComponent<Renderder>(new sf::CircleShape({ def.radius }), Vector2D(def.radius, def.radius));
+        sf::Color color = sf::Color::Red;
+        color.a = 130;
+        renderer->fillColor(color);
+        obj->moveTo(from + dx * (float)i);
+    }
+}
+
+#include <ObjectPool.h>
+#include <MemoryBlockPool.h>
 int main()
 {
     std::ios_base::sync_with_stdio(false); std::cin.tie(0); std::cout.tie(0);
-    demo11();
+    demo7();
     World::init({ 0.0f, 10.0f });
 	
     sf::Clock clock;
     bool pause = false;
     float dt = 0.0f;
+    float timeScale = 1.0f;
     /*while (true)
     {
         dt += clock.restart().asSeconds();
@@ -442,7 +555,7 @@ int main()
     }*/
     sf::View originalView = window.getDefaultView();
     sf::View zoomedView = window.getDefaultView();
-    zoomedView.zoom(1.0f / 10.0f);
+    zoomedView.zoom(1.0f / 14.0f);
 	while (window.isOpen())
 	{
 		sf::Event evt;
@@ -453,13 +566,15 @@ int main()
             if (evt.type == sf::Event::KeyPressed)
                 pause = !pause;
 		}
-        if (pause) continue;
         dt += clock.restart().asSeconds();
-        if (dt < 0.02f) continue;
-        dt -= 0.02f;
+        //
+        // threshold값이 step의 dt값보다 n배 크면 실제 시뮬레이션은 1/n배속된다.
+        if (dt < 0.02f / timeScale) continue;
+        dt -= 0.02f / timeScale;
+        if (pause) continue;
         window.clear(sf::Color::Black);
         //dt = clock.restart().asSeconds();
-        World::step(0.02f, 8, 23);
+        World::step(0.02f, 8, 6);
         window.setView(zoomedView);
         window.display();
 	}

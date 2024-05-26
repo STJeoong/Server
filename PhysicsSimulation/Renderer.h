@@ -25,8 +25,8 @@ public:
             {
                 const Contact2D& c = *(contacts[j]);
                 {
-                    sf::CircleShape point(0.2f);
-                    point.setOrigin({ 0.2f,0.2f });
+                    sf::CircleShape point(0.4f);
+                    point.setOrigin({ 0.4f,0.4f });
                     point.setFillColor(sf::Color::Red);
                     point.setPosition({ c.contactA().x(), c.contactA().y() });
                     window.draw(point);
@@ -34,7 +34,7 @@ public:
                 {
                     sf::CircleShape point(0.2f);
                     point.setOrigin({ 0.2f,0.2f });
-                    point.setFillColor(sf::Color::Blue);
+                    point.setFillColor(sf::Color::Green);
                     point.setPosition({ c.contactB().x(), c.contactB().y() });
                     window.draw(point);
                 }

@@ -153,13 +153,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\APPDATA\LOCAL\TEMP\TMPBFD1.TMP.H" />
     <ClInclude Include="AABB.h" />
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="BroadPhase.h" />
     <ClInclude Include="Collision2D.h" />
     <ClInclude Include="Contact2D.h" />
     <ClInclude Include="ContactFilter.h" />
+    <ClInclude Include="ContactGenerator.h" />
     <ClInclude Include="E_BodyFlag.h" />
     <ClInclude Include="E_BodyType.h" />
     <ClInclude Include="E_Layer.h" />
@@ -196,6 +196,7 @@
     <ClCompile Include="Collision2D.cpp" />
     <ClCompile Include="Contact2D.cpp" />
     <ClCompile Include="ContactFilter.cpp" />
+    <ClCompile Include="ContactGenerator.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="Polytope.cpp" />
     <ClCompile Include="RigidBody2D.cpp" />
@@ -215,6 +216,7 @@
     <ClCompile Include="Simplex.cpp" />
     <ClCompile Include="Solver.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>

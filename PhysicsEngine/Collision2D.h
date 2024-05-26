@@ -8,19 +8,21 @@ class Contact2D;
 class Collision2D
 {
 	friend class World;
-	friend class CollisionDetector;
 	friend class Solver;
-	static const float PERSISTENT_THRESHOLD_SQUARED;
+	friend class CollisionDetector;
 public:
 	bool isTrigger() const { return _isTrigger; }
 	Collider2D* colliderA() const { return _colliderA; }
 	Collider2D* colliderB() const { return _colliderB; }
 	const std::vector<Contact2D*>& contacts() const { return _contacts; }
 private:
-	void validateOldContacts();
-	bool importNewContact(Contact2D* contact);
-	bool isValid(Contact2D* contact);
+	void validateOldContacts(); // 중복된 점, depth < -2.0f * MARGIN인 점들 모두 삭제
+	bool importNewContact(Contact2D* contact); // 기존의 contact와 다른 contact만 추가
 	void prune();
+
+	void updateContacts();
+	void computeBouncinessBias();
+
 	void clearContacts();
 	void onDestroy();
 

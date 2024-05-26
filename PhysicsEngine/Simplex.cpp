@@ -7,12 +7,10 @@
 void Simplex::init(const Point2D& pointFromA, const Point2D& pointFromB)
 {
 	_points.clear();
-	_sources.clear();
 	_containsOrigin = false;
 	_points.push_back(pointFromA - pointFromB);
-	_sources.push_back({ pointFromA, pointFromB });
 	_supportVec = _points[0] * -1;
-	if (_supportVec == Vector2D(0.0f, 0.0f))
+	if (_supportVec.x() == 0.0f && _supportVec.y() == 0.0f)
 		_containsOrigin = true;
 }
 bool Simplex::insert(const Point2D& pointFromA, const Point2D& pointFromB)
@@ -22,16 +20,9 @@ bool Simplex::insert(const Point2D& pointFromA, const Point2D& pointFromB)
 		_points[0] = _points[1];
 		_points[1] = _points[2];
 		_points[2] = pointFromA - pointFromB;
-
-		_sources[0] = _sources[1];
-		_sources[1] = _sources[2];
-		_sources[2] = { pointFromA, pointFromB };
 	}
 	else
-	{
 		_points.push_back(pointFromA - pointFromB);
-		_sources.push_back({ pointFromA, pointFromB });
-	}
 	return this->check();
 }
 #pragma endregion
@@ -50,7 +41,7 @@ bool Simplex::check()
 		Vector2D AB = _points[1] - _points[0];
 		// TODO : supportVec가 {0,0}이면? // 원점 포함임
 		_supportVec = Vector2D::cross(Vector2D::cross(AB, _supportVec), AB);
-		if (_supportVec == Vector2D(0.0f, 0.0f))
+		if (_supportVec.x() == 0.0f && _supportVec.y() == 0.0f)
 			_containsOrigin = true;
 		return true;
 	}
@@ -64,7 +55,6 @@ bool Simplex::check()
 	if (Vector2D::dot(_supportVec, CO) > 0.0f) return true; // check Rbc. TODO : 여기에 0.0f 대신에 FLT_EPSILON쓰면 원점이 약간 삐져나가있어도 ok함
 	_supportVec = Vector2D::cross(Vector2D::cross(CB, CA), CA);
 	Utils::swap(_points[0], _points[1]);
-	Utils::swap(_sources[0], _sources[1]);
 	if (Vector2D::dot(_supportVec, CO) > 0.0f) return true; // check Rac
 	_containsOrigin = true;
 	return true;
