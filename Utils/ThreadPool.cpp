@@ -5,8 +5,9 @@
 int ThreadPool::enqueue(std::function<void()> func)
 {
 	if (s_stopThreads)
-		return;
-	if (s_workers.empty()) ThreadPool::makeWorkers();
+		return ThreadPool::INVALID_KEY;
+	if (s_workers.empty())
+		ThreadPool::makeWorkers();
 	std::lock_guard<std::mutex> lock(s_mutex);
 	s_queue.push({ s_allocateIdx, std::move(func) });
 	s_cv.notify_one();
@@ -17,6 +18,8 @@ int ThreadPool::enqueue(std::function<void()> func)
 }
 void ThreadPool::join(int key)
 {
+	if (key == ThreadPool::INVALID_KEY)
+		return;
 	while (!s_finished[key]);
 }
 void ThreadPool::terminate()

@@ -10,6 +10,8 @@ class ThreadPool
 	static const int THREAD_COUNT = 100;
 	static const int MAX_KEY = 50000;
 public:
+	static const int INVALID_KEY = -1;
+
 	static int enqueue(std::function<void()> func);
 	static void join(int key);
 	static void terminate();

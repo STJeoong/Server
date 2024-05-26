@@ -18,7 +18,6 @@ private:
 
 	static const int DEFAULT_POOL_SIZE = 1000;
 	static std::vector<std::pair<int, MemoryBlockPool*>> s_vec;
-	static std::unordered_map<int, MemoryBlockPool*> s_mp;
 	static std::mutex s_mutex;
 
 	int _blockSize;
