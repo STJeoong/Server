@@ -11,6 +11,10 @@ RigidBody2D* RigidBody2D::clone()
 	ret->_colliders.clear();
 	return ret;
 }
+void RigidBody2D::onUpdate()
+{
+	_oldTransform = this->gameObject()->transform();
+}
 void RigidBody2D::type(E_BodyType bodyType)
 {
 	_newType = bodyType;
@@ -139,8 +143,18 @@ void RigidBody2D::onApplyReservation()
 }
 void RigidBody2D::sync()
 {
+	if (_colliders.empty())
+		return;
+	
+	const Transform& transform = this->gameObject()->transform();
 	for (Collider2D* c : _colliders)
-		World::moveCollider(c->key(), c->computeAABB(), { 0.0f, 0.0f }); // TODO : sweepAABB·Î
+	{
+		AABB oldAABB = c->computeAABB(_oldTransform);
+		AABB newAABB = c->computeAABB(transform);
+		AABB combined = oldAABB + newAABB;
+		Vector2D displacement = (newAABB.maxi() + newAABB.mini()) * 0.5f - (oldAABB.maxi() + oldAABB.mini()) * 0.5f;
+		World::moveCollider(c->key(), combined, displacement); // TODO : sweepAABB·Î
+	}
 }
 void RigidBody2D::resetMassData()
 {

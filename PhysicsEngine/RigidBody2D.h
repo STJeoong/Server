@@ -5,6 +5,7 @@
 #include "E_BodyType.h"
 #include "E_BodyFlag.h"
 #include "S_RigidDef.h"
+#include "Transform.h"
 
 class Collider2D;
 class RigidBody2D : public Component
@@ -37,6 +38,7 @@ private:
 	RigidBody2D(const S_RigidDef& def);
 	~RigidBody2D();
 	virtual RigidBody2D* clone() override;
+	void onUpdate() override;
 	bool onAddComponent(Component* component) override;
 	void onRemoveComponent(Component* component) override;
 	void onEnableComponent(Component* component) override;
@@ -60,6 +62,7 @@ private:
 	float _gravityScale = 1.0f;
 	UINT8 _flags = 1; // default : awake start
 	float _sleepTime = 0.0f;
+	Transform _oldTransform;
 
 	std::vector<Collider2D*> _colliders;
 
