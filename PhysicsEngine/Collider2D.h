@@ -7,12 +7,15 @@
 
 class RigidBody2D;
 class AABB;
+class Transform;
 class Collider2D : public Behaviour
 {
 	friend class RigidBody2D;
 	friend class CollisionDetector;
 	friend class Polytope;
+	friend class ContactGenerator;
 	friend class World;
+	friend class Contact2D;
 public:
 	const Point2D& offset() const { return _offset; } // local offset
 	float density() const { return _density; }
@@ -62,10 +65,14 @@ protected:
 	// reservation ( executed next time step )
 	bool _needToToggleTriggerState = false; // have you reserved modification of trigger state?
 private:
-	virtual AABB computeAABB() = 0;
-	virtual Point2D computeSupportPoint(const Vector2D& vec) = 0;
-	virtual Point2D computeMarginSupportPoint(const Vector2D& vec) = 0;
+	virtual AABB computeAABB(const Transform& transform) = 0;
+	virtual Point2D computeSupportPoint(const Vector2D& vec) const = 0;
+	virtual Point2D computeMarginSupportPoint(const Vector2D& vec) const = 0;
 	virtual bool isCircle() const { return false; }
+	virtual bool perpendicularToTheSide(const Vector2D& vec) const = 0;
+	virtual bool project(const Vector2D& oldNormal, bool isA, const Point2D& otherGlobalPoint, const Point2D& myGlobalPoint, Point2D localEdgePoints[2]) = 0;
+	virtual bool containsPoint(const Point2D& p) = 0;
+	virtual void updatePoints() = 0;
 	void addToWorld();
 	void removeFromWorld();
 	void attachTo(RigidBody2D* rigid) { _attachedRigidBody = rigid; }

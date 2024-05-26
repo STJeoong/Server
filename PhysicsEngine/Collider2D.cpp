@@ -85,7 +85,8 @@ void Collider2D::onApplyReservation()
 void Collider2D::onMove()
 {
 	if (!this->gameObject()->isActive() || !Behaviour::enabled() || _key == -1) return;
-	World::moveCollider(_key, this->computeAABB(), { 0.0f, 0.0f });
+	const Transform& transform = this->gameObject()->transform();
+	World::moveCollider(_key, this->computeAABB(transform), { 0.0f, 0.0f });
 }
 void Collider2D::addToWorld() { _key = World::add(this); }
 void Collider2D::removeFromWorld()
