@@ -6,6 +6,7 @@ class DAT
     static const int NULL_NODE = -1; // 노드가 없음을 뜻함.
     static const float FATTEN_AABB;
     static const float PREDICT_MULTIPLIER;
+    static const int INITIAL_STK_SIZE = 10000;
 public:
     DAT();
     int insert(void* userData, const AABB& aabb);
@@ -49,4 +50,7 @@ private:
     int _freeNode; // 할당된 노드가 삭제됐거나 할당되지 않았을 때 이 인덱스를 사용해서 새로운 노드 할당할 수 있음.
     int _cnt; // 현재 트리에 있는 노드의 갯수
     int _capacity; // 벡터 capacity
+
+    std::vector<int> _stk; // for performance;
+    int _stkCapacity;
 };

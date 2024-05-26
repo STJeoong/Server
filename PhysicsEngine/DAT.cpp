@@ -5,6 +5,8 @@
 DAT::DAT() : _root(DAT::NULL_NODE), _freeNode(0), _cnt(0), _capacity(16)
 {
     _nodes.resize(_capacity);
+    _stk.resize(DAT::INITIAL_STK_SIZE);
+    _stkCapacity = DAT::INITIAL_STK_SIZE;
     for (int i = 0; i < _capacity; ++i)
     {
         _nodes[i].parent = i + 1;
@@ -64,18 +66,27 @@ void DAT::makeCandidates(const std::vector<int>& queryId, std::vector<std::pair<
     for (int i = 0; i < queryId.size(); ++i)
     {
         const AABB& queryAABB = _nodes[queryId[i]].aabb;
-        std::stack<int> stk;
-        stk.push(_root);
-        while (!stk.empty())
+        int idx = 0;
+        _stk[idx++] = _root;
+        while (idx > 0)
         {
-            int id = stk.top();
-            stk.pop();
+            int id = _stk[--idx];
             if (!queryAABB.overlaps(_nodes[id].aabb)) continue;
             if (queryId[i] == id) continue;
             if (!_nodes[id].isLeaf())
             {
-                stk.push(_nodes[id].left);
-                stk.push(_nodes[id].right);
+                if (idx >= _stkCapacity)
+                {
+                    _stkCapacity *= 2;
+                    _stk.resize(_stkCapacity);
+                }
+                _stk[idx++] = _nodes[id].left;
+                if (idx >= _stkCapacity)
+                {
+                    _stkCapacity *= 2;
+                    _stk.resize(_stkCapacity);
+                }
+                _stk[idx++] = _nodes[id].right;
                 continue;
             }
             if (_nodes[id].moved && _nodes[queryId[i]].moved && id < queryId[i]) continue;
