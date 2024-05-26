@@ -15,6 +15,7 @@
 #include "PassiveMode.h"
 #include "PhysicsMode.h"
 #include "ThreadPool.h"
+#include "MemoryBlockPool.h"
 #include <fstream>
 
 #pragma region public
@@ -65,6 +66,11 @@ void Engine::setServerMode(E_ServerMode mode)
 	case E_ServerMode::PHYSICS_MODE: s_evtContainer = new NoWaitEngineEventContainer(); s_serverMode = new PhysicsMode(); break;
 	}
 
+	isSet = true;
+	MemoryBlockPool::makePool(static_cast<int>(Size::_128));
+	MemoryBlockPool::makePool(static_cast<int>(Size::_256));
+	MemoryBlockPool::makePool(static_cast<int>(Size::_1024));
+	MemoryBlockPool::makePool(static_cast<int>(Size::_8192));
 	s_serverMode->setEventContainer(s_evtContainer);
 }
 bool Engine::addEngine(int engineID, const S_ServerConfig& config, I_Broadcaster* broadcaster)
