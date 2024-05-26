@@ -77,7 +77,6 @@ bool Collision2D::importNewContact(Contact2D* contact)
 }
 void Collision2D::prune()
 {
-	std::cout << "prune\n";
 	Contact2D* deepest = _contacts[2];
 
 	Contact2D* farthestFromDeepest = _contacts[0];

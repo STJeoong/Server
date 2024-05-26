@@ -27,9 +27,9 @@ public:
 	static void step(float dt, int velocityIter = 8, int positionIter = 3);
 private:
 	static int add(Collider2D* collider);
-	static int add(RigidBody2D* rigid);
+	static void add(RigidBody2D* rigid);
 	static void moveCollider(int key, const AABB& sweepAABB, const Vector2D& displacement);
-	static void removeRigid(int key);
+	static void removeRigid(RigidBody2D* rigid);
 	static void removalReq(int key); // request removal of collider
 	static void invokeCollisionEvents();
 	static void invokeExitEvents();

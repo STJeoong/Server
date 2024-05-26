@@ -59,8 +59,7 @@ RigidBody2D::~RigidBody2D()
 {
 	for (Collider2D* c : _colliders)
 		c->attachTo(nullptr);
-	if (_key != -1)
-		World::removeRigid(_key);
+	World::removeRigid(this);
 }
 bool RigidBody2D::onAddComponent(Component* component)
 {
@@ -137,7 +136,7 @@ void RigidBody2D::onApplyReservation()
 			tmp->attachTo(this);
 		}
 		this->resetMassData();
-		_key = World::add(this);
+		World::add(this);
 	}
 	_wasAdded = false;
 }

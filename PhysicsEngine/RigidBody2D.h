@@ -66,8 +66,6 @@ private:
 
 	std::vector<Collider2D*> _colliders;
 
-	int _key = -1; // world key
-
 	// reservation ( executed next time step )
 	E_BodyType _newType = E_BodyType::DYNAMIC;
 	bool _wasAdded = false;

@@ -5,16 +5,16 @@
 Matrix22::Matrix22(float radian)
 {
 	_radian = radian;
-	float c = cosf(radian);
-	float s = sinf(radian);
+	float c = std::cosf(radian);
+	float s = std::sinf(radian);
 	_m00 = c; _m01 = -s;
 	_m10 = s; _m11 = c;
 }
 void Matrix22::set(float radian)
 {
 	_radian = radian;
-	float c = cosf(radian);
-	float s = sinf(radian);
+	float c = std::cosf(radian);
+	float s = std::sinf(radian);
 	_m00 = c; _m01 = -s;
 	_m10 = s; _m11 = c;
 }

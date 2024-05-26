@@ -86,10 +86,9 @@ int World::add(Collider2D* collider)
 	const Transform& transform = collider->gameObject()->transform();
 	return s_broadPhase.insert(collider, collider->computeAABB(transform));
 }
-// FIX : 0번째 rigid를 지우면 1번째 rigid가 0번째가 됨. 즉, 가지고 있던 1이라는 key값은 유효하지 않게됨.
-int World::add(RigidBody2D* rigid) { s_rigids.push_back(rigid); return (int)s_rigids.size() - 1; }
+void World::add(RigidBody2D* rigid) { s_rigids.push_back(rigid); }
 void World::moveCollider(int key, const AABB& sweepAABB, const Vector2D& displacement) { s_broadPhase.move(key, sweepAABB, displacement); }
-void World::removeRigid(int key) { s_rigids.erase(s_rigids.begin() + key); }
+void World::removeRigid(RigidBody2D* rigid) { std::remove(s_rigids.begin(), s_rigids.end(), rigid); }
 void World::removalReq(int key)
 {
 	//s_broadPhase.remove(key); TODO : 바로 삭제해도 되나? 나중에 시뮬레이션할때 문제 생기나? 아니면 바로 지워도 될거같은데
