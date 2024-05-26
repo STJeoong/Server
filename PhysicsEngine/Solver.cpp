@@ -7,7 +7,7 @@
 #include "Contact2D.h"
 #include "GameObject.h"
 
-#include "AABB.h"
+#include <ThreadPool.h>
 #pragma region public
 void Solver::init(const std::vector<Collision2D*>& collisions)
 {
@@ -83,14 +83,30 @@ void Solver::solveVelocityConstraints(const std::vector<Collision2D*>& collision
 		}
 	}
 }
+void Solver::test(const std::vector<Collision2D*>& collisions, size_t start, size_t end)
+{
+	if (end - start < 100)
+	{
+		_lastKey = ThreadPool::enqueue([&collisions, start, end]() {
+			for (int i = start; i < end; ++i)
+				collisions[i]->updateContacts();
+			});
+		return;
+	}
+	size_t mid = (start + end) / 2;
+	this->test(collisions, start, mid);
+	this->test(collisions, mid, end);
+}
 void Solver::solvePositionConstraints(const std::vector<Collision2D*>& collisions)
 {
+	this->test(collisions, 0, collisions.size());
+	ThreadPool::join(_lastKey);
 	for (int i = 0; i < collisions.size(); ++i)
 	{
 		Collision2D& collision = *(collisions[i]);
 		if (collision._isTrigger) continue;
 		const std::vector<Contact2D*>& contacts = collision.contacts();
-		collision.updateContacts();
+		//collision.updateContacts();
 		for (int j = 0; j < contacts.size(); ++j)
 		{
 			Contact2D& contact = *(contacts[j]);

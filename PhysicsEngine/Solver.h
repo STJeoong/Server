@@ -21,6 +21,10 @@ private:
 	float computeEffectiveMass(const Contact2D& contact, const Vector2D& dir);
 	float computeJV(const Contact2D& contact, const Vector2D& dir);
 
+	// test
+	void test(const std::vector<Collision2D*>& collisions, size_t start, size_t end);
+	int _lastKey = 0;
+
 	std::vector<std::vector<float>> _normalEffMasses;
 	std::vector<std::vector<float>> _tangentEffMasses;
 };
