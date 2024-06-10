@@ -4,8 +4,10 @@
 #pragma region public
 void MemoryBlockPool::makePool(int blockSize)
 {
+	if (s_pools == nullptr)
+		s_pools = new std::pair<int, MemoryBlockPool*>[MemoryBlockPool::MAX_POOL_SIZE];
 	MemoryBlockPool* pool = new MemoryBlockPool(blockSize, MemoryBlockPool::DEFAULT_POOL_SIZE);
-	s_vec.push_back({ blockSize, pool });
+	s_pools[s_idx++] = { blockSize, pool };
 }
 char* MemoryBlockPool::get(int blockSize)
 {
@@ -24,9 +26,9 @@ void MemoryBlockPool::release(int blockSize, char*& obj)
 #pragma region private
 MemoryBlockPool* MemoryBlockPool::find(int blockSize)
 {
-	for (int i = 0; i < s_vec.size(); ++i)
-		if (s_vec[i].first == blockSize)
-			return s_vec[i].second;
+	for (int i = 0; i < s_idx; ++i)
+		if (s_pools[i].first == blockSize)
+			return s_pools[i].second;
 	return nullptr;
 }
 
@@ -70,5 +72,6 @@ void MemoryBlockPool::release(char*& obj)
 }
 #pragma endregion
 
-std::vector<std::pair<int, MemoryBlockPool*>> MemoryBlockPool::s_vec;
+std::pair<int, MemoryBlockPool*>* MemoryBlockPool::s_pools = nullptr;
+int MemoryBlockPool::s_idx = 0;
 std::mutex MemoryBlockPool::s_mutex;
