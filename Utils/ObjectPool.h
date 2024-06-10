@@ -16,7 +16,14 @@ public:
 	// if you try to release object to not initialized pool, your program is going to be crashed.
 	template<typename T>
 	static void release(T*& obj);
+	template<typename T>
+	static void useActionOnGet(bool flag);
+	template<typename T>
+	static void useActionOnRelease(bool flag);
 private:
+	template<typename T>
+	static ObjectPool* findPool();
+
 	static std::pair<size_t, ObjectPool*>* s_pools;
 	static int s_idx;
 
@@ -32,6 +39,8 @@ private:
 	std::function<void*()> _createFunc;
 	std::function<void(void*)> _actionOnGet;
 	std::function<void(void*)> _actionOnRelease;
+	bool _useActionOnGet = true;
+	bool _useActionOnRelease = true;
 };
 template<typename T>
 inline void ObjectPool::makePool(size_t size, std::function<void*()> createFunc, std::function<void(void*)> actionOnGet,
@@ -48,15 +57,7 @@ inline void ObjectPool::makePool(size_t size, std::function<void*()> createFunc,
 template<typename T>
 inline T* ObjectPool::get()
 {
-	const std::type_info& info = typeid(T);
-	size_t typeId = info.hash_code();
-	ObjectPool* pool = nullptr;
-	for (int i = 0; i < s_idx; ++i)
-		if (s_pools[i].first == typeId)
-		{
-			pool = s_pools[i].second;
-			break;
-		}
+	ObjectPool* pool = ObjectPool::findPool<T>();
 	T* ret = nullptr;
 
 	if (pool->_currentSize == 0)
@@ -71,21 +72,14 @@ inline T* ObjectPool::get()
 			pool->_allocateIdx = 0;
 		--pool->_currentSize;
 	}
-	pool->_actionOnGet(ret);
+	if (pool->_useActionOnGet)
+		pool->_actionOnGet(ret);
 	return ret;
 }
 template<typename T>
 inline void ObjectPool::release(T*& obj)
 {
-	const std::type_info& info = typeid(T);
-	size_t typeId = info.hash_code();
-	ObjectPool* pool = nullptr;
-	for (int i = 0; i < s_idx; ++i)
-		if (s_pools[i].first == typeId)
-		{
-			pool = s_pools[i].second;
-			break;
-		}
+	ObjectPool* pool = ObjectPool::findPool<T>();
 
 	if (pool->_currentSize == pool->_size)
 		delete obj;
@@ -98,10 +92,33 @@ inline void ObjectPool::release(T*& obj)
 			pool->_releaseIdx = 0;
 		++pool->_currentSize;
 	}
-	pool->_actionOnRelease(obj);
+	if (pool->_useActionOnRelease)
+		pool->_actionOnRelease(obj);
 	obj = nullptr;
 }
 
+template<typename T>
+inline void ObjectPool::useActionOnGet(bool flag)
+{
+	ObjectPool* pool = ObjectPool::findPool<T>();
+	pool->_useActionOnGet = flag;
+}
+template<typename T>
+inline void ObjectPool::useActionOnRelease(bool flag)
+{
+	ObjectPool* pool = ObjectPool::findPool<T>();
+	pool->_useActionOnRelease = flag;
+}
+template<typename T>
+inline ObjectPool* ObjectPool::findPool()
+{
+	const std::type_info& info = typeid(T);
+	size_t typeId = info.hash_code();
+	for (int i = 0; i < s_idx; ++i)
+		if (s_pools[i].first == typeId)
+			return s_pools[i].second;
+	return nullptr;
+}
 inline ObjectPool::ObjectPool(size_t size, std::function<void* ()> createFunc, std::function<void(void*)> actionOnGet,
 	std::function<void(void*)> actionOnRelease)
 	: _size(size), _createFunc(createFunc), _actionOnGet(actionOnGet), _actionOnRelease(actionOnRelease)
