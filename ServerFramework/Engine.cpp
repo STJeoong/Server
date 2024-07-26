@@ -75,7 +75,7 @@ void Engine::setServerMode(E_ServerMode mode)
 }
 bool Engine::addEngine(int engineID, const S_ServerConfig& config, I_Broadcaster* broadcaster)
 {
-	if (s_engines.find(engineID) != s_engines.end() || broadcaster == nullptr)
+	if (s_engines[engineID] != nullptr || broadcaster == nullptr)
 		return false;
 	s_engines[engineID] = Engine::parseConfig(engineID, config);
 	s_serverMode->addBroadcaster(engineID, broadcaster);
@@ -84,23 +84,23 @@ bool Engine::addEngine(int engineID, const S_ServerConfig& config, I_Broadcaster
 const S_ServerConfig& Engine::getEngineConfig(int engineID) { return s_engines[engineID]->_config; }
 void Engine::runEngine()
 {
-	for (auto val : s_engines)
-		if (val.second->_state == E_EngineState::INITIAL)
-			val.second->run();
+	for (int i = 0; i < Engine::MAX_ENGINE; ++i)
+		if (s_engines[i] != nullptr && s_engines[i]->_state == E_EngineState::INITIAL)
+			s_engines[i]->run();
 }
 void Engine::runEngine(int engineID)
 {
-	if (s_engines.find(engineID) == s_engines.end())
+	if (s_engines[engineID] == nullptr)
 		return;
 	s_engines[engineID]->run();
 }
 void Engine::runServer() { s_serverMode->run(); }
 void Engine::shutdown(int engineID)
 {
-	if (s_engines.find(engineID) == s_engines.end())
+	if (s_engines[engineID] == nullptr)
 		return;
 	delete s_engines[engineID];
-	s_engines.erase(engineID);
+	s_engines[engineID] = nullptr;
 }
 void Engine::send(int engineID, int serial, Size blockSize, char* data) { s_engines[engineID]->send(serial, blockSize, data); }
 void Engine::disconnect(int engineID, int serial) { s_engines[engineID]->disconnect(serial); }
@@ -168,6 +168,6 @@ void Engine::send(int to, Size blockSize, char* data) { _encoder->enqueue(to, bl
 void Engine::disconnect(int serial) { _network->disconnect(serial); }
 #pragma endregion
 
-std::unordered_map<int, Engine*> Engine::s_engines;
+Engine* Engine::s_engines[Engine::MAX_ENGINE] = {};
 ServerMode* Engine::s_serverMode = nullptr;
 I_EngineEventContainer* Engine::s_evtContainer = nullptr;

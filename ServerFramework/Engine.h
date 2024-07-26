@@ -1,5 +1,4 @@
 #pragma once
-#include <unordered_map>
 #include "Define.h"
 #include "NetEvent.h"
 #include "S_EngineEvent.h"
@@ -16,6 +15,7 @@ class I_Broadcaster;
 class ServerMode;
 class Engine
 {
+	static const int MAX_ENGINE = 100;
 public:
 	// must be executed eariler than other functions
 	static void setLogFolder(const char* argv0);
@@ -40,7 +40,7 @@ private:
 	void send(int to, Size blockSize, char* data);
 	void disconnect(int serial);
 
-	static std::unordered_map<int, Engine*> s_engines;
+	static Engine* s_engines[Engine::MAX_ENGINE];
 	static ServerMode* s_serverMode;
 	static I_EngineEventContainer* s_evtContainer;
 
