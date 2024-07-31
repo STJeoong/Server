@@ -15,8 +15,9 @@ class I_Broadcaster;
 class ServerMode;
 class Engine
 {
-	static const int MAX_ENGINE = 100;
 public:
+	static const int MAX_ENGINE = 100;
+
 	// must be executed eariler than other functions
 	static void setLogFolder(const char* argv0);
 	static void setServerMode(E_ServerMode mode);

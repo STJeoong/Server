@@ -75,7 +75,7 @@ void Engine::setServerMode(E_ServerMode mode)
 }
 bool Engine::addEngine(int engineID, const S_ServerConfig& config, I_Broadcaster* broadcaster)
 {
-	if (s_engines[engineID] != nullptr || broadcaster == nullptr)
+	if (s_engines[engineID] != nullptr || broadcaster == nullptr || engineID >= Engine::MAX_ENGINE || engineID < 0)
 		return false;
 	s_engines[engineID] = Engine::parseConfig(engineID, config);
 	s_serverMode->addBroadcaster(engineID, broadcaster);
