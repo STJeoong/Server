@@ -23,7 +23,6 @@ int main(int argc, char* argv[])
 
 	GameManager gameManager;
 	PlayerMoveUpdater moveUpdater;
-	Engine::runEngine();
-	Engine::runServer();
+	Engine::run();
 	return 0;
 }

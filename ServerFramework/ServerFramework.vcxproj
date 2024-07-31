@@ -159,7 +159,6 @@
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="E_EngineEventType.h" />
-    <ClInclude Include="E_EngineState.h" />
     <ClInclude Include="E_ServerMode.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="IOCPClient.h" />

@@ -119,9 +119,6 @@
     <ClInclude Include="S_ServerConfig.h">
       <Filter>소스 파일\EngineLayer</Filter>
     </ClInclude>
-    <ClInclude Include="E_EngineState.h">
-      <Filter>소스 파일\EngineLayer\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="ServerMode.h">
       <Filter>소스 파일\EngineLayer\Engine\ServerMode</Filter>
     </ClInclude>

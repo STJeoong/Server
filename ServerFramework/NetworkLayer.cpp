@@ -16,7 +16,7 @@ NetworkLayer::NetworkLayer(int engineID, I_NetworkCore* core, I_EngineEventConta
 	_core->setOnRecv([this](int serial, int len, char* data) { this->onRecv(serial, len, data); });
 }
 NetworkLayer::~NetworkLayer() { delete _core; }
-void NetworkLayer::run() { _core->run(); }
+void NetworkLayer::start() { _core->start(); }
 void NetworkLayer::send(int to, Size blockSize, int len, char* data) { _core->send(to, blockSize, len, data); }
 void NetworkLayer::disconnect(int serial) { _core->disconnect(serial); }
 #pragma endregion

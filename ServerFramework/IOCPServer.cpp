@@ -56,7 +56,7 @@ IOCPServer::~IOCPServer()
 	for (int i = 0; i < _workers.size(); ++i)
 		_workers[i].join();
 }
-void IOCPServer::run(int threadCount) { this->createWorkerThread(threadCount); }
+void IOCPServer::start(int threadCount) { this->createWorkerThread(threadCount); }
 void IOCPServer::send(int to, Size blockSize, int len, char* data) { _sender->send(to, blockSize, len, data); }
 void IOCPServer::disconnect(int idx) { this->notifyDisconnection(idx); }
 void IOCPServer::setOnConnect(std::function<void(int)> onConnect) { _onConnect = onConnect; }

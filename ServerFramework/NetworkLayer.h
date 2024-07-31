@@ -9,7 +9,7 @@ class NetworkLayer
 public:
 	NetworkLayer(int engineID, I_NetworkCore* core, I_EngineEventContainer* evtContainer, Decoder* decoder);
 	~NetworkLayer();
-	void run();
+	void start();
 	void send(int to, Size blockSize, int len, char* data);
 	void disconnect(int serial);
 private:

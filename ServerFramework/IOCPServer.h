@@ -20,7 +20,7 @@ class IOCPServer : public I_NetworkCore
 public:
 	IOCPServer(std::string ip, u_short port, int maxClient);
 	~IOCPServer();
-	void run(int threadCount = 4) override;
+	void start(int threadCount = 4) override;
 	void send(int to, Size blockSize, int len, char* data) override;
 	void disconnect(int idx) override;
 	void setOnConnect(std::function<void(int)> onConnect) override;

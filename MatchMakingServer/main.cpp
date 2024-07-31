@@ -22,7 +22,6 @@ int main(int argc, char* argv[])
 	setEngine();
 
 	MatchServerHandler handler;
-	Engine::runEngine();
-	Engine::runServer();
+	Engine::run();
 	return 0;
 }

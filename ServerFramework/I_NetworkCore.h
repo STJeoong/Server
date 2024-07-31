@@ -4,7 +4,7 @@ class I_NetworkCore
 {
 public:
 	virtual ~I_NetworkCore() {}
-	virtual void run(int threadCount = 4) = 0;
+	virtual void start(int threadCount = 4) = 0;
 	virtual void send(int to, Size blockSize, int len, char* data) = 0;
 	virtual void disconnect(int idx) = 0;
 

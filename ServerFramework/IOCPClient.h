@@ -13,7 +13,7 @@ class IOCPClient : public I_NetworkCore
 public:
 	IOCPClient(std::string ip, u_short port);
 	~IOCPClient();
-	virtual void run(int threadCount = 4) override;
+	virtual void start(int threadCount = 4) override;
 	virtual void send(int to, Size blockSize, int len, char* data) override;
 	void disconnect(int idx) override;
 	virtual void setOnConnect(std::function<void(int)> onConnect) override;

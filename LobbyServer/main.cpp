@@ -35,6 +35,5 @@ int main(int argc, char* argv[])
 	LobbyServerHandler lobbyHandler;
 	MatchClientHandler matchHandler;
 
-	Engine::runEngine();
-	Engine::runServer();
+	Engine::run();
 }

@@ -79,22 +79,11 @@ bool Engine::addEngine(int engineID, const S_ServerConfig& config, I_Broadcaster
 		return false;
 	s_engines[engineID] = Engine::parseConfig(engineID, config);
 	s_serverMode->addBroadcaster(engineID, broadcaster);
+	s_engines[engineID]->start();
 	return true;
 }
 const S_ServerConfig& Engine::getEngineConfig(int engineID) { return s_engines[engineID]->_config; }
-void Engine::runEngine()
-{
-	for (int i = 0; i < Engine::MAX_ENGINE; ++i)
-		if (s_engines[i] != nullptr && s_engines[i]->_state == E_EngineState::INITIAL)
-			s_engines[i]->run();
-}
-void Engine::runEngine(int engineID)
-{
-	if (s_engines[engineID] == nullptr)
-		return;
-	s_engines[engineID]->run();
-}
-void Engine::runServer() { s_serverMode->run(); }
+void Engine::run() { s_serverMode->run(); }
 void Engine::shutdown(int engineID)
 {
 	if (s_engines[engineID] == nullptr)
@@ -158,12 +147,11 @@ Engine::Engine(int id, I_NetworkCore* core, int maxClient, I_EngineEventContaine
 }
 Engine::~Engine()
 {
-	_state = E_EngineState::SHUTDOWN;
 	delete _network;
 	delete _decoder;
 	delete _encoder;
 }
-void Engine::run() { _state = E_EngineState::RUN; _network->run(); }
+void Engine::start() { _network->start(); }
 void Engine::send(int to, Size blockSize, char* data) { _encoder->enqueue(to, blockSize, data); }
 void Engine::disconnect(int serial) { _network->disconnect(serial); }
 #pragma endregion

@@ -4,7 +4,6 @@
 #include "S_EngineEvent.h"
 #include "S_ServerConfig.h"
 #include "E_ServerMode.h"
-#include "E_EngineState.h"
 
 class I_NetworkCore;
 class NetworkLayer;
@@ -24,9 +23,7 @@ public:
 	//
 	static bool addEngine(int engineID, const S_ServerConfig& config, I_Broadcaster* broadcaster);
 	static const S_ServerConfig& getEngineConfig(int engineID);
-	static void runEngine();
-	static void runEngine(int engineID);
-	static void runServer();
+	static void run();
 	static void shutdown(int engineID);
 	static void send(int engineID, int serial, Size blockSize, char* data);
 	static void disconnect(int engineID, int serial);
@@ -37,7 +34,7 @@ private:
 
 	Engine(int id, I_NetworkCore* core, int maxClient, I_EngineEventContainer* container);
 	~Engine();
-	void run();
+	void start();
 	void send(int to, Size blockSize, char* data);
 	void disconnect(int serial);
 
@@ -45,7 +42,6 @@ private:
 	static ServerMode* s_serverMode;
 	static I_EngineEventContainer* s_evtContainer;
 
-	E_EngineState _state = E_EngineState::INITIAL;
 	S_ServerConfig _config = {};
 	NetworkLayer* _network = nullptr;
 	Decoder* _decoder = nullptr;
