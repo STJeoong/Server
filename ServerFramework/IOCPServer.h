@@ -9,8 +9,7 @@
 #include "OverlappedEx.h"
 #include "I_NetworkCore.h"
 
-#pragma comment(lib, "ws2_32")
-#pragma comment(lib, "mswsock.lib")
+
 class Accepter;
 class Receiver;
 class Sender;
@@ -34,8 +33,6 @@ private:
 	void onSend(CompletionKey& ck, DWORD bytes);
 	void notifyDisconnection(int idx);
 
-
-	WSADATA _wsa = {};
 	SOCKET _sock; // 서버 소켓
 	sockaddr_in _addr = {};
 	HANDLE _cp;

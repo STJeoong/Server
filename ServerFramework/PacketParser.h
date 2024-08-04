@@ -10,9 +10,9 @@ class PacketParser
 public:
 	PacketParser(int maxClient);
 	void pushData(int serial, char* data, int len);
-	void resetBuf(int idx);
 	void collectData(int idx, S_EngineEvent& evt);
 private:
+	void resetBuf(int idx);
 
 	UINT16* _readIdx = nullptr;
 	UINT16* _writeIdx = nullptr;

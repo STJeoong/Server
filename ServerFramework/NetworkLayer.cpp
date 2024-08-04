@@ -29,6 +29,7 @@ void NetworkLayer::onConnect(int serial)
 	evt.serial = serial;
 
 	_evtContainer->enqueue(_engineID, evt);
+	_decoder->enqueue(serial, nullptr, 0, Size::_256); // connect event push
 }
 void NetworkLayer::onDisconnect(int serial)
 {
@@ -37,14 +38,12 @@ void NetworkLayer::onDisconnect(int serial)
 	evt.serial = serial;
 
 	_evtContainer->enqueue(_engineID, evt);
-	_decoder->reset(serial);
 }
 void NetworkLayer::onRecv(int serial, int len, char* data)
 {
-	// TODO : len이 256을 넘을 수 있나?
-	char* block = MemoryBlockPool::get((int)Size::_256);
+	char* block = MemoryBlockPool::get((int)Size::_1024);
 	memcpy(block, data, len);
 
-	_decoder->enqueue(serial, block, len, Size::_256);
+	_decoder->enqueue(serial, block, len, Size::_1024);
 }
 #pragma endregion

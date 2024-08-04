@@ -23,7 +23,6 @@ void Decoder::enqueue(int serial, char* data, int len, Size blockSize)
 	_queue.push({ serial, data, len, blockSize });
 	_cv.notify_one();
 }
-void Decoder::reset(int serial) { _parser->resetBuf(serial); }
 #pragma endregion
 
 #pragma region private

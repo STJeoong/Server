@@ -14,7 +14,6 @@ public:
 	Decoder(int engineID, I_EngineEventContainer* evtContainer, int maxClient);
 	~Decoder();
 	void enqueue(int serial, char* data, int len, Size blockSize);
-	void reset(int serial);
 private:
 	void threadMain();
 

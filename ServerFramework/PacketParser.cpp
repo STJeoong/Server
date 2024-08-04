@@ -14,6 +14,12 @@ PacketParser::PacketParser(int maxClient)
 }
 void PacketParser::pushData(int serial, char* data, int len)
 {
+	if (data == nullptr)
+	{
+		this->resetBuf(serial);
+		return;
+	}
+
 	int extraSpace = BUF_SIZE - _writeIdx[serial];
 	if (extraSpace < len)
 	{
@@ -24,11 +30,6 @@ void PacketParser::pushData(int serial, char* data, int len)
 	// 만약 버퍼 다 찼으면?
 	memcpy(&_buf[serial][_writeIdx[serial]], data, len);
 	_writeIdx[serial] += len;
-}
-void PacketParser::resetBuf(int idx)
-{
-	_readIdx[idx] = 0;
-	_writeIdx[idx] = 0;
 }
 void PacketParser::collectData(int idx, S_EngineEvent& evt)
 {
@@ -46,8 +47,8 @@ void PacketParser::collectData(int idx, S_EngineEvent& evt)
 	}
 	else
 	{
-		evt.blockSize = Size::_1024;
-		evt.data = MemoryBlockPool::get((int)Size::_1024);
+		evt.blockSize = Size::_2048;
+		evt.data = MemoryBlockPool::get((int)Size::_2048);
 	}
 	memcpy(evt.data, &_buf[idx][_readIdx[idx]], header->len);
 
@@ -58,4 +59,9 @@ void PacketParser::collectData(int idx, S_EngineEvent& evt)
 #pragma endregion
 
 #pragma region private
+void PacketParser::resetBuf(int idx)
+{
+	_readIdx[idx] = 0;
+	_writeIdx[idx] = 0;
+}
 #pragma endregion

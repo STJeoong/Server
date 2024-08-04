@@ -1,5 +1,7 @@
 #pragma once
 #include "pch.h"
+#include <basetsd.h>
+
 
 // 상수 모음
 #define MAX_USER_ACCEPT 65535 //서버에서 받아들일 수 있는 최대 소켓수
@@ -13,9 +15,9 @@
 // 크기 정의
 enum class Size : UINT16
 {
-	_128 = 128,
 	_256 = 256,
 	_1024 = 1024,
+	_2048 = 2048,
 	_8192 = 8192
 };
 

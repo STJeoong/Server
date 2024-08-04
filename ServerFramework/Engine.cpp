@@ -17,6 +17,10 @@
 #include "ThreadPool.h"
 #include "MemoryBlockPool.h"
 #include <fstream>
+#include <tchar.h>
+
+#pragma comment(lib, "ws2_32")
+#pragma comment(lib, "mswsock.lib")
 
 #pragma region public
 void Engine::setLogFolder(const char* argv0)
@@ -54,23 +58,36 @@ void Engine::setLogFolder(const char* argv0)
 	google::SetLogDestination(google::GLOG_FATAL, StringConversion::ToASCII(fatalPath).c_str());
 	LOG(INFO) << "Log Destination " << StringConversion::ToASCII(logPath);
 }
+void Engine::init()
+{
+	static bool isSet = false;
+	static WSADATA s_wsa = {};
+	if (isSet)
+		return;
+
+	isSet = true;
+	if (WSAStartup(MAKEWORD(2, 2), &s_wsa) != 0)
+	{
+		puts("WSAStartup error");
+		return;
+	}
+	MemoryBlockPool::makePool(static_cast<int>(Size::_256));
+	MemoryBlockPool::makePool(static_cast<int>(Size::_1024));
+	MemoryBlockPool::makePool(static_cast<int>(Size::_2048));
+	MemoryBlockPool::makePool(static_cast<int>(Size::_8192));
+}
 void Engine::setServerMode(E_ServerMode mode)
 {
 	static bool isSet = false;
 	if (isSet)
 		return;
 
+	isSet = true;
 	switch (mode)
 	{
 	case E_ServerMode::PASSIVE_MODE: s_evtContainer = new WaitEngineEventContainer(); s_serverMode = new PassiveMode(); break;
 	case E_ServerMode::PHYSICS_MODE: s_evtContainer = new NoWaitEngineEventContainer(); s_serverMode = new PhysicsMode(); break;
 	}
-
-	isSet = true;
-	MemoryBlockPool::makePool(static_cast<int>(Size::_128));
-	MemoryBlockPool::makePool(static_cast<int>(Size::_256));
-	MemoryBlockPool::makePool(static_cast<int>(Size::_1024));
-	MemoryBlockPool::makePool(static_cast<int>(Size::_8192));
 	s_serverMode->setEventContainer(s_evtContainer);
 }
 bool Engine::addEngine(int engineID, const S_ServerConfig& config, I_Broadcaster* broadcaster)
@@ -84,6 +101,7 @@ bool Engine::addEngine(int engineID, const S_ServerConfig& config, I_Broadcaster
 }
 const S_ServerConfig& Engine::getEngineConfig(int engineID) { return s_engines[engineID]->_config; }
 void Engine::run() { s_serverMode->run(); }
+void Engine::end() { WSACleanup(); }
 void Engine::shutdown(int engineID)
 {
 	if (s_engines[engineID] == nullptr)
@@ -124,9 +142,9 @@ Engine* Engine::parseConfig(int engineID, const S_ServerConfig& config)
 	Engine* ret = nullptr;
 	I_NetworkCore* core = nullptr;
 
-	if (config.network == "iocp_server")
+	if (config.network == "server")
 		core = new IOCPServer(config.ip, config.port, config.maxClient);
-	else if (config.network == "iocp_client")
+	else if (config.network == "client")
 		core = new IOCPClient(config.ip, config.port);
 	else
 	{

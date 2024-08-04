@@ -9,11 +9,6 @@
 #pragma region public
 IOCPServer::IOCPServer(std::string ip, u_short port, int maxClient)
 {
-	if (WSAStartup(MAKEWORD(2, 2), &_wsa) != 0)
-	{
-		puts("WSAStartup error");
-		return;
-	}
 	if ((_sock = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED)) == INVALID_SOCKET)
 	{
 		puts("WSASocket error");
@@ -52,7 +47,6 @@ IOCPServer::~IOCPServer()
 	delete _sender;
 	closesocket(_sock);
 	CloseHandle(_cp);
-	WSACleanup();
 	for (int i = 0; i < _workers.size(); ++i)
 		_workers[i].join();
 }
