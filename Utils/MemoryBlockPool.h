@@ -19,8 +19,8 @@ private:
 
 	static std::pair<int, MemoryBlockPool*>* s_pools;
 	static int s_idx;
-	static std::mutex s_mutex;
 
+	std::mutex _mutex;
 	int _blockSize;
 	char** _pool;
 

@@ -11,13 +11,12 @@ void MemoryBlockPool::makePool(int blockSize)
 }
 char* MemoryBlockPool::get(int blockSize)
 {
-	std::lock_guard<std::mutex> lock(s_mutex);
 	MemoryBlockPool* pool = MemoryBlockPool::find(blockSize);
 	return pool->get();
 }
 void MemoryBlockPool::release(int blockSize, char*& obj)
 {
-	std::lock_guard<std::mutex> lock(s_mutex);
+	if (obj == nullptr) return;
 	MemoryBlockPool* pool = MemoryBlockPool::find(blockSize);
 	pool->release(obj);
 }
@@ -46,6 +45,7 @@ MemoryBlockPool::~MemoryBlockPool()
 }
 char* MemoryBlockPool::get()
 {
+	std::lock_guard<std::mutex> lock(_mutex);
 	if (_currentAmount == 0)
 	{
 		char* ret = new char[static_cast<int>(_blockSize)];
@@ -59,6 +59,7 @@ char* MemoryBlockPool::get()
 }
 void MemoryBlockPool::release(char*& obj)
 {
+	std::lock_guard<std::mutex> lock(_mutex);
 	if (_currentAmount == _amount)
 	{
 		delete obj;
@@ -74,4 +75,3 @@ void MemoryBlockPool::release(char*& obj)
 
 std::pair<int, MemoryBlockPool*>* MemoryBlockPool::s_pools = nullptr;
 int MemoryBlockPool::s_idx = 0;
-std::mutex MemoryBlockPool::s_mutex;
