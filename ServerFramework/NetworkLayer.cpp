@@ -12,6 +12,7 @@ NetworkLayer::NetworkLayer(int engineID, I_NetworkCore* core, I_EngineEventConta
 	: _engineID(engineID), _core(core), _evtContainer(evtContainer), _decoder(decoder)
 {
 	_core->setOnConnect([this](int serial) { this->onConnect(serial); });
+	_core->setOnConnectFail([this](int serial) { this->onConnectFail(serial); });
 	_core->setOnDisconnect([this](int serial) { this->onDisconnect(serial); });
 	_core->setOnRecv([this](int serial, int len, char* data) { this->onRecv(serial, len, data); });
 }
