@@ -9,6 +9,7 @@ public:
 	virtual void disconnect(int idx) = 0;
 
 	virtual void setOnConnect(std::function<void(int)> onConnect) = 0;
+	virtual void setOnConnectFail(std::function<void(int)> onConnectFail) = 0;
 	virtual void setOnDisconnect(std::function<void(int)> onDisconnect) = 0;
 	virtual void setOnRecv(std::function<void(int, int, char*)> onRecv) = 0;
 };

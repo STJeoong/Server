@@ -23,6 +23,7 @@ public:
 	void send(int to, Size blockSize, int len, char* data) override;
 	void disconnect(int idx) override;
 	void setOnConnect(std::function<void(int)> onConnect) override;
+	void setOnConnectFail(std::function<void(int)> onConnectFail) override;
 	void setOnDisconnect(std::function<void(int)> onDisconnect) override;
 	void setOnRecv(std::function<void(int, int, char*)> onRecv) override;
 private:
@@ -45,6 +46,7 @@ private:
 
 	//events
 	std::function<void(int)> _onConnect;
+	std::function<void(int)> _onConnectFail;
 	std::function<void(int)> _onDisconnect;
 	std::function<void(int, int, char*)> _onRecv;
 };

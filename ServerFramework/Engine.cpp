@@ -113,6 +113,7 @@ void Engine::send(int engineID, int serial, Size blockSize, char* data) { s_engi
 void Engine::disconnect(int engineID, int serial) { s_engines[engineID]->disconnect(serial); }
 void Engine::setTimer(int engineID, int serial, int millisec, int evt)
 {
+	// TODO : ThreadPool에서 바로 꺼내지 않을 수 있음. queue에 넣은 시간과 현재 시간을 millisec과 비교해서 해야 될듯.
 	ThreadPool::enqueue([engineID, serial, millisec, evt]() {
 		std::this_thread::sleep_for(std::chrono::milliseconds(millisec));
 		S_EngineEvent engineEvt = {};

@@ -31,6 +31,14 @@ void NetworkLayer::onConnect(int serial)
 	_evtContainer->enqueue(_engineID, evt);
 	_decoder->enqueue(serial, nullptr, 0, Size::_256); // connect event push
 }
+void NetworkLayer::onConnectFail(int serial)
+{
+	S_EngineEvent evt = {};
+	evt.type = E_EngineEventType::EVENT_NET_CONNECT_FAIL;
+	evt.serial = serial;
+
+	_evtContainer->enqueue(_engineID, evt);
+}
 void NetworkLayer::onDisconnect(int serial)
 {
 	S_EngineEvent evt = {};

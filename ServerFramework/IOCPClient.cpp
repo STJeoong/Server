@@ -66,6 +66,7 @@ void IOCPClient::start(int threadCount) { this->createWorkerThread(threadCount);
 void IOCPClient::send(int to, Size blockSize, int len, char* data) { _sender->send(0, blockSize, len, data); }
 void IOCPClient::disconnect(int idx) { this->notifyDisconnection(0); }
 void IOCPClient::setOnConnect(std::function<void(int)> onConnect) { _onConnect = onConnect; }
+void IOCPClient::setOnConnectFail(std::function<void(int)> onConnectFail) { _onConnectFail = onConnectFail; }
 void IOCPClient::setOnDisconnect(std::function<void(int)> onDisconnect) { _onDisconnect = onDisconnect; }
 void IOCPClient::setOnRecv(std::function<void(int, int, char*)> onRecv) { _onRecv = onRecv; }
 #pragma endregion
@@ -90,7 +91,7 @@ void IOCPClient::threadMain(HANDLE cp)
 			return;
 		if (WSAGetLastError() == ERROR_CONNECTION_REFUSED)
 		{
-			puts("connection refused");
+			_onConnectFail(pOverlapped->sessionIdx);
 			return;
 		}
 		if (pOverlapped == NULL)

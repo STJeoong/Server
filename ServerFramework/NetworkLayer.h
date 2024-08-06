@@ -14,6 +14,7 @@ public:
 	void disconnect(int serial);
 private:
 	void onConnect(int serial);
+	void onConnectFail(int serial);
 	void onDisconnect(int serial);
 	void onRecv(int serial, int len, char* data);
 
