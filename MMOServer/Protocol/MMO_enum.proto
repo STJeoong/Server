@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package protocol.mmo;
+
+enum E_PacketID
+{
+	ENTER_GAME_REQ = 0;
+	ENTER_GAME_RESP = 1;
+	PLAYER_ENTER_NOTIFY = 2;
+	PLAYER_EXIT_NOTIFY = 3;
+}
+enum E_RespCode
+{
+	OK = 0;
+	NO = 1;
+}
+enum E_PlayerState
+{
+	NONE = 0;
+	IDLE = 1;
+}

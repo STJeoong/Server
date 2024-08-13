@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\Broadcaster">
+      <UniqueIdentifier>{b24c8566-e423-4caf-b459-7f0d829f1ca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Protocol">
+      <UniqueIdentifier>{65ffade7-59d8-4b94-80f9-f2a4a082b29a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Protocol\Schema">
+      <UniqueIdentifier>{437f967a-fcef-4e13-82cc-2af0ef5764c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Protocol\MMO">
+      <UniqueIdentifier>{d26a04fa-69ee-4131-8846-0e74cf17f09f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Protocol\Schema\MMO">
+      <UniqueIdentifier>{5ab393b4-3305-4605-b06e-035e86f658a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game">
+      <UniqueIdentifier>{3603c1fa-8143-4238-967b-a65e685cec66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Player">
+      <UniqueIdentifier>{40e59681-d515-43e6-8492-9b377e71c6da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Monster">
+      <UniqueIdentifier>{cc342ae0-e54c-44f1-b6c9-bf09915d41d4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MMOServerBroadcaster.cpp">
+      <Filter>소스 파일\Broadcaster</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>소스 파일\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>소스 파일\Game\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MMO_enum.pb.cc">
+      <Filter>소스 파일\Protocol\MMO</Filter>
+    </ClCompile>
+    <ClCompile Include="MMO_protocol.pb.cc">
+      <Filter>소스 파일\Protocol\MMO</Filter>
+    </ClCompile>
+    <ClCompile Include="MMO_struct.pb.cc">
+      <Filter>소스 파일\Protocol\MMO</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MMOServerBroadcaster.h">
+      <Filter>소스 파일\Broadcaster</Filter>
+    </ClInclude>
+    <ClInclude Include="E_TimerEvent.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="E_EngineType.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>소스 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>소스 파일\Game\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MMO_enum.pb.h">
+      <Filter>소스 파일\Protocol\MMO</Filter>
+    </ClInclude>
+    <ClInclude Include="MMO_protocol.pb.h">
+      <Filter>소스 파일\Protocol\MMO</Filter>
+    </ClInclude>
+    <ClInclude Include="MMO_struct.pb.h">
+      <Filter>소스 파일\Protocol\MMO</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Protocol\MMO_enum.proto">
+      <Filter>소스 파일\Protocol\Schema\MMO</Filter>
+    </None>
+    <None Include="Protocol\MMO_protocol.proto">
+      <Filter>소스 파일\Protocol\Schema\MMO</Filter>
+    </None>
+    <None Include="Protocol\MMO_struct.proto">
+      <Filter>소스 파일\Protocol\Schema\MMO</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package protocol.mmo;
+import "MMO_enum.proto";
+import "MMO_struct.proto";
+
+message EnterGame_Resp
+{
+	E_RespCode resp = 1;
+	int32 id = 2;
+	repeated PlayerInfo players = 3;
+}
+message PlayerEnter_Notify
+{
+	PlayerInfo info = 1;
+}
+message PlayerExit_Notify
+{
+	int32 id = 1;
+}

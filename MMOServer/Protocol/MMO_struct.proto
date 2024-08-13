@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package protocol.mmo;
+import "MMO_enum.proto";
+
+// not used for packet ( used for data struct )
+message Vec2
+{
+	int32 x = 1;
+	int32 y = 2;
+}
+message PlayerInfo
+{
+	int32 id = 1;
+	E_PlayerState state = 2;
+	Vec2 pos = 3;
+}
