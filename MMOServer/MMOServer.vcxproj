@@ -118,6 +118,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\taejeong\source\repos\ServerFramework\ServerFramework;C:\Users\taejeong\source\repos\ServerFramework\Utils;</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -155,6 +156,7 @@ protoc -I="C:\Users\taejeong\source\repos\ServerFramework\MMOServer\Protocol" --
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="MMOServerBroadcaster.cpp" />
     <ClCompile Include="MMO_enum.pb.cc" />
     <ClCompile Include="MMO_protocol.pb.cc" />
@@ -172,6 +174,7 @@ protoc -I="C:\Users\taejeong\source\repos\ServerFramework\MMOServer\Protocol" --
     <ClInclude Include="E_EngineType.h" />
     <ClInclude Include="E_TimerEvent.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="MMOServerBroadcaster.h" />
     <ClInclude Include="MMO_enum.pb.h" />
     <ClInclude Include="MMO_protocol.pb.h" />

@@ -5,11 +5,15 @@
 #include "E_EngineType.h"
 #include "E_TimerEvent.h"
 #include "Player.h"
+#include "Map.h"
+#include "Monster.h"
 
 #pragma region public
 Game::Game()
 {
+	Map::load();
 	Player::init();
+	Monster::init();
 	Engine::setTimer((int)E_EngineType::MMO_SERVER, 0, Game::UPDATE_DELTA_TIME, (int)E_TimerEvent::UPDATE);
 
 	MMOServerBroadcaster::onConnect += [](int serial) { printf("%d connect\n", serial); };

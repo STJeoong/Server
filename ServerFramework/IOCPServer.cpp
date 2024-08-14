@@ -54,7 +54,7 @@ void IOCPServer::start(int threadCount) { this->createWorkerThread(threadCount);
 void IOCPServer::send(int to, Size blockSize, int len, char* data) { _sender->send(to, blockSize, len, data); }
 void IOCPServer::disconnect(int idx) { this->notifyDisconnection(idx); }
 void IOCPServer::setOnConnect(std::function<void(int)> onConnect) { _onConnect = onConnect; }
-void IOCPServer::setOnConnect(std::function<void(int)> onConnectFail) { _onConnect = onConnectFail; }
+void IOCPServer::setOnConnectFail(std::function<void(int)> onConnectFail) { _onConnectFail = onConnectFail; }
 void IOCPServer::setOnDisconnect(std::function<void(int)> onDisconnect) { _onDisconnect = onDisconnect; }
 void IOCPServer::setOnRecv(std::function<void(int, int, char*)> onRecv) { _onRecv = onRecv; }
 #pragma endregion

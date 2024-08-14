@@ -33,6 +33,12 @@
     <Filter Include="소스 파일\Game\Monster">
       <UniqueIdentifier>{cc342ae0-e54c-44f1-b6c9-bf09915d41d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Map">
+      <UniqueIdentifier>{eec8c1fb-2d0b-42d9-bf27-64d158d57066}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Skill">
+      <UniqueIdentifier>{51077a0d-11f3-46e9-a0ae-08bc81fe1405}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -61,6 +67,9 @@
     </ClCompile>
     <ClCompile Include="MMO_struct.pb.cc">
       <Filter>소스 파일\Protocol\MMO</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>소스 파일\Game\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +102,9 @@
     </ClInclude>
     <ClInclude Include="MMO_struct.pb.h">
       <Filter>소스 파일\Protocol\MMO</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>소스 파일\Game\Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

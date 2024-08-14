@@ -25,14 +25,14 @@ void MMOServerBroadcaster::broadcastMessage(const S_EngineEvent& evt)
 
 	switch ((E_PacketID)header->id)
 	{
-	case E_PacketID::ENTER_GAME_REQ: onEnterGameReq(evt.serial); break;
+	case E_PacketID::ENTER_GAME_REQ: MMOServerBroadcaster::onEnterGameReq(evt.serial); break;
 	}
 }
 void MMOServerBroadcaster::broadcastTimer(const S_EngineEvent& evt)
 {
 	switch ((E_TimerEvent)((size_t)evt.data))
 	{
-	case E_TimerEvent::UPDATE: onUpdate(); break;
+	case E_TimerEvent::UPDATE: MMOServerBroadcaster::onUpdate(); break;
 	}
 }
 #pragma endregion

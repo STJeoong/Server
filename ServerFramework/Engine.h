@@ -12,16 +12,21 @@ class Decoder;
 class Encoder;
 class I_Broadcaster;
 class ServerMode;
+
+// 1. setLogFolder
+// 2. init
+// 3. setServerMode
+// 4. addEngine
+// 5. run
+// 6. end
 class Engine
 {
 public:
 	static const int MAX_ENGINE = 100;
 
-	// must be executed eariler than other functions
 	static void setLogFolder(const char* argv0);
 	static void init();
 	static void setServerMode(E_ServerMode mode);
-	//
 	static bool addEngine(int engineID, const S_ServerConfig& config, I_Broadcaster* broadcaster);
 	static const S_ServerConfig& getEngineConfig(int engineID);
 	static void run();

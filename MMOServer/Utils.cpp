@@ -28,3 +28,9 @@ void Utils::send(int engineID, int serial, UINT16 packetID, UINT8 option)
 
 	Engine::send(engineID, serial, Size::_256, block);
 }
+std::string Utils::eraseFileExtensionName(const std::string& fileName)
+{
+	std::string ret = fileName;
+	size_t idx = ret.find('.');
+	return ret.substr(0, idx);
+}
