@@ -2,6 +2,7 @@
 
 enum class E_GameObjectEvent
 {
+	AWAKE,
 	UPDATE,
 	ACTIVE,
 	INACTIVE,

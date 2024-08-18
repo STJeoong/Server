@@ -25,9 +25,15 @@ void Game::init()
 
 	Engine::setTimer((int)E_EngineType::MMO_SERVER, 0, Game::UPDATE_DELTA_TIME, (int)E_TimerEvent::UPDATE);
 }
-GameObject* Game::instantiate(GameObject* copy, bool active)
+GameObject* Game::instantiate(bool active, GameObject* copy, GameObject* parent)
 {
-	return nullptr;
+	GameObject* ret = nullptr;
+	if (copy != nullptr)
+		ret = new GameObject(active, *copy, parent);
+	else
+		ret = new GameObject(active, parent);
+	s_gameObjects.push_back(ret);
+	return ret;
 }
 void Game::destroy(GameObject* obj)
 {
@@ -104,24 +110,13 @@ void Game::updateCollisions()
 	{
 		Area* areaA = it->first;
 		Area* areaB = it->second;
-		if (!LayerFilter::detectable(areaA->layer(), areaB->layer()) || 
+		if (!LayerFilter::detectable(areaA->layer(), areaB->layer()) || !areaA->overlaps(*areaB) ||
 			(areaA->gameObject() == areaB->gameObject() && !areaA->detectMyArea() && !areaB->detectMyArea()))
 		{
 			Game::invokeAreaEvent(E_GameObjectEvent::AREA_EXIT, *it);
 			it = s_collisions.erase(it);
 			continue;
 		}
-
-		// 후보군에 같은 게 있는지 판별
-		auto candidateIt = std::find_if(s_candidates.begin(), s_candidates.end(), [&areaA, &areaB](const std::pair<int, int>& p)
-			{ return (areaA == s_dat.getData(p.first) && areaB == s_dat.getData(p.second)) || (areaA == s_dat.getData(p.second) && areaB == s_dat.getData(p.first));  });
-		if (candidateIt == s_candidates.end()) // 기존의 collision은 invalid => 기존 목록에서 제거
-		{
-			Game::invokeAreaEvent(E_GameObjectEvent::AREA_EXIT, *it);
-			it = s_collisions.erase(it);
-		}
-		else // 기존은 collision은 여전히 valid => 후보군에서 제외
-			s_candidates.erase(candidateIt);
 	}
 
 	for (int i = 0; i < s_collisions.size(); ++i)
@@ -132,8 +127,12 @@ void Game::updateCollisions()
 	{
 		Area* areaA = reinterpret_cast<Area*>(s_dat.getData(s_candidates[i].first));
 		Area* areaB = reinterpret_cast<Area*>(s_dat.getData(s_candidates[i].second));
-		if (!LayerFilter::detectable(areaA->layer(), areaB->layer()) ||
+		if (!LayerFilter::detectable(areaA->layer(), areaB->layer()) || areaA == areaB ||
 			(areaA->gameObject() == areaB->gameObject() && !areaA->detectMyArea() && !areaB->detectMyArea()))
+			continue;
+		const std::vector<Area*>& overlappedAreas = areaA->overlappedAreas();
+		auto it = std::find(overlappedAreas.begin(), overlappedAreas.end(), areaB);
+		if (it != overlappedAreas.end())
 			continue;
 		std::pair<Area*, Area*> collision = { areaA, areaB };
 		Game::invokeAreaEvent(E_GameObjectEvent::AREA_ENTER, collision);

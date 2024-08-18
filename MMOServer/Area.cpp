@@ -8,7 +8,15 @@ void Area::addShape(Shape* shape)
 	shape->_attachedArea = this;
 	if (!this->enable() || !this->gameObject()->activeInHierarchy())
 		return;
-	shape->insertToDAT(this->gameObject()->info().transform(), this);
+	shape->insertToDAT(this->gameObject()->transform(), this);
+}
+bool Area::overlaps(const Area& other) const
+{
+	for (int i = 0; i < _shapes.size(); ++i)
+		for (int j = 0; j < other._shapes.size(); ++j)
+			if (_shapes[i]->overlaps(*other._shapes[j]))
+				return true;
+	return false;
 }
 #pragma endregion
 
@@ -17,6 +25,10 @@ Area::~Area()
 {
 	for (Shape* shape : _shapes)
 		delete shape;
+}
+void Area::awake()
+{
+	_oldTF = this->gameObject()->transform();
 }
 void Area::update()
 {
@@ -32,7 +44,7 @@ void Area::update()
 void Area::onEnable()
 {
 	for (Shape* shape : _shapes)
-		shape->insertToDAT(this->gameObject()->info().transform(), this);
+		shape->insertToDAT(this->gameObject()->transform(), this);
 	_oldTF = this->gameObject()->transform();
 }
 void Area::onDisable()
@@ -56,4 +68,14 @@ void Area::onAreaExit(Area& my, Area& other)
 #pragma endregion
 
 #pragma region private
+void Area::copyTo(Component* instance)
+{
+	Area* area = reinterpret_cast<Area*>(instance);
+	area->_detectMyArea = _detectMyArea;
+	area->_layer = _layer;
+	area->_fixedRotation = _fixedRotation;
+	area->_enabled = _enabled;
+	for (Shape* shape : _shapes)
+		area->addShape(shape->clone());
+}
 #pragma endregion

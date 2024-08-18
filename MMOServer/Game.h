@@ -15,7 +15,7 @@ public:
 	static const int UPDATE_DELTA_TIME = 100;
 
 	static void init();
-	static GameObject* instantiate(GameObject* copy = nullptr, bool active = true);
+	static GameObject* instantiate(bool active = true, GameObject* copy = nullptr, GameObject* parent = nullptr);
 	static void destroy(GameObject* obj);
 	static void destroy(Component* component);
 private:

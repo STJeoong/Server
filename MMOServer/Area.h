@@ -17,9 +17,11 @@ public:
 	bool fixedRotation() const { return _fixedRotation; }
 	void fixedRotation(bool flag) { _fixedRotation = flag; }
 	const std::vector<Area*>& overlappedAreas() const { return _overlappedAreas; }
+	bool overlaps(const Area& other) const;
 protected:
-	Area() { _oldTF = this->gameObject()->transform(); }
+	Area() = default; // 여기서 _oldTF 초기화하면 안됨. _gameObject가 아직 nullptr이기 때문에
 	~Area();
+	virtual void awake() override;
 	virtual void update() override;
 	virtual void onEnable() override;
 	virtual void onDisable() override;
@@ -27,6 +29,8 @@ protected:
 	virtual void onAreaEnter(Area& my, Area& other) override;
 	virtual void onAreaExit(Area& my, Area& other) override;
 private:
+	virtual Area* createInstance() override { return new Area(); }
+	virtual void copyTo(Component* instance) override;
 
 	bool _detectMyArea = false;
 	E_Layer _layer = E_Layer::DEFAULT;

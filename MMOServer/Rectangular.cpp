@@ -1,13 +1,14 @@
 #include "Rectangular.h"
 #include "Area.h"
+#include "Utils.h"
 
 #pragma region public
 void Rectangular::removeFromDAT()
 {
-	if (_id == DAT::NULL_NODE)
+	if (_ids[0] == DAT::NULL_NODE)
 		return;
-	this->remove(_id);
-	_id = DAT::NULL_NODE;
+	this->remove(_ids[0]);
+	_ids[0] = DAT::NULL_NODE;
 }
 void Rectangular::insertToDAT(const TransformInt& pivot, void* userData)
 {
@@ -18,22 +19,53 @@ void Rectangular::insertToDAT(const TransformInt& pivot, void* userData)
 	int rightBtmX = pivot.x() + _offsetX + _xExtension;
 	if (!_attachedArea->fixedRotation())
 	{
+		TransformInt localOffset, localExtension;
+		TransformInt worldOffset, worldExtension;
+
+		localOffset.set_dir(E_Dir::BOTTOM);
+		localOffset.set_y(_offsetY);
+		localOffset.set_x(_offsetX);
+		localExtension.set_dir(E_Dir::BOTTOM);
+		localExtension.set_y(_yExtension);
+		localExtension.set_x(_xExtension);
+		Utils::localToWorld(pivot, localOffset, worldOffset);
+		Utils::localToWorld(pivot, localExtension, worldExtension);
+
+		leftTopY = pivot.y() + worldOffset.y() - std::abs(worldExtension.y());
+		leftTopX = pivot.x() + worldOffset.x() - std::abs(worldExtension.x());
+		rightBtmY = pivot.y() + worldOffset.y() + std::abs(worldExtension.y());
+		rightBtmX = pivot.x() + worldOffset.x() + std::abs(worldExtension.x());
 	}
 
 	this->add(userData, { leftTopY, leftTopX, rightBtmY, rightBtmX });
 }
 void Rectangular::move(const TransformInt& pivot)
 {
-	int leftTopY = pivot.y() - _yExtension;
-	int leftTopX = pivot.x() - _xExtension;
-	int rightBtmY = pivot.y() + _yExtension;
-	int rightBtmX = pivot.x() + _xExtension;
+	int leftTopY = pivot.y() + _offsetY - _yExtension;
+	int leftTopX = pivot.x() + _offsetX - _xExtension;
+	int rightBtmY = pivot.y() + _offsetY + _yExtension;
+	int rightBtmX = pivot.x() + _offsetX + _xExtension;
 	if (!_attachedArea->fixedRotation())
 	{
+		TransformInt localOffset, localExtension;
+		TransformInt worldOffset, worldExtension;
 
+		localOffset.set_dir(E_Dir::BOTTOM);
+		localOffset.set_y(_offsetY);
+		localOffset.set_x(_offsetX);
+		localExtension.set_dir(E_Dir::BOTTOM);
+		localExtension.set_y(_yExtension);
+		localExtension.set_x(_xExtension);
+		Utils::localToWorld(pivot, localOffset, worldOffset);
+		Utils::localToWorld(pivot, localExtension, worldExtension);
+
+		leftTopY = pivot.y() + worldOffset.y() - std::abs(worldExtension.y());
+		leftTopX = pivot.x() + worldOffset.x() - std::abs(worldExtension.x());
+		rightBtmY = pivot.y() + worldOffset.y() + std::abs(worldExtension.y());
+		rightBtmX = pivot.x() + worldOffset.x() + std::abs(worldExtension.x());
 	}
 
-	Shape::move(_id, { leftTopY, leftTopX, rightBtmY, rightBtmX });
+	Shape::move(_ids[0], { leftTopY, leftTopX, rightBtmY, rightBtmX });
 }
 #pragma endregion
 

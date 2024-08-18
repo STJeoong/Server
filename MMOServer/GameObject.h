@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <functional>
 #include "MMO_struct.pb.h"
 #include "E_GameObjectEvent.h"
 
@@ -20,23 +21,25 @@ public:
 	// get
 	// set
 	GameObject* parent() const { return _parent; }
-	void parent(GameObject* val);
+	void parent(GameObject* val, bool evtInvoke = true);
 	const std::vector<Component*>& components() const { return _components; }
-	E_ObjectState state() const { return _info.state(); }
-	void state(E_ObjectState val) { _info.set_state(val); }
-	const TransformInt& transform() const { return _info.transform(); }
+	const TransformInt& transform() const { return _worldTF; }
 	void transform(int y, int x, E_Dir dir);
-	const ObjectInfo& info() const { return _info; }
-	void active(bool flag);
+	void active(bool flag, bool evtInvoke = true);
 	bool activeSelf() const { return _activeSelf; }
 	bool activeInHierarchy() const { return _activeInHierarchy; }
 private:
-	GameObject();
+	static void doRecursively(GameObject* root, const std::function<void(GameObject*)>& action, const std::function<bool(GameObject*)>& filter);
+
+	GameObject() = delete;
+	GameObject(bool isActvie, GameObject* p);
+	GameObject(const GameObject& copy); // recursive 하지 않음. 내부적으로만 사용함. 외부 클래스에서 사용하면 안됨.
+	GameObject(bool isActive, const GameObject& copy, GameObject* p);
 	~GameObject();
 	void addChild(GameObject* child) { _children.push_back(child); }
 	void broadcastToComponents(const E_GameObjectEvent& evt, void* arg);
 
-	ObjectInfo _info;
+	TransformInt _worldTF;
 	TransformInt _localTF;
 	GameObject* _parent = nullptr;
 	std::vector<GameObject*> _children;
@@ -69,5 +72,6 @@ inline T* GameObject::addComponent(Args&&... args)
 	Component* ret = new T(std::forward<Args>(args)...);
 	ret->gameObject(this);
 	_components.push_back(ret);
+	ret->invoke(E_GameObjectEvent::AWAKE, nullptr);
 	return dynamic_cast<T*>(ret);
 }

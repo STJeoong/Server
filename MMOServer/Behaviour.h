@@ -15,8 +15,9 @@ protected:
 	virtual void onDisable() {}
 	virtual void start() {}
 	virtual void update() {}
-private:
 
 	bool _enabled = true;
+private:
+
 	bool _isFirstUpdate = true;
 };

@@ -16,6 +16,7 @@ protected:
 	virtual ~Component() = default;
 
 	void invokeAll(const E_GameObjectEvent& evt, void* arg);
+	virtual void awake() {}
 	virtual void onUpdate() {}
 	virtual void onActiveGameObject() {}
 	virtual void onInactiveGameObject() {}
@@ -26,6 +27,8 @@ protected:
 private:
 	void invoke(const E_GameObjectEvent& evt, void* arg);
 	void gameObject(GameObject* obj) { _gameObject = obj; }
+	virtual Component* createInstance() = 0;
+	virtual void copyTo(Component* instance) = 0;
 
 
 	GameObject* _gameObject = nullptr;

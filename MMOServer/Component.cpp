@@ -20,6 +20,7 @@ void Component::invoke(const E_GameObjectEvent& evt, void* arg)
 {
 	switch (evt)
 	{
+	case E_GameObjectEvent::AWAKE: this->awake(); return;
 	case E_GameObjectEvent::UPDATE: this->onUpdate(); return;
 	case E_GameObjectEvent::ACTIVE: this->onActiveGameObject(); return;
 	case E_GameObjectEvent::INACTIVE: this->onInactiveGameObject(); return;
