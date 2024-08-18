@@ -47,41 +47,41 @@ struct TableStruct_MMO_5fstruct_2eproto {
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_MMO_5fstruct_2eproto;
 namespace protocol {
 namespace mmo {
-class PlayerInfo;
-struct PlayerInfoDefaultTypeInternal;
-extern PlayerInfoDefaultTypeInternal _PlayerInfo_default_instance_;
-class Vec2;
-struct Vec2DefaultTypeInternal;
-extern Vec2DefaultTypeInternal _Vec2_default_instance_;
+class ObjectInfo;
+struct ObjectInfoDefaultTypeInternal;
+extern ObjectInfoDefaultTypeInternal _ObjectInfo_default_instance_;
+class TransformInt;
+struct TransformIntDefaultTypeInternal;
+extern TransformIntDefaultTypeInternal _TransformInt_default_instance_;
 }  // namespace mmo
 }  // namespace protocol
 PROTOBUF_NAMESPACE_OPEN
-template<> ::protocol::mmo::PlayerInfo* Arena::CreateMaybeMessage<::protocol::mmo::PlayerInfo>(Arena*);
-template<> ::protocol::mmo::Vec2* Arena::CreateMaybeMessage<::protocol::mmo::Vec2>(Arena*);
+template<> ::protocol::mmo::ObjectInfo* Arena::CreateMaybeMessage<::protocol::mmo::ObjectInfo>(Arena*);
+template<> ::protocol::mmo::TransformInt* Arena::CreateMaybeMessage<::protocol::mmo::TransformInt>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace protocol {
 namespace mmo {
 
 // ===================================================================
 
-class Vec2 final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.mmo.Vec2) */ {
+class TransformInt final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.mmo.TransformInt) */ {
  public:
-  inline Vec2() : Vec2(nullptr) {}
-  ~Vec2() override;
-  explicit PROTOBUF_CONSTEXPR Vec2(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline TransformInt() : TransformInt(nullptr) {}
+  ~TransformInt() override;
+  explicit PROTOBUF_CONSTEXPR TransformInt(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  Vec2(const Vec2& from);
-  Vec2(Vec2&& from) noexcept
-    : Vec2() {
+  TransformInt(const TransformInt& from);
+  TransformInt(TransformInt&& from) noexcept
+    : TransformInt() {
     *this = ::std::move(from);
   }
 
-  inline Vec2& operator=(const Vec2& from) {
+  inline TransformInt& operator=(const TransformInt& from) {
     CopyFrom(from);
     return *this;
   }
-  inline Vec2& operator=(Vec2&& from) noexcept {
+  inline TransformInt& operator=(TransformInt&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -104,20 +104,20 @@ class Vec2 final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const Vec2& default_instance() {
+  static const TransformInt& default_instance() {
     return *internal_default_instance();
   }
-  static inline const Vec2* internal_default_instance() {
-    return reinterpret_cast<const Vec2*>(
-               &_Vec2_default_instance_);
+  static inline const TransformInt* internal_default_instance() {
+    return reinterpret_cast<const TransformInt*>(
+               &_TransformInt_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     0;
 
-  friend void swap(Vec2& a, Vec2& b) {
+  friend void swap(TransformInt& a, TransformInt& b) {
     a.Swap(&b);
   }
-  inline void Swap(Vec2* other) {
+  inline void Swap(TransformInt* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -130,7 +130,7 @@ class Vec2 final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(Vec2* other) {
+  void UnsafeArenaSwap(TransformInt* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -138,14 +138,14 @@ class Vec2 final :
 
   // implements Message ----------------------------------------------
 
-  Vec2* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<Vec2>(arena);
+  TransformInt* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<TransformInt>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const Vec2& from);
+  void CopyFrom(const TransformInt& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const Vec2& from) {
-    Vec2::MergeImpl(*this, from);
+  void MergeFrom( const TransformInt& from) {
+    TransformInt::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -163,15 +163,15 @@ class Vec2 final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(Vec2* other);
+  void InternalSwap(TransformInt* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "protocol.mmo.Vec2";
+    return "protocol.mmo.TransformInt";
   }
   protected:
-  explicit Vec2(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit TransformInt(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -187,6 +187,7 @@ class Vec2 final :
   enum : int {
     kXFieldNumber = 1,
     kYFieldNumber = 2,
+    kDirFieldNumber = 3,
   };
   // int32 x = 1;
   void clear_x();
@@ -206,7 +207,16 @@ class Vec2 final :
   void _internal_set_y(int32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:protocol.mmo.Vec2)
+  // .protocol.mmo.E_Dir dir = 3;
+  void clear_dir();
+  ::protocol::mmo::E_Dir dir() const;
+  void set_dir(::protocol::mmo::E_Dir value);
+  private:
+  ::protocol::mmo::E_Dir _internal_dir() const;
+  void _internal_set_dir(::protocol::mmo::E_Dir value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:protocol.mmo.TransformInt)
  private:
   class _Internal;
 
@@ -216,6 +226,7 @@ class Vec2 final :
   struct Impl_ {
     int32_t x_;
     int32_t y_;
+    int dir_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -223,24 +234,24 @@ class Vec2 final :
 };
 // -------------------------------------------------------------------
 
-class PlayerInfo final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.mmo.PlayerInfo) */ {
+class ObjectInfo final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.mmo.ObjectInfo) */ {
  public:
-  inline PlayerInfo() : PlayerInfo(nullptr) {}
-  ~PlayerInfo() override;
-  explicit PROTOBUF_CONSTEXPR PlayerInfo(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline ObjectInfo() : ObjectInfo(nullptr) {}
+  ~ObjectInfo() override;
+  explicit PROTOBUF_CONSTEXPR ObjectInfo(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  PlayerInfo(const PlayerInfo& from);
-  PlayerInfo(PlayerInfo&& from) noexcept
-    : PlayerInfo() {
+  ObjectInfo(const ObjectInfo& from);
+  ObjectInfo(ObjectInfo&& from) noexcept
+    : ObjectInfo() {
     *this = ::std::move(from);
   }
 
-  inline PlayerInfo& operator=(const PlayerInfo& from) {
+  inline ObjectInfo& operator=(const ObjectInfo& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PlayerInfo& operator=(PlayerInfo&& from) noexcept {
+  inline ObjectInfo& operator=(ObjectInfo&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -263,20 +274,20 @@ class PlayerInfo final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PlayerInfo& default_instance() {
+  static const ObjectInfo& default_instance() {
     return *internal_default_instance();
   }
-  static inline const PlayerInfo* internal_default_instance() {
-    return reinterpret_cast<const PlayerInfo*>(
-               &_PlayerInfo_default_instance_);
+  static inline const ObjectInfo* internal_default_instance() {
+    return reinterpret_cast<const ObjectInfo*>(
+               &_ObjectInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     1;
 
-  friend void swap(PlayerInfo& a, PlayerInfo& b) {
+  friend void swap(ObjectInfo& a, ObjectInfo& b) {
     a.Swap(&b);
   }
-  inline void Swap(PlayerInfo* other) {
+  inline void Swap(ObjectInfo* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -289,7 +300,7 @@ class PlayerInfo final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PlayerInfo* other) {
+  void UnsafeArenaSwap(ObjectInfo* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -297,14 +308,14 @@ class PlayerInfo final :
 
   // implements Message ----------------------------------------------
 
-  PlayerInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<PlayerInfo>(arena);
+  ObjectInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ObjectInfo>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const PlayerInfo& from);
+  void CopyFrom(const ObjectInfo& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const PlayerInfo& from) {
-    PlayerInfo::MergeImpl(*this, from);
+  void MergeFrom( const ObjectInfo& from) {
+    ObjectInfo::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -322,15 +333,15 @@ class PlayerInfo final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(PlayerInfo* other);
+  void InternalSwap(ObjectInfo* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "protocol.mmo.PlayerInfo";
+    return "protocol.mmo.ObjectInfo";
   }
   protected:
-  explicit PlayerInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit ObjectInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -344,27 +355,27 @@ class PlayerInfo final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kPosFieldNumber = 3,
+    kTransformFieldNumber = 3,
     kIdFieldNumber = 1,
     kStateFieldNumber = 2,
   };
-  // .protocol.mmo.Vec2 pos = 3;
-  bool has_pos() const;
+  // .protocol.mmo.TransformInt transform = 3;
+  bool has_transform() const;
   private:
-  bool _internal_has_pos() const;
+  bool _internal_has_transform() const;
   public:
-  void clear_pos();
-  const ::protocol::mmo::Vec2& pos() const;
-  PROTOBUF_NODISCARD ::protocol::mmo::Vec2* release_pos();
-  ::protocol::mmo::Vec2* mutable_pos();
-  void set_allocated_pos(::protocol::mmo::Vec2* pos);
+  void clear_transform();
+  const ::protocol::mmo::TransformInt& transform() const;
+  PROTOBUF_NODISCARD ::protocol::mmo::TransformInt* release_transform();
+  ::protocol::mmo::TransformInt* mutable_transform();
+  void set_allocated_transform(::protocol::mmo::TransformInt* transform);
   private:
-  const ::protocol::mmo::Vec2& _internal_pos() const;
-  ::protocol::mmo::Vec2* _internal_mutable_pos();
+  const ::protocol::mmo::TransformInt& _internal_transform() const;
+  ::protocol::mmo::TransformInt* _internal_mutable_transform();
   public:
-  void unsafe_arena_set_allocated_pos(
-      ::protocol::mmo::Vec2* pos);
-  ::protocol::mmo::Vec2* unsafe_arena_release_pos();
+  void unsafe_arena_set_allocated_transform(
+      ::protocol::mmo::TransformInt* transform);
+  ::protocol::mmo::TransformInt* unsafe_arena_release_transform();
 
   // int32 id = 1;
   void clear_id();
@@ -375,16 +386,16 @@ class PlayerInfo final :
   void _internal_set_id(int32_t value);
   public:
 
-  // .protocol.mmo.E_PlayerState state = 2;
+  // .protocol.mmo.E_ObjectState state = 2;
   void clear_state();
-  ::protocol::mmo::E_PlayerState state() const;
-  void set_state(::protocol::mmo::E_PlayerState value);
+  ::protocol::mmo::E_ObjectState state() const;
+  void set_state(::protocol::mmo::E_ObjectState value);
   private:
-  ::protocol::mmo::E_PlayerState _internal_state() const;
-  void _internal_set_state(::protocol::mmo::E_PlayerState value);
+  ::protocol::mmo::E_ObjectState _internal_state() const;
+  void _internal_set_state(::protocol::mmo::E_ObjectState value);
   public:
 
-  // @@protoc_insertion_point(class_scope:protocol.mmo.PlayerInfo)
+  // @@protoc_insertion_point(class_scope:protocol.mmo.ObjectInfo)
  private:
   class _Internal;
 
@@ -392,7 +403,7 @@ class PlayerInfo final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::protocol::mmo::Vec2* pos_;
+    ::protocol::mmo::TransformInt* transform_;
     int32_t id_;
     int state_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -409,131 +420,151 @@ class PlayerInfo final :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// Vec2
+// TransformInt
 
 // int32 x = 1;
-inline void Vec2::clear_x() {
+inline void TransformInt::clear_x() {
   _impl_.x_ = 0;
 }
-inline int32_t Vec2::_internal_x() const {
+inline int32_t TransformInt::_internal_x() const {
   return _impl_.x_;
 }
-inline int32_t Vec2::x() const {
-  // @@protoc_insertion_point(field_get:protocol.mmo.Vec2.x)
+inline int32_t TransformInt::x() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.TransformInt.x)
   return _internal_x();
 }
-inline void Vec2::_internal_set_x(int32_t value) {
+inline void TransformInt::_internal_set_x(int32_t value) {
   
   _impl_.x_ = value;
 }
-inline void Vec2::set_x(int32_t value) {
+inline void TransformInt::set_x(int32_t value) {
   _internal_set_x(value);
-  // @@protoc_insertion_point(field_set:protocol.mmo.Vec2.x)
+  // @@protoc_insertion_point(field_set:protocol.mmo.TransformInt.x)
 }
 
 // int32 y = 2;
-inline void Vec2::clear_y() {
+inline void TransformInt::clear_y() {
   _impl_.y_ = 0;
 }
-inline int32_t Vec2::_internal_y() const {
+inline int32_t TransformInt::_internal_y() const {
   return _impl_.y_;
 }
-inline int32_t Vec2::y() const {
-  // @@protoc_insertion_point(field_get:protocol.mmo.Vec2.y)
+inline int32_t TransformInt::y() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.TransformInt.y)
   return _internal_y();
 }
-inline void Vec2::_internal_set_y(int32_t value) {
+inline void TransformInt::_internal_set_y(int32_t value) {
   
   _impl_.y_ = value;
 }
-inline void Vec2::set_y(int32_t value) {
+inline void TransformInt::set_y(int32_t value) {
   _internal_set_y(value);
-  // @@protoc_insertion_point(field_set:protocol.mmo.Vec2.y)
+  // @@protoc_insertion_point(field_set:protocol.mmo.TransformInt.y)
+}
+
+// .protocol.mmo.E_Dir dir = 3;
+inline void TransformInt::clear_dir() {
+  _impl_.dir_ = 0;
+}
+inline ::protocol::mmo::E_Dir TransformInt::_internal_dir() const {
+  return static_cast< ::protocol::mmo::E_Dir >(_impl_.dir_);
+}
+inline ::protocol::mmo::E_Dir TransformInt::dir() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.TransformInt.dir)
+  return _internal_dir();
+}
+inline void TransformInt::_internal_set_dir(::protocol::mmo::E_Dir value) {
+  
+  _impl_.dir_ = value;
+}
+inline void TransformInt::set_dir(::protocol::mmo::E_Dir value) {
+  _internal_set_dir(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.TransformInt.dir)
 }
 
 // -------------------------------------------------------------------
 
-// PlayerInfo
+// ObjectInfo
 
 // int32 id = 1;
-inline void PlayerInfo::clear_id() {
+inline void ObjectInfo::clear_id() {
   _impl_.id_ = 0;
 }
-inline int32_t PlayerInfo::_internal_id() const {
+inline int32_t ObjectInfo::_internal_id() const {
   return _impl_.id_;
 }
-inline int32_t PlayerInfo::id() const {
-  // @@protoc_insertion_point(field_get:protocol.mmo.PlayerInfo.id)
+inline int32_t ObjectInfo::id() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.ObjectInfo.id)
   return _internal_id();
 }
-inline void PlayerInfo::_internal_set_id(int32_t value) {
+inline void ObjectInfo::_internal_set_id(int32_t value) {
   
   _impl_.id_ = value;
 }
-inline void PlayerInfo::set_id(int32_t value) {
+inline void ObjectInfo::set_id(int32_t value) {
   _internal_set_id(value);
-  // @@protoc_insertion_point(field_set:protocol.mmo.PlayerInfo.id)
+  // @@protoc_insertion_point(field_set:protocol.mmo.ObjectInfo.id)
 }
 
-// .protocol.mmo.E_PlayerState state = 2;
-inline void PlayerInfo::clear_state() {
+// .protocol.mmo.E_ObjectState state = 2;
+inline void ObjectInfo::clear_state() {
   _impl_.state_ = 0;
 }
-inline ::protocol::mmo::E_PlayerState PlayerInfo::_internal_state() const {
-  return static_cast< ::protocol::mmo::E_PlayerState >(_impl_.state_);
+inline ::protocol::mmo::E_ObjectState ObjectInfo::_internal_state() const {
+  return static_cast< ::protocol::mmo::E_ObjectState >(_impl_.state_);
 }
-inline ::protocol::mmo::E_PlayerState PlayerInfo::state() const {
-  // @@protoc_insertion_point(field_get:protocol.mmo.PlayerInfo.state)
+inline ::protocol::mmo::E_ObjectState ObjectInfo::state() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.ObjectInfo.state)
   return _internal_state();
 }
-inline void PlayerInfo::_internal_set_state(::protocol::mmo::E_PlayerState value) {
+inline void ObjectInfo::_internal_set_state(::protocol::mmo::E_ObjectState value) {
   
   _impl_.state_ = value;
 }
-inline void PlayerInfo::set_state(::protocol::mmo::E_PlayerState value) {
+inline void ObjectInfo::set_state(::protocol::mmo::E_ObjectState value) {
   _internal_set_state(value);
-  // @@protoc_insertion_point(field_set:protocol.mmo.PlayerInfo.state)
+  // @@protoc_insertion_point(field_set:protocol.mmo.ObjectInfo.state)
 }
 
-// .protocol.mmo.Vec2 pos = 3;
-inline bool PlayerInfo::_internal_has_pos() const {
-  return this != internal_default_instance() && _impl_.pos_ != nullptr;
+// .protocol.mmo.TransformInt transform = 3;
+inline bool ObjectInfo::_internal_has_transform() const {
+  return this != internal_default_instance() && _impl_.transform_ != nullptr;
 }
-inline bool PlayerInfo::has_pos() const {
-  return _internal_has_pos();
+inline bool ObjectInfo::has_transform() const {
+  return _internal_has_transform();
 }
-inline void PlayerInfo::clear_pos() {
-  if (GetArenaForAllocation() == nullptr && _impl_.pos_ != nullptr) {
-    delete _impl_.pos_;
+inline void ObjectInfo::clear_transform() {
+  if (GetArenaForAllocation() == nullptr && _impl_.transform_ != nullptr) {
+    delete _impl_.transform_;
   }
-  _impl_.pos_ = nullptr;
+  _impl_.transform_ = nullptr;
 }
-inline const ::protocol::mmo::Vec2& PlayerInfo::_internal_pos() const {
-  const ::protocol::mmo::Vec2* p = _impl_.pos_;
-  return p != nullptr ? *p : reinterpret_cast<const ::protocol::mmo::Vec2&>(
-      ::protocol::mmo::_Vec2_default_instance_);
+inline const ::protocol::mmo::TransformInt& ObjectInfo::_internal_transform() const {
+  const ::protocol::mmo::TransformInt* p = _impl_.transform_;
+  return p != nullptr ? *p : reinterpret_cast<const ::protocol::mmo::TransformInt&>(
+      ::protocol::mmo::_TransformInt_default_instance_);
 }
-inline const ::protocol::mmo::Vec2& PlayerInfo::pos() const {
-  // @@protoc_insertion_point(field_get:protocol.mmo.PlayerInfo.pos)
-  return _internal_pos();
+inline const ::protocol::mmo::TransformInt& ObjectInfo::transform() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.ObjectInfo.transform)
+  return _internal_transform();
 }
-inline void PlayerInfo::unsafe_arena_set_allocated_pos(
-    ::protocol::mmo::Vec2* pos) {
+inline void ObjectInfo::unsafe_arena_set_allocated_transform(
+    ::protocol::mmo::TransformInt* transform) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.pos_);
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.transform_);
   }
-  _impl_.pos_ = pos;
-  if (pos) {
+  _impl_.transform_ = transform;
+  if (transform) {
     
   } else {
     
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:protocol.mmo.PlayerInfo.pos)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:protocol.mmo.ObjectInfo.transform)
 }
-inline ::protocol::mmo::Vec2* PlayerInfo::release_pos() {
+inline ::protocol::mmo::TransformInt* ObjectInfo::release_transform() {
   
-  ::protocol::mmo::Vec2* temp = _impl_.pos_;
-  _impl_.pos_ = nullptr;
+  ::protocol::mmo::TransformInt* temp = _impl_.transform_;
+  _impl_.transform_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
   temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
@@ -545,44 +576,44 @@ inline ::protocol::mmo::Vec2* PlayerInfo::release_pos() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::protocol::mmo::Vec2* PlayerInfo::unsafe_arena_release_pos() {
-  // @@protoc_insertion_point(field_release:protocol.mmo.PlayerInfo.pos)
+inline ::protocol::mmo::TransformInt* ObjectInfo::unsafe_arena_release_transform() {
+  // @@protoc_insertion_point(field_release:protocol.mmo.ObjectInfo.transform)
   
-  ::protocol::mmo::Vec2* temp = _impl_.pos_;
-  _impl_.pos_ = nullptr;
+  ::protocol::mmo::TransformInt* temp = _impl_.transform_;
+  _impl_.transform_ = nullptr;
   return temp;
 }
-inline ::protocol::mmo::Vec2* PlayerInfo::_internal_mutable_pos() {
+inline ::protocol::mmo::TransformInt* ObjectInfo::_internal_mutable_transform() {
   
-  if (_impl_.pos_ == nullptr) {
-    auto* p = CreateMaybeMessage<::protocol::mmo::Vec2>(GetArenaForAllocation());
-    _impl_.pos_ = p;
+  if (_impl_.transform_ == nullptr) {
+    auto* p = CreateMaybeMessage<::protocol::mmo::TransformInt>(GetArenaForAllocation());
+    _impl_.transform_ = p;
   }
-  return _impl_.pos_;
+  return _impl_.transform_;
 }
-inline ::protocol::mmo::Vec2* PlayerInfo::mutable_pos() {
-  ::protocol::mmo::Vec2* _msg = _internal_mutable_pos();
-  // @@protoc_insertion_point(field_mutable:protocol.mmo.PlayerInfo.pos)
+inline ::protocol::mmo::TransformInt* ObjectInfo::mutable_transform() {
+  ::protocol::mmo::TransformInt* _msg = _internal_mutable_transform();
+  // @@protoc_insertion_point(field_mutable:protocol.mmo.ObjectInfo.transform)
   return _msg;
 }
-inline void PlayerInfo::set_allocated_pos(::protocol::mmo::Vec2* pos) {
+inline void ObjectInfo::set_allocated_transform(::protocol::mmo::TransformInt* transform) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete _impl_.pos_;
+    delete _impl_.transform_;
   }
-  if (pos) {
+  if (transform) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(pos);
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(transform);
     if (message_arena != submessage_arena) {
-      pos = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, pos, submessage_arena);
+      transform = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, transform, submessage_arena);
     }
     
   } else {
     
   }
-  _impl_.pos_ = pos;
-  // @@protoc_insertion_point(field_set_allocated:protocol.mmo.PlayerInfo.pos)
+  _impl_.transform_ = transform;
+  // @@protoc_insertion_point(field_set_allocated:protocol.mmo.ObjectInfo.transform)
 }
 
 #ifdef __GNUC__

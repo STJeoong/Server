@@ -194,22 +194,22 @@ class EnterGame_Resp final :
     kRespFieldNumber = 1,
     kIdFieldNumber = 2,
   };
-  // repeated .protocol.mmo.PlayerInfo players = 3;
+  // repeated .protocol.mmo.ObjectInfo players = 3;
   int players_size() const;
   private:
   int _internal_players_size() const;
   public:
   void clear_players();
-  ::protocol::mmo::PlayerInfo* mutable_players(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::mmo::PlayerInfo >*
+  ::protocol::mmo::ObjectInfo* mutable_players(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::mmo::ObjectInfo >*
       mutable_players();
   private:
-  const ::protocol::mmo::PlayerInfo& _internal_players(int index) const;
-  ::protocol::mmo::PlayerInfo* _internal_add_players();
+  const ::protocol::mmo::ObjectInfo& _internal_players(int index) const;
+  ::protocol::mmo::ObjectInfo* _internal_add_players();
   public:
-  const ::protocol::mmo::PlayerInfo& players(int index) const;
-  ::protocol::mmo::PlayerInfo* add_players();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::mmo::PlayerInfo >&
+  const ::protocol::mmo::ObjectInfo& players(int index) const;
+  ::protocol::mmo::ObjectInfo* add_players();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::mmo::ObjectInfo >&
       players() const;
 
   // .protocol.mmo.E_RespCode resp = 1;
@@ -238,7 +238,7 @@ class EnterGame_Resp final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::mmo::PlayerInfo > players_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::mmo::ObjectInfo > players_;
     int resp_;
     int32_t id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -371,23 +371,23 @@ class PlayerEnter_Notify final :
   enum : int {
     kInfoFieldNumber = 1,
   };
-  // .protocol.mmo.PlayerInfo info = 1;
+  // .protocol.mmo.ObjectInfo info = 1;
   bool has_info() const;
   private:
   bool _internal_has_info() const;
   public:
   void clear_info();
-  const ::protocol::mmo::PlayerInfo& info() const;
-  PROTOBUF_NODISCARD ::protocol::mmo::PlayerInfo* release_info();
-  ::protocol::mmo::PlayerInfo* mutable_info();
-  void set_allocated_info(::protocol::mmo::PlayerInfo* info);
+  const ::protocol::mmo::ObjectInfo& info() const;
+  PROTOBUF_NODISCARD ::protocol::mmo::ObjectInfo* release_info();
+  ::protocol::mmo::ObjectInfo* mutable_info();
+  void set_allocated_info(::protocol::mmo::ObjectInfo* info);
   private:
-  const ::protocol::mmo::PlayerInfo& _internal_info() const;
-  ::protocol::mmo::PlayerInfo* _internal_mutable_info();
+  const ::protocol::mmo::ObjectInfo& _internal_info() const;
+  ::protocol::mmo::ObjectInfo* _internal_mutable_info();
   public:
   void unsafe_arena_set_allocated_info(
-      ::protocol::mmo::PlayerInfo* info);
-  ::protocol::mmo::PlayerInfo* unsafe_arena_release_info();
+      ::protocol::mmo::ObjectInfo* info);
+  ::protocol::mmo::ObjectInfo* unsafe_arena_release_info();
 
   // @@protoc_insertion_point(class_scope:protocol.mmo.PlayerEnter_Notify)
  private:
@@ -397,7 +397,7 @@ class PlayerEnter_Notify final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::protocol::mmo::PlayerInfo* info_;
+    ::protocol::mmo::ObjectInfo* info_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -602,38 +602,38 @@ inline void EnterGame_Resp::set_id(int32_t value) {
   // @@protoc_insertion_point(field_set:protocol.mmo.EnterGame_Resp.id)
 }
 
-// repeated .protocol.mmo.PlayerInfo players = 3;
+// repeated .protocol.mmo.ObjectInfo players = 3;
 inline int EnterGame_Resp::_internal_players_size() const {
   return _impl_.players_.size();
 }
 inline int EnterGame_Resp::players_size() const {
   return _internal_players_size();
 }
-inline ::protocol::mmo::PlayerInfo* EnterGame_Resp::mutable_players(int index) {
+inline ::protocol::mmo::ObjectInfo* EnterGame_Resp::mutable_players(int index) {
   // @@protoc_insertion_point(field_mutable:protocol.mmo.EnterGame_Resp.players)
   return _impl_.players_.Mutable(index);
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::mmo::PlayerInfo >*
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::mmo::ObjectInfo >*
 EnterGame_Resp::mutable_players() {
   // @@protoc_insertion_point(field_mutable_list:protocol.mmo.EnterGame_Resp.players)
   return &_impl_.players_;
 }
-inline const ::protocol::mmo::PlayerInfo& EnterGame_Resp::_internal_players(int index) const {
+inline const ::protocol::mmo::ObjectInfo& EnterGame_Resp::_internal_players(int index) const {
   return _impl_.players_.Get(index);
 }
-inline const ::protocol::mmo::PlayerInfo& EnterGame_Resp::players(int index) const {
+inline const ::protocol::mmo::ObjectInfo& EnterGame_Resp::players(int index) const {
   // @@protoc_insertion_point(field_get:protocol.mmo.EnterGame_Resp.players)
   return _internal_players(index);
 }
-inline ::protocol::mmo::PlayerInfo* EnterGame_Resp::_internal_add_players() {
+inline ::protocol::mmo::ObjectInfo* EnterGame_Resp::_internal_add_players() {
   return _impl_.players_.Add();
 }
-inline ::protocol::mmo::PlayerInfo* EnterGame_Resp::add_players() {
-  ::protocol::mmo::PlayerInfo* _add = _internal_add_players();
+inline ::protocol::mmo::ObjectInfo* EnterGame_Resp::add_players() {
+  ::protocol::mmo::ObjectInfo* _add = _internal_add_players();
   // @@protoc_insertion_point(field_add:protocol.mmo.EnterGame_Resp.players)
   return _add;
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::mmo::PlayerInfo >&
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::mmo::ObjectInfo >&
 EnterGame_Resp::players() const {
   // @@protoc_insertion_point(field_list:protocol.mmo.EnterGame_Resp.players)
   return _impl_.players_;
@@ -643,24 +643,24 @@ EnterGame_Resp::players() const {
 
 // PlayerEnter_Notify
 
-// .protocol.mmo.PlayerInfo info = 1;
+// .protocol.mmo.ObjectInfo info = 1;
 inline bool PlayerEnter_Notify::_internal_has_info() const {
   return this != internal_default_instance() && _impl_.info_ != nullptr;
 }
 inline bool PlayerEnter_Notify::has_info() const {
   return _internal_has_info();
 }
-inline const ::protocol::mmo::PlayerInfo& PlayerEnter_Notify::_internal_info() const {
-  const ::protocol::mmo::PlayerInfo* p = _impl_.info_;
-  return p != nullptr ? *p : reinterpret_cast<const ::protocol::mmo::PlayerInfo&>(
-      ::protocol::mmo::_PlayerInfo_default_instance_);
+inline const ::protocol::mmo::ObjectInfo& PlayerEnter_Notify::_internal_info() const {
+  const ::protocol::mmo::ObjectInfo* p = _impl_.info_;
+  return p != nullptr ? *p : reinterpret_cast<const ::protocol::mmo::ObjectInfo&>(
+      ::protocol::mmo::_ObjectInfo_default_instance_);
 }
-inline const ::protocol::mmo::PlayerInfo& PlayerEnter_Notify::info() const {
+inline const ::protocol::mmo::ObjectInfo& PlayerEnter_Notify::info() const {
   // @@protoc_insertion_point(field_get:protocol.mmo.PlayerEnter_Notify.info)
   return _internal_info();
 }
 inline void PlayerEnter_Notify::unsafe_arena_set_allocated_info(
-    ::protocol::mmo::PlayerInfo* info) {
+    ::protocol::mmo::ObjectInfo* info) {
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.info_);
   }
@@ -672,9 +672,9 @@ inline void PlayerEnter_Notify::unsafe_arena_set_allocated_info(
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:protocol.mmo.PlayerEnter_Notify.info)
 }
-inline ::protocol::mmo::PlayerInfo* PlayerEnter_Notify::release_info() {
+inline ::protocol::mmo::ObjectInfo* PlayerEnter_Notify::release_info() {
   
-  ::protocol::mmo::PlayerInfo* temp = _impl_.info_;
+  ::protocol::mmo::ObjectInfo* temp = _impl_.info_;
   _impl_.info_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
@@ -687,27 +687,27 @@ inline ::protocol::mmo::PlayerInfo* PlayerEnter_Notify::release_info() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::protocol::mmo::PlayerInfo* PlayerEnter_Notify::unsafe_arena_release_info() {
+inline ::protocol::mmo::ObjectInfo* PlayerEnter_Notify::unsafe_arena_release_info() {
   // @@protoc_insertion_point(field_release:protocol.mmo.PlayerEnter_Notify.info)
   
-  ::protocol::mmo::PlayerInfo* temp = _impl_.info_;
+  ::protocol::mmo::ObjectInfo* temp = _impl_.info_;
   _impl_.info_ = nullptr;
   return temp;
 }
-inline ::protocol::mmo::PlayerInfo* PlayerEnter_Notify::_internal_mutable_info() {
+inline ::protocol::mmo::ObjectInfo* PlayerEnter_Notify::_internal_mutable_info() {
   
   if (_impl_.info_ == nullptr) {
-    auto* p = CreateMaybeMessage<::protocol::mmo::PlayerInfo>(GetArenaForAllocation());
+    auto* p = CreateMaybeMessage<::protocol::mmo::ObjectInfo>(GetArenaForAllocation());
     _impl_.info_ = p;
   }
   return _impl_.info_;
 }
-inline ::protocol::mmo::PlayerInfo* PlayerEnter_Notify::mutable_info() {
-  ::protocol::mmo::PlayerInfo* _msg = _internal_mutable_info();
+inline ::protocol::mmo::ObjectInfo* PlayerEnter_Notify::mutable_info() {
+  ::protocol::mmo::ObjectInfo* _msg = _internal_mutable_info();
   // @@protoc_insertion_point(field_mutable:protocol.mmo.PlayerEnter_Notify.info)
   return _msg;
 }
-inline void PlayerEnter_Notify::set_allocated_info(::protocol::mmo::PlayerInfo* info) {
+inline void PlayerEnter_Notify::set_allocated_info(::protocol::mmo::ObjectInfo* info) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
     delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.info_);

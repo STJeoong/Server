@@ -125,13 +125,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>del C:\Users\taejeong\source\repos\ServerFramework\MMOServer\MMO_enum.pb.cc
-del C:\Users\taejeong\source\repos\ServerFramework\MMOServer\MMO_enum.pb.h
-del C:\Users\taejeong\source\repos\ServerFramework\MMOServer\MMO_struct.pb.cc
-del C:\Users\taejeong\source\repos\ServerFramework\MMOServer\MMO_struct.pb.h
-del C:\Users\taejeong\source\repos\ServerFramework\MMOServer\MMO_protocol.pb.cc
-del C:\Users\taejeong\source\repos\ServerFramework\MMOServer\MMO_protocol.pb.h
-protoc -I="C:\Users\taejeong\source\repos\ServerFramework\MMOServer\Protocol" --cpp_out="C:\Users\taejeong\source\repos\ServerFramework\MMOServer" MMO_protocol.proto MMO_enum.proto MMO_struct.proto</Command>
+      <Command>protoc -I="C:\Users\taejeong\source\repos\ServerFramework\MMOServer\Protocol" --cpp_out="C:\Users\taejeong\source\repos\ServerFramework\MMOServer" MMO_protocol.proto MMO_enum.proto MMO_struct.proto</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>protoc -I="C:\Users\taejeong\source\repos\ServerFramework\MMOServer\Protocol" --csharp_out="C:\Users\taejeong\Desktop\Systems\Unknown 2D\Assets\@Scripts\Protocol" MMO_protocol.proto MMO_enum.proto MMO_struct.proto</Command>
@@ -154,7 +148,14 @@ protoc -I="C:\Users\taejeong\source\repos\ServerFramework\MMOServer\Protocol" --
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AABB.cpp" />
+    <ClCompile Include="Area.cpp" />
+    <ClCompile Include="Behaviour.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="DAT.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="LayerFilter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MMOServerBroadcaster.cpp" />
@@ -162,7 +163,7 @@ protoc -I="C:\Users\taejeong\source\repos\ServerFramework\MMOServer\Protocol" --
     <ClCompile Include="MMO_protocol.pb.cc" />
     <ClCompile Include="MMO_struct.pb.cc" />
     <ClCompile Include="Monster.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Rectangular.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,16 +172,26 @@ protoc -I="C:\Users\taejeong\source\repos\ServerFramework\MMOServer\Protocol" --
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AABB.h" />
+    <ClInclude Include="Area.h" />
+    <ClInclude Include="Behaviour.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="DAT.h" />
     <ClInclude Include="E_EngineType.h" />
+    <ClInclude Include="E_GameObjectEvent.h" />
+    <ClInclude Include="E_Layer.h" />
     <ClInclude Include="E_TimerEvent.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Shape.h" />
+    <ClInclude Include="LayerFilter.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MMOServerBroadcaster.h" />
     <ClInclude Include="MMO_enum.pb.h" />
     <ClInclude Include="MMO_protocol.pb.h" />
     <ClInclude Include="MMO_struct.pb.h" />
     <ClInclude Include="Monster.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="Rectangular.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>

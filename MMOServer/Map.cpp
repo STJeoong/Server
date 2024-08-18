@@ -26,6 +26,11 @@ bool Map::canGo(int y, int x)
 		return false;
 	return _canGo[y - _yMin][x - _xMin];
 }
+bool Map::findPath(int startY, int startX, int destY, int destX, int& resultY, int& resultX)
+{
+	// TODO
+	return false;
+}
 #pragma endregion
 
 #pragma region private

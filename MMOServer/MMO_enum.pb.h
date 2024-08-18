@@ -100,30 +100,58 @@ inline bool E_RespCode_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_RespCode>(
     E_RespCode_descriptor(), name, value);
 }
-enum E_PlayerState : int {
+enum E_ObjectState : int {
   NONE = 0,
   IDLE = 1,
-  E_PlayerState_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
-  E_PlayerState_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+  E_ObjectState_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  E_ObjectState_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
-bool E_PlayerState_IsValid(int value);
-constexpr E_PlayerState E_PlayerState_MIN = NONE;
-constexpr E_PlayerState E_PlayerState_MAX = IDLE;
-constexpr int E_PlayerState_ARRAYSIZE = E_PlayerState_MAX + 1;
+bool E_ObjectState_IsValid(int value);
+constexpr E_ObjectState E_ObjectState_MIN = NONE;
+constexpr E_ObjectState E_ObjectState_MAX = IDLE;
+constexpr int E_ObjectState_ARRAYSIZE = E_ObjectState_MAX + 1;
 
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_PlayerState_descriptor();
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_ObjectState_descriptor();
 template<typename T>
-inline const std::string& E_PlayerState_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, E_PlayerState>::value ||
+inline const std::string& E_ObjectState_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, E_ObjectState>::value ||
     ::std::is_integral<T>::value,
-    "Incorrect type passed to function E_PlayerState_Name.");
+    "Incorrect type passed to function E_ObjectState_Name.");
   return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    E_PlayerState_descriptor(), enum_t_value);
+    E_ObjectState_descriptor(), enum_t_value);
 }
-inline bool E_PlayerState_Parse(
-    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, E_PlayerState* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_PlayerState>(
-    E_PlayerState_descriptor(), name, value);
+inline bool E_ObjectState_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, E_ObjectState* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_ObjectState>(
+    E_ObjectState_descriptor(), name, value);
+}
+enum E_Dir : int {
+  BOTTOM = 0,
+  LEFT = 1,
+  UP = 2,
+  RIGHT = 3,
+  MAX = 4,
+  E_Dir_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  E_Dir_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool E_Dir_IsValid(int value);
+constexpr E_Dir E_Dir_MIN = BOTTOM;
+constexpr E_Dir E_Dir_MAX = MAX;
+constexpr int E_Dir_ARRAYSIZE = E_Dir_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_Dir_descriptor();
+template<typename T>
+inline const std::string& E_Dir_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, E_Dir>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function E_Dir_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    E_Dir_descriptor(), enum_t_value);
+}
+inline bool E_Dir_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, E_Dir* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_Dir>(
+    E_Dir_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -158,10 +186,15 @@ template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_RespCode>() {
   return ::protocol::mmo::E_RespCode_descriptor();
 }
-template <> struct is_proto_enum< ::protocol::mmo::E_PlayerState> : ::std::true_type {};
+template <> struct is_proto_enum< ::protocol::mmo::E_ObjectState> : ::std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_PlayerState>() {
-  return ::protocol::mmo::E_PlayerState_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_ObjectState>() {
+  return ::protocol::mmo::E_ObjectState_descriptor();
+}
+template <> struct is_proto_enum< ::protocol::mmo::E_Dir> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_Dir>() {
+  return ::protocol::mmo::E_Dir_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

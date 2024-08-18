@@ -111,8 +111,8 @@ const char descriptor_table_protodef_MMO_5fprotocol_2eproto[] PROTOBUF_SECTION_V
   "enum.proto\032\020MMO_struct.proto\"o\n\016EnterGam"
   "e_Resp\022&\n\004resp\030\001 \001(\0162\030.protocol.mmo.E_Re"
   "spCode\022\n\n\002id\030\002 \001(\005\022)\n\007players\030\003 \003(\0132\030.pr"
-  "otocol.mmo.PlayerInfo\"<\n\022PlayerEnter_Not"
-  "ify\022&\n\004info\030\001 \001(\0132\030.protocol.mmo.PlayerI"
+  "otocol.mmo.ObjectInfo\"<\n\022PlayerEnter_Not"
+  "ify\022&\n\004info\030\001 \001(\0132\030.protocol.mmo.ObjectI"
   "nfo\"\037\n\021PlayerExit_Notify\022\n\n\002id\030\001 \001(\005b\006pr"
   "oto3"
   ;
@@ -235,7 +235,7 @@ const char* EnterGame_Resp::_InternalParse(const char* ptr, ::_pbi::ParseContext
         } else
           goto handle_unusual;
         continue;
-      // repeated .protocol.mmo.PlayerInfo players = 3;
+      // repeated .protocol.mmo.ObjectInfo players = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           ptr -= 1;
@@ -290,7 +290,7 @@ uint8_t* EnterGame_Resp::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_id(), target);
   }
 
-  // repeated .protocol.mmo.PlayerInfo players = 3;
+  // repeated .protocol.mmo.ObjectInfo players = 3;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_players_size()); i < n; i++) {
     const auto& repfield = this->_internal_players(i);
@@ -314,7 +314,7 @@ size_t EnterGame_Resp::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .protocol.mmo.PlayerInfo players = 3;
+  // repeated .protocol.mmo.ObjectInfo players = 3;
   total_size += 1UL * this->_internal_players_size();
   for (const auto& msg : this->_impl_.players_) {
     total_size +=
@@ -393,10 +393,10 @@ void EnterGame_Resp::InternalSwap(EnterGame_Resp* other) {
 
 class PlayerEnter_Notify::_Internal {
  public:
-  static const ::protocol::mmo::PlayerInfo& info(const PlayerEnter_Notify* msg);
+  static const ::protocol::mmo::ObjectInfo& info(const PlayerEnter_Notify* msg);
 };
 
-const ::protocol::mmo::PlayerInfo&
+const ::protocol::mmo::ObjectInfo&
 PlayerEnter_Notify::_Internal::info(const PlayerEnter_Notify* msg) {
   return *msg->_impl_.info_;
 }
@@ -421,7 +421,7 @@ PlayerEnter_Notify::PlayerEnter_Notify(const PlayerEnter_Notify& from)
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   if (from._internal_has_info()) {
-    _this->_impl_.info_ = new ::protocol::mmo::PlayerInfo(*from._impl_.info_);
+    _this->_impl_.info_ = new ::protocol::mmo::ObjectInfo(*from._impl_.info_);
   }
   // @@protoc_insertion_point(copy_constructor:protocol.mmo.PlayerEnter_Notify)
 }
@@ -473,7 +473,7 @@ const char* PlayerEnter_Notify::_InternalParse(const char* ptr, ::_pbi::ParseCon
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // .protocol.mmo.PlayerInfo info = 1;
+      // .protocol.mmo.ObjectInfo info = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_info(), ptr);
@@ -510,7 +510,7 @@ uint8_t* PlayerEnter_Notify::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .protocol.mmo.PlayerInfo info = 1;
+  // .protocol.mmo.ObjectInfo info = 1;
   if (this->_internal_has_info()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::info(this),
@@ -533,7 +533,7 @@ size_t PlayerEnter_Notify::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .protocol.mmo.PlayerInfo info = 1;
+  // .protocol.mmo.ObjectInfo info = 1;
   if (this->_internal_has_info()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -559,7 +559,7 @@ void PlayerEnter_Notify::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, con
   (void) cached_has_bits;
 
   if (from._internal_has_info()) {
-    _this->_internal_mutable_info()->::protocol::mmo::PlayerInfo::MergeFrom(
+    _this->_internal_mutable_info()->::protocol::mmo::ObjectInfo::MergeFrom(
         from._internal_info());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);

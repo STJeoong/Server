@@ -14,8 +14,16 @@ enum E_RespCode
 	OK = 0;
 	NO = 1;
 }
-enum E_PlayerState
+enum E_ObjectState
 {
 	NONE = 0;
 	IDLE = 1;
+}
+enum E_Dir
+{
+	BOTTOM = 0;
+	LEFT = 1;
+	UP = 2;
+	RIGHT = 3;
+	MAX = 4;
 }

@@ -27,17 +27,32 @@
     <Filter Include="소스 파일\Game">
       <UniqueIdentifier>{3603c1fa-8143-4238-967b-a65e685cec66}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Game\Player">
-      <UniqueIdentifier>{40e59681-d515-43e6-8492-9b377e71c6da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Game\Monster">
-      <UniqueIdentifier>{cc342ae0-e54c-44f1-b6c9-bf09915d41d4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Game\Map">
       <UniqueIdentifier>{eec8c1fb-2d0b-42d9-bf27-64d158d57066}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Game\Skill">
       <UniqueIdentifier>{51077a0d-11f3-46e9-a0ae-08bc81fe1405}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\GameObject">
+      <UniqueIdentifier>{d3532939-b5fd-4512-99a6-422dfe514b94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\GameObject\Player">
+      <UniqueIdentifier>{40e59681-d515-43e6-8492-9b377e71c6da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\GameObject\Monster">
+      <UniqueIdentifier>{cc342ae0-e54c-44f1-b6c9-bf09915d41d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Area">
+      <UniqueIdentifier>{b5a1ae03-8725-4103-989c-c2f21f4165e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Item">
+      <UniqueIdentifier>{24300796-14c5-4e59-a961-51402ed13679}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Area\Shape">
+      <UniqueIdentifier>{9fa694d0-c40b-4e78-8c4c-8bdea1ea8d58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Area\DAT">
+      <UniqueIdentifier>{0a04879d-afb8-4f76-bd91-e9c6857d2498}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -53,11 +68,8 @@
     <ClCompile Include="Game.cpp">
       <Filter>소스 파일\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>소스 파일\Game\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Monster.cpp">
-      <Filter>소스 파일\Game\Monster</Filter>
+      <Filter>소스 파일\Game\GameObject\Monster</Filter>
     </ClCompile>
     <ClCompile Include="MMO_enum.pb.cc">
       <Filter>소스 파일\Protocol\MMO</Filter>
@@ -70,6 +82,30 @@
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>소스 파일\Game\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>소스 파일\Game\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>소스 파일\Game\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Area.cpp">
+      <Filter>소스 파일\Game\Area</Filter>
+    </ClCompile>
+    <ClCompile Include="LayerFilter.cpp">
+      <Filter>소스 파일\Game\Area</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangular.cpp">
+      <Filter>소스 파일\Game\Area\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="AABB.cpp">
+      <Filter>소스 파일\Game\Area\DAT</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviour.cpp">
+      <Filter>소스 파일\Game\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DAT.cpp">
+      <Filter>소스 파일\Game\Area\DAT</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -88,11 +124,8 @@
     <ClInclude Include="Game.h">
       <Filter>소스 파일\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>소스 파일\Game\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Monster.h">
-      <Filter>소스 파일\Game\Monster</Filter>
+      <Filter>소스 파일\Game\GameObject\Monster</Filter>
     </ClInclude>
     <ClInclude Include="MMO_enum.pb.h">
       <Filter>소스 파일\Protocol\MMO</Filter>
@@ -105,6 +138,39 @@
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>소스 파일\Game\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>소스 파일\Game\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>소스 파일\Game\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="E_Layer.h">
+      <Filter>소스 파일\Game\Area</Filter>
+    </ClInclude>
+    <ClInclude Include="Area.h">
+      <Filter>소스 파일\Game\Area</Filter>
+    </ClInclude>
+    <ClInclude Include="E_GameObjectEvent.h">
+      <Filter>소스 파일\Game\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape.h">
+      <Filter>소스 파일\Game\Area\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="LayerFilter.h">
+      <Filter>소스 파일\Game\Area</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangular.h">
+      <Filter>소스 파일\Game\Area\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="AABB.h">
+      <Filter>소스 파일\Game\Area\DAT</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviour.h">
+      <Filter>소스 파일\Game\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DAT.h">
+      <Filter>소스 파일\Game\Area\DAT</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

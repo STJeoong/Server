@@ -4,14 +4,15 @@ package protocol.mmo;
 import "MMO_enum.proto";
 
 // not used for packet ( used for data struct )
-message Vec2
+message TransformInt
 {
 	int32 x = 1;
 	int32 y = 2;
+	E_Dir dir = 3;
 }
-message PlayerInfo
+message ObjectInfo
 {
 	int32 id = 1;
-	E_PlayerState state = 2;
-	Vec2 pos = 3;
+	E_ObjectState state = 2;
+	TransformInt transform = 3;
 }

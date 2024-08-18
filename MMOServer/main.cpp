@@ -13,14 +13,15 @@ static void setEngine()
 
 	Engine::addEngine((int)E_EngineType::MMO_SERVER, config, new MMOServerBroadcaster());
 }
-
+#include <vector>
 int main(int argc, char* argv[])
 {
+	DAT dat;
 	Engine::setLogFolder(argv[0]);
 	Engine::init();
 	Engine::setServerMode(E_ServerMode::PASSIVE_MODE);
 	setEngine();
-	Game game;
+	Game::init();
 	Engine::run();
 	Engine::end();
 }

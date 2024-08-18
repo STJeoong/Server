@@ -24,7 +24,7 @@ namespace protocol {
 namespace mmo {
 }  // namespace mmo
 }  // namespace protocol
-static const ::_pb::EnumDescriptor* file_level_enum_descriptors_MMO_5fenum_2eproto[3];
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_MMO_5fenum_2eproto[4];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_MMO_5fenum_2eproto = nullptr;
 const uint32_t TableStruct_MMO_5fenum_2eproto::offsets[1] = {};
 static constexpr ::_pbi::MigrationSchema* schemas = nullptr;
@@ -35,12 +35,13 @@ const char descriptor_table_protodef_MMO_5fenum_2eproto[] PROTOBUF_SECTION_VARIA
   "etID\022\022\n\016ENTER_GAME_REQ\020\000\022\023\n\017ENTER_GAME_R"
   "ESP\020\001\022\027\n\023PLAYER_ENTER_NOTIFY\020\002\022\026\n\022PLAYER"
   "_EXIT_NOTIFY\020\003*\034\n\nE_RespCode\022\006\n\002OK\020\000\022\006\n\002"
-  "NO\020\001*#\n\rE_PlayerState\022\010\n\004NONE\020\000\022\010\n\004IDLE\020"
-  "\001b\006proto3"
+  "NO\020\001*#\n\rE_ObjectState\022\010\n\004NONE\020\000\022\010\n\004IDLE\020"
+  "\001*9\n\005E_Dir\022\n\n\006BOTTOM\020\000\022\010\n\004LEFT\020\001\022\006\n\002UP\020\002"
+  "\022\t\n\005RIGHT\020\003\022\007\n\003MAX\020\004b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_MMO_5fenum_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_MMO_5fenum_2eproto = {
-    false, false, 209, descriptor_table_protodef_MMO_5fenum_2eproto,
+    false, false, 268, descriptor_table_protodef_MMO_5fenum_2eproto,
     "MMO_enum.proto",
     &descriptor_table_MMO_5fenum_2eproto_once, nullptr, 0, 0,
     schemas, file_default_instances, TableStruct_MMO_5fenum_2eproto::offsets,
@@ -85,14 +86,31 @@ bool E_RespCode_IsValid(int value) {
   }
 }
 
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_PlayerState_descriptor() {
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_ObjectState_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_MMO_5fenum_2eproto);
   return file_level_enum_descriptors_MMO_5fenum_2eproto[2];
 }
-bool E_PlayerState_IsValid(int value) {
+bool E_ObjectState_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_Dir_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_MMO_5fenum_2eproto);
+  return file_level_enum_descriptors_MMO_5fenum_2eproto[3];
+}
+bool E_Dir_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
       return true;
     default:
       return false;
