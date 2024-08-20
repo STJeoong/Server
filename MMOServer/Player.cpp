@@ -33,7 +33,7 @@ Player* Player::createPlayer()
 	Area* objArea = obj->addComponent<Area>();
 
 	aoi->layer(E_Layer::AOI);
-	aoi->addShape(new Rectangular(0, 0, 5, 5));
+	aoi->addShape(new Rectangular(-3, -3, 7, 7));
 	objArea->layer(E_Layer::PLAYER_OBJ);
 	// TODO : Å©±â°¡ 1ÀÌ ¾Æ´Ô. 2x2°¡ µÊ.
 	objArea->addShape(new Rectangular(0, 0, 1, 1));

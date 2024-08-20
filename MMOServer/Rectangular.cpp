@@ -12,6 +12,11 @@ void Rectangular::removeFromDAT()
 }
 void Rectangular::insertToDAT(const TransformInt& pivot, void* userData)
 {
+	/*int leftTopY = pivot.y() + _offsetY;
+	int leftTopX = pivot.x() + _offsetX;
+	int rightBtmY = pivot.y() + _offsetY + _yExtension;
+	int rightBtmX = pivot.x() + _offsetX + _xExtension;*/
+
 	int leftTopY = pivot.y() + _offsetY - _yExtension;
 	int leftTopX = pivot.x() + _offsetX - _xExtension;
 	int rightBtmY = pivot.y() + _offsetY + _yExtension;
@@ -36,7 +41,7 @@ void Rectangular::insertToDAT(const TransformInt& pivot, void* userData)
 		rightBtmX = pivot.x() + worldOffset.x() + std::abs(worldExtension.x());
 	}
 
-	this->add(userData, { leftTopY, leftTopX, rightBtmY, rightBtmX });
+	_ids[0] = this->add(userData, { leftTopY, leftTopX, rightBtmY, rightBtmX });
 }
 void Rectangular::move(const TransformInt& pivot)
 {
