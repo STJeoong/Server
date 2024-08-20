@@ -2,7 +2,6 @@
 class Monster
 {
 public:
-	static void init();
+protected:
 private:
-	static void update();
 };

@@ -26,6 +26,7 @@ void MMOServerBroadcaster::broadcastMessage(const S_EngineEvent& evt)
 	switch ((E_PacketID)header->id)
 	{
 	case E_PacketID::ENTER_GAME_REQ: MMOServerBroadcaster::onEnterGameReq(evt.serial); break;
+	case E_PacketID::MOVE_REQ: { Move_Req req = {}; req.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader)); MMOServerBroadcaster::onMoveReq(evt.serial, req); break; }
 	}
 }
 void MMOServerBroadcaster::broadcastTimer(const S_EngineEvent& evt)
@@ -40,4 +41,5 @@ void MMOServerBroadcaster::broadcastTimer(const S_EngineEvent& evt)
 Delegate<const int> MMOServerBroadcaster::onConnect;
 Delegate<const int> MMOServerBroadcaster::onDisconnect;
 Delegate<const int> MMOServerBroadcaster::onEnterGameReq;
+Delegate<const int, const Move_Req&> MMOServerBroadcaster::onMoveReq;
 Delegate<> MMOServerBroadcaster::onUpdate;

@@ -7,14 +7,22 @@ import "MMO_struct.proto";
 message EnterGame_Resp
 {
 	E_RespCode resp = 1;
-	int32 id = 2;
-	repeated ObjectInfo players = 3;
+	ObjectInfo myInfo = 2;
 }
-message PlayerEnter_Notify
+message ObjectEnter_Notify
 {
-	ObjectInfo info = 1;
+	ObjectInfo otherInfo = 1;
 }
-message PlayerExit_Notify
+message ObjectExit_Notify
+{
+	int32 otherId = 1;
+}
+message Move_Req
+{
+	E_Dir dir = 1;
+}
+message Move_Notify
 {
 	int32 id = 1;
+	E_Dir dir = 2;
 }

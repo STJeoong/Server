@@ -6,8 +6,10 @@ enum E_PacketID
 {
 	ENTER_GAME_REQ = 0;
 	ENTER_GAME_RESP = 1;
-	PLAYER_ENTER_NOTIFY = 2;
-	PLAYER_EXIT_NOTIFY = 3;
+	OBJECT_ENTER_NOTIFY = 2;
+	OBJECT_EXIT_NOTIFY = 3;
+	MOVE_REQ = 4;
+	MOVE_NOTIFY = 5;
 }
 enum E_RespCode
 {
@@ -18,6 +20,7 @@ enum E_ObjectState
 {
 	NONE = 0;
 	IDLE = 1;
+	MOVE = 2;
 }
 enum E_Dir
 {

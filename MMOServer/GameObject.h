@@ -5,12 +5,13 @@
 #include "E_GameObjectEvent.h"
 
 using namespace protocol::mmo;
-// TODO : 자식 오브젝트 만들 수 있게 할까?
 class Component;
 class GameObject
 {
 	friend class Game;
 public:
+	static const int INVALID_ID = -1;
+
 	template<typename T>
 	T* getComponent();
 	template<typename T>
@@ -23,8 +24,13 @@ public:
 	GameObject* parent() const { return _parent; }
 	void parent(GameObject* val, bool evtInvoke = true);
 	const std::vector<Component*>& components() const { return _components; }
-	const TransformInt& transform() const { return _worldTF; }
+	int id() const { return _info.id(); }
+	void id(int val) { _info.set_id(val); }
+	E_ObjectState state() const { return _info.state(); }
+	void state(E_ObjectState val) { _info.set_state(val); }
+	const TransformInt& transform() const { return _info.transform(); }
 	void transform(int y, int x, E_Dir dir);
+	const ObjectInfo& info() const { return _info; }
 	void active(bool flag, bool evtInvoke = true);
 	bool activeSelf() const { return _activeSelf; }
 	bool activeInHierarchy() const { return _activeInHierarchy; }
@@ -33,13 +39,13 @@ private:
 
 	GameObject() = delete;
 	GameObject(bool isActvie, GameObject* p);
-	GameObject(const GameObject& copy); // recursive 하지 않음. 내부적으로만 사용함. 외부 클래스에서 사용하면 안됨.
+	GameObject(const GameObject& copy);
 	GameObject(bool isActive, const GameObject& copy, GameObject* p);
 	~GameObject();
 	void addChild(GameObject* child) { _children.push_back(child); }
 	void broadcastToComponents(const E_GameObjectEvent& evt, void* arg);
 
-	TransformInt _worldTF;
+	ObjectInfo _info;
 	TransformInt _localTF;
 	GameObject* _parent = nullptr;
 	std::vector<GameObject*> _children;
@@ -69,8 +75,7 @@ inline void GameObject::getComponents(std::vector<Component*>& list)
 template<typename T, typename... Args>
 inline T* GameObject::addComponent(Args&&... args)
 {
-	Component* ret = new T(std::forward<Args>(args)...);
-	ret->gameObject(this);
+	Component* ret = new T(this, std::forward<Args>(args)...);
 	_components.push_back(ret);
 	ret->invoke(E_GameObjectEvent::AWAKE, nullptr);
 	return dynamic_cast<T*>(ret);

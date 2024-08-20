@@ -8,6 +8,7 @@
 class Shape;
 class Area : public Behaviour
 {
+	friend class GameObject;
 public:
 	void addShape(Shape* shape);
 	bool detectMyArea() const { return _detectMyArea; }
@@ -19,7 +20,9 @@ public:
 	const std::vector<Area*>& overlappedAreas() const { return _overlappedAreas; }
 	bool overlaps(const Area& other) const;
 protected:
-	Area() = default; // 여기서 _oldTF 초기화하면 안됨. _gameObject가 아직 nullptr이기 때문에
+	Area() = delete; // 여기서 _oldTF 초기화하면 안됨. _gameObject가 아직 nullptr이기 때문에
+	Area(const Area&) = delete;
+	Area(GameObject* obj) : Behaviour(obj) {}
 	~Area();
 	virtual void awake() override;
 	virtual void update() override;
@@ -29,7 +32,7 @@ protected:
 	virtual void onAreaEnter(Area& my, Area& other) override;
 	virtual void onAreaExit(Area& my, Area& other) override;
 private:
-	virtual Area* createInstance() override { return new Area(); }
+	virtual Area* createInstance(GameObject* obj) override { return new Area(obj); }
 	virtual void copyTo(Component* instance) override;
 
 	bool _detectMyArea = false;

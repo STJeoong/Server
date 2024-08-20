@@ -6,9 +6,9 @@ void Area::addShape(Shape* shape)
 {
 	_shapes.push_back(shape);
 	shape->_attachedArea = this;
-	if (!this->enable() || !this->gameObject()->activeInHierarchy())
+	if (!this->enable() || !_gameObject->activeInHierarchy())
 		return;
-	shape->insertToDAT(this->gameObject()->transform(), this);
+	shape->insertToDAT(_gameObject->transform(), this);
 }
 bool Area::overlaps(const Area& other) const
 {
@@ -28,12 +28,12 @@ Area::~Area()
 }
 void Area::awake()
 {
-	_oldTF = this->gameObject()->transform();
+	_oldTF = _gameObject->transform();
 }
 void Area::update()
 {
 	// 움직였으면 area 갱신
-	const TransformInt& newTF = this->gameObject()->transform();
+	const TransformInt& newTF = _gameObject->transform();
 	if (_oldTF.y() == newTF.y() && _oldTF.x() == newTF.x() && (_fixedRotation || (_oldTF.dir() == newTF.dir())))
 		return;
 
@@ -44,8 +44,8 @@ void Area::update()
 void Area::onEnable()
 {
 	for (Shape* shape : _shapes)
-		shape->insertToDAT(this->gameObject()->transform(), this);
-	_oldTF = this->gameObject()->transform();
+		shape->insertToDAT(_gameObject->transform(), this);
+	_oldTF = _gameObject->transform();
 }
 void Area::onDisable()
 {

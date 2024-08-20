@@ -4,7 +4,7 @@
 #include <fstream>
 #include "Utils.h"
 
-#pragma region public
+#pragma region public static
 void Map::load()
 {
 	std::filesystem::path directoryPath = "C:/Users/taejeong/source/repos/ServerFramework/MMOServer/data/map";
@@ -15,11 +15,23 @@ void Map::load()
 	}
 	std::cout << "map loading...\n";
 	for (const auto& entry : std::filesystem::directory_iterator(directoryPath))
-		s_maps[Utils::eraseFileExtensionName(entry.path().filename().string())] = new Map(entry.path());
+	{
+		std::string fileName = entry.path().filename().string();
+		std::string mapName = fileName.substr(0, fileName.find('_')); // _Collision도 key값에서 뺐음.
+		s_maps[mapName] = new Map(entry.path());
+		//s_maps[Utils::eraseFileExtensionName(entry.path().filename().string())] = new Map(entry.path());
+	}
 }
 Map* Map::getMap(const std::string& mapName) { return s_maps[mapName]; }
+#pragma endregion
+
+#pragma region private static
+#pragma endregion
 
 
+
+
+#pragma region public
 bool Map::canGo(int y, int x)
 {
 	if (y < _yMin || y > _yMax || x < _xMin || x > _xMax)
@@ -54,5 +66,6 @@ Map::Map(const std::filesystem::path& path)
 	}
 }
 #pragma endregion
+
 
 std::unordered_map<std::string, Map*> Map::s_maps;

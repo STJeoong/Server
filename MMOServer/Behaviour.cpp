@@ -7,7 +7,7 @@ void Behaviour::enable(bool flag)
 	if (_enabled == flag)
 		return;
 	_enabled = flag;
-	if (!this->gameObject()->activeInHierarchy())
+	if (!_gameObject->activeInHierarchy())
 		return;
 
 	if (_enabled) this->onEnable();

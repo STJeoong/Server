@@ -12,7 +12,6 @@ void Rectangular::removeFromDAT()
 }
 void Rectangular::insertToDAT(const TransformInt& pivot, void* userData)
 {
-	// TODO
 	int leftTopY = pivot.y() + _offsetY - _yExtension;
 	int leftTopX = pivot.x() + _offsetX - _xExtension;
 	int rightBtmY = pivot.y() + _offsetY + _yExtension;

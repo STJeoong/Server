@@ -6,7 +6,8 @@ public:
 	void enable(bool flag);
 	bool enable() const { return _enabled; }
 protected:
-	Behaviour() = default;
+	Behaviour() = delete;
+	Behaviour(GameObject* obj) : Component(obj) {}
 	virtual ~Behaviour() = default;
 	virtual void onUpdate() override final;
 	virtual void onActiveGameObject() override final;

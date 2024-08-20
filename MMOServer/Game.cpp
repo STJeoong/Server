@@ -11,13 +11,16 @@
 #include "Component.h"
 #include "Area.h"
 #include "LayerFilter.h"
+#include "Player.h"
 
-#pragma region public
+#pragma region public static
 void Game::init()
 {
 	Map::load();
 	LayerFilter::init();
-	Monster::init();
+	Player::init();
+	GameObject* obj = Game::instantiate();
+	Player* player = obj->addComponent<Player>();
 
 	MMOServerBroadcaster::onConnect += [](int serial) { printf("%d connect\n", serial); };
 	MMOServerBroadcaster::onDisconnect += [](int serial) { printf("%d disconnect\n", serial); };
@@ -72,7 +75,7 @@ void Game::destroy(Component* component)
 }
 #pragma endregion
 
-#pragma region private
+#pragma region private static
 void Game::update()
 {
 	Engine::setTimer((int)E_EngineType::MMO_SERVER, 0, Game::UPDATE_DELTA_TIME, (int)E_TimerEvent::UPDATE);
@@ -81,7 +84,6 @@ void Game::update()
 			obj->broadcastToComponents(E_GameObjectEvent::UPDATE, nullptr);
 
 	// discrete collision detection. 이전에 하려고 했던 움직일때마다 체크하는건 continuous collision detection.
-	// TODO : broad-phase, narrow-phase
 	s_dat.makeCandidates(s_queryIds, s_candidates);
 	Game::updateCollisions();
 	Game::destroy();

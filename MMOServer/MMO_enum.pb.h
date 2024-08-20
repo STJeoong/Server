@@ -51,14 +51,16 @@ namespace mmo {
 enum E_PacketID : int {
   ENTER_GAME_REQ = 0,
   ENTER_GAME_RESP = 1,
-  PLAYER_ENTER_NOTIFY = 2,
-  PLAYER_EXIT_NOTIFY = 3,
+  OBJECT_ENTER_NOTIFY = 2,
+  OBJECT_EXIT_NOTIFY = 3,
+  MOVE_REQ = 4,
+  MOVE_NOTIFY = 5,
   E_PacketID_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   E_PacketID_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool E_PacketID_IsValid(int value);
 constexpr E_PacketID E_PacketID_MIN = ENTER_GAME_REQ;
-constexpr E_PacketID E_PacketID_MAX = PLAYER_EXIT_NOTIFY;
+constexpr E_PacketID E_PacketID_MAX = MOVE_NOTIFY;
 constexpr int E_PacketID_ARRAYSIZE = E_PacketID_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_PacketID_descriptor();
@@ -103,12 +105,13 @@ inline bool E_RespCode_Parse(
 enum E_ObjectState : int {
   NONE = 0,
   IDLE = 1,
+  MOVE = 2,
   E_ObjectState_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   E_ObjectState_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool E_ObjectState_IsValid(int value);
 constexpr E_ObjectState E_ObjectState_MIN = NONE;
-constexpr E_ObjectState E_ObjectState_MAX = IDLE;
+constexpr E_ObjectState E_ObjectState_MAX = MOVE;
 constexpr int E_ObjectState_ARRAYSIZE = E_ObjectState_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_ObjectState_descriptor();

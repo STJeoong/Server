@@ -1,0 +1,3 @@
+1. friend class로 GameObject 설정
+2. 생성자, 복사생성자, 소멸자는 최소 protected로 (GameObject가 아닌곳에서 생성되지 않도록)
+3. 생성자의 첫번째 인자로 GameObject*를 받는 생성자가 하나 있어야됨. 기본 생성자는 안쓰임. 어차피 Behaviour기본 생성자를 삭제해서 GameObject*를 받게끔 해놨음.

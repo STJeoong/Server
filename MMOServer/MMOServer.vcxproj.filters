@@ -107,6 +107,9 @@
     <ClCompile Include="DAT.cpp">
       <Filter>소스 파일\Game\Area\DAT</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\Game\GameObject\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MMOServerBroadcaster.h">
@@ -172,6 +175,9 @@
     <ClInclude Include="DAT.h">
       <Filter>소스 파일\Game\Area\DAT</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\Game\GameObject\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Protocol\MMO_enum.proto">
@@ -181,6 +187,12 @@
       <Filter>소스 파일\Protocol\Schema\MMO</Filter>
     </None>
     <None Include="Protocol\MMO_struct.proto">
+      <Filter>소스 파일\Protocol\Schema\MMO</Filter>
+    </None>
+    <None Include="data\config.json">
+      <Filter>소스 파일</Filter>
+    </None>
+    <None Include="Protocol\MMO_protocol.bat">
       <Filter>소스 파일\Protocol\Schema\MMO</Filter>
     </None>
   </ItemGroup>

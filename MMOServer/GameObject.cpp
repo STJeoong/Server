@@ -34,20 +34,21 @@ void GameObject::parent(GameObject* val, bool evtInvoke)
 }
 void GameObject::transform(int y, int x, E_Dir dir)
 {
-	if (!_activeInHierarchy || (_worldTF.y() == y && _worldTF.x() == x && _worldTF.dir() == dir))
+	TransformInt* worldTF = _info.mutable_transform();
+	if (!_activeInHierarchy || (worldTF->y() == y && worldTF->x() == x && worldTF->dir() == dir))
 		return;
 	
-	_worldTF.set_y(y);
-	_worldTF.set_x(x);
-	_worldTF.set_dir(dir);
+	worldTF->set_dir(dir);
+	worldTF->set_y(y);
+	worldTF->set_x(x);
 	// local 좌표 설정
 	if (_parent != nullptr)
-		Utils::worldToLocal(_parent->transform(), _worldTF, _localTF);
+		Utils::worldToLocal(_parent->transform(), *worldTF, _localTF);
 
 	// 자식 오브젝트의 월드좌표 설정
 	if (_children.empty()) return;
 	GameObject::doRecursively(this,
-		[](GameObject* obj) { if (obj->_parent != nullptr) Utils::localToWorld(obj->_parent->transform(), obj->_localTF, obj->_worldTF); },
+		[](GameObject* obj) { if (obj->_parent != nullptr) Utils::localToWorld(obj->_parent->transform(), obj->_localTF, *(obj->_info.mutable_transform())); },
 		[](GameObject* obj) { return true; });
 }
 void GameObject::active(bool flag, bool evtInvoke)
@@ -86,12 +87,11 @@ GameObject::GameObject(const GameObject& copy)
 {
 	_activeSelf = copy._activeSelf;
 	_activeInHierarchy = copy._activeInHierarchy;
-	_worldTF = copy._worldTF;
+	_info = copy._info;
 	_localTF = copy._localTF;
 	for (Component* component : copy._components)
 	{
-		Component* newComp = component->createInstance();
-		newComp->gameObject(this);
+		Component* newComp = component->createInstance(this);
 		component->copyTo(newComp);
 		newComp->invoke(E_GameObjectEvent::AWAKE, nullptr);
 		_components.push_back(newComp);
@@ -106,9 +106,12 @@ GameObject::GameObject(const GameObject& copy)
 GameObject::GameObject(bool isActive, GameObject* p)
 {
 	_activeSelf = _activeInHierarchy = isActive;
-	_worldTF.set_dir(E_Dir::BOTTOM);
-	_worldTF.set_y(0);
-	_worldTF.set_x(0);
+	_info.set_id(GameObject::INVALID_ID);
+	_info.set_state(E_ObjectState::NONE);
+	TransformInt* worldTF = _info.mutable_transform();
+	worldTF->set_dir(E_Dir::BOTTOM);
+	worldTF->set_y(0);
+	worldTF->set_x(0);
 	this->parent(p, false);
 }
 GameObject::GameObject(bool isActive, const GameObject& copy, GameObject* p) : GameObject(copy)

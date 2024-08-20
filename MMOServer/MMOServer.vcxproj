@@ -125,7 +125,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>protoc -I="C:\Users\taejeong\source\repos\ServerFramework\MMOServer\Protocol" --cpp_out="C:\Users\taejeong\source\repos\ServerFramework\MMOServer" MMO_protocol.proto MMO_enum.proto MMO_struct.proto</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>protoc -I="C:\Users\taejeong\source\repos\ServerFramework\MMOServer\Protocol" --csharp_out="C:\Users\taejeong\Desktop\Systems\Unknown 2D\Assets\@Scripts\Protocol" MMO_protocol.proto MMO_enum.proto MMO_struct.proto</Command>
@@ -163,6 +164,7 @@
     <ClCompile Include="MMO_protocol.pb.cc" />
     <ClCompile Include="MMO_struct.pb.cc" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rectangular.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
@@ -183,6 +185,7 @@
     <ClInclude Include="E_TimerEvent.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="LayerFilter.h" />
     <ClInclude Include="Map.h" />
@@ -195,11 +198,18 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="data\config.json" />
     <None Include="Protocol\MMO_enum.proto" />
+    <None Include="Protocol\MMO_protocol.bat" />
     <None Include="Protocol\MMO_protocol.proto" />
     <None Include="Protocol\MMO_struct.proto" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

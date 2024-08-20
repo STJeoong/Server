@@ -24,9 +24,8 @@ namespace protocol {
 namespace mmo {
 PROTOBUF_CONSTEXPR EnterGame_Resp::EnterGame_Resp(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.players_)*/{}
+    /*decltype(_impl_.myinfo_)*/nullptr
   , /*decltype(_impl_.resp_)*/0
-  , /*decltype(_impl_.id_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct EnterGame_RespDefaultTypeInternal {
   PROTOBUF_CONSTEXPR EnterGame_RespDefaultTypeInternal()
@@ -37,35 +36,62 @@ struct EnterGame_RespDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EnterGame_RespDefaultTypeInternal _EnterGame_Resp_default_instance_;
-PROTOBUF_CONSTEXPR PlayerEnter_Notify::PlayerEnter_Notify(
+PROTOBUF_CONSTEXPR ObjectEnter_Notify::ObjectEnter_Notify(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.info_)*/nullptr
+    /*decltype(_impl_.otherinfo_)*/nullptr
   , /*decltype(_impl_._cached_size_)*/{}} {}
-struct PlayerEnter_NotifyDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR PlayerEnter_NotifyDefaultTypeInternal()
+struct ObjectEnter_NotifyDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ObjectEnter_NotifyDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~PlayerEnter_NotifyDefaultTypeInternal() {}
+  ~ObjectEnter_NotifyDefaultTypeInternal() {}
   union {
-    PlayerEnter_Notify _instance;
+    ObjectEnter_Notify _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PlayerEnter_NotifyDefaultTypeInternal _PlayerEnter_Notify_default_instance_;
-PROTOBUF_CONSTEXPR PlayerExit_Notify::PlayerExit_Notify(
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ObjectEnter_NotifyDefaultTypeInternal _ObjectEnter_Notify_default_instance_;
+PROTOBUF_CONSTEXPR ObjectExit_Notify::ObjectExit_Notify(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.otherid_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct ObjectExit_NotifyDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ObjectExit_NotifyDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ObjectExit_NotifyDefaultTypeInternal() {}
+  union {
+    ObjectExit_Notify _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ObjectExit_NotifyDefaultTypeInternal _ObjectExit_Notify_default_instance_;
+PROTOBUF_CONSTEXPR Move_Req::Move_Req(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.dir_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct Move_ReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR Move_ReqDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~Move_ReqDefaultTypeInternal() {}
+  union {
+    Move_Req _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 Move_ReqDefaultTypeInternal _Move_Req_default_instance_;
+PROTOBUF_CONSTEXPR Move_Notify::Move_Notify(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.id_)*/0
+  , /*decltype(_impl_.dir_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
-struct PlayerExit_NotifyDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR PlayerExit_NotifyDefaultTypeInternal()
+struct Move_NotifyDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR Move_NotifyDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~PlayerExit_NotifyDefaultTypeInternal() {}
+  ~Move_NotifyDefaultTypeInternal() {}
   union {
-    PlayerExit_Notify _instance;
+    Move_Notify _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PlayerExit_NotifyDefaultTypeInternal _PlayerExit_Notify_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 Move_NotifyDefaultTypeInternal _Move_Notify_default_instance_;
 }  // namespace mmo
 }  // namespace protocol
-static ::_pb::Metadata file_level_metadata_MMO_5fprotocol_2eproto[3];
+static ::_pb::Metadata file_level_metadata_MMO_5fprotocol_2eproto[5];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_MMO_5fprotocol_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_MMO_5fprotocol_2eproto = nullptr;
 
@@ -77,44 +103,64 @@ const uint32_t TableStruct_MMO_5fprotocol_2eproto::offsets[] PROTOBUF_SECTION_VA
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::protocol::mmo::EnterGame_Resp, _impl_.resp_),
-  PROTOBUF_FIELD_OFFSET(::protocol::mmo::EnterGame_Resp, _impl_.id_),
-  PROTOBUF_FIELD_OFFSET(::protocol::mmo::EnterGame_Resp, _impl_.players_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::EnterGame_Resp, _impl_.myinfo_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::protocol::mmo::PlayerEnter_Notify, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::ObjectEnter_Notify, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::protocol::mmo::PlayerEnter_Notify, _impl_.info_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::ObjectEnter_Notify, _impl_.otherinfo_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::protocol::mmo::PlayerExit_Notify, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::ObjectExit_Notify, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::protocol::mmo::PlayerExit_Notify, _impl_.id_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::ObjectExit_Notify, _impl_.otherid_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::Move_Req, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::Move_Req, _impl_.dir_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::Move_Notify, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::Move_Notify, _impl_.id_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::Move_Notify, _impl_.dir_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::protocol::mmo::EnterGame_Resp)},
-  { 9, -1, -1, sizeof(::protocol::mmo::PlayerEnter_Notify)},
-  { 16, -1, -1, sizeof(::protocol::mmo::PlayerExit_Notify)},
+  { 8, -1, -1, sizeof(::protocol::mmo::ObjectEnter_Notify)},
+  { 15, -1, -1, sizeof(::protocol::mmo::ObjectExit_Notify)},
+  { 22, -1, -1, sizeof(::protocol::mmo::Move_Req)},
+  { 29, -1, -1, sizeof(::protocol::mmo::Move_Notify)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
   &::protocol::mmo::_EnterGame_Resp_default_instance_._instance,
-  &::protocol::mmo::_PlayerEnter_Notify_default_instance_._instance,
-  &::protocol::mmo::_PlayerExit_Notify_default_instance_._instance,
+  &::protocol::mmo::_ObjectEnter_Notify_default_instance_._instance,
+  &::protocol::mmo::_ObjectExit_Notify_default_instance_._instance,
+  &::protocol::mmo::_Move_Req_default_instance_._instance,
+  &::protocol::mmo::_Move_Notify_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_MMO_5fprotocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\022MMO_protocol.proto\022\014protocol.mmo\032\016MMO_"
-  "enum.proto\032\020MMO_struct.proto\"o\n\016EnterGam"
+  "enum.proto\032\020MMO_struct.proto\"b\n\016EnterGam"
   "e_Resp\022&\n\004resp\030\001 \001(\0162\030.protocol.mmo.E_Re"
-  "spCode\022\n\n\002id\030\002 \001(\005\022)\n\007players\030\003 \003(\0132\030.pr"
-  "otocol.mmo.ObjectInfo\"<\n\022PlayerEnter_Not"
-  "ify\022&\n\004info\030\001 \001(\0132\030.protocol.mmo.ObjectI"
-  "nfo\"\037\n\021PlayerExit_Notify\022\n\n\002id\030\001 \001(\005b\006pr"
-  "oto3"
+  "spCode\022(\n\006myInfo\030\002 \001(\0132\030.protocol.mmo.Ob"
+  "jectInfo\"A\n\022ObjectEnter_Notify\022+\n\totherI"
+  "nfo\030\001 \001(\0132\030.protocol.mmo.ObjectInfo\"$\n\021O"
+  "bjectExit_Notify\022\017\n\007otherId\030\001 \001(\005\",\n\010Mov"
+  "e_Req\022 \n\003dir\030\001 \001(\0162\023.protocol.mmo.E_Dir\""
+  ";\n\013Move_Notify\022\n\n\002id\030\001 \001(\005\022 \n\003dir\030\002 \001(\0162"
+  "\023.protocol.mmo.E_Dirb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_MMO_5fprotocol_2eproto_deps[2] = {
   &::descriptor_table_MMO_5fenum_2eproto,
@@ -122,9 +168,9 @@ static const ::_pbi::DescriptorTable* const descriptor_table_MMO_5fprotocol_2epr
 };
 static ::_pbi::once_flag descriptor_table_MMO_5fprotocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_MMO_5fprotocol_2eproto = {
-    false, false, 284, descriptor_table_protodef_MMO_5fprotocol_2eproto,
+    false, false, 388, descriptor_table_protodef_MMO_5fprotocol_2eproto,
     "MMO_protocol.proto",
-    &descriptor_table_MMO_5fprotocol_2eproto_once, descriptor_table_MMO_5fprotocol_2eproto_deps, 2, 3,
+    &descriptor_table_MMO_5fprotocol_2eproto_once, descriptor_table_MMO_5fprotocol_2eproto_deps, 2, 5,
     schemas, file_default_instances, TableStruct_MMO_5fprotocol_2eproto::offsets,
     file_level_metadata_MMO_5fprotocol_2eproto, file_level_enum_descriptors_MMO_5fprotocol_2eproto,
     file_level_service_descriptors_MMO_5fprotocol_2eproto,
@@ -142,10 +188,18 @@ namespace mmo {
 
 class EnterGame_Resp::_Internal {
  public:
+  static const ::protocol::mmo::ObjectInfo& myinfo(const EnterGame_Resp* msg);
 };
 
-void EnterGame_Resp::clear_players() {
-  _impl_.players_.Clear();
+const ::protocol::mmo::ObjectInfo&
+EnterGame_Resp::_Internal::myinfo(const EnterGame_Resp* msg) {
+  return *msg->_impl_.myinfo_;
+}
+void EnterGame_Resp::clear_myinfo() {
+  if (GetArenaForAllocation() == nullptr && _impl_.myinfo_ != nullptr) {
+    delete _impl_.myinfo_;
+  }
+  _impl_.myinfo_ = nullptr;
 }
 EnterGame_Resp::EnterGame_Resp(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
@@ -157,15 +211,15 @@ EnterGame_Resp::EnterGame_Resp(const EnterGame_Resp& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   EnterGame_Resp* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.players_){from._impl_.players_}
+      decltype(_impl_.myinfo_){nullptr}
     , decltype(_impl_.resp_){}
-    , decltype(_impl_.id_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&_impl_.resp_, &from._impl_.resp_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.id_) -
-    reinterpret_cast<char*>(&_impl_.resp_)) + sizeof(_impl_.id_));
+  if (from._internal_has_myinfo()) {
+    _this->_impl_.myinfo_ = new ::protocol::mmo::ObjectInfo(*from._impl_.myinfo_);
+  }
+  _this->_impl_.resp_ = from._impl_.resp_;
   // @@protoc_insertion_point(copy_constructor:protocol.mmo.EnterGame_Resp)
 }
 
@@ -174,9 +228,8 @@ inline void EnterGame_Resp::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.players_){arena}
+      decltype(_impl_.myinfo_){nullptr}
     , decltype(_impl_.resp_){0}
-    , decltype(_impl_.id_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -192,7 +245,7 @@ EnterGame_Resp::~EnterGame_Resp() {
 
 inline void EnterGame_Resp::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.players_.~RepeatedPtrField();
+  if (this != internal_default_instance()) delete _impl_.myinfo_;
 }
 
 void EnterGame_Resp::SetCachedSize(int size) const {
@@ -205,10 +258,11 @@ void EnterGame_Resp::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.players_.Clear();
-  ::memset(&_impl_.resp_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.id_) -
-      reinterpret_cast<char*>(&_impl_.resp_)) + sizeof(_impl_.id_));
+  if (GetArenaForAllocation() == nullptr && _impl_.myinfo_ != nullptr) {
+    delete _impl_.myinfo_;
+  }
+  _impl_.myinfo_ = nullptr;
+  _impl_.resp_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -227,24 +281,11 @@ const char* EnterGame_Resp::_InternalParse(const char* ptr, ::_pbi::ParseContext
         } else
           goto handle_unusual;
         continue;
-      // int32 id = 2;
+      // .protocol.mmo.ObjectInfo myInfo = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          _impl_.id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_myinfo(), ptr);
           CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // repeated .protocol.mmo.ObjectInfo players = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_players(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
         } else
           goto handle_unusual;
         continue;
@@ -284,18 +325,11 @@ uint8_t* EnterGame_Resp::_InternalSerialize(
       1, this->_internal_resp(), target);
   }
 
-  // int32 id = 2;
-  if (this->_internal_id() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_id(), target);
-  }
-
-  // repeated .protocol.mmo.ObjectInfo players = 3;
-  for (unsigned i = 0,
-      n = static_cast<unsigned>(this->_internal_players_size()); i < n; i++) {
-    const auto& repfield = this->_internal_players(i);
+  // .protocol.mmo.ObjectInfo myInfo = 2;
+  if (this->_internal_has_myinfo()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-        InternalWriteMessage(3, repfield, repfield.GetCachedSize(), target, stream);
+      InternalWriteMessage(2, _Internal::myinfo(this),
+        _Internal::myinfo(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -314,22 +348,17 @@ size_t EnterGame_Resp::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .protocol.mmo.ObjectInfo players = 3;
-  total_size += 1UL * this->_internal_players_size();
-  for (const auto& msg : this->_impl_.players_) {
-    total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  // .protocol.mmo.ObjectInfo myInfo = 2;
+  if (this->_internal_has_myinfo()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.myinfo_);
   }
 
   // .protocol.mmo.E_RespCode resp = 1;
   if (this->_internal_resp() != 0) {
     total_size += 1 +
       ::_pbi::WireFormatLite::EnumSize(this->_internal_resp());
-  }
-
-  // int32 id = 2;
-  if (this->_internal_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_id());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -350,12 +379,12 @@ void EnterGame_Resp::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const :
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  _this->_impl_.players_.MergeFrom(from._impl_.players_);
+  if (from._internal_has_myinfo()) {
+    _this->_internal_mutable_myinfo()->::protocol::mmo::ObjectInfo::MergeFrom(
+        from._internal_myinfo());
+  }
   if (from._internal_resp() != 0) {
     _this->_internal_set_resp(from._internal_resp());
-  }
-  if (from._internal_id() != 0) {
-    _this->_internal_set_id(from._internal_id());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -374,13 +403,12 @@ bool EnterGame_Resp::IsInitialized() const {
 void EnterGame_Resp::InternalSwap(EnterGame_Resp* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  _impl_.players_.InternalSwap(&other->_impl_.players_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(EnterGame_Resp, _impl_.id_)
-      + sizeof(EnterGame_Resp::_impl_.id_)
-      - PROTOBUF_FIELD_OFFSET(EnterGame_Resp, _impl_.resp_)>(
-          reinterpret_cast<char*>(&_impl_.resp_),
-          reinterpret_cast<char*>(&other->_impl_.resp_));
+      PROTOBUF_FIELD_OFFSET(EnterGame_Resp, _impl_.resp_)
+      + sizeof(EnterGame_Resp::_impl_.resp_)
+      - PROTOBUF_FIELD_OFFSET(EnterGame_Resp, _impl_.myinfo_)>(
+          reinterpret_cast<char*>(&_impl_.myinfo_),
+          reinterpret_cast<char*>(&other->_impl_.myinfo_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata EnterGame_Resp::GetMetadata() const {
@@ -391,53 +419,53 @@ void EnterGame_Resp::InternalSwap(EnterGame_Resp* other) {
 
 // ===================================================================
 
-class PlayerEnter_Notify::_Internal {
+class ObjectEnter_Notify::_Internal {
  public:
-  static const ::protocol::mmo::ObjectInfo& info(const PlayerEnter_Notify* msg);
+  static const ::protocol::mmo::ObjectInfo& otherinfo(const ObjectEnter_Notify* msg);
 };
 
 const ::protocol::mmo::ObjectInfo&
-PlayerEnter_Notify::_Internal::info(const PlayerEnter_Notify* msg) {
-  return *msg->_impl_.info_;
+ObjectEnter_Notify::_Internal::otherinfo(const ObjectEnter_Notify* msg) {
+  return *msg->_impl_.otherinfo_;
 }
-void PlayerEnter_Notify::clear_info() {
-  if (GetArenaForAllocation() == nullptr && _impl_.info_ != nullptr) {
-    delete _impl_.info_;
+void ObjectEnter_Notify::clear_otherinfo() {
+  if (GetArenaForAllocation() == nullptr && _impl_.otherinfo_ != nullptr) {
+    delete _impl_.otherinfo_;
   }
-  _impl_.info_ = nullptr;
+  _impl_.otherinfo_ = nullptr;
 }
-PlayerEnter_Notify::PlayerEnter_Notify(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+ObjectEnter_Notify::ObjectEnter_Notify(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:protocol.mmo.PlayerEnter_Notify)
+  // @@protoc_insertion_point(arena_constructor:protocol.mmo.ObjectEnter_Notify)
 }
-PlayerEnter_Notify::PlayerEnter_Notify(const PlayerEnter_Notify& from)
+ObjectEnter_Notify::ObjectEnter_Notify(const ObjectEnter_Notify& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
-  PlayerEnter_Notify* const _this = this; (void)_this;
+  ObjectEnter_Notify* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.info_){nullptr}
+      decltype(_impl_.otherinfo_){nullptr}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_info()) {
-    _this->_impl_.info_ = new ::protocol::mmo::ObjectInfo(*from._impl_.info_);
+  if (from._internal_has_otherinfo()) {
+    _this->_impl_.otherinfo_ = new ::protocol::mmo::ObjectInfo(*from._impl_.otherinfo_);
   }
-  // @@protoc_insertion_point(copy_constructor:protocol.mmo.PlayerEnter_Notify)
+  // @@protoc_insertion_point(copy_constructor:protocol.mmo.ObjectEnter_Notify)
 }
 
-inline void PlayerEnter_Notify::SharedCtor(
+inline void ObjectEnter_Notify::SharedCtor(
     ::_pb::Arena* arena, bool is_message_owned) {
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.info_){nullptr}
+      decltype(_impl_.otherinfo_){nullptr}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
 
-PlayerEnter_Notify::~PlayerEnter_Notify() {
-  // @@protoc_insertion_point(destructor:protocol.mmo.PlayerEnter_Notify)
+ObjectEnter_Notify::~ObjectEnter_Notify() {
+  // @@protoc_insertion_point(destructor:protocol.mmo.ObjectEnter_Notify)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -445,38 +473,38 @@ PlayerEnter_Notify::~PlayerEnter_Notify() {
   SharedDtor();
 }
 
-inline void PlayerEnter_Notify::SharedDtor() {
+inline void ObjectEnter_Notify::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  if (this != internal_default_instance()) delete _impl_.info_;
+  if (this != internal_default_instance()) delete _impl_.otherinfo_;
 }
 
-void PlayerEnter_Notify::SetCachedSize(int size) const {
+void ObjectEnter_Notify::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void PlayerEnter_Notify::Clear() {
-// @@protoc_insertion_point(message_clear_start:protocol.mmo.PlayerEnter_Notify)
+void ObjectEnter_Notify::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.mmo.ObjectEnter_Notify)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.info_ != nullptr) {
-    delete _impl_.info_;
+  if (GetArenaForAllocation() == nullptr && _impl_.otherinfo_ != nullptr) {
+    delete _impl_.otherinfo_;
   }
-  _impl_.info_ = nullptr;
+  _impl_.otherinfo_ = nullptr;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* PlayerEnter_Notify::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* ObjectEnter_Notify::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // .protocol.mmo.ObjectInfo info = 1;
+      // .protocol.mmo.ObjectInfo otherInfo = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_info(), ptr);
+          ptr = ctx->ParseMessage(_internal_mutable_otherinfo(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -504,85 +532,85 @@ failure:
 #undef CHK_
 }
 
-uint8_t* PlayerEnter_Notify::_InternalSerialize(
+uint8_t* ObjectEnter_Notify::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:protocol.mmo.PlayerEnter_Notify)
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.mmo.ObjectEnter_Notify)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .protocol.mmo.ObjectInfo info = 1;
-  if (this->_internal_has_info()) {
+  // .protocol.mmo.ObjectInfo otherInfo = 1;
+  if (this->_internal_has_otherinfo()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(1, _Internal::info(this),
-        _Internal::info(this).GetCachedSize(), target, stream);
+      InternalWriteMessage(1, _Internal::otherinfo(this),
+        _Internal::otherinfo(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:protocol.mmo.PlayerEnter_Notify)
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.mmo.ObjectEnter_Notify)
   return target;
 }
 
-size_t PlayerEnter_Notify::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:protocol.mmo.PlayerEnter_Notify)
+size_t ObjectEnter_Notify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.mmo.ObjectEnter_Notify)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .protocol.mmo.ObjectInfo info = 1;
-  if (this->_internal_has_info()) {
+  // .protocol.mmo.ObjectInfo otherInfo = 1;
+  if (this->_internal_has_otherinfo()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.info_);
+        *_impl_.otherinfo_);
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData PlayerEnter_Notify::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ObjectEnter_Notify::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    PlayerEnter_Notify::MergeImpl
+    ObjectEnter_Notify::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*PlayerEnter_Notify::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ObjectEnter_Notify::GetClassData() const { return &_class_data_; }
 
 
-void PlayerEnter_Notify::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<PlayerEnter_Notify*>(&to_msg);
-  auto& from = static_cast<const PlayerEnter_Notify&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:protocol.mmo.PlayerEnter_Notify)
+void ObjectEnter_Notify::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<ObjectEnter_Notify*>(&to_msg);
+  auto& from = static_cast<const ObjectEnter_Notify&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:protocol.mmo.ObjectEnter_Notify)
   GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_info()) {
-    _this->_internal_mutable_info()->::protocol::mmo::ObjectInfo::MergeFrom(
-        from._internal_info());
+  if (from._internal_has_otherinfo()) {
+    _this->_internal_mutable_otherinfo()->::protocol::mmo::ObjectInfo::MergeFrom(
+        from._internal_otherinfo());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void PlayerEnter_Notify::CopyFrom(const PlayerEnter_Notify& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:protocol.mmo.PlayerEnter_Notify)
+void ObjectEnter_Notify::CopyFrom(const ObjectEnter_Notify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.mmo.ObjectEnter_Notify)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool PlayerEnter_Notify::IsInitialized() const {
+bool ObjectEnter_Notify::IsInitialized() const {
   return true;
 }
 
-void PlayerEnter_Notify::InternalSwap(PlayerEnter_Notify* other) {
+void ObjectEnter_Notify::InternalSwap(ObjectEnter_Notify* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_.info_, other->_impl_.info_);
+  swap(_impl_.otherinfo_, other->_impl_.otherinfo_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata PlayerEnter_Notify::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata ObjectEnter_Notify::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_MMO_5fprotocol_2eproto_getter, &descriptor_table_MMO_5fprotocol_2eproto_once,
       file_level_metadata_MMO_5fprotocol_2eproto[1]);
@@ -590,40 +618,40 @@ void PlayerEnter_Notify::InternalSwap(PlayerEnter_Notify* other) {
 
 // ===================================================================
 
-class PlayerExit_Notify::_Internal {
+class ObjectExit_Notify::_Internal {
  public:
 };
 
-PlayerExit_Notify::PlayerExit_Notify(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+ObjectExit_Notify::ObjectExit_Notify(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:protocol.mmo.PlayerExit_Notify)
+  // @@protoc_insertion_point(arena_constructor:protocol.mmo.ObjectExit_Notify)
 }
-PlayerExit_Notify::PlayerExit_Notify(const PlayerExit_Notify& from)
+ObjectExit_Notify::ObjectExit_Notify(const ObjectExit_Notify& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
-  PlayerExit_Notify* const _this = this; (void)_this;
+  ObjectExit_Notify* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.id_){}
+      decltype(_impl_.otherid_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _this->_impl_.id_ = from._impl_.id_;
-  // @@protoc_insertion_point(copy_constructor:protocol.mmo.PlayerExit_Notify)
+  _this->_impl_.otherid_ = from._impl_.otherid_;
+  // @@protoc_insertion_point(copy_constructor:protocol.mmo.ObjectExit_Notify)
 }
 
-inline void PlayerExit_Notify::SharedCtor(
+inline void ObjectExit_Notify::SharedCtor(
     ::_pb::Arena* arena, bool is_message_owned) {
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.id_){0}
+      decltype(_impl_.otherid_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
 
-PlayerExit_Notify::~PlayerExit_Notify() {
-  // @@protoc_insertion_point(destructor:protocol.mmo.PlayerExit_Notify)
+ObjectExit_Notify::~ObjectExit_Notify() {
+  // @@protoc_insertion_point(destructor:protocol.mmo.ObjectExit_Notify)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -631,25 +659,390 @@ PlayerExit_Notify::~PlayerExit_Notify() {
   SharedDtor();
 }
 
-inline void PlayerExit_Notify::SharedDtor() {
+inline void ObjectExit_Notify::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
 }
 
-void PlayerExit_Notify::SetCachedSize(int size) const {
+void ObjectExit_Notify::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void PlayerExit_Notify::Clear() {
-// @@protoc_insertion_point(message_clear_start:protocol.mmo.PlayerExit_Notify)
+void ObjectExit_Notify::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.mmo.ObjectExit_Notify)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.id_ = 0;
+  _impl_.otherid_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* PlayerExit_Notify::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* ObjectExit_Notify::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 otherId = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.otherid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* ObjectExit_Notify::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.mmo.ObjectExit_Notify)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 otherId = 1;
+  if (this->_internal_otherid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_otherid(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.mmo.ObjectExit_Notify)
+  return target;
+}
+
+size_t ObjectExit_Notify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.mmo.ObjectExit_Notify)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int32 otherId = 1;
+  if (this->_internal_otherid() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_otherid());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ObjectExit_Notify::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    ObjectExit_Notify::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ObjectExit_Notify::GetClassData() const { return &_class_data_; }
+
+
+void ObjectExit_Notify::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<ObjectExit_Notify*>(&to_msg);
+  auto& from = static_cast<const ObjectExit_Notify&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:protocol.mmo.ObjectExit_Notify)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_otherid() != 0) {
+    _this->_internal_set_otherid(from._internal_otherid());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void ObjectExit_Notify::CopyFrom(const ObjectExit_Notify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.mmo.ObjectExit_Notify)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ObjectExit_Notify::IsInitialized() const {
+  return true;
+}
+
+void ObjectExit_Notify::InternalSwap(ObjectExit_Notify* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_.otherid_, other->_impl_.otherid_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata ObjectExit_Notify::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_MMO_5fprotocol_2eproto_getter, &descriptor_table_MMO_5fprotocol_2eproto_once,
+      file_level_metadata_MMO_5fprotocol_2eproto[2]);
+}
+
+// ===================================================================
+
+class Move_Req::_Internal {
+ public:
+};
+
+Move_Req::Move_Req(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:protocol.mmo.Move_Req)
+}
+Move_Req::Move_Req(const Move_Req& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Move_Req* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.dir_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_impl_.dir_ = from._impl_.dir_;
+  // @@protoc_insertion_point(copy_constructor:protocol.mmo.Move_Req)
+}
+
+inline void Move_Req::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.dir_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+Move_Req::~Move_Req() {
+  // @@protoc_insertion_point(destructor:protocol.mmo.Move_Req)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void Move_Req::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void Move_Req::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void Move_Req::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.mmo.Move_Req)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.dir_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Move_Req::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .protocol.mmo.E_Dir dir = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_dir(static_cast<::protocol::mmo::E_Dir>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* Move_Req::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.mmo.Move_Req)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .protocol.mmo.E_Dir dir = 1;
+  if (this->_internal_dir() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_dir(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.mmo.Move_Req)
+  return target;
+}
+
+size_t Move_Req::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.mmo.Move_Req)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .protocol.mmo.E_Dir dir = 1;
+  if (this->_internal_dir() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_dir());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Move_Req::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    Move_Req::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Move_Req::GetClassData() const { return &_class_data_; }
+
+
+void Move_Req::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Move_Req*>(&to_msg);
+  auto& from = static_cast<const Move_Req&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:protocol.mmo.Move_Req)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_dir() != 0) {
+    _this->_internal_set_dir(from._internal_dir());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Move_Req::CopyFrom(const Move_Req& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.mmo.Move_Req)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Move_Req::IsInitialized() const {
+  return true;
+}
+
+void Move_Req::InternalSwap(Move_Req* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_.dir_, other->_impl_.dir_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Move_Req::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_MMO_5fprotocol_2eproto_getter, &descriptor_table_MMO_5fprotocol_2eproto_once,
+      file_level_metadata_MMO_5fprotocol_2eproto[3]);
+}
+
+// ===================================================================
+
+class Move_Notify::_Internal {
+ public:
+};
+
+Move_Notify::Move_Notify(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:protocol.mmo.Move_Notify)
+}
+Move_Notify::Move_Notify(const Move_Notify& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Move_Notify* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.id_){}
+    , decltype(_impl_.dir_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&_impl_.id_, &from._impl_.id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.dir_) -
+    reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.dir_));
+  // @@protoc_insertion_point(copy_constructor:protocol.mmo.Move_Notify)
+}
+
+inline void Move_Notify::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.id_){0}
+    , decltype(_impl_.dir_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+Move_Notify::~Move_Notify() {
+  // @@protoc_insertion_point(destructor:protocol.mmo.Move_Notify)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void Move_Notify::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void Move_Notify::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void Move_Notify::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.mmo.Move_Notify)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&_impl_.id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.dir_) -
+      reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.dir_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Move_Notify::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
@@ -663,6 +1056,15 @@ const char* PlayerExit_Notify::_InternalParse(const char* ptr, ::_pbi::ParseCont
         } else
           goto handle_unusual;
         continue;
+      // .protocol.mmo.E_Dir dir = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_dir(static_cast<::protocol::mmo::E_Dir>(val));
+        } else
+          goto handle_unusual;
+        continue;
       default:
         goto handle_unusual;
     }  // switch
@@ -686,9 +1088,9 @@ failure:
 #undef CHK_
 }
 
-uint8_t* PlayerExit_Notify::_InternalSerialize(
+uint8_t* Move_Notify::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:protocol.mmo.PlayerExit_Notify)
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.mmo.Move_Notify)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -698,16 +1100,23 @@ uint8_t* PlayerExit_Notify::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_id(), target);
   }
 
+  // .protocol.mmo.E_Dir dir = 2;
+  if (this->_internal_dir() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      2, this->_internal_dir(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:protocol.mmo.PlayerExit_Notify)
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.mmo.Move_Notify)
   return target;
 }
 
-size_t PlayerExit_Notify::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:protocol.mmo.PlayerExit_Notify)
+size_t Move_Notify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.mmo.Move_Notify)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
@@ -719,20 +1128,26 @@ size_t PlayerExit_Notify::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_id());
   }
 
+  // .protocol.mmo.E_Dir dir = 2;
+  if (this->_internal_dir() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_dir());
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData PlayerExit_Notify::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Move_Notify::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    PlayerExit_Notify::MergeImpl
+    Move_Notify::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*PlayerExit_Notify::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Move_Notify::GetClassData() const { return &_class_data_; }
 
 
-void PlayerExit_Notify::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<PlayerExit_Notify*>(&to_msg);
-  auto& from = static_cast<const PlayerExit_Notify&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:protocol.mmo.PlayerExit_Notify)
+void Move_Notify::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Move_Notify*>(&to_msg);
+  auto& from = static_cast<const Move_Notify&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:protocol.mmo.Move_Notify)
   GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -740,30 +1155,38 @@ void PlayerExit_Notify::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, cons
   if (from._internal_id() != 0) {
     _this->_internal_set_id(from._internal_id());
   }
+  if (from._internal_dir() != 0) {
+    _this->_internal_set_dir(from._internal_dir());
+  }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void PlayerExit_Notify::CopyFrom(const PlayerExit_Notify& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:protocol.mmo.PlayerExit_Notify)
+void Move_Notify::CopyFrom(const Move_Notify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.mmo.Move_Notify)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool PlayerExit_Notify::IsInitialized() const {
+bool Move_Notify::IsInitialized() const {
   return true;
 }
 
-void PlayerExit_Notify::InternalSwap(PlayerExit_Notify* other) {
+void Move_Notify::InternalSwap(Move_Notify* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_.id_, other->_impl_.id_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Move_Notify, _impl_.dir_)
+      + sizeof(Move_Notify::_impl_.dir_)
+      - PROTOBUF_FIELD_OFFSET(Move_Notify, _impl_.id_)>(
+          reinterpret_cast<char*>(&_impl_.id_),
+          reinterpret_cast<char*>(&other->_impl_.id_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata PlayerExit_Notify::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata Move_Notify::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_MMO_5fprotocol_2eproto_getter, &descriptor_table_MMO_5fprotocol_2eproto_once,
-      file_level_metadata_MMO_5fprotocol_2eproto[2]);
+      file_level_metadata_MMO_5fprotocol_2eproto[4]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -774,13 +1197,21 @@ template<> PROTOBUF_NOINLINE ::protocol::mmo::EnterGame_Resp*
 Arena::CreateMaybeMessage< ::protocol::mmo::EnterGame_Resp >(Arena* arena) {
   return Arena::CreateMessageInternal< ::protocol::mmo::EnterGame_Resp >(arena);
 }
-template<> PROTOBUF_NOINLINE ::protocol::mmo::PlayerEnter_Notify*
-Arena::CreateMaybeMessage< ::protocol::mmo::PlayerEnter_Notify >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::protocol::mmo::PlayerEnter_Notify >(arena);
+template<> PROTOBUF_NOINLINE ::protocol::mmo::ObjectEnter_Notify*
+Arena::CreateMaybeMessage< ::protocol::mmo::ObjectEnter_Notify >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::mmo::ObjectEnter_Notify >(arena);
 }
-template<> PROTOBUF_NOINLINE ::protocol::mmo::PlayerExit_Notify*
-Arena::CreateMaybeMessage< ::protocol::mmo::PlayerExit_Notify >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::protocol::mmo::PlayerExit_Notify >(arena);
+template<> PROTOBUF_NOINLINE ::protocol::mmo::ObjectExit_Notify*
+Arena::CreateMaybeMessage< ::protocol::mmo::ObjectExit_Notify >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::mmo::ObjectExit_Notify >(arena);
+}
+template<> PROTOBUF_NOINLINE ::protocol::mmo::Move_Req*
+Arena::CreateMaybeMessage< ::protocol::mmo::Move_Req >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::mmo::Move_Req >(arena);
+}
+template<> PROTOBUF_NOINLINE ::protocol::mmo::Move_Notify*
+Arena::CreateMaybeMessage< ::protocol::mmo::Move_Notify >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::mmo::Move_Notify >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 
