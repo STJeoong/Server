@@ -12,13 +12,8 @@ void Rectangular::removeFromDAT()
 }
 void Rectangular::insertToDAT(const TransformInt& pivot, void* userData)
 {
-	/*int leftTopY = pivot.y() + _offsetY;
+	int leftTopY = pivot.y() + _offsetY;
 	int leftTopX = pivot.x() + _offsetX;
-	int rightBtmY = pivot.y() + _offsetY + _yExtension;
-	int rightBtmX = pivot.x() + _offsetX + _xExtension;*/
-
-	int leftTopY = pivot.y() + _offsetY - _yExtension;
-	int leftTopX = pivot.x() + _offsetX - _xExtension;
 	int rightBtmY = pivot.y() + _offsetY + _yExtension;
 	int rightBtmX = pivot.x() + _offsetX + _xExtension;
 	if (!_attachedArea->fixedRotation())
@@ -45,8 +40,8 @@ void Rectangular::insertToDAT(const TransformInt& pivot, void* userData)
 }
 void Rectangular::move(const TransformInt& pivot)
 {
-	int leftTopY = pivot.y() + _offsetY - _yExtension;
-	int leftTopX = pivot.x() + _offsetX - _xExtension;
+	int leftTopY = pivot.y() + _offsetY;
+	int leftTopX = pivot.x() + _offsetX;
 	int rightBtmY = pivot.y() + _offsetY + _yExtension;
 	int rightBtmX = pivot.x() + _offsetX + _xExtension;
 	if (!_attachedArea->fixedRotation())

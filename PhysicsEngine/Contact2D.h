@@ -26,7 +26,6 @@ private:
 	void processCircle();
 	bool changeEdge(const Point2D& p, Point2D globalPoints[2]);
 	int getCloserPoint(const Point2D& p, Point2D globalPoints[2]);
-	void onDestroy();
 	bool operator==(const Contact2D& other);
 
 	Point2D _contactA;

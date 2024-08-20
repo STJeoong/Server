@@ -43,8 +43,12 @@ void World::init(const Vector2D& g)
 	ContactFilter::reset();
 	ObjectPool::makePool<Collision2D>(World::COLLISION_POOL_SIZE, []{ return new Collision2D(); },
 		[](void* collision) {}, [](void* collision) { Collision2D* p = reinterpret_cast<Collision2D*>(collision); p->onDestroy(); });
+	ObjectPool::useActionOnGet<Collision2D>(false);
+
 	ObjectPool::makePool<Contact2D>(World::CONTACT_POOL_SIZE, [] { return new Contact2D(); },
-		[](void* contact) {}, [](void* contact) { Contact2D* c = reinterpret_cast<Contact2D*>(contact); c->onDestroy(); });
+		[](void* contact) {}, [](void* contact) {});
+	ObjectPool::useActionOnGet<Contact2D>(false);
+	ObjectPool::useActionOnRelease<Contact2D>(false);
 }
 void World::step(float dt, int velocityIter, int positionIter)
 {
@@ -88,7 +92,7 @@ int World::add(Collider2D* collider)
 }
 void World::add(RigidBody2D* rigid) { s_rigids.push_back(rigid); }
 void World::moveCollider(int key, const AABB& sweepAABB, const Vector2D& displacement) { s_broadPhase.move(key, sweepAABB, displacement); }
-void World::removeRigid(RigidBody2D* rigid) { std::remove(s_rigids.begin(), s_rigids.end(), rigid); }
+void World::removeRigid(RigidBody2D* rigid) { s_rigids.erase(std::remove(s_rigids.begin(), s_rigids.end(), rigid), s_rigids.end()); }
 void World::removalReq(int key)
 {
 	//s_broadPhase.remove(key); TODO : 바로 삭제해도 되나? 나중에 시뮬레이션할때 문제 생기나? 아니면 바로 지워도 될거같은데

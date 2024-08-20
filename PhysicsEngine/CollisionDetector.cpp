@@ -10,6 +10,7 @@
 #include "GameObject.h"
 #include "Contact2D.h"
 #include <ObjectPool.h>
+#include <ThreadPool.h>
 
 #pragma region public
 void CollisionDetector::findRelatedCollisions(Collider2D* collider, std::vector<Collision2D*>& exits)
@@ -29,6 +30,8 @@ void CollisionDetector::update(const BroadPhase& broadPhase)
 {
 	this->pruneOldCollisions(broadPhase);
 	this->importFromBroadPhase(broadPhase);
+	/*this->test(0, _collisions.size());
+	ThreadPool::join(_lastKey);*/
 	for (int i = 0; i < _collisions.size(); ++i)
 	{
 		const E_GameObjectEvent& evt = _collisions[i]->_evt;
@@ -246,5 +249,19 @@ void CollisionDetector::setExit(Collision2D* collision)
 	}
 	collisionsA.erase(std::remove(collisionsA.begin(), collisionsA.end(), collision), collisionsA.end());
 	collisionsB.erase(std::remove(collisionsB.begin(), collisionsB.end(), collision), collisionsB.end());
+}
+void CollisionDetector::test(size_t start, size_t end)
+{
+	if (end - start < 50)
+	{
+		_lastKey = ThreadPool::enqueue([this, start, end]() {
+			for (int i = start; i < end; ++i)
+				narrowPhase(_collisions[i]);
+			});
+		return;
+	}
+	size_t mid = (start + end) / 2;
+	this->test(start, mid);
+	this->test(mid, end);
 }
 #pragma endregion

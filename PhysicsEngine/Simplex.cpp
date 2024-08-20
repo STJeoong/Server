@@ -6,8 +6,11 @@
 #pragma region public
 void Simplex::init(const Point2D& pointFromA, const Point2D& pointFromB)
 {
+	//_points.resize(3);
 	_points.clear();
+	_size = 0;
 	_containsOrigin = false;
+	//_points[_size++] = pointFromA - pointFromB;
 	_points.push_back(pointFromA - pointFromB);
 	_supportVec = _points[0] * -1;
 	if (_supportVec.x() == 0.0f && _supportVec.y() == 0.0f)
@@ -15,6 +18,7 @@ void Simplex::init(const Point2D& pointFromA, const Point2D& pointFromB)
 }
 bool Simplex::insert(const Point2D& pointFromA, const Point2D& pointFromB)
 {
+	//if (_size == 3)
 	if (_points.size() == 3)
 	{
 		_points[0] = _points[1];
@@ -23,6 +27,7 @@ bool Simplex::insert(const Point2D& pointFromA, const Point2D& pointFromB)
 	}
 	else
 		_points.push_back(pointFromA - pointFromB);
+		//_points[_size++] = pointFromA - pointFromB;
 	return this->check();
 }
 #pragma endregion

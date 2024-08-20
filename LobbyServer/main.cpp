@@ -20,14 +20,15 @@ static void setEngine()
 	data["db_client"].get_to(dbConfig);
 	data["match_client"].get_to(matchConfig);
 
-	Engine::addEngine((int)E_EngineType::LOBBY_SERVER, lobbyConfig, new LobbyServerBroadcaster());
 	Engine::addEngine((int)E_EngineType::DB_CLIENT, dbConfig, new DBClientBroadcaster());
 	Engine::addEngine((int)E_EngineType::MATCH_CLIENT, matchConfig, new MatchClientBroadcaster());
+	Engine::addEngine((int)E_EngineType::LOBBY_SERVER, lobbyConfig, new LobbyServerBroadcaster());
 }
 
 int main(int argc, char* argv[])
 {
 	Engine::setLogFolder(argv[0]);
+	Engine::init();
 	Engine::setServerMode(E_ServerMode::PASSIVE_MODE);
 	setEngine();
 
@@ -36,4 +37,5 @@ int main(int argc, char* argv[])
 	MatchClientHandler matchHandler;
 
 	Engine::run();
+	Engine::end();
 }

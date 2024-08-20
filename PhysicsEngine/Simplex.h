@@ -15,6 +15,7 @@ private:
 	bool check();
 
 	std::vector<Point2D> _points;
+	int _size = 0;
 	Vector2D _supportVec; // next support function's direction
 	bool _containsOrigin = false;
 };

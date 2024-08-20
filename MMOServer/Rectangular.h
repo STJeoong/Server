@@ -2,6 +2,15 @@
 #include "Shape.h"
 #include "MMO_struct.pb.h"
 #include "DAT.h"
+
+// yExtension, xExtension은 offset으로부터 양방향으로 뻗어나가는 게 아니라 오른쪽 아래로 뻗어나간다.
+// offset =>  *=========|
+//			  |         |
+//			  |         |
+//			  ===========
+// 직사각형의 가로길이 : xExtension
+// 직사각형의 세로길이 : yExtension
+// * : offset
 class Rectangular : public Shape
 {
 public:

@@ -40,7 +40,7 @@ private:
 
 	static std::vector<GameObject*> s_gameObjects;
 	static std::vector<GameObject*> s_destroyed;
-	static GameObject* s_root;
+	static GameObject* s_root; // 모든 물체를 한번에 이동할 때 사용할 수 있음.
 
 	static Vector2D s_gravity;
 	static BroadPhase s_broadPhase;

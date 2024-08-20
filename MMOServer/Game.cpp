@@ -19,8 +19,6 @@ void Game::init()
 	Map::load();
 	LayerFilter::init();
 	Player::init();
-	GameObject* obj = Game::instantiate();
-	Player* player = obj->addComponent<Player>();
 
 	MMOServerBroadcaster::onConnect += [](int serial) { printf("%d connect\n", serial); };
 	MMOServerBroadcaster::onDisconnect += [](int serial) { printf("%d disconnect\n", serial); };
@@ -108,7 +106,7 @@ void Game::destroy()
 void Game::updateCollisions()
 {
 	// delete invalid collisions.
-	for (auto it = s_collisions.begin(); it != s_collisions.end(); ++it)
+	for (auto it = s_collisions.begin(); it != s_collisions.end();)
 	{
 		Area* areaA = it->first;
 		Area* areaB = it->second;
@@ -116,9 +114,11 @@ void Game::updateCollisions()
 			(areaA->gameObject() == areaB->gameObject() && !areaA->detectMyArea() && !areaB->detectMyArea()))
 		{
 			Game::invokeAreaEvent(E_GameObjectEvent::AREA_EXIT, *it);
-			it = s_collisions.erase(it);
+			it = s_collisions.erase(it); // 여기서 삭제하고 ++it까지 돼서 그랬음.
 			continue;
 		}
+		else
+			++it;
 	}
 
 	for (int i = 0; i < s_collisions.size(); ++i)

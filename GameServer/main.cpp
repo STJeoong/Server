@@ -18,6 +18,8 @@ static void setEngine(char* argv[])
 int main(int argc, char* argv[])
 {
 	Engine::setLogFolder(argv[0]);
+	Engine::init();
+	
 	Engine::setServerMode(E_ServerMode::PASSIVE_MODE);
 	setEngine(argv);
 

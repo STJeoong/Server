@@ -12,9 +12,6 @@
     <Filter Include="소스 파일\User">
       <UniqueIdentifier>{956f3561-9cf0-462c-ae2c-306a57ec73f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Lobby">
-      <UniqueIdentifier>{55f5a18b-1f59-407d-87f5-f65c4bca150a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Protocol">
       <UniqueIdentifier>{2540cbc3-b595-4023-851b-8d7f527ad112}</UniqueIdentifier>
     </Filter>
@@ -23,6 +20,9 @@
     </Filter>
     <Filter Include="소스 파일\Broadcast">
       <UniqueIdentifier>{a470b55f-d1bf-46a6-9153-bb61fa371a68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Lobby">
+      <UniqueIdentifier>{55f5a18b-1f59-407d-87f5-f65c4bca150a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

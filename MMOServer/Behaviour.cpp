@@ -23,6 +23,7 @@ void Behaviour::onUpdate()
 
 	if (_isFirstUpdate)	this->start();
 	else this->update();
+	_isFirstUpdate = false;
 }
 void Behaviour::onActiveGameObject()
 {

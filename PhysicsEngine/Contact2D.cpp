@@ -171,11 +171,6 @@ int Contact2D::getCloserPoint(const Point2D& p, Point2D globalPoints[2])
 		return 0;
 	return 1;
 }
-void Contact2D::onDestroy()
-{
-	_normalImpulse = 0.0f;
-	_tangentImpulse = 0.0f;
-}
 bool Contact2D::operator==(const Contact2D& other)
 {
 	if (_colliderA != other._colliderA || _colliderB != other._colliderB)

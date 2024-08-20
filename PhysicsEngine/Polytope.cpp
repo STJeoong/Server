@@ -112,7 +112,6 @@ void Polytope::initDistances()
 		// TODO : 값이 너무 커질 수 있나?
 		float distance = line.squaredDistanceFrom({ 0.0f, 0.0f });
 		_distances.push_back({ false, distance, i, (i + 1) % _points.size() });
-		//_pq.push({ distance, i, (i + 1) % _points.size() });
 	}
 }
 void Polytope::getMinDistance(float& distance, size_t& idxA, size_t& idxB)

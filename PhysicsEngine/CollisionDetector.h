@@ -19,5 +19,9 @@ private:
 	void epa(Collision2D* collision);
 	void setExit(Collision2D* collision);
 
+	//test
+	void test(size_t start, size_t end);
+	int _lastKey;
+
 	std::vector<Collision2D*> _collisions;
 };
