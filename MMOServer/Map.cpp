@@ -55,7 +55,7 @@ std::optional<std::pair<int, int>> Map::findPath(const TransformInt& start, cons
 		for (int j = 0; j < visited[i].size(); ++j)
 			visited[i][j] = false;
 	pq.push({ 0,0,start.y(), start.x() });
-	visited[start.y()][start.x()] = true;
+	visited[start.y() - _yMin][start.x() - _xMin] = true;
 	while (!pq.empty())
 	{
 		auto [F, H, y, x] = pq.top();
@@ -64,23 +64,23 @@ std::optional<std::pair<int, int>> Map::findPath(const TransformInt& start, cons
 		{
 			while (true)
 			{
-				if (trace[y][x].first == start.y() && trace[y][x].second == start.x())
+				if (trace[y - _yMin][x - _xMin].first == start.y() && trace[y - _yMin][x - _xMin].second == start.x())
 					return std::pair<int, int>(y, x);
-				std::tie(y, x) = trace[y][x];
+				std::tie(y, x) = trace[y - _yMin][x - _xMin];
 			}
 		}
 		for (int i = 0; i < 4; ++i)
 		{
 			int ny = y + dy[i];
 			int nx = x + dx[i];
-			if (this->canGo(ny, nx) && !visited[ny][nx])
+			if (this->canGo(ny, nx) && !visited[ny - _yMin][nx - _xMin])
 			{
 				int G = std::abs(ny - start.y()) + std::abs(nx - start.x());
 				H = std::abs(ny - dest.y()) + std::abs(nx - dest.x());
 				F = G + H;
 				pq.push({ F,H,ny,nx });
-				visited[ny][nx] = true;
-				trace[ny][nx] = { y,x };
+				visited[ny - _yMin][nx - _xMin] = true;
+				trace[ny - _yMin][nx - _xMin] = { y,x };
 			}
 		}
 	}

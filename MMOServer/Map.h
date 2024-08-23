@@ -23,10 +23,10 @@ public:
 private:
 	Map(const std::filesystem::path& path);
 
-	int _xMin;
-	int _xMax;
-	int _yMin;
-	int _yMax;
+	size_t _xMin;
+	size_t _xMax;
+	size_t _yMin;
+	size_t _yMax;
 	std::vector<std::vector<bool>> _canGo;
 };
 
