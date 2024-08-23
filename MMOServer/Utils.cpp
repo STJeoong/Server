@@ -3,6 +3,7 @@
 #include <MemoryBlockPool.h>
 #include <S_PacketHeader.h>
 #include "E_EngineType.h"
+#include <random>
 
 void Utils::send(int serial, protocol::mmo::E_PacketID packetID, UINT8 option, const google::protobuf::Message& message)
 {
@@ -50,4 +51,13 @@ void Utils::worldToLocal(const TransformInt& pivotWorld, const TransformInt& myW
 	myLocal.set_dir((E_Dir)(((int)E_Dir::MAX - (int)pivotWorld.dir() + (int)myWorld.dir()) % (int)E_Dir::MAX));
 	myLocal.set_y(invMat[(int)pivotWorld.dir()][1][0] * (myWorld.x() - pivotWorld.x()) + invMat[(int)pivotWorld.dir()][1][1] * (myWorld.y() - pivotWorld.y()));
 	myLocal.set_x(invMat[(int)pivotWorld.dir()][0][0] * (myWorld.x() - pivotWorld.x()) + invMat[(int)pivotWorld.dir()][0][1] * (myWorld.y() - pivotWorld.y()));
+}
+bool Utils::gacha(int percentage)
+{
+	static std::random_device rd;
+	static std::mt19937 gen(rd());
+	static std::uniform_int_distribution dis(1, 100);
+
+	if (dis(gen) <= percentage) return true;
+	return false;
 }

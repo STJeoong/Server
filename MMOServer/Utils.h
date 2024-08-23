@@ -18,4 +18,6 @@ namespace Utils
 	// (인자로 주는)world좌표를 (인자로 주는)world좌표를 기준으로 로컬좌표를 반환.
 	// 즉, 기준점은 그대로인데 본인 좌표가 바뀌었을 때 사용.
 	void worldToLocal(const TransformInt& pivotWorld, const TransformInt& myWorld, TransformInt& myLocal);
+	// 임시 (소수점이 없는 확률만 처리하고 있음)
+	bool gacha(int percentage);
 }
