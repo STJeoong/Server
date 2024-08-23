@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <fstream>
 #include <filesystem>
+#include <optional>
 #include "MMO_struct.pb.h"
 
 using namespace protocol::mmo;
@@ -18,7 +19,7 @@ private:
 
 public:
 	bool canGo(int y, int x);
-	bool findPath(int startY, int startX, int destY, int destX, int& resultY, int& resultX);
+	std::optional<std::pair<int, int>> findPath(const TransformInt& start, const TransformInt& dest);
 private:
 	Map(const std::filesystem::path& path);
 
