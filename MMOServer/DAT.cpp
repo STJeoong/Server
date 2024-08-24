@@ -1,6 +1,7 @@
 #include "DAT.h"
 #include "Area.h"
 #include "GameObject.h"
+#include "LayerFilter.h"
 
 #pragma region public
 DAT::DAT() : _root(DAT::NULL_NODE), _freeNode(0), _cnt(0), _capacity(16)
@@ -99,6 +100,11 @@ void DAT::makeCandidates(const std::vector<int>& queryId, std::vector<std::pair<
                 continue;
             }
             if (_nodes[id].moved && _nodes[queryId[i]].moved && id < queryId[i]) continue;
+            Area* areaA = _nodes[queryId[i]].userData;
+            Area* areaB = _nodes[id].userData;
+            if (!LayerFilter::detectable(areaA->layer(), areaB->layer()) || areaA == areaB ||
+                (areaA->gameObject() == areaB->gameObject() && !areaA->detectMyArea() && !areaB->detectMyArea()))
+                continue;
             candidates.push_back({ std::min(id, queryId[i]), std::max(id, queryId[i]) });
         }
     }

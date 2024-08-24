@@ -204,9 +204,6 @@ void Map::updateCollisions()
 	{
 		Area* areaA = _dat->getData(_candidates[i].first);
 		Area* areaB = _dat->getData(_candidates[i].second);
-		if (!LayerFilter::detectable(areaA->layer(), areaB->layer()) || areaA == areaB ||
-			(areaA->gameObject() == areaB->gameObject() && !areaA->detectMyArea() && !areaB->detectMyArea()))
-			continue;
 		const std::vector<Area*>& overlappedAreas = areaA->overlappedAreas();
 		auto it = std::find(overlappedAreas.begin(), overlappedAreas.end(), areaB);
 		if (it != overlappedAreas.end())
