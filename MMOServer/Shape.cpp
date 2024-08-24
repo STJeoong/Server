@@ -20,7 +20,7 @@ bool Shape::overlaps(const Shape& other)
 #pragma endregion
 
 #pragma region protected
-int Shape::add(void* userData, const AABB& aabb)
+int Shape::add(Area* userData, const AABB& aabb)
 {
 	return _attachedArea->gameObject()->map()->add(userData, aabb);
 }

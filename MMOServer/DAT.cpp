@@ -1,4 +1,6 @@
 #include "DAT.h"
+#include "Area.h"
+#include "GameObject.h"
 
 #pragma region public
 DAT::DAT() : _root(DAT::NULL_NODE), _freeNode(0), _cnt(0), _capacity(16)
@@ -13,7 +15,7 @@ DAT::DAT() : _root(DAT::NULL_NODE), _freeNode(0), _cnt(0), _capacity(16)
     }
     _nodes[_capacity - 1].parent = DAT::NULL_NODE;
 }
-int DAT::insert(void* userData, const AABB& aabb)
+int DAT::insert(Area* userData, const AABB& aabb)
 {
     int node = this->allocate();
     _nodes[node].aabb = aabb;
@@ -35,7 +37,7 @@ bool DAT::move(int id, const AABB& newAABB)
     _nodes[id].moved = true;
     return true;
 }
-void* DAT::getData(int id) const { return _nodes[id].userData; }
+Area* DAT::getData(int id) const { return _nodes[id].userData; }
 const AABB& DAT::getAABB(int id) const { return _nodes[id].aabb; }
 void DAT::makeCandidates(const std::vector<int>& queryId, std::vector<std::pair<int, int>>& candidates)
 {

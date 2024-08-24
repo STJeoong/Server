@@ -19,7 +19,7 @@ public:
 	{ _ids.push_back(DAT::NULL_NODE); }
 	~Rectangular() { this->removeFromDAT(); }
 	virtual void removeFromDAT() override;
-	virtual void insertToDAT(const TransformInt& pivot, void* userData) override;
+	virtual void insertToDAT(const TransformInt& pivot, Area* userData) override;
 	virtual void move(const TransformInt& pivot) override;
 	virtual Rectangular* clone(Area* attachedArea) override { return new Rectangular(attachedArea, _offsetY, _offsetX, _yExtension, _xExtension); }
 private:

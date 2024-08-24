@@ -10,7 +10,7 @@ void Rectangular::removeFromDAT()
 	this->remove(_ids[0]);
 	_ids[0] = DAT::NULL_NODE;
 }
-void Rectangular::insertToDAT(const TransformInt& pivot, void* userData)
+void Rectangular::insertToDAT(const TransformInt& pivot, Area* userData)
 {
 	int leftTopY = pivot.y() + _offsetY;
 	int leftTopX = pivot.x() + _offsetX;

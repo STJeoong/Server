@@ -2,6 +2,8 @@
 #include <vector>
 #include "AABB.h"
 
+class Area;
+class GameObject;
 class DAT
 {
     static const int INITIAL_STK_SIZE = 10000;
@@ -9,10 +11,10 @@ public:
     static const int NULL_NODE = -1; // 노드가 없음을 뜻함.
 
     DAT();
-    int insert(void* userData, const AABB& aabb);
+    int insert(Area* userData, const AABB& aabb);
     void remove(int id);
     bool move(int id, const AABB& newAABB);
-    void* getData(int id) const;
+    Area* getData(int id) const;
     const AABB& getAABB(int id) const;
     void makeCandidates(const std::vector<int>& queryId, std::vector<std::pair<int, int>>& candidates);
 private:
@@ -42,7 +44,7 @@ private:
         int left; // 왼쪽 자식노드
         int right; // 오른쪽 자식노드
         int height; // 현재 노드의 높이 정보. 높이는 depth의 반대라고 보면 됨.
-        void* userData; // Object pointer or some user data
+        Area* userData; // Object pointer or some user data
         bool moved;
     };
     std::vector<Node> _nodes; // 배열로 트리 관리
