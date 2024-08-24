@@ -16,6 +16,7 @@ public:
     bool move(int id, const AABB& newAABB);
     Area* getData(int id) const;
     const AABB& getAABB(int id) const;
+    void overlapsBox(const AABB& box, int filter, std::vector<GameObject*>& list);
     void makeCandidates(const std::vector<int>& queryId, std::vector<std::pair<int, int>>& candidates);
 private:
     void insertLeaf(int leaf); // 균형을 유지하면서 새로운 leaf 노드를 적절한 위치에 위치시킴

@@ -7,10 +7,12 @@ enum class E_Layer
 	AOI,
 
 	// Object 식별 영역
+	OBJ_MIN,
 	PLAYER_OBJ,
 	MONSTER_OBJ,
 	PROJECTILE_OBJ,
 	ITEM_OBj,
+	OBJ_MAX,
 
 	// 선공격 영역
 	MONSTER_AGGRESSIVE,

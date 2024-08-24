@@ -82,6 +82,10 @@ void Map::destroy(Component* component)
 	components.erase(std::find(components.begin(), components.end(), component));
 	_destroyedComponents.push(component);
 }
+void Map::overlapsBox(const AABB& box, int filter, std::vector<GameObject*>& list)
+{
+	_dat->overlapsBox(box, filter, list);
+}
 bool Map::canGo(int y, int x)
 {
 	if (y < _yMin || y > _yMax || x < _xMin || x > _xMax)
@@ -198,8 +202,8 @@ void Map::updateCollisions()
 	// import valid collisions.
 	for (int i = 0; i < _candidates.size(); ++i)
 	{
-		Area* areaA = reinterpret_cast<Area*>(_dat->getData(_candidates[i].first));
-		Area* areaB = reinterpret_cast<Area*>(_dat->getData(_candidates[i].second));
+		Area* areaA = _dat->getData(_candidates[i].first);
+		Area* areaB = _dat->getData(_candidates[i].second);
 		if (!LayerFilter::detectable(areaA->layer(), areaB->layer()) || areaA == areaB ||
 			(areaA->gameObject() == areaB->gameObject() && !areaA->detectMyArea() && !areaB->detectMyArea()))
 			continue;
@@ -234,7 +238,7 @@ void Map::destroy()
 		delete component;
 	}
 }
-int Map::add(void* userData, const AABB& aabb)
+int Map::add(Area* userData, const AABB& aabb)
 {
 	int id = _dat->insert(userData, aabb);
 	_queryIDs.push_back(id);
@@ -247,7 +251,7 @@ void Map::remove(int id)
 		if (it != _queryIDs.end())
 			_queryIDs.erase(it);
 	}
-	Area* area = reinterpret_cast<Area*>(_dat->getData(id));
+	Area* area = _dat->getData(id);
 	_dat->remove(id);
 
 	// collision 중에서 id에 해당하는 area와 관련된 것들 제거

@@ -39,6 +39,37 @@ bool DAT::move(int id, const AABB& newAABB)
 }
 Area* DAT::getData(int id) const { return _nodes[id].userData; }
 const AABB& DAT::getAABB(int id) const { return _nodes[id].aabb; }
+void DAT::overlapsBox(const AABB& box, int filter, std::vector<GameObject*>& list)
+{
+    int idx = 0;
+    _stk[idx++] = _root;
+    while (idx > 0)
+    {
+        int id = _stk[--idx];
+        if (!box.overlaps(_nodes[id].aabb)) continue;
+        if (!_nodes[id].isLeaf())
+        {
+            if (idx >= _stkCapacity)
+            {
+                _stkCapacity *= 2;
+                _stk.resize(_stkCapacity);
+            }
+            _stk[idx++] = _nodes[id].left;
+            if (idx >= _stkCapacity)
+            {
+                _stkCapacity *= 2;
+                _stk.resize(_stkCapacity);
+            }
+            _stk[idx++] = _nodes[id].right;
+            continue;
+        }
+        Area* area = _nodes[id].userData;
+        GameObject* obj = area->gameObject();
+        if (area->layer() <= E_Layer::OBJ_MIN || area->layer() >= E_Layer::OBJ_MAX) continue;
+        if (!(filter & ((int)obj->objectType()))) continue;
+        list.push_back(obj);
+    }
+}
 void DAT::makeCandidates(const std::vector<int>& queryId, std::vector<std::pair<int, int>>& candidates)
 {
     for (int i = 0; i < queryId.size(); ++i)

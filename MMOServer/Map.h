@@ -35,6 +35,7 @@ public:
 	void destroy(GameObject* obj);
 	void destroy(Component* component);
 
+	void overlapsBox(const AABB& box, int filter, std::vector<GameObject*>& list);
 	std::pair<int, int> basePoint() const { return { _basePointY, _basePointX }; }
 	bool canGo(int y, int x);
 	std::optional<std::pair<int, int>> findPath(const std::pair<int, int>& start, const std::pair<int, int>& dest);
@@ -46,7 +47,7 @@ private:
 	void invokeAreaEvent(const E_GameObjectEvent& evt, const std::pair<Area*, Area*>& collision);
 	void destroy();
 
-	int add(void* userData, const AABB& aabb);
+	int add(Area* userData, const AABB& aabb);
 	void remove(int id);
 	void move(int id, const AABB& newAABB);
 
