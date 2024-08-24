@@ -1,8 +1,30 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "Utils.h"
+#include "Map.h"
 #include <stack>
 using namespace protocol::mmo;
+
+
+#pragma region private static
+void GameObject::doRecursively(GameObject* root, const std::function<void(GameObject*)>& action, const std::function<bool(GameObject*)>& filter)
+{
+	static std::stack<GameObject*> stk;
+	stk.push(root);
+	while (!stk.empty())
+	{
+		GameObject* obj = stk.top();
+		stk.pop();
+		action(obj);
+		for (GameObject* child : obj->_children)
+			if (filter(child))
+				stk.push(child);
+	}
+}
+#pragma endregion
+
+
+
 
 #pragma region public
 void GameObject::parent(GameObject* val, bool evtInvoke)
@@ -65,40 +87,38 @@ void GameObject::active(bool flag, bool evtInvoke)
 			[&evtInvoke](GameObject* obj) { obj->_activeInHierarchy = false; if (evtInvoke) obj->broadcastToComponents(E_GameObjectEvent::INACTIVE, nullptr); },
 			[](GameObject* obj) { return obj->_activeSelf; });
 }
+void GameObject::map(Map* val)
+{
+	if (_map == val) return;
+
+	if (_parent != nullptr)
+		_parent->_children.erase(std::find(_parent->_children.begin(), _parent->_children.end(), this));
+	_parent = nullptr;
+	auto [baseY, baseX] = val->basePoint();
+	this->transform(baseY, baseX, _info.transform().dir());
+	// 기존 맵에서 삭제, 새로운 맵에 추가
+	// 근데 기존 맵에서 삭제하는 건 update의 맨 마지막에 실제로 삭제를 해버리는데
+	// 그럼 복사본을 만들어서 새로운 맵에 추가?? <= 비용이 꽤 들거 같은데
+}
 #pragma endregion
 
-#pragma region private
-void GameObject::doRecursively(GameObject* root, const std::function<void(GameObject*)>& action, const std::function<bool(GameObject*)>& filter)
+#pragma region protected
+GameObject::GameObject(GameObject* copy)
 {
-	static std::stack<GameObject*> stk;
-	stk.push(root);
-	while (!stk.empty())
-	{
-		GameObject* obj = stk.top();
-		stk.pop();
-		action(obj);
-		for (GameObject* child : obj->_children)
-			if (filter(child))
-				stk.push(child);
-	}
-}
-
-GameObject::GameObject(const GameObject& copy)
-{
-	_activeSelf = copy._activeSelf;
-	_activeInHierarchy = copy._activeInHierarchy;
-	_info = copy._info;
-	_localTF = copy._localTF;
-	for (Component* component : copy._components)
+	_activeSelf = copy->_activeSelf;
+	_activeInHierarchy = copy->_activeInHierarchy;
+	_info = copy->_info;
+	_localTF = copy->_localTF;
+	for (Component* component : copy->_components)
 	{
 		Component* newComp = component->createInstance(this);
 		component->copyTo(newComp);
 		newComp->invoke(E_GameObjectEvent::AWAKE, nullptr);
 		_components.push_back(newComp);
 	}
-	for (GameObject* child : copy._children)
+	for (GameObject* child : copy->_children)
 	{
-		GameObject* newChild = new GameObject(*child);
+		GameObject* newChild = child->clone();
 		newChild->_parent = this;
 		_children.push_back(newChild);
 	}
@@ -114,7 +134,7 @@ GameObject::GameObject(bool isActive, GameObject* p)
 	worldTF->set_x(0);
 	this->parent(p, false);
 }
-GameObject::GameObject(bool isActive, const GameObject& copy, GameObject* p) : GameObject(copy)
+GameObject::GameObject(bool isActive, GameObject* copy, GameObject* p) : GameObject(copy)
 {
 	this->active(isActive, false);
 	this->parent(p, false);
@@ -124,6 +144,9 @@ GameObject::~GameObject()
 	for (Component* component : _components)
 		delete component;
 }
+#pragma endregion
+
+#pragma region private
 void GameObject::broadcastToComponents(const E_GameObjectEvent& evt, void* arg)
 {
 	for (Component* component : _components)

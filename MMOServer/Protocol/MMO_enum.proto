@@ -30,3 +30,10 @@ enum E_Dir
 	RIGHT = 3;
 	MAX = 4;
 }
+enum E_KeyCode
+{
+	Q = 0;
+	W = 1;
+	E = 2;
+	R = 3;
+}

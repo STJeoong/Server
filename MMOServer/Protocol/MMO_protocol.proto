@@ -26,3 +26,17 @@ message Move_Notify
 	int32 id = 1;
 	E_Dir dir = 2;
 }
+message ChangeQuickSlot_Req
+{
+	E_KeyCode keycode = 1;
+	string skillName = 2;
+}
+message UseSkill_Req
+{
+	E_KeyCode keycode = 1;
+}
+message UseSkill_Resp
+{
+	ObjectInfo who = 1;
+	string skillName = 2;
+}

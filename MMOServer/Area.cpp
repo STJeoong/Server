@@ -5,7 +5,6 @@
 void Area::addShape(Shape* shape)
 {
 	_shapes.push_back(shape);
-	shape->_attachedArea = this;
 	if (!this->enable() || !_gameObject->activeInHierarchy())
 		return;
 	shape->insertToDAT(_gameObject->transform(), this);
@@ -78,6 +77,6 @@ void Area::copyTo(Component* instance)
 	area->_fixedRotation = _fixedRotation;
 	area->_enabled = _enabled;
 	for (Shape* shape : _shapes)
-		area->addShape(shape->clone());
+		area->addShape(shape->clone(area));
 }
 #pragma endregion

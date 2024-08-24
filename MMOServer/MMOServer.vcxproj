@@ -153,10 +153,14 @@
     <ClCompile Include="Area.cpp" />
     <ClCompile Include="Behaviour.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ContinuousSkill.cpp" />
     <ClCompile Include="DAT.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="InstantSkill.cpp" />
+    <ClCompile Include="LaunchProjectile.cpp" />
     <ClCompile Include="LayerFilter.cpp" />
+    <ClCompile Include="LocationSkill.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MMOServerBroadcaster.cpp" />
@@ -164,8 +168,13 @@
     <ClCompile Include="MMO_protocol.pb.cc" />
     <ClCompile Include="MMO_struct.pb.cc" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MonsterController.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Rectangular.cpp" />
+    <ClCompile Include="Shape.cpp" />
+    <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="TargetSkill.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -178,14 +187,26 @@
     <ClInclude Include="Area.h" />
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="ContinuousSkill.h" />
     <ClInclude Include="DAT.h" />
     <ClInclude Include="E_EngineType.h" />
     <ClInclude Include="E_GameObjectEvent.h" />
     <ClInclude Include="E_Layer.h" />
+    <ClInclude Include="E_ObjectType.h" />
     <ClInclude Include="E_TimerEvent.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="InstantSkill.h" />
+    <ClInclude Include="I_Damagable.h" />
+    <ClInclude Include="I_LocationBasedSkillAction.h" />
+    <ClInclude Include="I_Skill.h" />
+    <ClInclude Include="I_SkillRange.h" />
+    <ClInclude Include="I_TargetBasedSkillAction.h" />
+    <ClInclude Include="LaunchProjectile.h" />
+    <ClInclude Include="LocationSkill.h" />
+    <ClInclude Include="MonsterController.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="LayerFilter.h" />
     <ClInclude Include="Map.h" />
@@ -195,6 +216,11 @@
     <ClInclude Include="MMO_struct.pb.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Rectangular.h" />
+    <ClInclude Include="Skill.h" />
+    <ClInclude Include="S_MonsterData.h" />
+    <ClInclude Include="S_SkillData.h" />
+    <ClInclude Include="S_Stat.h" />
+    <ClInclude Include="TargetSkill.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>

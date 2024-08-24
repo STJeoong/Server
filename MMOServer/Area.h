@@ -39,6 +39,6 @@ private:
 	E_Layer _layer = E_Layer::DEFAULT;
 	bool _fixedRotation = true;
 	std::vector<Shape*> _shapes;
-	TransformInt _oldTF;
+	protocol::mmo::TransformInt _oldTF;
 	std::vector<Area*> _overlappedAreas;
 };

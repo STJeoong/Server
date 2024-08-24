@@ -2,5 +2,5 @@
   "network": "server",
   "ip": "172.30.1.72",
   "port": 9090,
-  "maxClient" : 100
+  "maxClient": 100
 }

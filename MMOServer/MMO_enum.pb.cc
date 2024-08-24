@@ -24,7 +24,7 @@ namespace protocol {
 namespace mmo {
 }  // namespace mmo
 }  // namespace protocol
-static const ::_pb::EnumDescriptor* file_level_enum_descriptors_MMO_5fenum_2eproto[4];
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_MMO_5fenum_2eproto[5];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_MMO_5fenum_2eproto = nullptr;
 const uint32_t TableStruct_MMO_5fenum_2eproto::offsets[1] = {};
 static constexpr ::_pbi::MigrationSchema* schemas = nullptr;
@@ -38,11 +38,12 @@ const char descriptor_table_protodef_MMO_5fenum_2eproto[] PROTOBUF_SECTION_VARIA
   "TIFY\020\005*\034\n\nE_RespCode\022\006\n\002OK\020\000\022\006\n\002NO\020\001*-\n\r"
   "E_ObjectState\022\010\n\004NONE\020\000\022\010\n\004IDLE\020\001\022\010\n\004MOV"
   "E\020\002*9\n\005E_Dir\022\n\n\006BOTTOM\020\000\022\010\n\004LEFT\020\001\022\006\n\002UP"
-  "\020\002\022\t\n\005RIGHT\020\003\022\007\n\003MAX\020\004b\006proto3"
+  "\020\002\022\t\n\005RIGHT\020\003\022\007\n\003MAX\020\004*\'\n\tE_KeyCode\022\005\n\001Q"
+  "\020\000\022\005\n\001W\020\001\022\005\n\001E\020\002\022\005\n\001R\020\003b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_MMO_5fenum_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_MMO_5fenum_2eproto = {
-    false, false, 310, descriptor_table_protodef_MMO_5fenum_2eproto,
+    false, false, 351, descriptor_table_protodef_MMO_5fenum_2eproto,
     "MMO_enum.proto",
     &descriptor_table_MMO_5fenum_2eproto_once, nullptr, 0, 0,
     schemas, file_default_instances, TableStruct_MMO_5fenum_2eproto::offsets,
@@ -115,6 +116,22 @@ bool E_Dir_IsValid(int value) {
     case 2:
     case 3:
     case 4:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_KeyCode_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_MMO_5fenum_2eproto);
+  return file_level_enum_descriptors_MMO_5fenum_2eproto[4];
+}
+bool E_KeyCode_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
       return true;
     default:
       return false;

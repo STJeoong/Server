@@ -2,7 +2,7 @@
 #include <I_Broadcaster.h>
 #include <Delegate.h>
 #include "MMO_protocol.pb.h"
-using namespace protocol::mmo;
+
 class MMOServerBroadcaster : public I_Broadcaster
 {
 public:
@@ -13,7 +13,7 @@ public:
 	static Delegate<const int> onDisconnect;
 	// packets
 	static Delegate<const int> onEnterGameReq;
-	static Delegate<const int, const Move_Req&> onMoveReq;
+	static Delegate<const int, const protocol::mmo::Move_Req&> onMoveReq;
 	// timer
 	static Delegate<> onUpdate;
 

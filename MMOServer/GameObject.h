@@ -2,16 +2,23 @@
 #include <vector>
 #include <functional>
 #include "MMO_struct.pb.h"
+#include "E_ObjectType.h"
 #include "E_GameObjectEvent.h"
 
-using namespace protocol::mmo;
 class Component;
+class Map;
 class GameObject
 {
-	friend class Game;
+	friend class Map;
 public:
 	static const int INVALID_ID = -1;
+private:
+	static void doRecursively(GameObject* root, const std::function<void(GameObject*)>& action, const std::function<bool(GameObject*)>& filter);
 
+
+
+
+public:
 	template<typename T>
 	T* getComponent();
 	template<typename T>
@@ -26,30 +33,36 @@ public:
 	const std::vector<Component*>& components() const { return _components; }
 	int id() const { return _info.id(); }
 	void id(int val) { _info.set_id(val); }
-	E_ObjectState state() const { return _info.state(); }
-	void state(E_ObjectState val) { _info.set_state(val); }
-	const TransformInt& transform() const { return _info.transform(); }
-	void transform(int y, int x, E_Dir dir);
-	const ObjectInfo& info() const { return _info; }
+	protocol::mmo::E_ObjectState state() const { return _info.state(); }
+	void state(protocol::mmo::E_ObjectState val) { _info.set_state(val); }
+	const protocol::mmo::TransformInt& transform() const { return _info.transform(); }
+	void transform(int y, int x, protocol::mmo::E_Dir dir);
+	const protocol::mmo::ObjectInfo& info() const { return _info; }
 	void active(bool flag, bool evtInvoke = true);
 	bool activeSelf() const { return _activeSelf; }
 	bool activeInHierarchy() const { return _activeInHierarchy; }
-private:
-	static void doRecursively(GameObject* root, const std::function<void(GameObject*)>& action, const std::function<bool(GameObject*)>& filter);
-
+	virtual E_ObjectType objectType() const = 0;
+	Map* map() const { return _map; }
+	void map(Map* val);
+protected:
 	GameObject() = delete;
+	GameObject(const GameObject&) = delete;
+	GameObject(GameObject* copy);
 	GameObject(bool isActvie, GameObject* p);
-	GameObject(const GameObject& copy);
-	GameObject(bool isActive, const GameObject& copy, GameObject* p);
-	~GameObject();
+	GameObject(bool isActive, GameObject* copy, GameObject* p);
+	virtual ~GameObject();
+private:
+
+	virtual GameObject* clone() = 0;
 	void addChild(GameObject* child) { _children.push_back(child); }
 	void broadcastToComponents(const E_GameObjectEvent& evt, void* arg);
 
-	ObjectInfo _info;
-	TransformInt _localTF;
+	protocol::mmo::ObjectInfo _info;
+	protocol::mmo::TransformInt _localTF;
 	GameObject* _parent = nullptr;
 	std::vector<GameObject*> _children;
 	std::vector<Component*> _components;
+	Map* _map;
 	bool _activeSelf = true; // 해당 값이 true더라도 부모 오브젝트 중에 하나라도 false라면 해당 오브젝트는 활성화되지 않음.
 	bool _activeInHierarchy = true; // 부모 오브젝트들과 본인 오브젝트 중 하나라도 activeSelf가 false라면 해당값은 false.
 };

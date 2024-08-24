@@ -156,6 +156,33 @@ inline bool E_Dir_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_Dir>(
     E_Dir_descriptor(), name, value);
 }
+enum E_KeyCode : int {
+  Q = 0,
+  W = 1,
+  E = 2,
+  R = 3,
+  E_KeyCode_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  E_KeyCode_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool E_KeyCode_IsValid(int value);
+constexpr E_KeyCode E_KeyCode_MIN = Q;
+constexpr E_KeyCode E_KeyCode_MAX = R;
+constexpr int E_KeyCode_ARRAYSIZE = E_KeyCode_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_KeyCode_descriptor();
+template<typename T>
+inline const std::string& E_KeyCode_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, E_KeyCode>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function E_KeyCode_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    E_KeyCode_descriptor(), enum_t_value);
+}
+inline bool E_KeyCode_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, E_KeyCode* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_KeyCode>(
+    E_KeyCode_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -198,6 +225,11 @@ template <> struct is_proto_enum< ::protocol::mmo::E_Dir> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_Dir>() {
   return ::protocol::mmo::E_Dir_descriptor();
+}
+template <> struct is_proto_enum< ::protocol::mmo::E_KeyCode> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_KeyCode>() {
+  return ::protocol::mmo::E_KeyCode_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

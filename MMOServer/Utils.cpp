@@ -5,6 +5,8 @@
 #include "E_EngineType.h"
 #include <random>
 
+using namespace protocol::mmo;
+
 void Utils::send(int serial, protocol::mmo::E_PacketID packetID, UINT8 option, const google::protobuf::Message& message)
 {
 	char* block = MemoryBlockPool::get((int)Size::_2048);

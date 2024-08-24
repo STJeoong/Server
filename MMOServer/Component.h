@@ -1,13 +1,12 @@
 #pragma once
 #include "E_GameObjectEvent.h"
-#include "MMO_struct.pb.h"
-using namespace protocol::mmo;
+
 class GameObject;
 class Area;
 class Component
 {
 	friend class GameObject;
-	friend class Game;
+	friend class Map;
 public:
 	const GameObject* gameObject() const { return _gameObject; }
 	GameObject* gameObject() { return _gameObject; }

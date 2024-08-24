@@ -48,6 +48,9 @@ struct TableStruct_MMO_5fprotocol_2eproto {
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_MMO_5fprotocol_2eproto;
 namespace protocol {
 namespace mmo {
+class ChangeQuickSlot_Req;
+struct ChangeQuickSlot_ReqDefaultTypeInternal;
+extern ChangeQuickSlot_ReqDefaultTypeInternal _ChangeQuickSlot_Req_default_instance_;
 class EnterGame_Resp;
 struct EnterGame_RespDefaultTypeInternal;
 extern EnterGame_RespDefaultTypeInternal _EnterGame_Resp_default_instance_;
@@ -63,14 +66,23 @@ extern ObjectEnter_NotifyDefaultTypeInternal _ObjectEnter_Notify_default_instanc
 class ObjectExit_Notify;
 struct ObjectExit_NotifyDefaultTypeInternal;
 extern ObjectExit_NotifyDefaultTypeInternal _ObjectExit_Notify_default_instance_;
+class UseSkill_Req;
+struct UseSkill_ReqDefaultTypeInternal;
+extern UseSkill_ReqDefaultTypeInternal _UseSkill_Req_default_instance_;
+class UseSkill_Resp;
+struct UseSkill_RespDefaultTypeInternal;
+extern UseSkill_RespDefaultTypeInternal _UseSkill_Resp_default_instance_;
 }  // namespace mmo
 }  // namespace protocol
 PROTOBUF_NAMESPACE_OPEN
+template<> ::protocol::mmo::ChangeQuickSlot_Req* Arena::CreateMaybeMessage<::protocol::mmo::ChangeQuickSlot_Req>(Arena*);
 template<> ::protocol::mmo::EnterGame_Resp* Arena::CreateMaybeMessage<::protocol::mmo::EnterGame_Resp>(Arena*);
 template<> ::protocol::mmo::Move_Notify* Arena::CreateMaybeMessage<::protocol::mmo::Move_Notify>(Arena*);
 template<> ::protocol::mmo::Move_Req* Arena::CreateMaybeMessage<::protocol::mmo::Move_Req>(Arena*);
 template<> ::protocol::mmo::ObjectEnter_Notify* Arena::CreateMaybeMessage<::protocol::mmo::ObjectEnter_Notify>(Arena*);
 template<> ::protocol::mmo::ObjectExit_Notify* Arena::CreateMaybeMessage<::protocol::mmo::ObjectExit_Notify>(Arena*);
+template<> ::protocol::mmo::UseSkill_Req* Arena::CreateMaybeMessage<::protocol::mmo::UseSkill_Req>(Arena*);
+template<> ::protocol::mmo::UseSkill_Resp* Arena::CreateMaybeMessage<::protocol::mmo::UseSkill_Resp>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace protocol {
 namespace mmo {
@@ -855,6 +867,491 @@ class Move_Notify final :
   union { Impl_ _impl_; };
   friend struct ::TableStruct_MMO_5fprotocol_2eproto;
 };
+// -------------------------------------------------------------------
+
+class ChangeQuickSlot_Req final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.mmo.ChangeQuickSlot_Req) */ {
+ public:
+  inline ChangeQuickSlot_Req() : ChangeQuickSlot_Req(nullptr) {}
+  ~ChangeQuickSlot_Req() override;
+  explicit PROTOBUF_CONSTEXPR ChangeQuickSlot_Req(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  ChangeQuickSlot_Req(const ChangeQuickSlot_Req& from);
+  ChangeQuickSlot_Req(ChangeQuickSlot_Req&& from) noexcept
+    : ChangeQuickSlot_Req() {
+    *this = ::std::move(from);
+  }
+
+  inline ChangeQuickSlot_Req& operator=(const ChangeQuickSlot_Req& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ChangeQuickSlot_Req& operator=(ChangeQuickSlot_Req&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ChangeQuickSlot_Req& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ChangeQuickSlot_Req* internal_default_instance() {
+    return reinterpret_cast<const ChangeQuickSlot_Req*>(
+               &_ChangeQuickSlot_Req_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(ChangeQuickSlot_Req& a, ChangeQuickSlot_Req& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ChangeQuickSlot_Req* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ChangeQuickSlot_Req* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ChangeQuickSlot_Req* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ChangeQuickSlot_Req>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const ChangeQuickSlot_Req& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const ChangeQuickSlot_Req& from) {
+    ChangeQuickSlot_Req::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ChangeQuickSlot_Req* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "protocol.mmo.ChangeQuickSlot_Req";
+  }
+  protected:
+  explicit ChangeQuickSlot_Req(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kSkillNameFieldNumber = 2,
+    kKeycodeFieldNumber = 1,
+  };
+  // string skillName = 2;
+  void clear_skillname();
+  const std::string& skillname() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_skillname(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_skillname();
+  PROTOBUF_NODISCARD std::string* release_skillname();
+  void set_allocated_skillname(std::string* skillname);
+  private:
+  const std::string& _internal_skillname() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_skillname(const std::string& value);
+  std::string* _internal_mutable_skillname();
+  public:
+
+  // .protocol.mmo.E_KeyCode keycode = 1;
+  void clear_keycode();
+  ::protocol::mmo::E_KeyCode keycode() const;
+  void set_keycode(::protocol::mmo::E_KeyCode value);
+  private:
+  ::protocol::mmo::E_KeyCode _internal_keycode() const;
+  void _internal_set_keycode(::protocol::mmo::E_KeyCode value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:protocol.mmo.ChangeQuickSlot_Req)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr skillname_;
+    int keycode_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_MMO_5fprotocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class UseSkill_Req final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.mmo.UseSkill_Req) */ {
+ public:
+  inline UseSkill_Req() : UseSkill_Req(nullptr) {}
+  ~UseSkill_Req() override;
+  explicit PROTOBUF_CONSTEXPR UseSkill_Req(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  UseSkill_Req(const UseSkill_Req& from);
+  UseSkill_Req(UseSkill_Req&& from) noexcept
+    : UseSkill_Req() {
+    *this = ::std::move(from);
+  }
+
+  inline UseSkill_Req& operator=(const UseSkill_Req& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UseSkill_Req& operator=(UseSkill_Req&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const UseSkill_Req& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const UseSkill_Req* internal_default_instance() {
+    return reinterpret_cast<const UseSkill_Req*>(
+               &_UseSkill_Req_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  friend void swap(UseSkill_Req& a, UseSkill_Req& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(UseSkill_Req* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(UseSkill_Req* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  UseSkill_Req* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<UseSkill_Req>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const UseSkill_Req& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const UseSkill_Req& from) {
+    UseSkill_Req::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UseSkill_Req* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "protocol.mmo.UseSkill_Req";
+  }
+  protected:
+  explicit UseSkill_Req(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kKeycodeFieldNumber = 1,
+  };
+  // .protocol.mmo.E_KeyCode keycode = 1;
+  void clear_keycode();
+  ::protocol::mmo::E_KeyCode keycode() const;
+  void set_keycode(::protocol::mmo::E_KeyCode value);
+  private:
+  ::protocol::mmo::E_KeyCode _internal_keycode() const;
+  void _internal_set_keycode(::protocol::mmo::E_KeyCode value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:protocol.mmo.UseSkill_Req)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int keycode_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_MMO_5fprotocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class UseSkill_Resp final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.mmo.UseSkill_Resp) */ {
+ public:
+  inline UseSkill_Resp() : UseSkill_Resp(nullptr) {}
+  ~UseSkill_Resp() override;
+  explicit PROTOBUF_CONSTEXPR UseSkill_Resp(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  UseSkill_Resp(const UseSkill_Resp& from);
+  UseSkill_Resp(UseSkill_Resp&& from) noexcept
+    : UseSkill_Resp() {
+    *this = ::std::move(from);
+  }
+
+  inline UseSkill_Resp& operator=(const UseSkill_Resp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UseSkill_Resp& operator=(UseSkill_Resp&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const UseSkill_Resp& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const UseSkill_Resp* internal_default_instance() {
+    return reinterpret_cast<const UseSkill_Resp*>(
+               &_UseSkill_Resp_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    7;
+
+  friend void swap(UseSkill_Resp& a, UseSkill_Resp& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(UseSkill_Resp* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(UseSkill_Resp* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  UseSkill_Resp* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<UseSkill_Resp>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const UseSkill_Resp& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const UseSkill_Resp& from) {
+    UseSkill_Resp::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UseSkill_Resp* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "protocol.mmo.UseSkill_Resp";
+  }
+  protected:
+  explicit UseSkill_Resp(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kSkillNameFieldNumber = 2,
+    kWhoFieldNumber = 1,
+  };
+  // string skillName = 2;
+  void clear_skillname();
+  const std::string& skillname() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_skillname(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_skillname();
+  PROTOBUF_NODISCARD std::string* release_skillname();
+  void set_allocated_skillname(std::string* skillname);
+  private:
+  const std::string& _internal_skillname() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_skillname(const std::string& value);
+  std::string* _internal_mutable_skillname();
+  public:
+
+  // .protocol.mmo.ObjectInfo who = 1;
+  bool has_who() const;
+  private:
+  bool _internal_has_who() const;
+  public:
+  void clear_who();
+  const ::protocol::mmo::ObjectInfo& who() const;
+  PROTOBUF_NODISCARD ::protocol::mmo::ObjectInfo* release_who();
+  ::protocol::mmo::ObjectInfo* mutable_who();
+  void set_allocated_who(::protocol::mmo::ObjectInfo* who);
+  private:
+  const ::protocol::mmo::ObjectInfo& _internal_who() const;
+  ::protocol::mmo::ObjectInfo* _internal_mutable_who();
+  public:
+  void unsafe_arena_set_allocated_who(
+      ::protocol::mmo::ObjectInfo* who);
+  ::protocol::mmo::ObjectInfo* unsafe_arena_release_who();
+
+  // @@protoc_insertion_point(class_scope:protocol.mmo.UseSkill_Resp)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr skillname_;
+    ::protocol::mmo::ObjectInfo* who_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_MMO_5fprotocol_2eproto;
+};
 // ===================================================================
 
 
@@ -1152,9 +1649,252 @@ inline void Move_Notify::set_dir(::protocol::mmo::E_Dir value) {
   // @@protoc_insertion_point(field_set:protocol.mmo.Move_Notify.dir)
 }
 
+// -------------------------------------------------------------------
+
+// ChangeQuickSlot_Req
+
+// .protocol.mmo.E_KeyCode keycode = 1;
+inline void ChangeQuickSlot_Req::clear_keycode() {
+  _impl_.keycode_ = 0;
+}
+inline ::protocol::mmo::E_KeyCode ChangeQuickSlot_Req::_internal_keycode() const {
+  return static_cast< ::protocol::mmo::E_KeyCode >(_impl_.keycode_);
+}
+inline ::protocol::mmo::E_KeyCode ChangeQuickSlot_Req::keycode() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.ChangeQuickSlot_Req.keycode)
+  return _internal_keycode();
+}
+inline void ChangeQuickSlot_Req::_internal_set_keycode(::protocol::mmo::E_KeyCode value) {
+  
+  _impl_.keycode_ = value;
+}
+inline void ChangeQuickSlot_Req::set_keycode(::protocol::mmo::E_KeyCode value) {
+  _internal_set_keycode(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.ChangeQuickSlot_Req.keycode)
+}
+
+// string skillName = 2;
+inline void ChangeQuickSlot_Req::clear_skillname() {
+  _impl_.skillname_.ClearToEmpty();
+}
+inline const std::string& ChangeQuickSlot_Req::skillname() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.ChangeQuickSlot_Req.skillName)
+  return _internal_skillname();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void ChangeQuickSlot_Req::set_skillname(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.skillname_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:protocol.mmo.ChangeQuickSlot_Req.skillName)
+}
+inline std::string* ChangeQuickSlot_Req::mutable_skillname() {
+  std::string* _s = _internal_mutable_skillname();
+  // @@protoc_insertion_point(field_mutable:protocol.mmo.ChangeQuickSlot_Req.skillName)
+  return _s;
+}
+inline const std::string& ChangeQuickSlot_Req::_internal_skillname() const {
+  return _impl_.skillname_.Get();
+}
+inline void ChangeQuickSlot_Req::_internal_set_skillname(const std::string& value) {
+  
+  _impl_.skillname_.Set(value, GetArenaForAllocation());
+}
+inline std::string* ChangeQuickSlot_Req::_internal_mutable_skillname() {
+  
+  return _impl_.skillname_.Mutable(GetArenaForAllocation());
+}
+inline std::string* ChangeQuickSlot_Req::release_skillname() {
+  // @@protoc_insertion_point(field_release:protocol.mmo.ChangeQuickSlot_Req.skillName)
+  return _impl_.skillname_.Release();
+}
+inline void ChangeQuickSlot_Req::set_allocated_skillname(std::string* skillname) {
+  if (skillname != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.skillname_.SetAllocated(skillname, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.skillname_.IsDefault()) {
+    _impl_.skillname_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:protocol.mmo.ChangeQuickSlot_Req.skillName)
+}
+
+// -------------------------------------------------------------------
+
+// UseSkill_Req
+
+// .protocol.mmo.E_KeyCode keycode = 1;
+inline void UseSkill_Req::clear_keycode() {
+  _impl_.keycode_ = 0;
+}
+inline ::protocol::mmo::E_KeyCode UseSkill_Req::_internal_keycode() const {
+  return static_cast< ::protocol::mmo::E_KeyCode >(_impl_.keycode_);
+}
+inline ::protocol::mmo::E_KeyCode UseSkill_Req::keycode() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.UseSkill_Req.keycode)
+  return _internal_keycode();
+}
+inline void UseSkill_Req::_internal_set_keycode(::protocol::mmo::E_KeyCode value) {
+  
+  _impl_.keycode_ = value;
+}
+inline void UseSkill_Req::set_keycode(::protocol::mmo::E_KeyCode value) {
+  _internal_set_keycode(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.UseSkill_Req.keycode)
+}
+
+// -------------------------------------------------------------------
+
+// UseSkill_Resp
+
+// .protocol.mmo.ObjectInfo who = 1;
+inline bool UseSkill_Resp::_internal_has_who() const {
+  return this != internal_default_instance() && _impl_.who_ != nullptr;
+}
+inline bool UseSkill_Resp::has_who() const {
+  return _internal_has_who();
+}
+inline const ::protocol::mmo::ObjectInfo& UseSkill_Resp::_internal_who() const {
+  const ::protocol::mmo::ObjectInfo* p = _impl_.who_;
+  return p != nullptr ? *p : reinterpret_cast<const ::protocol::mmo::ObjectInfo&>(
+      ::protocol::mmo::_ObjectInfo_default_instance_);
+}
+inline const ::protocol::mmo::ObjectInfo& UseSkill_Resp::who() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.UseSkill_Resp.who)
+  return _internal_who();
+}
+inline void UseSkill_Resp::unsafe_arena_set_allocated_who(
+    ::protocol::mmo::ObjectInfo* who) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.who_);
+  }
+  _impl_.who_ = who;
+  if (who) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:protocol.mmo.UseSkill_Resp.who)
+}
+inline ::protocol::mmo::ObjectInfo* UseSkill_Resp::release_who() {
+  
+  ::protocol::mmo::ObjectInfo* temp = _impl_.who_;
+  _impl_.who_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::protocol::mmo::ObjectInfo* UseSkill_Resp::unsafe_arena_release_who() {
+  // @@protoc_insertion_point(field_release:protocol.mmo.UseSkill_Resp.who)
+  
+  ::protocol::mmo::ObjectInfo* temp = _impl_.who_;
+  _impl_.who_ = nullptr;
+  return temp;
+}
+inline ::protocol::mmo::ObjectInfo* UseSkill_Resp::_internal_mutable_who() {
+  
+  if (_impl_.who_ == nullptr) {
+    auto* p = CreateMaybeMessage<::protocol::mmo::ObjectInfo>(GetArenaForAllocation());
+    _impl_.who_ = p;
+  }
+  return _impl_.who_;
+}
+inline ::protocol::mmo::ObjectInfo* UseSkill_Resp::mutable_who() {
+  ::protocol::mmo::ObjectInfo* _msg = _internal_mutable_who();
+  // @@protoc_insertion_point(field_mutable:protocol.mmo.UseSkill_Resp.who)
+  return _msg;
+}
+inline void UseSkill_Resp::set_allocated_who(::protocol::mmo::ObjectInfo* who) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.who_);
+  }
+  if (who) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(who));
+    if (message_arena != submessage_arena) {
+      who = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, who, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.who_ = who;
+  // @@protoc_insertion_point(field_set_allocated:protocol.mmo.UseSkill_Resp.who)
+}
+
+// string skillName = 2;
+inline void UseSkill_Resp::clear_skillname() {
+  _impl_.skillname_.ClearToEmpty();
+}
+inline const std::string& UseSkill_Resp::skillname() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.UseSkill_Resp.skillName)
+  return _internal_skillname();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void UseSkill_Resp::set_skillname(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.skillname_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:protocol.mmo.UseSkill_Resp.skillName)
+}
+inline std::string* UseSkill_Resp::mutable_skillname() {
+  std::string* _s = _internal_mutable_skillname();
+  // @@protoc_insertion_point(field_mutable:protocol.mmo.UseSkill_Resp.skillName)
+  return _s;
+}
+inline const std::string& UseSkill_Resp::_internal_skillname() const {
+  return _impl_.skillname_.Get();
+}
+inline void UseSkill_Resp::_internal_set_skillname(const std::string& value) {
+  
+  _impl_.skillname_.Set(value, GetArenaForAllocation());
+}
+inline std::string* UseSkill_Resp::_internal_mutable_skillname() {
+  
+  return _impl_.skillname_.Mutable(GetArenaForAllocation());
+}
+inline std::string* UseSkill_Resp::release_skillname() {
+  // @@protoc_insertion_point(field_release:protocol.mmo.UseSkill_Resp.skillName)
+  return _impl_.skillname_.Release();
+}
+inline void UseSkill_Resp::set_allocated_skillname(std::string* skillname) {
+  if (skillname != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.skillname_.SetAllocated(skillname, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.skillname_.IsDefault()) {
+    _impl_.skillname_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:protocol.mmo.UseSkill_Resp.skillName)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
