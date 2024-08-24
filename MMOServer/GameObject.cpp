@@ -94,11 +94,17 @@ void GameObject::map(Map* val)
 	if (_parent != nullptr)
 		_parent->_children.erase(std::find(_parent->_children.begin(), _parent->_children.end(), this));
 	_parent = nullptr;
+	this->active(false);
+
+	// 기존 맵에서 삭제, 새로운 맵에 추가
+	std::vector<GameObject*>& gameObjects = _map->_gameObjects;
+	gameObjects.erase(std::find(gameObjects.begin(), gameObjects.end(), this));
+	_map = val;
+	_map->_gameObjects.push_back(this);
+
 	auto [baseY, baseX] = val->basePoint();
 	this->transform(baseY, baseX, _info.transform().dir());
-	// 기존 맵에서 삭제, 새로운 맵에 추가
-	// 근데 기존 맵에서 삭제하는 건 update의 맨 마지막에 실제로 삭제를 해버리는데
-	// 그럼 복사본을 만들어서 새로운 맵에 추가?? <= 비용이 꽤 들거 같은데
+	this->active(true);
 }
 #pragma endregion
 

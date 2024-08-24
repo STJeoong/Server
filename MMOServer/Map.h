@@ -22,6 +22,7 @@ class AABB;
 class Map
 {
 	friend class Shape; // add, remove, move에 접근하기 위해서
+	friend class GameObject; // 맵 이동할때
 public:
 	static void load();
 	static Map* getMap(const std::string& mapName);
