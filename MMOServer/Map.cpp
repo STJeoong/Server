@@ -82,12 +82,6 @@ void Map::destroy(Component* component)
 	components.erase(std::find(components.begin(), components.end(), component));
 	_destroyedComponents.push(component);
 }
-void Map::moveTo(GameObject* obj, Map* other)
-{
-	if (obj == nullptr || other == this) return;
-	_gameObjects.erase(std::find(_gameObjects.begin(), _gameObjects.end(), obj));
-	other->_gameObjects.push_back(obj);
-}
 bool Map::canGo(int y, int x)
 {
 	if (y < _yMin || y > _yMax || x < _xMin || x > _xMax)

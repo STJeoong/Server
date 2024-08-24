@@ -36,7 +36,6 @@ public:
 	void destroy(Component* component);
 
 	std::pair<int, int> basePoint() const { return { _basePointY, _basePointX }; }
-	void moveTo(GameObject* obj, Map* other);
 	bool canGo(int y, int x);
 	std::optional<std::pair<int, int>> findPath(const std::pair<int, int>& start, const std::pair<int, int>& dest);
 private:
