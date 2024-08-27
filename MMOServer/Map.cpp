@@ -18,6 +18,7 @@
 #undef max
 #endif
 
+using namespace protocol::mmo;
 #pragma region public static
 void Map::load()
 {
@@ -92,16 +93,14 @@ bool Map::canGo(int y, int x)
 		return false;
 	return _canGo[y - _yMin][x - _xMin];
 }
-std::optional<std::pair<int, int>> Map::findPath(const std::pair<int, int>& start, const std::pair<int, int>& dest)
+std::optional<E_Dir> Map::findPath(const TransformInt& start, const TransformInt& dest)
 {
 	static std::priority_queue<std::tuple<int, int, int, int>, std::vector<std::tuple<int, int, int, int>>, std::greater<>>  pq;
 	static std::vector<std::vector<bool>> visited = _canGo;
-	static std::vector<std::vector<std::pair<int, int>>> trace(_canGo.size(), std::vector<std::pair<int, int>>(_canGo[0].size()));
-	static int dy[4] = { 0,0,1,-1 };
-	static int dx[4] = { 1,-1,0,0 };
+	static std::vector<std::vector<E_Dir>> trace(_canGo.size(), std::vector<E_Dir>(_canGo[0].size()));
 
-	auto [startY, startX] = start;
-	auto [destY, destX] = dest;
+	int startY = start.y(), startX = start.x();
+	int destY = dest.y(), destX = dest.x();
 	while (!pq.empty())
 		pq.pop();
 	for (int i = 0; i < visited.size(); ++i)
@@ -117,9 +116,13 @@ std::optional<std::pair<int, int>> Map::findPath(const std::pair<int, int>& star
 		{
 			while (true)
 			{
-				if (trace[y - _yMin][x - _xMin].first == startY && trace[y - _yMin][x - _xMin].second == startX)
-					return std::pair<int, int>(y, x);
-				std::tie(y, x) = trace[y - _yMin][x - _xMin];
+				int dir = ((int)trace[y - _yMin][x - _xMin] + ((int)E_Dir::MAX / 2)) % (int)E_Dir::MAX; // 반대 방향
+				int ny = y + dy[dir]; // 이전 y좌표
+				int nx = x + dx[dir]; // 이전 x좌표
+				if (ny == startY && nx == startX)
+					return trace[y - _yMin][x - _xMin];
+				y = ny;
+				x = nx;
 			}
 		}
 		for (int i = 0; i < 4; ++i)
@@ -133,7 +136,7 @@ std::optional<std::pair<int, int>> Map::findPath(const std::pair<int, int>& star
 				F = G + H;
 				pq.push({ F,H,ny,nx });
 				visited[ny - _yMin][nx - _xMin] = true;
-				trace[ny - _yMin][nx - _xMin] = { y,x };
+				trace[ny - _yMin][nx - _xMin] = (E_Dir)i; // 이전 위치에서 해당 방향으로 이동헀음.
 			}
 		}
 	}

@@ -7,7 +7,7 @@
 #include <optional>
 #include <queue>
 #include "E_GameObjectEvent.h"
-
+#include "MMO_struct.pb.h"
 
 namespace MapName
 {
@@ -44,7 +44,7 @@ public:
 	void overlapsBox(const AABB& box, int filter, std::vector<GameObject*>& list);
 	std::pair<int, int> basePoint() const { return { _basePointY, _basePointX }; }
 	bool canGo(int y, int x);
-	std::optional<std::pair<int, int>> findPath(const std::pair<int, int>& start, const std::pair<int, int>& dest);
+	std::optional<protocol::mmo::E_Dir> findPath(const protocol::mmo::TransformInt& start, const protocol::mmo::TransformInt& dest);
 private:
 	Map(const std::filesystem::path& path);
 	~Map();

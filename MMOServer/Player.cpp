@@ -44,7 +44,7 @@ void Player::onConnect(int serial)
 
 	aoi->layer(E_Layer::AOI);
 	myObjArea->layer(E_Layer::PLAYER_OBJ);
-	aoi->addShape(new Rectangular(aoi, -3, -3, 7, 7));
+	aoi->addShape(new Rectangular(aoi, -6, -6, 13, 13));
 	myObjArea->addShape(new Rectangular(myObjArea, 0, 0, 1, 1));
 
 	s_players[serial] = newPlayer;

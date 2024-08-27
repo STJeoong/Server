@@ -28,9 +28,11 @@ void MonsterController::onAreaEnter(Area& my, Area& other)
 {
 	if (_target != nullptr || my.layer() != E_Layer::MONSTER_AGGRESSIVE) return;
 	// 타겟 설정
+	Map* map = _me->map();
+	auto path = map->findPath(_me->transform(), other.gameObject()->transform());
+	if (!path.has_value()) return; // 타겟으로 이동할 수 없으면 타겟 x
 	_target = reinterpret_cast<Player*>(other.gameObject());
-	_me->state(E_ObjectState::MOVE);
-	_nextUpdateCnt = 0;
+	this->move(path.value());
 }
 void MonsterController::onAreaExit(Area& my, Area& other)
 {
@@ -61,8 +63,6 @@ void MonsterController::move()
 }
 void MonsterController::decisionWhenNoTarget()
 {
-	static int dy[4] = { 1,0,-1,0 };
-	static int dx[4] = { 0,-1,0,1 };
 	// TODO : Data로 관리하기
 	// 20% 확률로 가만히 있고 80% 확률로 주변 왔다갔다
 	Map* map = _me->map();
@@ -86,20 +86,48 @@ void MonsterController::decisionWhenNoTarget()
 		int nx = worldTF.x() + dx[dir];
 		if (map->canGo(ny, nx))
 		{
-			_me->transform(ny, nx, (E_Dir)dir);
-			_me->state(E_ObjectState::MOVE);
-			int speed = _me->stats().defaultSpeed;
-			_nextUpdateCnt = (1600 / speed) / Game::UPDATE_DELTA_TIME;
-
-			Move_Notify notify = {};
-			notify.set_dir((E_Dir)dir);
-			notify.set_id(_me->id());
-			_me->broadcast(E_PacketID::MOVE_NOTIFY, notify);
+			this->move((E_Dir)dir);
 			break;
 		}
 	}
 }
 void MonsterController::decisionWhenTargetExist()
 {
+	Map* map = _me->map();
+	auto path = map->findPath(_me->transform(), _target->transform());
+	if (!path.has_value())
+	{
+		_target = this->findNewTarget();
+		return;
+	}
+	this->move(path.value());
+}
+Player* MonsterController::findNewTarget()
+{
+	Map* map = _me->map();
+	for (Area* area : _aggressiveArea->overlappedAreas())
+	{
+		auto path = map->findPath(_me->transform(), area->gameObject()->transform());
+		if (path.has_value())
+		{
+			this->move(path.value());
+			return reinterpret_cast<Player*>(area->gameObject());
+		}
+	}
+	return nullptr;
+}
+void MonsterController::move(protocol::mmo::E_Dir dir)
+{
+	_me->state(E_ObjectState::MOVE);
+	int ny = _me->transform().y() + dy[(int)dir];
+	int nx = _me->transform().x() + dx[(int)dir];
+	int speed = _me->stats().defaultSpeed; // TODO : speed값으로
+	_me->transform(ny, nx, dir);
+	_nextUpdateCnt = (1600 / speed) / Game::UPDATE_DELTA_TIME;
+
+	Move_Notify notify = {};
+	notify.set_dir(dir);
+	notify.set_id(_me->id());
+	_me->broadcast(E_PacketID::MOVE_NOTIFY, notify);
 }
 #pragma endregion

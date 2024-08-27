@@ -24,3 +24,5 @@ namespace Utils
 	int createID(E_ObjectType objType, UINT8 templateID, int objID);
 	int getID(int id);
 }
+const int dy[4] = { 1,0,-1,0 };
+const int dx[4] = { 0,-1,0,1 };

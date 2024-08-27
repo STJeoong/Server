@@ -8,8 +8,6 @@ using namespace protocol::mmo;
 #pragma region  public
 void PlayerController::move(const protocol::mmo::Move_Req& req)
 {
-	static int dy[4] = { 1,0,-1,0 };
-	static int dx[4] = { 0,-1,0,1 };
 	const TransformInt& worldTF = _me->transform();
 
 	int ny = worldTF.y() + dy[(int)req.dir()];

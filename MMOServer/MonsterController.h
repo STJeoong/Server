@@ -1,5 +1,6 @@
 #pragma once
 #include "Behaviour.h"
+#include "MMO_protocol.pb.h"
 class Area;
 class Player;
 class Monster;
@@ -7,6 +8,7 @@ class MonsterController : public Behaviour
 {
 	friend class GameObject;
 public:
+	void aggressiveArea(Area* area) { _aggressiveArea = area; }
 protected:
 	MonsterController() = delete;
 	MonsterController(const MonsterController&) = delete;
@@ -21,10 +23,13 @@ private:
 	void move();
 	void decisionWhenNoTarget();
 	void decisionWhenTargetExist(); // Å¸°Ù ÃßÀû
+	Player* findNewTarget();
+	void move(protocol::mmo::E_Dir dir);
 	virtual Component* createInstance(GameObject* obj) override { return new MonsterController(obj); }
 	virtual void copyTo(Component* instance) override {}
 
 	Monster* _me = nullptr;
 	int _nextUpdateCnt = 0;
 	Player* _target = nullptr;
+	Area* _aggressiveArea = nullptr;
 };
