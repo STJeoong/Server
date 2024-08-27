@@ -19,7 +19,15 @@ void Game::init()
 {
 	MMOServerBroadcaster::onConnect += [](int serial) { printf("%d connect\n", serial); };
 	MMOServerBroadcaster::onDisconnect += [](int serial) { printf("%d disconnect\n", serial); };
-	MMOServerBroadcaster::onUpdate += []() { Engine::setTimer((int)E_EngineType::MMO_SERVER, 0, Game::UPDATE_DELTA_TIME, (int)E_TimerEvent::UPDATE); };
+	MMOServerBroadcaster::onUpdate += []()
+	{
+		s_updateCnt += Game::UPDATE_DELTA_TIME;
+		Engine::setTimer((int)E_EngineType::MMO_SERVER, 0, Game::UPDATE_DELTA_TIME, (int)E_TimerEvent::UPDATE);
+	};
+	MMOServerBroadcaster::onMonsterRespawn += []()
+	{
+		Engine::setTimer((int)E_EngineType::MMO_SERVER, 0, Game::MONSTER_RESPAWN_DELTA_TIME, (int)E_TimerEvent::MONSTER_RESPAWN);
+	};
 
 	Map::load();
 	LayerFilter::init();
@@ -29,5 +37,8 @@ void Game::init()
 
 	// game start
 	Engine::setTimer((int)E_EngineType::MMO_SERVER, 0, Game::UPDATE_DELTA_TIME, (int)E_TimerEvent::UPDATE);
+	Engine::setTimer((int)E_EngineType::MMO_SERVER, 0, Game::MONSTER_RESPAWN_DELTA_TIME, (int)E_TimerEvent::MONSTER_RESPAWN);
 }
 #pragma endregion
+
+long long Game::s_updateCnt = 0;

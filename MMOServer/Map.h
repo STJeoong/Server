@@ -29,12 +29,18 @@ public:
 private:
 	static std::unordered_map<std::string, Map*> s_maps;
 
+
+
 public:
 	template<typename T>
 	T* instantiate(bool isActive, T* copy = nullptr, T* parent = nullptr);
 	void destroy(GameObject* obj);
 	void destroy(Component* component);
 
+	int xMin() const { return _xMin; }
+	int xMax() const { return _xMax; }
+	int yMin() const { return _yMin; }
+	int yMax() const { return _yMax; }
 	void overlapsBox(const AABB& box, int filter, std::vector<GameObject*>& list);
 	std::pair<int, int> basePoint() const { return { _basePointY, _basePointX }; }
 	bool canGo(int y, int x);

@@ -26,6 +26,10 @@ message Move_Notify
 	int32 id = 1;
 	E_Dir dir = 2;
 }
+message Idle_Notify
+{
+	int32 id = 1;
+}
 message ChangeQuickSlot_Req
 {
 	E_KeyCode keycode = 1;

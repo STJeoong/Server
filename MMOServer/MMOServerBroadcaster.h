@@ -14,8 +14,10 @@ public:
 	// packets
 	static Delegate<const int> onEnterGameReq;
 	static Delegate<const int, const protocol::mmo::Move_Req&> onMoveReq;
+	static Delegate<const int> onIdleReq;
 	// timer
 	static Delegate<> onUpdate;
+	static Delegate<> onMonsterRespawn;
 
 
 	virtual void broadcast(const S_EngineEvent& evt) override;

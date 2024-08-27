@@ -54,6 +54,9 @@ extern ChangeQuickSlot_ReqDefaultTypeInternal _ChangeQuickSlot_Req_default_insta
 class EnterGame_Resp;
 struct EnterGame_RespDefaultTypeInternal;
 extern EnterGame_RespDefaultTypeInternal _EnterGame_Resp_default_instance_;
+class Idle_Notify;
+struct Idle_NotifyDefaultTypeInternal;
+extern Idle_NotifyDefaultTypeInternal _Idle_Notify_default_instance_;
 class Move_Notify;
 struct Move_NotifyDefaultTypeInternal;
 extern Move_NotifyDefaultTypeInternal _Move_Notify_default_instance_;
@@ -77,6 +80,7 @@ extern UseSkill_RespDefaultTypeInternal _UseSkill_Resp_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
 template<> ::protocol::mmo::ChangeQuickSlot_Req* Arena::CreateMaybeMessage<::protocol::mmo::ChangeQuickSlot_Req>(Arena*);
 template<> ::protocol::mmo::EnterGame_Resp* Arena::CreateMaybeMessage<::protocol::mmo::EnterGame_Resp>(Arena*);
+template<> ::protocol::mmo::Idle_Notify* Arena::CreateMaybeMessage<::protocol::mmo::Idle_Notify>(Arena*);
 template<> ::protocol::mmo::Move_Notify* Arena::CreateMaybeMessage<::protocol::mmo::Move_Notify>(Arena*);
 template<> ::protocol::mmo::Move_Req* Arena::CreateMaybeMessage<::protocol::mmo::Move_Req>(Arena*);
 template<> ::protocol::mmo::ObjectEnter_Notify* Arena::CreateMaybeMessage<::protocol::mmo::ObjectEnter_Notify>(Arena*);
@@ -869,6 +873,154 @@ class Move_Notify final :
 };
 // -------------------------------------------------------------------
 
+class Idle_Notify final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.mmo.Idle_Notify) */ {
+ public:
+  inline Idle_Notify() : Idle_Notify(nullptr) {}
+  ~Idle_Notify() override;
+  explicit PROTOBUF_CONSTEXPR Idle_Notify(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Idle_Notify(const Idle_Notify& from);
+  Idle_Notify(Idle_Notify&& from) noexcept
+    : Idle_Notify() {
+    *this = ::std::move(from);
+  }
+
+  inline Idle_Notify& operator=(const Idle_Notify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Idle_Notify& operator=(Idle_Notify&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Idle_Notify& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Idle_Notify* internal_default_instance() {
+    return reinterpret_cast<const Idle_Notify*>(
+               &_Idle_Notify_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(Idle_Notify& a, Idle_Notify& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Idle_Notify* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Idle_Notify* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Idle_Notify* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Idle_Notify>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Idle_Notify& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Idle_Notify& from) {
+    Idle_Notify::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Idle_Notify* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "protocol.mmo.Idle_Notify";
+  }
+  protected:
+  explicit Idle_Notify(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kIdFieldNumber = 1,
+  };
+  // int32 id = 1;
+  void clear_id();
+  int32_t id() const;
+  void set_id(int32_t value);
+  private:
+  int32_t _internal_id() const;
+  void _internal_set_id(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:protocol.mmo.Idle_Notify)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_MMO_5fprotocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class ChangeQuickSlot_Req final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.mmo.ChangeQuickSlot_Req) */ {
  public:
@@ -917,7 +1069,7 @@ class ChangeQuickSlot_Req final :
                &_ChangeQuickSlot_Req_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   friend void swap(ChangeQuickSlot_Req& a, ChangeQuickSlot_Req& b) {
     a.Swap(&b);
@@ -1081,7 +1233,7 @@ class UseSkill_Req final :
                &_UseSkill_Req_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    7;
 
   friend void swap(UseSkill_Req& a, UseSkill_Req& b) {
     a.Swap(&b);
@@ -1229,7 +1381,7 @@ class UseSkill_Resp final :
                &_UseSkill_Resp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    8;
 
   friend void swap(UseSkill_Resp& a, UseSkill_Resp& b) {
     a.Swap(&b);
@@ -1651,6 +1803,30 @@ inline void Move_Notify::set_dir(::protocol::mmo::E_Dir value) {
 
 // -------------------------------------------------------------------
 
+// Idle_Notify
+
+// int32 id = 1;
+inline void Idle_Notify::clear_id() {
+  _impl_.id_ = 0;
+}
+inline int32_t Idle_Notify::_internal_id() const {
+  return _impl_.id_;
+}
+inline int32_t Idle_Notify::id() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.Idle_Notify.id)
+  return _internal_id();
+}
+inline void Idle_Notify::_internal_set_id(int32_t value) {
+  
+  _impl_.id_ = value;
+}
+inline void Idle_Notify::set_id(int32_t value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.Idle_Notify.id)
+}
+
+// -------------------------------------------------------------------
+
 // ChangeQuickSlot_Req
 
 // .protocol.mmo.E_KeyCode keycode = 1;
@@ -1889,6 +2065,8 @@ inline void UseSkill_Resp::set_allocated_skillname(std::string* skillname) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

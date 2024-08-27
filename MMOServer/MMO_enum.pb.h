@@ -55,12 +55,14 @@ enum E_PacketID : int {
   OBJECT_EXIT_NOTIFY = 3,
   MOVE_REQ = 4,
   MOVE_NOTIFY = 5,
+  IDLE_REQ = 6,
+  IDLE_NOTIFY = 7,
   E_PacketID_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   E_PacketID_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool E_PacketID_IsValid(int value);
 constexpr E_PacketID E_PacketID_MIN = ENTER_GAME_REQ;
-constexpr E_PacketID E_PacketID_MAX = MOVE_NOTIFY;
+constexpr E_PacketID E_PacketID_MAX = IDLE_NOTIFY;
 constexpr int E_PacketID_ARRAYSIZE = E_PacketID_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_PacketID_descriptor();

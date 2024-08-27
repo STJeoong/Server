@@ -10,6 +10,8 @@ enum E_PacketID
 	OBJECT_EXIT_NOTIFY = 3;
 	MOVE_REQ = 4;
 	MOVE_NOTIFY = 5;
+	IDLE_REQ = 6;
+	IDLE_NOTIFY = 7;
 }
 enum E_RespCode
 {

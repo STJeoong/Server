@@ -2,7 +2,9 @@
 #include <vector>
 #include "GameObject.h"
 #include "MMO_protocol.pb.h"
+#include "S_Stats.h"
 
+class Area;
 class PlayerController;
 class Player : public GameObject
 {
@@ -14,11 +16,14 @@ private:
 	static void onDisconnect(int serial);
 	static void onEnterReq(int serial);
 	static void onMoveReq(int serial, const protocol::mmo::Move_Req& req);
+	static void onIdleReq(int serial);
 
 	static std::vector<Player*> s_players;
 	
 public:
 	virtual E_ObjectType objectType() const override { return E_ObjectType::PLAYER; }
+	void broadcast(protocol::mmo::E_PacketID packetID, bool includeMe = true);
+	void broadcast(protocol::mmo::E_PacketID packetID, google::protobuf::Message& message, bool includeMe = true);
 protected:
 	Player() = delete;
 	Player(const Player&) = delete;
@@ -30,7 +35,9 @@ protected:
 private:
 	virtual GameObject* clone() override { return new Player(this); }
 
+	Area* _objArea = nullptr;
 	PlayerController* _controller = nullptr;
+	S_Stats _stats = {};
 };
 
 // id == -1 => disconnected ป๓ลย

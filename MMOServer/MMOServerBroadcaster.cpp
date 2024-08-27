@@ -27,6 +27,7 @@ void MMOServerBroadcaster::broadcastMessage(const S_EngineEvent& evt)
 	{
 	case E_PacketID::ENTER_GAME_REQ: MMOServerBroadcaster::onEnterGameReq(evt.serial); break;
 	case E_PacketID::MOVE_REQ: { Move_Req req = {}; req.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader)); MMOServerBroadcaster::onMoveReq(evt.serial, req); break; }
+	case E_PacketID::IDLE_REQ: MMOServerBroadcaster::onIdleReq(evt.serial); break;
 	}
 }
 void MMOServerBroadcaster::broadcastTimer(const S_EngineEvent& evt)
@@ -34,12 +35,17 @@ void MMOServerBroadcaster::broadcastTimer(const S_EngineEvent& evt)
 	switch ((E_TimerEvent)((size_t)evt.data))
 	{
 	case E_TimerEvent::UPDATE: MMOServerBroadcaster::onUpdate(); break;
+	case E_TimerEvent::MONSTER_RESPAWN: MMOServerBroadcaster::onMonsterRespawn(); break;
 	}
 }
 #pragma endregion
 
 Delegate<const int> MMOServerBroadcaster::onConnect;
 Delegate<const int> MMOServerBroadcaster::onDisconnect;
+
 Delegate<const int> MMOServerBroadcaster::onEnterGameReq;
 Delegate<const int, const Move_Req&> MMOServerBroadcaster::onMoveReq;
+Delegate<const int> MMOServerBroadcaster::onIdleReq;
+
 Delegate<> MMOServerBroadcaster::onUpdate;
+Delegate<> MMOServerBroadcaster::onMonsterRespawn;

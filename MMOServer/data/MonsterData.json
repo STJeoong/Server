@@ -1,0 +1,23 @@
+[
+  {
+    "stats": {
+      "maxHp": 100,
+      "maxMp": 100,
+      "defaultAttack": 3,
+      "defaultDefence": 3,
+      "defaultSpeed": 2
+    },
+    "templateID": 1,
+    "extraCellSize": 0,
+
+    "isAggressive": false,
+    "offsetY": -2,
+    "offsetX": -2,
+    "yExtension": 5,
+    "xExtension": 5,
+
+    "spawnInfo": [
+      [ "Main", 10 ]
+    ]
+  }
+]

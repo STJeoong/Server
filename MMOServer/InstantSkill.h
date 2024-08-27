@@ -5,6 +5,6 @@
 class InstantSkill : public I_Skill
 {
 public:
-	virtual void use(S_Stat& userStat, Map* map, TransformInt& pivot) override;
+	virtual void use(S_Stats& userStat, Map* map, TransformInt& pivot) override;
 private:
 };

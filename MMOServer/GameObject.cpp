@@ -57,7 +57,7 @@ void GameObject::parent(GameObject* val, bool evtInvoke)
 void GameObject::transform(int y, int x, E_Dir dir)
 {
 	TransformInt* worldTF = _info.mutable_transform();
-	if (!_activeInHierarchy || (worldTF->y() == y && worldTF->x() == x && worldTF->dir() == dir))
+	if ((worldTF->y() == y && worldTF->x() == x && worldTF->dir() == dir))
 		return;
 	
 	worldTF->set_dir(dir);
@@ -72,6 +72,7 @@ void GameObject::transform(int y, int x, E_Dir dir)
 	GameObject::doRecursively(this,
 		[](GameObject* obj) { if (obj->_parent != nullptr) Utils::localToWorld(obj->_parent->transform(), obj->_localTF, *(obj->_info.mutable_transform())); },
 		[](GameObject* obj) { return true; });
+	return;
 }
 void GameObject::active(bool flag, bool evtInvoke)
 {
@@ -103,8 +104,8 @@ void GameObject::map(Map* val)
 	_map->_gameObjects.push_back(this);
 
 	auto [baseY, baseX] = val->basePoint();
-	this->transform(baseY, baseX, _info.transform().dir());
 	this->active(true);
+	this->transform(baseY, baseX, _info.transform().dir());
 }
 #pragma endregion
 

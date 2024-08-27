@@ -5,6 +5,7 @@
 #include "E_EngineType.h"
 #include "MMO_enum.pb.h"
 #include "MMO_struct.pb.h"
+#include "E_ObjectType.h"
 namespace Utils
 {
 	// 만약에 다른 엔진 추가되면 어차피 E_PacketID로 구분되니까 engineID는 받을필요없이 오버로딩하면 됨. 대신 네임스페이스는 붙여줘야됨.
@@ -19,4 +20,7 @@ namespace Utils
 	void worldToLocal(const protocol::mmo::TransformInt& pivotWorld, const protocol::mmo::TransformInt& myWorld, protocol::mmo::TransformInt& myLocal);
 	// 임시 (소수점이 없는 확률만 처리하고 있음)
 	bool gacha(int percentage);
+	int randomVal(int minVal, int maxVal);
+	int createID(E_ObjectType objType, UINT8 templateID, int objID);
+	int getID(int id);
 }

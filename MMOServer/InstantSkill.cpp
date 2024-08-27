@@ -2,7 +2,7 @@
 
 
 #pragma region public
-void InstantSkill::use(S_Stat& userStat, Map* map, TransformInt& pivot)
+void InstantSkill::use(S_Stats& userStat, Map* map, TransformInt& pivot)
 {
 }
 #pragma endregion

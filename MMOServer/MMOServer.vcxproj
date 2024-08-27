@@ -158,6 +158,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InstantSkill.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="LaunchProjectile.cpp" />
     <ClCompile Include="LayerFilter.cpp" />
     <ClCompile Include="LocationSkill.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="MonsterController.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Rectangular.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Skill.cpp" />
@@ -197,6 +199,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InstantSkill.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="I_Damagable.h" />
     <ClInclude Include="I_LocationBasedSkillAction.h" />
     <ClInclude Include="I_Skill.h" />
@@ -207,6 +210,7 @@
     <ClInclude Include="MonsterController.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="LayerFilter.h" />
     <ClInclude Include="Map.h" />
@@ -219,12 +223,13 @@
     <ClInclude Include="Skill.h" />
     <ClInclude Include="S_MonsterData.h" />
     <ClInclude Include="S_SkillData.h" />
-    <ClInclude Include="S_Stat.h" />
+    <ClInclude Include="S_Stats.h" />
     <ClInclude Include="TargetSkill.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\config.json" />
+    <None Include="data\MonsterData.json" />
     <None Include="Protocol\MMO_enum.proto" />
     <None Include="Protocol\MMO_protocol.bat" />
     <None Include="Protocol\MMO_protocol.proto" />

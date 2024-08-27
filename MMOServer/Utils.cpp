@@ -11,13 +11,15 @@ void Utils::send(int serial, protocol::mmo::E_PacketID packetID, UINT8 option, c
 {
 	char* block = MemoryBlockPool::get((int)Size::_2048);
 	S_PacketHeader* header = reinterpret_cast<S_PacketHeader*>(block);
+	size_t messageSize = message.ByteSizeLong();
 
 	header->id = (UINT16)packetID;
 	header->option = option;
-	header->initLen = sizeof(S_PacketHeader) + (UINT16)message.ByteSizeLong();
-	header->len = sizeof(S_PacketHeader) + (UINT16)message.ByteSizeLong();
+	header->initLen = sizeof(S_PacketHeader) + (UINT16)messageSize;
+	header->len = sizeof(S_PacketHeader) + (UINT16)messageSize;
 
-	message.SerializeToArray(block + sizeof(S_PacketHeader), (int)Size::_2048 - (int)sizeof(S_PacketHeader));
+	//message.SerializeToArray(block + sizeof(S_PacketHeader), (int)Size::_2048 - (int)sizeof(S_PacketHeader));
+	message.SerializeToArray(block + sizeof(S_PacketHeader), messageSize);
 	Engine::send((int)E_EngineType::MMO_SERVER, serial, Size::_2048, block);
 }
 void Utils::send(int serial, protocol::mmo::E_PacketID packetID, UINT8 option)
@@ -62,4 +64,28 @@ bool Utils::gacha(int percentage)
 
 	if (dis(gen) <= percentage) return true;
 	return false;
+}
+
+int Utils::randomVal(int minVal, int maxVal)
+{
+	static std::random_device rd;
+	static std::mt19937 gen(rd());
+	std::uniform_int_distribution dis(minVal, maxVal);
+
+	return dis(gen);
+}
+
+int Utils::createID(E_ObjectType objType, UINT8 templateID, int objID)
+{
+	int ret = 0; // all bits off
+	ret |= ((int)objType) << 28;
+	ret |= (int)templateID << 20;
+	ret |= objID;
+	return ret;
+}
+
+int Utils::getID(int id)
+{
+	int mask = (1 << 20) - 1;
+	return id & mask;
 }

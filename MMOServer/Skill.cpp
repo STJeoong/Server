@@ -26,7 +26,7 @@ void Skill::init()
 
 
 #pragma region public
-void Skill::use(S_Stat& userStat, Map* map, TransformInt& pivot)
+void Skill::use(S_Stats& userStat, Map* map, TransformInt& pivot)
 {
 	_skill->use(userStat, map, pivot);
 }

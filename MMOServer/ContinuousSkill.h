@@ -7,7 +7,7 @@ class ContinuousSkill : public I_Skill
 {
 public:
 	ContinuousSkill(int validTime) : _validTime(validTime) {}
-	virtual void use(S_Stat& userStat, Map* map, TransformInt& pivot) override;
+	virtual void use(S_Stats& userStat, Map* map, TransformInt& pivot) override;
 private:
 	
 	int _validTime = 0; // 스킬 유효시간

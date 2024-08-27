@@ -2,7 +2,7 @@
 
 
 #pragma region public
-void ContinuousSkill::use(S_Stat& userStat, Map* map, TransformInt& pivot)
+void ContinuousSkill::use(S_Stats& userStat, Map* map, TransformInt& pivot)
 {
 }
 #pragma endregion

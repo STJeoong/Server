@@ -5,6 +5,7 @@
 
 class Skill;
 class Area;
+class Player;
 class PlayerController : public Behaviour
 {
 	friend class GameObject;
@@ -16,12 +17,14 @@ protected:
 	PlayerController(const PlayerController&) = delete;
 	PlayerController(GameObject* obj) : Behaviour(obj) {}
 	~PlayerController() = default;
+	virtual void awake() override { _me = reinterpret_cast<Player*>(_gameObject); }
 	virtual void onAreaEnter(Area& my, Area& other) override;
 	virtual void onAreaExit(Area& my, Area& other) override;
 private:
 	virtual Component* createInstance(GameObject* obj) override { return new PlayerController(obj); }
 	virtual void copyTo(Component* instance) override {}
 
+	Player* _me = nullptr;
 	Area* _myObjArea = nullptr;
 	Skill* _q = nullptr;
 	Skill* _w = nullptr;

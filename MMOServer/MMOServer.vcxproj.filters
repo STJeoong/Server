@@ -66,6 +66,9 @@
     <Filter Include="소스 파일\Game\Skill\Action\TargetAction">
       <UniqueIdentifier>{8800c4dd-0244-4a0c-9790-6e5bb99bb458}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Projectile">
+      <UniqueIdentifier>{7d5ac88f-ba93-4c07-988a-4bb3de07e8a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -149,6 +152,12 @@
     <ClCompile Include="PlayerController.cpp">
       <Filter>소스 파일\Game\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>소스 파일\Game\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>소스 파일\Game\Projectile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MMOServerBroadcaster.h">
@@ -226,7 +235,7 @@
     <ClInclude Include="S_MonsterData.h">
       <Filter>소스 파일\Game\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="S_Stat.h">
+    <ClInclude Include="S_Stats.h">
       <Filter>소스 파일\Game</Filter>
     </ClInclude>
     <ClInclude Include="I_Skill.h">
@@ -259,14 +268,20 @@
     <ClInclude Include="I_TargetBasedSkillAction.h">
       <Filter>소스 파일\Game\Skill\Action</Filter>
     </ClInclude>
-    <ClInclude Include="E_ObjectType.h">
-      <Filter>소스 파일\Game\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="MonsterController.h">
       <Filter>소스 파일\Game\Monster</Filter>
     </ClInclude>
     <ClInclude Include="PlayerController.h">
       <Filter>소스 파일\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>소스 파일\Game\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>소스 파일\Game\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="E_ObjectType.h">
+      <Filter>소스 파일\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -284,6 +299,9 @@
     </None>
     <None Include="Protocol\MMO_protocol.bat">
       <Filter>소스 파일\Protocol\Schema\MMO</Filter>
+    </None>
+    <None Include="data\MonsterData.json">
+      <Filter>소스 파일\Game\Monster</Filter>
     </None>
   </ItemGroup>
 </Project>

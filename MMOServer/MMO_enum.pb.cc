@@ -31,19 +31,20 @@ static constexpr ::_pbi::MigrationSchema* schemas = nullptr;
 static constexpr ::_pb::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_MMO_5fenum_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\016MMO_enum.proto\022\014protocol.mmo*\205\001\n\nE_Pac"
+  "\n\016MMO_enum.proto\022\014protocol.mmo*\244\001\n\nE_Pac"
   "ketID\022\022\n\016ENTER_GAME_REQ\020\000\022\023\n\017ENTER_GAME_"
   "RESP\020\001\022\027\n\023OBJECT_ENTER_NOTIFY\020\002\022\026\n\022OBJEC"
   "T_EXIT_NOTIFY\020\003\022\014\n\010MOVE_REQ\020\004\022\017\n\013MOVE_NO"
-  "TIFY\020\005*\034\n\nE_RespCode\022\006\n\002OK\020\000\022\006\n\002NO\020\001*-\n\r"
-  "E_ObjectState\022\010\n\004NONE\020\000\022\010\n\004IDLE\020\001\022\010\n\004MOV"
-  "E\020\002*9\n\005E_Dir\022\n\n\006BOTTOM\020\000\022\010\n\004LEFT\020\001\022\006\n\002UP"
-  "\020\002\022\t\n\005RIGHT\020\003\022\007\n\003MAX\020\004*\'\n\tE_KeyCode\022\005\n\001Q"
-  "\020\000\022\005\n\001W\020\001\022\005\n\001E\020\002\022\005\n\001R\020\003b\006proto3"
+  "TIFY\020\005\022\014\n\010IDLE_REQ\020\006\022\017\n\013IDLE_NOTIFY\020\007*\034\n"
+  "\nE_RespCode\022\006\n\002OK\020\000\022\006\n\002NO\020\001*-\n\rE_ObjectS"
+  "tate\022\010\n\004NONE\020\000\022\010\n\004IDLE\020\001\022\010\n\004MOVE\020\002*9\n\005E_"
+  "Dir\022\n\n\006BOTTOM\020\000\022\010\n\004LEFT\020\001\022\006\n\002UP\020\002\022\t\n\005RIG"
+  "HT\020\003\022\007\n\003MAX\020\004*\'\n\tE_KeyCode\022\005\n\001Q\020\000\022\005\n\001W\020\001"
+  "\022\005\n\001E\020\002\022\005\n\001R\020\003b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_MMO_5fenum_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_MMO_5fenum_2eproto = {
-    false, false, 351, descriptor_table_protodef_MMO_5fenum_2eproto,
+    false, false, 382, descriptor_table_protodef_MMO_5fenum_2eproto,
     "MMO_enum.proto",
     &descriptor_table_MMO_5fenum_2eproto_once, nullptr, 0, 0,
     schemas, file_default_instances, TableStruct_MMO_5fenum_2eproto::offsets,
@@ -70,6 +71,8 @@ bool E_PacketID_IsValid(int value) {
     case 3:
     case 4:
     case 5:
+    case 6:
+    case 7:
       return true;
     default:
       return false;

@@ -2,10 +2,10 @@
 #include <chrono>
 #include <string>
 #include <unordered_map>
-#include <vector>
+#include <queue>
 #include "S_SkillData.h"
 #include "MMO_struct.pb.h"
-#include "S_Stat.h"
+#include "S_Stats.h"
 
 using namespace protocol::mmo;
 class I_Skill;
@@ -21,7 +21,7 @@ private:
 
 
 public:
-	void use(S_Stat& userStat, Map* map, TransformInt& pivot);
+	void use(S_Stats& userStat, Map* map, TransformInt& pivot);
 	long long coolTime() const;
 private:
 	Skill(const S_SkillData& config);
@@ -29,7 +29,7 @@ private:
 
 	long long _coolTime = 0;
 	I_Skill* _skill = nullptr;
-	std::vector<std::tuple<int, S_Stat&, Map*, TransformInt&>> _list;
+	std::queue<std::tuple<int, S_Stats&, Map*, TransformInt&>> _q;
 	int _totalCnt = 0; // action을 총 몇번하는지
 	int _interval = 0; // 몇 초의 시간 간격을 두고 action을 하는지
 };
