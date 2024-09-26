@@ -46,7 +46,7 @@ void Player::onConnect(int serial)
 	newPlayer->_objArea = myObjArea;
 	controller->myObjArea(myObjArea);
 
-	S_RectDefine aoiDef = {-6, -6, 13, 13};
+	S_RectDefine aoiDef = {-10, -10, 21, 21};
 	S_RectDefine objDef = { 0,0,1,1 };
 	aoi->layer(E_Layer::AOI);
 	myObjArea->layer(E_Layer::PLAYER_OBJ);
