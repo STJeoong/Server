@@ -20,7 +20,7 @@ void PlayerController::move(const protocol::mmo::Move_Req& req)
 	Move_Notify notify = {};
 	notify.set_id(_me->id());
 	notify.set_dir(req.dir());
-	_me->broadcast(E_PacketID::MOVE_NOTIFY, notify);
+	_me->broadcastPacket(E_PacketID::MOVE_NOTIFY, notify);
 }
 #pragma endregion
 
@@ -32,7 +32,7 @@ void PlayerController::onAreaEnter(Area& my, Area& other)
 	// spawn
 	ObjectEnter_Notify notify = {};
 	*(notify.mutable_otherinfo()) = other.gameObject()->info();
-	Utils::send(Utils::getID(_me->id()), E_PacketID::OBJECT_ENTER_NOTIFY, 0, notify);
+	Utils::send(_me->networkSerial(), E_PacketID::OBJECT_ENTER_NOTIFY, 0, notify);
 }
 void PlayerController::onAreaExit(Area& my, Area& other)
 {
@@ -42,7 +42,7 @@ void PlayerController::onAreaExit(Area& my, Area& other)
 	// despawn
 	ObjectExit_Notify notify = {};
 	notify.set_otherid(other.gameObject()->id());
-	Utils::send(Utils::getID(_me->id()), E_PacketID::OBJECT_EXIT_NOTIFY, 0, notify);
+	Utils::send(_me->networkSerial(), E_PacketID::OBJECT_EXIT_NOTIFY, 0, notify);
 }
 #pragma endregion
 

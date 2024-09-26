@@ -15,6 +15,12 @@ using namespace protocol::mmo;
 #pragma region protected
 void MonsterController::update()
 {
+	if (_target != nullptr)
+	{
+		bool invalidTarget = !_target->activeInHierarchy() || _target->state() == E_ObjectState::DEAD || _target->map() != _me->map();
+		if (invalidTarget)
+			_target = this->findNewTarget();
+	}
 	if (_nextUpdateCnt > 0) --_nextUpdateCnt;
 	if (_nextUpdateCnt > 0) return;
 
@@ -32,20 +38,7 @@ void MonsterController::onAreaEnter(Area& my, Area& other)
 	auto path = map->findPath(_me->transform(), other.gameObject()->transform());
 	if (!path.has_value()) return; // 타겟으로 이동할 수 없으면 타겟 x
 	_target = reinterpret_cast<Player*>(other.gameObject());
-	this->move(path.value());
-}
-void MonsterController::onAreaExit(Area& my, Area& other)
-{
-	if (my.layer() != E_Layer::MONSTER_AGGRESSIVE || other.gameObject() != _target) return;
-	// 새로운 타겟 찾기
-	const std::vector<Area*>& areas = my.overlappedAreas();
-	if (areas.empty())
-	{
-		_me->state(E_ObjectState::IDLE);
-		_target = nullptr;
-		return;
-	}
-	_target = reinterpret_cast<Player*>(areas[0]->gameObject());
+	_me->state(E_ObjectState::MOVE);
 }
 #pragma endregion
 
@@ -74,7 +67,7 @@ void MonsterController::decisionWhenNoTarget()
 		{
 			Idle_Notify notify = {};
 			notify.set_id(_me->id());
-			_me->broadcast(E_PacketID::IDLE_NOTIFY, notify);
+			_me->broadcastPacket(E_PacketID::IDLE_NOTIFY, notify);
 		}
 		_me->state(E_ObjectState::IDLE);
 		return;
@@ -93,26 +86,32 @@ void MonsterController::decisionWhenNoTarget()
 }
 void MonsterController::decisionWhenTargetExist()
 {
+	if (_me->transform().y() == _target->transform().y() && _me->transform().x() == _target->transform().x()) // 도착
+		return;
 	Map* map = _me->map();
 	auto path = map->findPath(_me->transform(), _target->transform());
 	if (!path.has_value())
-	{
 		_target = this->findNewTarget();
+	if (_target == nullptr)
+	{
+		this->decisionWhenNoTarget();
 		return;
 	}
+	path = map->findPath(_me->transform(), _target->transform());
 	this->move(path.value());
 }
 Player* MonsterController::findNewTarget()
 {
+	if (_aggressiveArea == nullptr)
+		return nullptr;
 	Map* map = _me->map();
 	for (Area* area : _aggressiveArea->overlappedAreas())
 	{
+		if (area->gameObject()->state() == E_ObjectState::DEAD || area->gameObject() == _target)
+			continue;
 		auto path = map->findPath(_me->transform(), area->gameObject()->transform());
 		if (path.has_value())
-		{
-			this->move(path.value());
 			return reinterpret_cast<Player*>(area->gameObject());
-		}
 	}
 	return nullptr;
 }
@@ -121,13 +120,13 @@ void MonsterController::move(protocol::mmo::E_Dir dir)
 	_me->state(E_ObjectState::MOVE);
 	int ny = _me->transform().y() + dy[(int)dir];
 	int nx = _me->transform().x() + dx[(int)dir];
-	int speed = _me->stats().defaultSpeed; // TODO : speed값으로
+	int speed = _me->stats().defaultSpeed; // TODO : 현재 speed값으로
 	_me->transform(ny, nx, dir);
 	_nextUpdateCnt = (1600 / speed) / Game::UPDATE_DELTA_TIME;
 
 	Move_Notify notify = {};
 	notify.set_dir(dir);
 	notify.set_id(_me->id());
-	_me->broadcast(E_PacketID::MOVE_NOTIFY, notify);
+	_me->broadcastPacket(E_PacketID::MOVE_NOTIFY, notify);
 }
 #pragma endregion

@@ -5,7 +5,8 @@
 #include "E_EngineType.h"
 #include "MMO_enum.pb.h"
 #include "MMO_struct.pb.h"
-#include "E_ObjectType.h"
+#include "S_RectDefine.h"
+#include "AABB.h"
 namespace Utils
 {
 	// 만약에 다른 엔진 추가되면 어차피 E_PacketID로 구분되니까 engineID는 받을필요없이 오버로딩하면 됨. 대신 네임스페이스는 붙여줘야됨.
@@ -21,8 +22,9 @@ namespace Utils
 	// 임시 (소수점이 없는 확률만 처리하고 있음)
 	bool gacha(int percentage);
 	int randomVal(int minVal, int maxVal);
-	int createID(E_ObjectType objType, UINT8 templateID, int objID);
+	int createID(protocol::mmo::E_ObjectType objType, UINT8 templateID, int objID);
 	int getID(int id);
+	AABB calcAABB(const S_RectDefine& rect, const protocol::mmo::TransformInt& pivot, bool fixedRotation);
 }
 const int dy[4] = { 1,0,-1,0 };
 const int dx[4] = { 0,-1,0,1 };

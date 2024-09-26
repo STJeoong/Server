@@ -3,10 +3,14 @@
 #include "GameObject.h"
 #include "MMO_protocol.pb.h"
 #include "S_Stats.h"
+#include "I_Targetable.h"
 
 class Area;
 class PlayerController;
-class Player : public GameObject
+class Buff;
+class CC;
+class PersistentHit;
+class Player : public GameObject, public I_Targetable
 {
 	friend class Map;
 public:
@@ -21,9 +25,19 @@ private:
 	static std::vector<Player*> s_players;
 	
 public:
-	virtual E_ObjectType objectType() const override { return E_ObjectType::PLAYER; }
-	void broadcast(protocol::mmo::E_PacketID packetID, bool includeMe = true);
-	void broadcast(protocol::mmo::E_PacketID packetID, google::protobuf::Message& message, bool includeMe = true);
+	virtual protocol::mmo::E_ObjectType objectType() const override { return protocol::mmo::E_ObjectType::PLAYER; }
+	int networkSerial() const { return _networkSerial; }
+	void broadcastPacket(protocol::mmo::E_PacketID packetID, bool includeMe = true);
+	void broadcastPacket(protocol::mmo::E_PacketID packetID, google::protobuf::Message& message, bool includeMe = true);
+
+	// I_Targetable을(를) 통해 상속됨
+	virtual void addBuff(Buff* buff) override;
+	virtual void removeBuff(Buff* buff) override;
+	virtual void addCC(CC* cc) override;
+	virtual void removeCC(CC* cc) override;
+	virtual void addPersistentHit(PersistentHit* persistentHit) override;
+	virtual void removePersistentHit(PersistentHit* persistentHit) override;
+	virtual void takeDamage(protocol::mmo::E_Stats what, int val) override;
 protected:
 	Player() = delete;
 	Player(const Player&) = delete;
@@ -35,9 +49,14 @@ protected:
 private:
 	virtual GameObject* clone() override { return new Player(this); }
 
+	int _networkSerial = -1;
 	Area* _objArea = nullptr;
 	PlayerController* _controller = nullptr;
 	S_Stats _stats = {};
+
+	std::vector<Buff*> _buff;
+	std::vector<CC*> _cc;
+	std::vector<PersistentHit*> _persistentHit;
 };
 
 // id == -1 => disconnected 상태

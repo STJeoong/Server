@@ -10,7 +10,7 @@ enum class E_Layer
 	OBJ_MIN,
 	PLAYER_OBJ,
 	MONSTER_OBJ,
-	PROJECTILE_OBJ,
+	SKILL_OBJ,
 	ITEM_OBj,
 	OBJ_MAX,
 
@@ -18,6 +18,5 @@ enum class E_Layer
 	MONSTER_AGGRESSIVE,
 
 	// 스킬 영역
-	PLAYER_SKILL,
-	MONSTER_SKILL,
+	SKILL,
 };

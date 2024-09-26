@@ -5,14 +5,14 @@ struct S_Stats
 {
 	int maxHp;
 	int maxMp;
+	int defaultAtk;
+	int defaultDef;
+	int defaultSpeed;
+
 	int hp;
 	int mp;
-
-	int defaultAttack;
-	int defaultDefence;
-	int defaultSpeed;
-	int attack;
-	int defence;
+	int atk;
+	int def;
 	int speed;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(S_Stats, maxHp, maxMp, defaultAttack, defaultDefence, defaultSpeed)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(S_Stats, maxHp, maxMp, defaultAtk, defaultDef, defaultSpeed)

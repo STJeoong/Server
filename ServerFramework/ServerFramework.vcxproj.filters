@@ -45,7 +45,7 @@
     <Filter Include="소스 파일\EngineLayer\Engine\ServerMode\Physics">
       <UniqueIdentifier>{e595ae02-589d-44aa-9101-61de619dcc95}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\EngineLayer\Engine\Broacast">
+    <Filter Include="소스 파일\EngineLayer\Engine\Broadcast">
       <UniqueIdentifier>{4bf39fba-a51b-4dd9-9773-09f239193898}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -132,7 +132,7 @@
       <Filter>소스 파일\EngineLayer\Engine\ServerMode\Physics</Filter>
     </ClInclude>
     <ClInclude Include="I_Broadcaster.h">
-      <Filter>소스 파일\EngineLayer\Engine\Broacast</Filter>
+      <Filter>소스 파일\EngineLayer\Engine\Broadcast</Filter>
     </ClInclude>
     <ClInclude Include="NoWaitEngineEventContainer.h">
       <Filter>소스 파일\EngineLayer\EngineEventContainer</Filter>

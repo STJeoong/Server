@@ -150,18 +150,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AABB.cpp" />
+    <ClCompile Include="ActionTimer.cpp" />
     <ClCompile Include="Area.cpp" />
     <ClCompile Include="Behaviour.cpp" />
+    <ClCompile Include="Buff.cpp" />
+    <ClCompile Include="BuffAction.cpp" />
+    <ClCompile Include="CC.cpp" />
+    <ClCompile Include="CCAction.cpp" />
     <ClCompile Include="Component.cpp" />
-    <ClCompile Include="ContinuousSkill.cpp" />
     <ClCompile Include="DAT.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="InstantSkill.cpp" />
+    <ClCompile Include="HitAction.cpp" />
     <ClCompile Include="Item.cpp" />
-    <ClCompile Include="LaunchProjectile.cpp" />
     <ClCompile Include="LayerFilter.cpp" />
-    <ClCompile Include="LocationSkill.cpp" />
+    <ClCompile Include="InstantLocationBasedAction.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MMOServerBroadcaster.cpp" />
@@ -170,13 +173,16 @@
     <ClCompile Include="MMO_struct.pb.cc" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterController.cpp" />
+    <ClCompile Include="PersistentHit.cpp" />
+    <ClCompile Include="PersistentHitAction.cpp" />
+    <ClCompile Include="PersistentLocationBasedAction.cpp" />
+    <ClCompile Include="PersistentTargetBasedAction.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerController.cpp" />
-    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Rectangular.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Skill.cpp" />
-    <ClCompile Include="TargetSkill.cpp" />
+    <ClCompile Include="InstantTargetBasedAction.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -186,31 +192,32 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
+    <ClInclude Include="ActionTimer.h" />
     <ClInclude Include="Area.h" />
     <ClInclude Include="Behaviour.h" />
+    <ClInclude Include="Buff.h" />
+    <ClInclude Include="BuffAction.h" />
+    <ClInclude Include="CC.h" />
+    <ClInclude Include="CCAction.h" />
     <ClInclude Include="Component.h" />
-    <ClInclude Include="ContinuousSkill.h" />
     <ClInclude Include="DAT.h" />
     <ClInclude Include="E_EngineType.h" />
     <ClInclude Include="E_GameObjectEvent.h" />
     <ClInclude Include="E_Layer.h" />
-    <ClInclude Include="E_ObjectType.h" />
     <ClInclude Include="E_TimerEvent.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="InstantSkill.h" />
+    <ClInclude Include="HitAction.h" />
     <ClInclude Include="Item.h" />
-    <ClInclude Include="I_Damagable.h" />
-    <ClInclude Include="I_LocationBasedSkillAction.h" />
-    <ClInclude Include="I_Skill.h" />
-    <ClInclude Include="I_SkillRange.h" />
-    <ClInclude Include="I_TargetBasedSkillAction.h" />
-    <ClInclude Include="LaunchProjectile.h" />
-    <ClInclude Include="LocationSkill.h" />
+    <ClInclude Include="InstantLocationBasedAction.h" />
+    <ClInclude Include="I_Targetable.h" />
     <ClInclude Include="MonsterController.h" />
+    <ClInclude Include="PersistentHit.h" />
+    <ClInclude Include="PersistentHitAction.h" />
+    <ClInclude Include="PersistentLocationBasedAction.h" />
+    <ClInclude Include="PersistentTargetBasedAction.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerController.h" />
-    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="LayerFilter.h" />
     <ClInclude Include="Map.h" />
@@ -222,14 +229,16 @@
     <ClInclude Include="Rectangular.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="S_MonsterData.h" />
+    <ClInclude Include="S_RectDefine.h" />
     <ClInclude Include="S_SkillData.h" />
     <ClInclude Include="S_Stats.h" />
-    <ClInclude Include="TargetSkill.h" />
+    <ClInclude Include="InstantTargetBasedAction.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\config.json" />
     <None Include="data\MonsterData.json" />
+    <None Include="data\SkillData.json" />
     <None Include="Protocol\MMO_enum.proto" />
     <None Include="Protocol\MMO_protocol.bat" />
     <None Include="Protocol\MMO_protocol.proto" />

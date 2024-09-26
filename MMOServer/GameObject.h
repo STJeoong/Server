@@ -2,9 +2,9 @@
 #include <vector>
 #include <functional>
 #include "MMO_struct.pb.h"
-#include "E_ObjectType.h"
 #include "E_GameObjectEvent.h"
 
+class ActionTimer;
 class Component;
 class Map;
 class GameObject
@@ -25,6 +25,8 @@ public:
 	void getComponents(std::vector<Component*>& list);
 	template<typename T, typename... Args>
 	T* addComponent(Args&&... args);
+	ActionTimer* addTimer(int msec, const std::function<void(GameObject*)>& action);
+	void removeTimer(ActionTimer* timer);
 
 	// get
 	// set
@@ -41,7 +43,7 @@ public:
 	void active(bool flag, bool evtInvoke = true);
 	bool activeSelf() const { return _activeSelf; }
 	bool activeInHierarchy() const { return _activeInHierarchy; }
-	virtual E_ObjectType objectType() const = 0;
+	virtual protocol::mmo::E_ObjectType objectType() const = 0;
 	Map* map() const { return _map; }
 	void map(Map* val);
 protected:
@@ -60,6 +62,7 @@ private:
 	protocol::mmo::ObjectInfo _info;
 	protocol::mmo::TransformInt _localTF;
 	GameObject* _parent = nullptr;
+	std::vector<ActionTimer*> _timers;
 	std::vector<GameObject*> _children;
 	std::vector<Component*> _components;
 	Map* _map;

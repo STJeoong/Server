@@ -2,6 +2,8 @@
 #include "Component.h"
 #include "Utils.h"
 #include "Map.h"
+#include "ActionTimer.h"
+#include "ObjectPool.h"
 #include <stack>
 using namespace protocol::mmo;
 
@@ -27,6 +29,25 @@ void GameObject::doRecursively(GameObject* root, const std::function<void(GameOb
 
 
 #pragma region public
+ActionTimer* GameObject::addTimer(int msec, const std::function<void(GameObject*)>& action)
+{
+	ActionTimer* timer = ObjectPool::get<ActionTimer>();
+	timer->_gameObject = this;
+	timer->_delayTime = msec;
+	timer->_action = action;
+	_timers.push_back(timer);
+
+	return timer;
+}
+void GameObject::removeTimer(ActionTimer* timer)
+{
+	auto it = std::find(_timers.begin(), _timers.end(), timer);
+	if (it != _timers.end())
+	{
+		_timers.erase(it);
+		ObjectPool::release<ActionTimer>(timer);
+	}
+}
 void GameObject::parent(GameObject* val, bool evtInvoke)
 {
 	if (_parent == val) return;
@@ -158,5 +179,7 @@ void GameObject::broadcastToComponents(const E_GameObjectEvent& evt, void* arg)
 {
 	for (Component* component : _components)
 		component->invoke(evt, arg);
+	for (ActionTimer* timer : _timers)
+		timer->invoke(evt, arg);
 }
 #pragma endregion

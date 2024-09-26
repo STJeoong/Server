@@ -2,6 +2,7 @@
 #include "Behaviour.h"
 #include "E_Layer.h"
 #include "GameObject.h"
+#include <Delegate.h>
 #include <vector>
 #include <functional>
 
@@ -19,6 +20,11 @@ public:
 	void fixedRotation(bool flag) { _fixedRotation = flag; }
 	const std::vector<Area*>& overlappedAreas() const { return _overlappedAreas; }
 	bool overlaps(const Area& other) const;
+
+	void addListenerOnAreaEnter(const std::function<void(Area&)>& listener);
+	void removeListenerOnAreaEnter(const std::function<void(Area&)>& listener);
+	void addListenerOnAreaExit(const std::function<void(Area&)>& listener);
+	void removeListenerOnAreaExit(const std::function<void(Area&)>& listener);
 protected:
 	Area() = delete; // 여기서 _oldTF 초기화하면 안됨. _gameObject가 아직 nullptr이기 때문에
 	Area(const Area&) = delete;
@@ -41,4 +47,7 @@ private:
 	std::vector<Shape*> _shapes;
 	protocol::mmo::TransformInt _oldTF;
 	std::vector<Area*> _overlappedAreas;
+
+	Delegate<Area&> _onAreaEnter = {};
+	Delegate<Area&> _onAreaExit = {};
 };

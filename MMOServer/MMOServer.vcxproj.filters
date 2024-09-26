@@ -39,9 +39,6 @@
     <Filter Include="소스 파일\Game\Area">
       <UniqueIdentifier>{b5a1ae03-8725-4103-989c-c2f21f4165e5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Game\Item">
-      <UniqueIdentifier>{24300796-14c5-4e59-a961-51402ed13679}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Game\Area\Shape">
       <UniqueIdentifier>{9fa694d0-c40b-4e78-8c4c-8bdea1ea8d58}</UniqueIdentifier>
     </Filter>
@@ -54,20 +51,20 @@
     <Filter Include="소스 파일\Game\Player">
       <UniqueIdentifier>{40e59681-d515-43e6-8492-9b377e71c6da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Game\Skill\Time">
-      <UniqueIdentifier>{54901dc1-118f-45f7-85c1-3985765a82ef}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Game\Skill\Action">
-      <UniqueIdentifier>{140f7840-c7b2-4f68-af7f-d2f0218a30e7}</UniqueIdentifier>
+      <UniqueIdentifier>{a269faa2-6ec4-4bbd-8309-385dc221628d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Game\Skill\Range">
-      <UniqueIdentifier>{79b9b8ee-733a-48b2-ba0e-ed7ebb1bc1f9}</UniqueIdentifier>
+    <Filter Include="소스 파일\Game\Skill\Action\LocationBased">
+      <UniqueIdentifier>{6b6ca69d-cd4b-4072-9433-b43474246a18}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Game\Skill\Action\TargetAction">
-      <UniqueIdentifier>{8800c4dd-0244-4a0c-9790-6e5bb99bb458}</UniqueIdentifier>
+    <Filter Include="소스 파일\Game\Skill\Action\TargetBased">
+      <UniqueIdentifier>{7d61d3cb-5b5d-4548-826c-712b3adcc069}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Game\Projectile">
-      <UniqueIdentifier>{7d5ac88f-ba93-4c07-988a-4bb3de07e8a6}</UniqueIdentifier>
+    <Filter Include="소스 파일\Game\Skill\Action\TargetBased\TargetBasedActionType">
+      <UniqueIdentifier>{56859bba-c424-49c3-8ba2-82197936c105}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Item">
+      <UniqueIdentifier>{24300796-14c5-4e59-a961-51402ed13679}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -125,24 +122,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>소스 파일\Game\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Skill.cpp">
-      <Filter>소스 파일\Game\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="ContinuousSkill.cpp">
-      <Filter>소스 파일\Game\Skill\Time</Filter>
-    </ClCompile>
-    <ClCompile Include="InstantSkill.cpp">
-      <Filter>소스 파일\Game\Skill\Time</Filter>
-    </ClCompile>
-    <ClCompile Include="LaunchProjectile.cpp">
-      <Filter>소스 파일\Game\Skill\Action</Filter>
-    </ClCompile>
-    <ClCompile Include="TargetSkill.cpp">
-      <Filter>소스 파일\Game\Skill\Range</Filter>
-    </ClCompile>
-    <ClCompile Include="LocationSkill.cpp">
-      <Filter>소스 파일\Game\Skill\Range</Filter>
-    </ClCompile>
     <ClCompile Include="MonsterController.cpp">
       <Filter>소스 파일\Game\Monster</Filter>
     </ClCompile>
@@ -155,8 +134,44 @@
     <ClCompile Include="Item.cpp">
       <Filter>소스 파일\Game\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>소스 파일\Game\Projectile</Filter>
+    <ClCompile Include="Skill.cpp">
+      <Filter>소스 파일\Game\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="HitAction.cpp">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased\TargetBasedActionType</Filter>
+    </ClCompile>
+    <ClCompile Include="BuffAction.cpp">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased\TargetBasedActionType</Filter>
+    </ClCompile>
+    <ClCompile Include="CCAction.cpp">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased\TargetBasedActionType</Filter>
+    </ClCompile>
+    <ClCompile Include="InstantLocationBasedAction.cpp">
+      <Filter>소스 파일\Game\Skill\Action\LocationBased</Filter>
+    </ClCompile>
+    <ClCompile Include="InstantTargetBasedAction.cpp">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased</Filter>
+    </ClCompile>
+    <ClCompile Include="PersistentLocationBasedAction.cpp">
+      <Filter>소스 파일\Game\Skill\Action\LocationBased</Filter>
+    </ClCompile>
+    <ClCompile Include="PersistentTargetBasedAction.cpp">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased</Filter>
+    </ClCompile>
+    <ClCompile Include="PersistentHitAction.cpp">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased\TargetBasedActionType</Filter>
+    </ClCompile>
+    <ClCompile Include="Buff.cpp">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased\TargetBasedActionType</Filter>
+    </ClCompile>
+    <ClCompile Include="CC.cpp">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased\TargetBasedActionType</Filter>
+    </ClCompile>
+    <ClCompile Include="PersistentHit.cpp">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased\TargetBasedActionType</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionTimer.cpp">
+      <Filter>소스 파일\Game\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -226,47 +241,11 @@
     <ClInclude Include="Player.h">
       <Filter>소스 파일\Game\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Skill.h">
-      <Filter>소스 파일\Game\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="S_SkillData.h">
-      <Filter>소스 파일\Game\Skill</Filter>
-    </ClInclude>
     <ClInclude Include="S_MonsterData.h">
       <Filter>소스 파일\Game\Monster</Filter>
     </ClInclude>
     <ClInclude Include="S_Stats.h">
       <Filter>소스 파일\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="I_Skill.h">
-      <Filter>소스 파일\Game\Skill\Time</Filter>
-    </ClInclude>
-    <ClInclude Include="I_Damagable.h">
-      <Filter>소스 파일\Game\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="ContinuousSkill.h">
-      <Filter>소스 파일\Game\Skill\Time</Filter>
-    </ClInclude>
-    <ClInclude Include="InstantSkill.h">
-      <Filter>소스 파일\Game\Skill\Time</Filter>
-    </ClInclude>
-    <ClInclude Include="LaunchProjectile.h">
-      <Filter>소스 파일\Game\Skill\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="I_SkillRange.h">
-      <Filter>소스 파일\Game\Skill\Range</Filter>
-    </ClInclude>
-    <ClInclude Include="TargetSkill.h">
-      <Filter>소스 파일\Game\Skill\Range</Filter>
-    </ClInclude>
-    <ClInclude Include="LocationSkill.h">
-      <Filter>소스 파일\Game\Skill\Range</Filter>
-    </ClInclude>
-    <ClInclude Include="I_LocationBasedSkillAction.h">
-      <Filter>소스 파일\Game\Skill\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="I_TargetBasedSkillAction.h">
-      <Filter>소스 파일\Game\Skill\Action</Filter>
     </ClInclude>
     <ClInclude Include="MonsterController.h">
       <Filter>소스 파일\Game\Monster</Filter>
@@ -277,11 +256,53 @@
     <ClInclude Include="Item.h">
       <Filter>소스 파일\Game\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>소스 파일\Game\Projectile</Filter>
+    <ClInclude Include="Skill.h">
+      <Filter>소스 파일\Game\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="E_ObjectType.h">
-      <Filter>소스 파일\Game</Filter>
+    <ClInclude Include="S_SkillData.h">
+      <Filter>소스 파일\Game\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="HitAction.h">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased\TargetBasedActionType</Filter>
+    </ClInclude>
+    <ClInclude Include="CCAction.h">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased\TargetBasedActionType</Filter>
+    </ClInclude>
+    <ClInclude Include="BuffAction.h">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased\TargetBasedActionType</Filter>
+    </ClInclude>
+    <ClInclude Include="InstantLocationBasedAction.h">
+      <Filter>소스 파일\Game\Skill\Action\LocationBased</Filter>
+    </ClInclude>
+    <ClInclude Include="InstantTargetBasedAction.h">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased</Filter>
+    </ClInclude>
+    <ClInclude Include="S_RectDefine.h">
+      <Filter>소스 파일\Game\Area\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="PersistentLocationBasedAction.h">
+      <Filter>소스 파일\Game\Skill\Action\LocationBased</Filter>
+    </ClInclude>
+    <ClInclude Include="PersistentTargetBasedAction.h">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased</Filter>
+    </ClInclude>
+    <ClInclude Include="Buff.h">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased\TargetBasedActionType</Filter>
+    </ClInclude>
+    <ClInclude Include="CC.h">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased\TargetBasedActionType</Filter>
+    </ClInclude>
+    <ClInclude Include="PersistentHit.h">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased\TargetBasedActionType</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionTimer.h">
+      <Filter>소스 파일\Game\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="I_Targetable.h">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased</Filter>
+    </ClInclude>
+    <ClInclude Include="PersistentHitAction.h">
+      <Filter>소스 파일\Game\Skill\Action\TargetBased\TargetBasedActionType</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -302,6 +323,9 @@
     </None>
     <None Include="data\MonsterData.json">
       <Filter>소스 파일\Game\Monster</Filter>
+    </None>
+    <None Include="data\SkillData.json">
+      <Filter>소스 파일\Game\Skill</Filter>
     </None>
   </ItemGroup>
 </Project>

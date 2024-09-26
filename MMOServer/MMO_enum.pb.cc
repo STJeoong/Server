@@ -24,7 +24,7 @@ namespace protocol {
 namespace mmo {
 }  // namespace mmo
 }  // namespace protocol
-static const ::_pb::EnumDescriptor* file_level_enum_descriptors_MMO_5fenum_2eproto[5];
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_MMO_5fenum_2eproto[10];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_MMO_5fenum_2eproto = nullptr;
 const uint32_t TableStruct_MMO_5fenum_2eproto::offsets[1] = {};
 static constexpr ::_pbi::MigrationSchema* schemas = nullptr;
@@ -36,15 +36,28 @@ const char descriptor_table_protodef_MMO_5fenum_2eproto[] PROTOBUF_SECTION_VARIA
   "RESP\020\001\022\027\n\023OBJECT_ENTER_NOTIFY\020\002\022\026\n\022OBJEC"
   "T_EXIT_NOTIFY\020\003\022\014\n\010MOVE_REQ\020\004\022\017\n\013MOVE_NO"
   "TIFY\020\005\022\014\n\010IDLE_REQ\020\006\022\017\n\013IDLE_NOTIFY\020\007*\034\n"
-  "\nE_RespCode\022\006\n\002OK\020\000\022\006\n\002NO\020\001*-\n\rE_ObjectS"
-  "tate\022\010\n\004NONE\020\000\022\010\n\004IDLE\020\001\022\010\n\004MOVE\020\002*9\n\005E_"
-  "Dir\022\n\n\006BOTTOM\020\000\022\010\n\004LEFT\020\001\022\006\n\002UP\020\002\022\t\n\005RIG"
-  "HT\020\003\022\007\n\003MAX\020\004*\'\n\tE_KeyCode\022\005\n\001Q\020\000\022\005\n\001W\020\001"
-  "\022\005\n\001E\020\002\022\005\n\001R\020\003b\006proto3"
+  "\nE_RespCode\022\006\n\002OK\020\000\022\006\n\002NO\020\001*7\n\rE_ObjectS"
+  "tate\022\010\n\004NONE\020\000\022\010\n\004IDLE\020\001\022\010\n\004MOVE\020\002\022\010\n\004DE"
+  "AD\020\003*9\n\005E_Dir\022\n\n\006BOTTOM\020\000\022\010\n\004LEFT\020\001\022\006\n\002U"
+  "P\020\002\022\t\n\005RIGHT\020\003\022\007\n\003MAX\020\004*\'\n\tE_KeyCode\022\005\n\001"
+  "Q\020\000\022\005\n\001W\020\001\022\005\n\001E\020\002\022\005\n\001R\020\003*Y\n\014E_ObjectType"
+  "\022\024\n\020OBJECT_TYPE_NULL\020\000\022\n\n\006PLAYER\020\001\022\013\n\007MO"
+  "NSTER\020\002\022\020\n\014SKILL_OBJECT\020\004\022\010\n\004ITEM\020\010*\177\n\013E"
+  "_SkillType\022\030\n\024INSTANT_TARGET_BASED\020\000\022\032\n\026"
+  "INSTANT_LOCATION_BASED\020\001\022\033\n\027PERSISTENT_T"
+  "ARGET_BASED\020\002\022\035\n\031PERSISTENT_LOCATION_BAS"
+  "ED\020\003*1\n\010E_CCType\022\010\n\004STUN\020\000\022\r\n\tNO_POTION\020"
+  "\001\022\014\n\010NO_SKILL\020\002*1\n\007E_Stats\022\n\n\006MAX_HP\020\000\022\n"
+  "\n\006MAX_MP\020\001\022\006\n\002HP\020\002\022\006\n\002MP\020\003*\254\001\n\027E_TargetB"
+  "asedActionType\022 \n\034TARGET_BASED_ACTION_TY"
+  "PE_HIT\020\000\022!\n\035TARGET_BASED_ACTION_TYPE_BUF"
+  "F\020\001\022\037\n\033TARGET_BASED_ACTION_TYPE_CC\020\002\022+\n\'"
+  "TARGET_BASED_ACTION_TYPE_PERSISTENT_HIT\020"
+  "\003b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_MMO_5fenum_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_MMO_5fenum_2eproto = {
-    false, false, 382, descriptor_table_protodef_MMO_5fenum_2eproto,
+    false, false, 889, descriptor_table_protodef_MMO_5fenum_2eproto,
     "MMO_enum.proto",
     &descriptor_table_MMO_5fenum_2eproto_once, nullptr, 0, 0,
     schemas, file_default_instances, TableStruct_MMO_5fenum_2eproto::offsets,
@@ -102,6 +115,7 @@ bool E_ObjectState_IsValid(int value) {
     case 0:
     case 1:
     case 2:
+    case 3:
       return true;
     default:
       return false;
@@ -130,6 +144,86 @@ const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_KeyCode_descriptor() {
   return file_level_enum_descriptors_MMO_5fenum_2eproto[4];
 }
 bool E_KeyCode_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_ObjectType_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_MMO_5fenum_2eproto);
+  return file_level_enum_descriptors_MMO_5fenum_2eproto[5];
+}
+bool E_ObjectType_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 4:
+    case 8:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_SkillType_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_MMO_5fenum_2eproto);
+  return file_level_enum_descriptors_MMO_5fenum_2eproto[6];
+}
+bool E_SkillType_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_CCType_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_MMO_5fenum_2eproto);
+  return file_level_enum_descriptors_MMO_5fenum_2eproto[7];
+}
+bool E_CCType_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_Stats_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_MMO_5fenum_2eproto);
+  return file_level_enum_descriptors_MMO_5fenum_2eproto[8];
+}
+bool E_Stats_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_TargetBasedActionType_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_MMO_5fenum_2eproto);
+  return file_level_enum_descriptors_MMO_5fenum_2eproto[9];
+}
+bool E_TargetBasedActionType_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:

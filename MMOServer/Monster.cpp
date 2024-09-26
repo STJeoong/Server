@@ -18,6 +18,7 @@ void Monster::init()
 {
 	MMOServerBroadcaster::onMonsterRespawn += Monster::respawn;
 
+	std::cout << "Monster init...\n";
 	// TODO : 설정파일로 몬스터 정보 가져와서 한번에 소환하기
 	std::ifstream fstream("C:/Users/taejeong/source/repos/ServerFramework/MMOServer/data/MonsterData.json");
 	std::vector<S_MonsterData> data;
@@ -34,7 +35,8 @@ void Monster::spawn(const S_MonsterData& data)
 {
 	for (int i = 0; i < data.spawnInfo.size(); ++i)
 	{
-		auto [mapName, howMany] = data.spawnInfo[i];
+		const std::string& mapName = data.spawnInfo[i].mapName;
+		int howMany = data.spawnInfo[i].howMany;
 		Map* map = Map::getMap(mapName);
 		for (int j = 0; j < howMany; ++j)
 		{
@@ -44,13 +46,20 @@ void Monster::spawn(const S_MonsterData& data)
 			monster->_objArea->layer(E_Layer::MONSTER_OBJ);
 			MonsterController* controller = monster->addComponent<MonsterController>();
 
-			monster->_objArea->addShape(new Rectangular(monster->_objArea, -data.extraCellSize, -data.extraCellSize, 2 * data.extraCellSize + 1, 2 * data.extraCellSize + 1));
+			{
+				S_RectDefine rect = {};
+				rect.offsetY = -data.extraCellSize;
+				rect.offsetX = -data.extraCellSize;
+				rect.yExtension = 2 * data.extraCellSize + 1;
+				rect.xExtension = 2 * data.extraCellSize + 1;
+				monster->_objArea->addShape(new Rectangular(monster->_objArea, rect));
+			}
 
 			if (data.isAggressive)
 			{
 				Area* aggressiveArea = monster->addComponent<Area>();
 				aggressiveArea->layer(E_Layer::MONSTER_AGGRESSIVE);
-				aggressiveArea->addShape(new Rectangular(aggressiveArea, data.offsetY, data.offsetX, data.yExtension, data.xExtension));
+				aggressiveArea->addShape(new Rectangular(aggressiveArea, data.aggressiveArea));
 			}
 			// TODO : 몬스터 스탯
 			monster->_stats = data.stats;
@@ -83,8 +92,8 @@ void Monster::respawn()
 		monster->transform(initTF.y(), initTF.x(), initTF.dir());
 		stats.hp = stats.maxHp;
 		stats.mp = stats.maxMp;
-		stats.attack = stats.defaultAttack;
-		stats.defence = stats.defaultDefence;
+		stats.atk = stats.defaultAtk;
+		stats.def = stats.defaultDef;
 		stats.speed = stats.defaultSpeed;
 
 
@@ -98,17 +107,23 @@ void Monster::respawn()
 
 
 #pragma region public
-void Monster::broadcast(protocol::mmo::E_PacketID packetID)
+void Monster::broadcastPacket(protocol::mmo::E_PacketID packetID)
 {
 	for (Area* other : _objArea->overlappedAreas())
 		if (other->layer() == E_Layer::AOI)
-			Utils::send(Utils::getID(other->gameObject()->id()), packetID, 0);
+		{
+			Player* player = reinterpret_cast<Player*>(other->gameObject());
+			Utils::send(player->networkSerial(), packetID, 0);
+		}
 }
-void Monster::broadcast(E_PacketID packetID, google::protobuf::Message& message)
+void Monster::broadcastPacket(E_PacketID packetID, google::protobuf::Message& message)
 {
 	for (Area* other : _objArea->overlappedAreas())
 		if (other->layer() == E_Layer::AOI)
-			Utils::send(Utils::getID(other->gameObject()->id()), packetID, 0, message);
+		{
+			Player* player = reinterpret_cast<Player*>(other->gameObject());
+			Utils::send(player->networkSerial(), packetID, 0, message);
+		}
 }
 void Monster::stats(const S_Stats& val)
 {
@@ -116,6 +131,31 @@ void Monster::stats(const S_Stats& val)
 	if (_stats.hp <= 0)
 		Monster::s_deadMonsters.push(this);
 	this->active(false);
+}
+void Monster::addBuff(Buff* buff) { _buff.push_back(buff); }
+void Monster::removeBuff(Buff* buff)
+{
+	auto it = std::find(_buff.begin(), _buff.end(), buff);
+	if (it != _buff.end())
+		_buff.erase(it);
+}
+void Monster::addCC(CC* cc) { _cc.push_back(cc); }
+void Monster::removeCC(CC* cc)
+{
+	auto it = std::find(_cc.begin(), _cc.end(), cc);
+	if (it != _cc.end())
+		_cc.erase(it);
+}
+void Monster::addPersistentHit(PersistentHit* persistentHit) { _persistentHit.push_back(persistentHit); }
+void Monster::removePersistentHit(PersistentHit* persistentHit)
+{
+	auto it = std::find(_persistentHit.begin(), _persistentHit.end(), persistentHit);
+	if (it != _persistentHit.end())
+		_persistentHit.erase(it);
+}
+void Monster::takeDamage(protocol::mmo::E_Stats what, int val)
+{
+	// TODO
 }
 #pragma endregion
 

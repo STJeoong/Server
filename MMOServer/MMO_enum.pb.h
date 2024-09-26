@@ -108,12 +108,13 @@ enum E_ObjectState : int {
   NONE = 0,
   IDLE = 1,
   MOVE = 2,
+  DEAD = 3,
   E_ObjectState_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   E_ObjectState_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool E_ObjectState_IsValid(int value);
 constexpr E_ObjectState E_ObjectState_MIN = NONE;
-constexpr E_ObjectState E_ObjectState_MAX = MOVE;
+constexpr E_ObjectState E_ObjectState_MAX = DEAD;
 constexpr int E_ObjectState_ARRAYSIZE = E_ObjectState_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_ObjectState_descriptor();
@@ -185,6 +186,141 @@ inline bool E_KeyCode_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_KeyCode>(
     E_KeyCode_descriptor(), name, value);
 }
+enum E_ObjectType : int {
+  OBJECT_TYPE_NULL = 0,
+  PLAYER = 1,
+  MONSTER = 2,
+  SKILL_OBJECT = 4,
+  ITEM = 8,
+  E_ObjectType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  E_ObjectType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool E_ObjectType_IsValid(int value);
+constexpr E_ObjectType E_ObjectType_MIN = OBJECT_TYPE_NULL;
+constexpr E_ObjectType E_ObjectType_MAX = ITEM;
+constexpr int E_ObjectType_ARRAYSIZE = E_ObjectType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_ObjectType_descriptor();
+template<typename T>
+inline const std::string& E_ObjectType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, E_ObjectType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function E_ObjectType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    E_ObjectType_descriptor(), enum_t_value);
+}
+inline bool E_ObjectType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, E_ObjectType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_ObjectType>(
+    E_ObjectType_descriptor(), name, value);
+}
+enum E_SkillType : int {
+  INSTANT_TARGET_BASED = 0,
+  INSTANT_LOCATION_BASED = 1,
+  PERSISTENT_TARGET_BASED = 2,
+  PERSISTENT_LOCATION_BASED = 3,
+  E_SkillType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  E_SkillType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool E_SkillType_IsValid(int value);
+constexpr E_SkillType E_SkillType_MIN = INSTANT_TARGET_BASED;
+constexpr E_SkillType E_SkillType_MAX = PERSISTENT_LOCATION_BASED;
+constexpr int E_SkillType_ARRAYSIZE = E_SkillType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_SkillType_descriptor();
+template<typename T>
+inline const std::string& E_SkillType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, E_SkillType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function E_SkillType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    E_SkillType_descriptor(), enum_t_value);
+}
+inline bool E_SkillType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, E_SkillType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_SkillType>(
+    E_SkillType_descriptor(), name, value);
+}
+enum E_CCType : int {
+  STUN = 0,
+  NO_POTION = 1,
+  NO_SKILL = 2,
+  E_CCType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  E_CCType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool E_CCType_IsValid(int value);
+constexpr E_CCType E_CCType_MIN = STUN;
+constexpr E_CCType E_CCType_MAX = NO_SKILL;
+constexpr int E_CCType_ARRAYSIZE = E_CCType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_CCType_descriptor();
+template<typename T>
+inline const std::string& E_CCType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, E_CCType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function E_CCType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    E_CCType_descriptor(), enum_t_value);
+}
+inline bool E_CCType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, E_CCType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_CCType>(
+    E_CCType_descriptor(), name, value);
+}
+enum E_Stats : int {
+  MAX_HP = 0,
+  MAX_MP = 1,
+  HP = 2,
+  MP = 3,
+  E_Stats_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  E_Stats_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool E_Stats_IsValid(int value);
+constexpr E_Stats E_Stats_MIN = MAX_HP;
+constexpr E_Stats E_Stats_MAX = MP;
+constexpr int E_Stats_ARRAYSIZE = E_Stats_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_Stats_descriptor();
+template<typename T>
+inline const std::string& E_Stats_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, E_Stats>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function E_Stats_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    E_Stats_descriptor(), enum_t_value);
+}
+inline bool E_Stats_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, E_Stats* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_Stats>(
+    E_Stats_descriptor(), name, value);
+}
+enum E_TargetBasedActionType : int {
+  TARGET_BASED_ACTION_TYPE_HIT = 0,
+  TARGET_BASED_ACTION_TYPE_BUFF = 1,
+  TARGET_BASED_ACTION_TYPE_CC = 2,
+  TARGET_BASED_ACTION_TYPE_PERSISTENT_HIT = 3,
+  E_TargetBasedActionType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  E_TargetBasedActionType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool E_TargetBasedActionType_IsValid(int value);
+constexpr E_TargetBasedActionType E_TargetBasedActionType_MIN = TARGET_BASED_ACTION_TYPE_HIT;
+constexpr E_TargetBasedActionType E_TargetBasedActionType_MAX = TARGET_BASED_ACTION_TYPE_PERSISTENT_HIT;
+constexpr int E_TargetBasedActionType_ARRAYSIZE = E_TargetBasedActionType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_TargetBasedActionType_descriptor();
+template<typename T>
+inline const std::string& E_TargetBasedActionType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, E_TargetBasedActionType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function E_TargetBasedActionType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    E_TargetBasedActionType_descriptor(), enum_t_value);
+}
+inline bool E_TargetBasedActionType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, E_TargetBasedActionType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_TargetBasedActionType>(
+    E_TargetBasedActionType_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -232,6 +368,31 @@ template <> struct is_proto_enum< ::protocol::mmo::E_KeyCode> : ::std::true_type
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_KeyCode>() {
   return ::protocol::mmo::E_KeyCode_descriptor();
+}
+template <> struct is_proto_enum< ::protocol::mmo::E_ObjectType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_ObjectType>() {
+  return ::protocol::mmo::E_ObjectType_descriptor();
+}
+template <> struct is_proto_enum< ::protocol::mmo::E_SkillType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_SkillType>() {
+  return ::protocol::mmo::E_SkillType_descriptor();
+}
+template <> struct is_proto_enum< ::protocol::mmo::E_CCType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_CCType>() {
+  return ::protocol::mmo::E_CCType_descriptor();
+}
+template <> struct is_proto_enum< ::protocol::mmo::E_Stats> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_Stats>() {
+  return ::protocol::mmo::E_Stats_descriptor();
+}
+template <> struct is_proto_enum< ::protocol::mmo::E_TargetBasedActionType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_TargetBasedActionType>() {
+  return ::protocol::mmo::E_TargetBasedActionType_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

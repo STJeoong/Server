@@ -6,10 +6,13 @@ void LayerFilter::init()
 	// TODO : 설정 파일로?
 	LayerFilter::enable(E_Layer::AOI, E_Layer::PLAYER_OBJ);
 	LayerFilter::enable(E_Layer::AOI, E_Layer::MONSTER_OBJ);
-	LayerFilter::enable(E_Layer::AOI, E_Layer::PROJECTILE_OBJ);
+	LayerFilter::enable(E_Layer::AOI, E_Layer::SKILL_OBJ);
 	LayerFilter::enable(E_Layer::AOI, E_Layer::ITEM_OBj);
 	
 	LayerFilter::enable(E_Layer::MONSTER_AGGRESSIVE, E_Layer::PLAYER_OBJ);
+
+	LayerFilter::enable(E_Layer::SKILL, E_Layer::PLAYER_OBJ);
+	LayerFilter::enable(E_Layer::SKILL, E_Layer::MONSTER_OBJ);
 }
 void LayerFilter::enable(E_Layer layer1, E_Layer layer2)
 {

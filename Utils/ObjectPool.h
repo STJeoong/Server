@@ -15,7 +15,7 @@ public:
 	static T* get();
 	// if you try to release object to not initialized pool, your program is going to be crashed.
 	template<typename T>
-	static void release(T*& obj);
+	static void release(T* obj);
 	template<typename T>
 	static void useActionOnGet(bool flag);
 	template<typename T>
@@ -77,7 +77,7 @@ inline T* ObjectPool::get()
 	return ret;
 }
 template<typename T>
-inline void ObjectPool::release(T*& obj)
+inline void ObjectPool::release(T* obj)
 {
 	ObjectPool* pool = ObjectPool::findPool<T>();
 
@@ -94,7 +94,6 @@ inline void ObjectPool::release(T*& obj)
 	}
 	if (pool->_useActionOnRelease)
 		pool->_actionOnRelease(obj);
-	obj = nullptr;
 }
 
 template<typename T>

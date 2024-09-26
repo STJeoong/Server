@@ -4,21 +4,27 @@
 #include <string>
 #include <vector>
 #include "S_Stats.h"
+#include "S_RectDefine.h"
 #include <basetsd.h>
 
+struct S_SpawnInfo
+{
+	std::string mapName;
+	int howMany;
+};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(S_SpawnInfo, mapName, howMany)
 struct S_MonsterData
 {
-	S_Stats stats;
+	std::string monsterName;
 	UINT8 templateID;
 	int extraCellSize;
+	S_Stats stats;
+
+	std::vector<std::string> skills;
+	std::vector<S_SpawnInfo> spawnInfo; // 무슨맵에 몇 마리 스폰시키는지
 
 	// 선공몹
 	bool isAggressive;
-	int offsetY;
-	int offsetX;
-	int yExtension;
-	int xExtension;
-
-	std::vector<std::pair<std::string, int>> spawnInfo; // 무슨맵에 몇 마리 스폰시키는지
+	S_RectDefine aggressiveArea;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(S_MonsterData, stats, templateID, extraCellSize, isAggressive, offsetY, offsetX, yExtension, xExtension, spawnInfo)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(S_MonsterData, monsterName, templateID, extraCellSize, stats, skills, spawnInfo, isAggressive, aggressiveArea)

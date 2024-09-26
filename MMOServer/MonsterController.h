@@ -17,7 +17,6 @@ protected:
 	virtual void awake() override { _me = reinterpret_cast<Monster*>(_gameObject); }
 	virtual void update() override;
 	virtual void onAreaEnter(Area& my, Area& other) override;
-	virtual void onAreaExit(Area& my, Area& other) override;
 private:
 	void idle();
 	void move();

@@ -9,6 +9,10 @@
 #include "Utils.h"
 #include "Map.h"
 #include "PlayerController.h"
+#include "S_RectDefine.h"
+#include "Buff.h"
+#include "CC.h"	
+#include "PersistentHit.h"
 
 using namespace protocol::mmo;
 #pragma region public static
@@ -42,12 +46,15 @@ void Player::onConnect(int serial)
 	newPlayer->_objArea = myObjArea;
 	controller->myObjArea(myObjArea);
 
+	S_RectDefine aoiDef = {-6, -6, 13, 13};
+	S_RectDefine objDef = { 0,0,1,1 };
 	aoi->layer(E_Layer::AOI);
 	myObjArea->layer(E_Layer::PLAYER_OBJ);
-	aoi->addShape(new Rectangular(aoi, -6, -6, 13, 13));
-	myObjArea->addShape(new Rectangular(myObjArea, 0, 0, 1, 1));
+	aoi->addShape(new Rectangular(aoi, aoiDef));
+	myObjArea->addShape(new Rectangular(myObjArea, objDef));
 
 	s_players[serial] = newPlayer;
+	newPlayer->_networkSerial = serial;
 }
 void Player::onDisconnect(int serial)
 {
@@ -55,6 +62,7 @@ void Player::onDisconnect(int serial)
 	if (player == nullptr) return;
 
 	player->map()->destroy(player);
+	player->active(false);
 	s_players[serial] = nullptr;
 }
 void Player::onEnterReq(int serial)
@@ -91,28 +99,59 @@ void Player::onIdleReq(int serial)
 	if (player == nullptr || player->state() == E_ObjectState::NONE) return;
 	Idle_Notify notify = {};
 	notify.set_id(player->id());
-	player->broadcast(E_PacketID::IDLE_NOTIFY, notify);
+	player->broadcastPacket(E_PacketID::IDLE_NOTIFY, notify);
 }
 #pragma endregion
 
 
 
 #pragma region public
-void Player::broadcast(protocol::mmo::E_PacketID packetID , bool includeMe)
+void Player::broadcastPacket(protocol::mmo::E_PacketID packetID , bool includeMe)
 {
 	for (Area* area : _objArea->overlappedAreas())
 		if (area->layer() == E_Layer::AOI)
-			Utils::send(Utils::getID(area->gameObject()->id()), packetID, 0);
+		{
+			Player* otherPlayer = reinterpret_cast<Player*>(area->gameObject());
+			Utils::send(otherPlayer->_networkSerial, packetID, 0);
+		}
 	if (includeMe)
-		Utils::send(Utils::getID(this->id()), packetID, 0);
+		Utils::send(_networkSerial, packetID, 0);
 }
-void Player::broadcast(protocol::mmo::E_PacketID packetID, google::protobuf::Message& message, bool includeMe)
+void Player::broadcastPacket(protocol::mmo::E_PacketID packetID, google::protobuf::Message& message, bool includeMe)
 {
 	for (Area* area : _objArea->overlappedAreas())
 		if (area->layer() == E_Layer::AOI)
-			Utils::send(Utils::getID(area->gameObject()->id()), packetID, 0, message);
+		{
+			Player* otherPlayer = reinterpret_cast<Player*>(area->gameObject());
+			Utils::send(otherPlayer->_networkSerial, packetID, 0, message);
+		}
 	if (includeMe)
-		Utils::send(Utils::getID(this->id()), packetID, 0, message);
+		Utils::send(_networkSerial, packetID, 0, message);
+}
+void Player::addBuff(Buff* buff) { _buff.push_back(buff); }
+void Player::removeBuff(Buff* buff)
+{
+	auto it = std::find(_buff.begin(), _buff.end(), buff);
+	if (it != _buff.end())
+		_buff.erase(it);
+}
+void Player::addCC(CC* cc) { _cc.push_back(cc); }
+void Player::removeCC(CC* cc)
+{
+	auto it = std::find(_cc.begin(), _cc.end(), cc);
+	if (it != _cc.end())
+		_cc.erase(it);
+}
+void Player::addPersistentHit(PersistentHit* persistentHit) { _persistentHit.push_back(persistentHit); }
+void Player::removePersistentHit(PersistentHit* persistentHit)
+{
+	auto it = std::find(_persistentHit.begin(), _persistentHit.end(), persistentHit);
+	if (it != _persistentHit.end())
+		_persistentHit.erase(it);
+}
+void Player::takeDamage(protocol::mmo::E_Stats what, int val)
+{
+	// TODO
 }
 #pragma endregion
 

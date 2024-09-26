@@ -17,6 +17,10 @@ bool Area::overlaps(const Area& other) const
 				return true;
 	return false;
 }
+void Area::addListenerOnAreaEnter(const std::function<void(Area&)>& listener) { _onAreaEnter += listener; }
+void Area::removeListenerOnAreaEnter(const std::function<void(Area&)>& listener) { _onAreaEnter -= listener; }
+void Area::addListenerOnAreaExit(const std::function<void(Area&)>& listener) { _onAreaExit += listener; }
+void Area::removeListenerOnAreaExit(const std::function<void(Area&)>& listener) { _onAreaExit -= listener; }
 #pragma endregion
 
 #pragma region protected
@@ -60,11 +64,13 @@ void Area::onAreaEnter(Area& my, Area& other)
 {
 	if (this != &my) return;
 	_overlappedAreas.push_back(&other);
+	_onAreaEnter(other);
 }
 void Area::onAreaExit(Area& my, Area& other)
 {
 	if (this != &my) return;
 	_overlappedAreas.erase(std::find(_overlappedAreas.begin(), _overlappedAreas.end(), &other));
+	_onAreaExit(other);
 }
 #pragma endregion
 

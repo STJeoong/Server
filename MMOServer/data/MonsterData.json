@@ -1,23 +1,32 @@
 [
   {
+    "monsterName": "TEST_MONSTER_1",
+    "templateID": 0,
+    "extraCellSize": 0,
     "stats": {
-      "maxHp": 100,
-      "maxMp": 100,
-      "defaultAttack": 3,
-      "defaultDefence": 3,
+      "maxHp": 20,
+      "maxMp": 0,
+      "defaultAtk": 5,
+      "defaultDef": 3,
       "defaultSpeed": 2
     },
-    "templateID": 1,
-    "extraCellSize": 0,
-
-    "isAggressive": true,
-    "offsetY": -2,
-    "offsetX": -2,
-    "yExtension": 5,
-    "xExtension": 5,
-
+    "skills": [
+      "MONSTER_CLOSE_RANGE_ATK"
+    ],
     "spawnInfo": [
-      [ "Main", 10 ]
-    ]
+      {
+        "mapName": "Main",
+        "howMany": 10
+      }
+    ],
+    "isAggressive": true,
+    "aggressiveArea": {
+      "offsetY": -2,
+      "offsetX": -2,
+      "yExtension": 5,
+      "xExtension": 5
+    },
+    "name": "TEST_MONSTER_1",
+    "hideFlags": 0
   }
 ]

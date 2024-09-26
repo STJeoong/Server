@@ -23,6 +23,8 @@ enum E_ObjectState
 	NONE = 0;
 	IDLE = 1;
 	MOVE = 2;
+
+	DEAD = 3;
 }
 enum E_Dir
 {
@@ -38,4 +40,39 @@ enum E_KeyCode
 	W = 1;
 	E = 2;
 	R = 3;
+}
+enum E_ObjectType
+{
+	OBJECT_TYPE_NULL = 0;
+	PLAYER = 1;
+	MONSTER = 2;
+	SKILL_OBJECT = 4;
+	ITEM = 8;
+}
+enum E_SkillType
+{
+	INSTANT_TARGET_BASED = 0;
+	INSTANT_LOCATION_BASED = 1;
+	PERSISTENT_TARGET_BASED = 2;
+	PERSISTENT_LOCATION_BASED = 3;
+}
+enum E_CCType
+{
+	STUN = 0;
+	NO_POTION = 1;
+	NO_SKILL = 2;
+}
+enum E_Stats
+{
+	MAX_HP = 0;
+	MAX_MP = 1;
+	HP = 2;
+	MP = 3;
+}
+enum E_TargetBasedActionType
+{
+	TARGET_BASED_ACTION_TYPE_HIT = 0;
+	TARGET_BASED_ACTION_TYPE_BUFF = 1; // 디버프도 포함
+	TARGET_BASED_ACTION_TYPE_CC = 2;
+	TARGET_BASED_ACTION_TYPE_PERSISTENT_HIT = 3;
 }

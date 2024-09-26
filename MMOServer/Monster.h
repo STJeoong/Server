@@ -4,8 +4,12 @@
 #include "S_Stats.h"
 #include "MMO_struct.pb.h"
 #include "S_MonsterData.h"
+#include "I_Targetable.h"
 class Area;
-class Monster : public GameObject
+class Buff;
+class CC;
+class PersistentHit;
+class Monster : public GameObject, public I_Targetable
 {
 	friend class Map;
 public:
@@ -17,11 +21,20 @@ private:
 	static std::queue<Monster*> s_deadMonsters;
 
 public:
-	virtual E_ObjectType objectType() const override { return E_ObjectType::MONSTER; }
-	void broadcast(protocol::mmo::E_PacketID packetID);
-	void broadcast(protocol::mmo::E_PacketID packetID, google::protobuf::Message& message);
+	virtual protocol::mmo::E_ObjectType objectType() const override { return protocol::mmo::E_ObjectType::MONSTER; }
+	void broadcastPacket(protocol::mmo::E_PacketID packetID);
+	void broadcastPacket(protocol::mmo::E_PacketID packetID, google::protobuf::Message& message);
 	const S_Stats& stats() const { return _stats; }
 	void stats(const S_Stats& val);
+
+	// I_Targetable을(를) 통해 상속됨
+	virtual void addBuff(Buff* buff) override;
+	virtual void removeBuff(Buff* buff) override;
+	virtual void addCC(CC* cc) override;
+	virtual void removeCC(CC* cc) override;
+	virtual void addPersistentHit(PersistentHit* persistentHit) override;
+	virtual void removePersistentHit(PersistentHit* persistentHit) override;
+	virtual void takeDamage(protocol::mmo::E_Stats what, int val) override;
 protected:
 	Monster() = delete;
 	Monster(const Monster&) = delete;
@@ -35,5 +48,9 @@ private:
 
 	Area* _objArea = nullptr;
 	S_Stats _stats = {};
-	protocol::mmo::TransformInt _initTF; // 초기위치
+	protocol::mmo::TransformInt _initTF; // 초기위치 (리스폰할때 사용)
+
+	std::vector<Buff*> _buff;
+	std::vector<CC*> _cc;
+	std::vector<PersistentHit*> _persistentHit;
 };
