@@ -10,7 +10,7 @@ I_Revertable* HitAction::action(const S_TargetBasedAction& targetActionDetail, G
     {
         // TODO : 비례 데미지
     }
-    I_Targetable* target = reinterpret_cast<I_Targetable*>(targetObj);
+    I_Targetable* target = dynamic_cast<I_Targetable*>(targetObj);
     target->takeDamage(targetActionDetail.targetStats, damage);
     return nullptr;
 }

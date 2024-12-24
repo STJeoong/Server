@@ -39,11 +39,11 @@ void MonsterController::update()
 }
 void MonsterController::onAreaEnter(Area& my, Area& other)
 {
-	/*if (_target != nullptr && other.gameObject() == _target && my.layer() == E_Layer::MONSTER_NORMAL_ATTACK)
+	if (_target != nullptr && other.gameObject() == _target && my.layer() == E_Layer::MONSTER_NORMAL_ATTACK)
 	{
 		_me->state(E_ObjectState::ATTACK);
 		return;
-	}*/
+	}
 	if (_target != nullptr || my.layer() != E_Layer::MONSTER_AGGRESSIVE) return;
 	// Å¸°Ù ¼³Á¤
 	Map* map = _me->map();

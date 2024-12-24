@@ -20,7 +20,7 @@
         "xExtension": 1
       },
       "fixedRotation": false,
-      "delayTime": 3000,
+      "delayTime": 1000,
       "actions": [
         {
           "actionType": 0,
@@ -44,7 +44,7 @@
     "spawnInfo": [
       {
         "mapName": "Main",
-        "howMany": 10
+        "howMany": 1
       }
     ],
     "isAggressive": true,
