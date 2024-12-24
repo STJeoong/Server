@@ -149,6 +149,7 @@ Map::Map(const std::filesystem::path& path)
 {
 	std::ifstream mapFile(path);
 	std::string line;
+	std::queue<std::pair<int, int>> q; // 맵 바깥쪽의 0을 1로 바꾸기 위해서
 	mapFile >> _xMin >> _xMax >> _yMin >> _yMax;
 	mapFile.ignore(::std::numeric_limits<std::streamsize>::max(), '\n');
 	while (std::getline(mapFile, line))
@@ -164,8 +165,31 @@ Map::Map(const std::filesystem::path& path)
 		_canGo.push_back(v);
 	}
 	// 맵 아웃라인을 감싸는 장애물밖에 있는 0 전부 1로 변경
-	
-
+	if (_canGo[0][0])
+		q.push({ _yMin,_xMin });
+	else if (_canGo[0][_xMax - _xMin])
+		q.push({ _yMin, _xMax });
+	else if (_canGo[_yMax - _yMin][0])
+		q.push({ _yMax, _xMin });
+	else
+		q.push({ _yMax, _xMax });
+	_canGo[0][0] = _canGo[0][_xMax - _xMin] = _canGo[_yMax - _yMin][0] = _canGo[_yMax - _yMin][_xMax - _xMin] = false;
+	while (!q.empty())
+	{
+		auto [y, x] = q.front();
+		q.pop();
+		
+		for (int i = 0; i < 4; ++i)
+		{
+			int ny = y + dy[i];
+			int nx = x + dx[i];
+			if (this->canGo(ny, nx))
+			{
+				q.push({ ny,nx });
+				_canGo[ny - _yMin][nx - _xMin] = false;
+			}
+		}
+	}
 	_dat = new DAT();
 	// TODO : basePoint 설정
 	_basePointY = _basePointX = 0;
