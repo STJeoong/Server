@@ -91,9 +91,9 @@ inline void ObjectPool::release(T* obj)
 		if (pool->_releaseIdx == pool->_size)
 			pool->_releaseIdx = 0;
 		++pool->_currentSize;
+		if (pool->_useActionOnRelease)
+			pool->_actionOnRelease(obj);
 	}
-	if (pool->_useActionOnRelease)
-		pool->_actionOnRelease(obj);
 }
 
 template<typename T>

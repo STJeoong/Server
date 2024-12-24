@@ -163,9 +163,12 @@ Map::Map(const std::filesystem::path& path)
 		}
 		_canGo.push_back(v);
 	}
+	// 맵 아웃라인을 감싸는 장애물밖에 있는 0 전부 1로 변경
+	
+
 	_dat = new DAT();
 	// TODO : basePoint 설정
-	_basePointY = _basePointX = 2;
+	_basePointY = _basePointX = 0;
 	MMOServerBroadcaster::onUpdate += [this]() { this->update(); };
 }
 Map::~Map() { delete _dat; }

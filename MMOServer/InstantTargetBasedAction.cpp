@@ -30,10 +30,10 @@ void InstantTargetBasedAction::action(S_SkillAction& detail, GameObject* pivotOb
 		{
 			switch (targetAction.actionType)
 			{
-			case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_HIT: HitAction::action(detail, targetAction, targetObj, user); break;
-			case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_BUFF: BuffAction::action(detail, targetAction, targetObj, user); break;
-			case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_CC: CCAction::action(detail, targetAction, targetObj, user); break;
-			case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_PERSISTENT_HIT: PersistentHitAction::action(detail, targetAction, targetObj, user); break;
+			case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_HIT: HitAction::action(targetAction, targetObj, user); break;
+			case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_BUFF: BuffAction::action(targetAction, targetObj, user); break;
+			case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_CC: CCAction::action(targetAction, targetObj, user); break;
+			case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_PERSISTENT_HIT: PersistentHitAction::action(targetAction, targetObj, user); break;
 			}
 		}
 		if (detail.maxTarget == 0)

@@ -9,6 +9,7 @@ class MonsterController : public Behaviour
 	friend class GameObject;
 public:
 	void aggressiveArea(Area* area) { _aggressiveArea = area; }
+	void normalAttackArea(Area* area) { _normalAttackArea = area; }
 protected:
 	MonsterController() = delete;
 	MonsterController(const MonsterController&) = delete;
@@ -20,6 +21,7 @@ protected:
 private:
 	void idle();
 	void move();
+	void attack();
 	void decisionWhenNoTarget();
 	void decisionWhenTargetExist(); // Å¸°Ù ÃßÀû
 	Player* findNewTarget();
@@ -31,4 +33,5 @@ private:
 	int _nextUpdateCnt = 0;
 	Player* _target = nullptr;
 	Area* _aggressiveArea = nullptr;
+	Area* _normalAttackArea = nullptr;
 };

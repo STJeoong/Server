@@ -39,6 +39,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 PROTOBUF_CONSTEXPR ObjectEnter_Notify::ObjectEnter_Notify(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.otherinfo_)*/nullptr
+  , /*decltype(_impl_.speed_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct ObjectEnter_NotifyDefaultTypeInternal {
   PROTOBUF_CONSTEXPR ObjectEnter_NotifyDefaultTypeInternal()
@@ -143,9 +144,37 @@ struct UseSkill_RespDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 UseSkill_RespDefaultTypeInternal _UseSkill_Resp_default_instance_;
+PROTOBUF_CONSTEXPR MonsterNormalAttack_Notify::MonsterNormalAttack_Notify(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.objid_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct MonsterNormalAttack_NotifyDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR MonsterNormalAttack_NotifyDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~MonsterNormalAttack_NotifyDefaultTypeInternal() {}
+  union {
+    MonsterNormalAttack_Notify _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MonsterNormalAttack_NotifyDefaultTypeInternal _MonsterNormalAttack_Notify_default_instance_;
+PROTOBUF_CONSTEXPR StatsChange_Notify::StatsChange_Notify(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.objid_)*/0
+  , /*decltype(_impl_.what_)*/0
+  , /*decltype(_impl_.val_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct StatsChange_NotifyDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR StatsChange_NotifyDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~StatsChange_NotifyDefaultTypeInternal() {}
+  union {
+    StatsChange_Notify _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StatsChange_NotifyDefaultTypeInternal _StatsChange_Notify_default_instance_;
 }  // namespace mmo
 }  // namespace protocol
-static ::_pb::Metadata file_level_metadata_MMO_5fprotocol_2eproto[9];
+static ::_pb::Metadata file_level_metadata_MMO_5fprotocol_2eproto[11];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_MMO_5fprotocol_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_MMO_5fprotocol_2eproto = nullptr;
 
@@ -165,6 +194,7 @@ const uint32_t TableStruct_MMO_5fprotocol_2eproto::offsets[] PROTOBUF_SECTION_VA
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::protocol::mmo::ObjectEnter_Notify, _impl_.otherinfo_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::ObjectEnter_Notify, _impl_.speed_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::protocol::mmo::ObjectExit_Notify, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -217,17 +247,35 @@ const uint32_t TableStruct_MMO_5fprotocol_2eproto::offsets[] PROTOBUF_SECTION_VA
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::protocol::mmo::UseSkill_Resp, _impl_.who_),
   PROTOBUF_FIELD_OFFSET(::protocol::mmo::UseSkill_Resp, _impl_.skillname_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::MonsterNormalAttack_Notify, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::MonsterNormalAttack_Notify, _impl_.objid_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::StatsChange_Notify, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::StatsChange_Notify, _impl_.objid_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::StatsChange_Notify, _impl_.what_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::StatsChange_Notify, _impl_.val_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::protocol::mmo::EnterGame_Resp)},
   { 8, -1, -1, sizeof(::protocol::mmo::ObjectEnter_Notify)},
-  { 15, -1, -1, sizeof(::protocol::mmo::ObjectExit_Notify)},
-  { 22, -1, -1, sizeof(::protocol::mmo::Move_Req)},
-  { 29, -1, -1, sizeof(::protocol::mmo::Move_Notify)},
-  { 37, -1, -1, sizeof(::protocol::mmo::Idle_Notify)},
-  { 44, -1, -1, sizeof(::protocol::mmo::ChangeQuickSlot_Req)},
-  { 52, -1, -1, sizeof(::protocol::mmo::UseSkill_Req)},
-  { 59, -1, -1, sizeof(::protocol::mmo::UseSkill_Resp)},
+  { 16, -1, -1, sizeof(::protocol::mmo::ObjectExit_Notify)},
+  { 23, -1, -1, sizeof(::protocol::mmo::Move_Req)},
+  { 30, -1, -1, sizeof(::protocol::mmo::Move_Notify)},
+  { 38, -1, -1, sizeof(::protocol::mmo::Idle_Notify)},
+  { 45, -1, -1, sizeof(::protocol::mmo::ChangeQuickSlot_Req)},
+  { 53, -1, -1, sizeof(::protocol::mmo::UseSkill_Req)},
+  { 60, -1, -1, sizeof(::protocol::mmo::UseSkill_Resp)},
+  { 68, -1, -1, sizeof(::protocol::mmo::MonsterNormalAttack_Notify)},
+  { 75, -1, -1, sizeof(::protocol::mmo::StatsChange_Notify)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -240,6 +288,8 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::protocol::mmo::_ChangeQuickSlot_Req_default_instance_._instance,
   &::protocol::mmo::_UseSkill_Req_default_instance_._instance,
   &::protocol::mmo::_UseSkill_Resp_default_instance_._instance,
+  &::protocol::mmo::_MonsterNormalAttack_Notify_default_instance_._instance,
+  &::protocol::mmo::_StatsChange_Notify_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_MMO_5fprotocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -247,18 +297,22 @@ const char descriptor_table_protodef_MMO_5fprotocol_2eproto[] PROTOBUF_SECTION_V
   "enum.proto\032\020MMO_struct.proto\"b\n\016EnterGam"
   "e_Resp\022&\n\004resp\030\001 \001(\0162\030.protocol.mmo.E_Re"
   "spCode\022(\n\006myInfo\030\002 \001(\0132\030.protocol.mmo.Ob"
-  "jectInfo\"A\n\022ObjectEnter_Notify\022+\n\totherI"
-  "nfo\030\001 \001(\0132\030.protocol.mmo.ObjectInfo\"$\n\021O"
-  "bjectExit_Notify\022\017\n\007otherId\030\001 \001(\005\",\n\010Mov"
-  "e_Req\022 \n\003dir\030\001 \001(\0162\023.protocol.mmo.E_Dir\""
-  ";\n\013Move_Notify\022\n\n\002id\030\001 \001(\005\022 \n\003dir\030\002 \001(\0162"
-  "\023.protocol.mmo.E_Dir\"\031\n\013Idle_Notify\022\n\n\002i"
-  "d\030\001 \001(\005\"R\n\023ChangeQuickSlot_Req\022(\n\007keycod"
-  "e\030\001 \001(\0162\027.protocol.mmo.E_KeyCode\022\021\n\tskil"
-  "lName\030\002 \001(\t\"8\n\014UseSkill_Req\022(\n\007keycode\030\001"
-  " \001(\0162\027.protocol.mmo.E_KeyCode\"I\n\rUseSkil"
-  "l_Resp\022%\n\003who\030\001 \001(\0132\030.protocol.mmo.Objec"
-  "tInfo\022\021\n\tskillName\030\002 \001(\tb\006proto3"
+  "jectInfo\"P\n\022ObjectEnter_Notify\022+\n\totherI"
+  "nfo\030\001 \001(\0132\030.protocol.mmo.ObjectInfo\022\r\n\005s"
+  "peed\030\002 \001(\005\"$\n\021ObjectExit_Notify\022\017\n\007other"
+  "Id\030\001 \001(\005\",\n\010Move_Req\022 \n\003dir\030\001 \001(\0162\023.prot"
+  "ocol.mmo.E_Dir\";\n\013Move_Notify\022\n\n\002id\030\001 \001("
+  "\005\022 \n\003dir\030\002 \001(\0162\023.protocol.mmo.E_Dir\"\031\n\013I"
+  "dle_Notify\022\n\n\002id\030\001 \001(\005\"R\n\023ChangeQuickSlo"
+  "t_Req\022(\n\007keycode\030\001 \001(\0162\027.protocol.mmo.E_"
+  "KeyCode\022\021\n\tskillName\030\002 \001(\t\"8\n\014UseSkill_R"
+  "eq\022(\n\007keycode\030\001 \001(\0162\027.protocol.mmo.E_Key"
+  "Code\"I\n\rUseSkill_Resp\022%\n\003who\030\001 \001(\0132\030.pro"
+  "tocol.mmo.ObjectInfo\022\021\n\tskillName\030\002 \001(\t\""
+  "+\n\032MonsterNormalAttack_Notify\022\r\n\005objID\030\001"
+  " \001(\005\"U\n\022StatsChange_Notify\022\r\n\005objID\030\001 \001("
+  "\005\022#\n\004what\030\002 \001(\0162\025.protocol.mmo.E_Stats\022\013"
+  "\n\003val\030\003 \001(\005b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_MMO_5fprotocol_2eproto_deps[2] = {
   &::descriptor_table_MMO_5fenum_2eproto,
@@ -266,9 +320,9 @@ static const ::_pbi::DescriptorTable* const descriptor_table_MMO_5fprotocol_2epr
 };
 static ::_pbi::once_flag descriptor_table_MMO_5fprotocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_MMO_5fprotocol_2eproto = {
-    false, false, 632, descriptor_table_protodef_MMO_5fprotocol_2eproto,
+    false, false, 779, descriptor_table_protodef_MMO_5fprotocol_2eproto,
     "MMO_protocol.proto",
-    &descriptor_table_MMO_5fprotocol_2eproto_once, descriptor_table_MMO_5fprotocol_2eproto_deps, 2, 9,
+    &descriptor_table_MMO_5fprotocol_2eproto_once, descriptor_table_MMO_5fprotocol_2eproto_deps, 2, 11,
     schemas, file_default_instances, TableStruct_MMO_5fprotocol_2eproto::offsets,
     file_level_metadata_MMO_5fprotocol_2eproto, file_level_enum_descriptors_MMO_5fprotocol_2eproto,
     file_level_service_descriptors_MMO_5fprotocol_2eproto,
@@ -543,12 +597,14 @@ ObjectEnter_Notify::ObjectEnter_Notify(const ObjectEnter_Notify& from)
   ObjectEnter_Notify* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.otherinfo_){nullptr}
+    , decltype(_impl_.speed_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   if (from._internal_has_otherinfo()) {
     _this->_impl_.otherinfo_ = new ::protocol::mmo::ObjectInfo(*from._impl_.otherinfo_);
   }
+  _this->_impl_.speed_ = from._impl_.speed_;
   // @@protoc_insertion_point(copy_constructor:protocol.mmo.ObjectEnter_Notify)
 }
 
@@ -558,6 +614,7 @@ inline void ObjectEnter_Notify::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.otherinfo_){nullptr}
+    , decltype(_impl_.speed_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -590,6 +647,7 @@ void ObjectEnter_Notify::Clear() {
     delete _impl_.otherinfo_;
   }
   _impl_.otherinfo_ = nullptr;
+  _impl_.speed_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -603,6 +661,14 @@ const char* ObjectEnter_Notify::_InternalParse(const char* ptr, ::_pbi::ParseCon
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_otherinfo(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 speed = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.speed_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -643,6 +709,12 @@ uint8_t* ObjectEnter_Notify::_InternalSerialize(
         _Internal::otherinfo(this).GetCachedSize(), target, stream);
   }
 
+  // int32 speed = 2;
+  if (this->_internal_speed() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_speed(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -664,6 +736,11 @@ size_t ObjectEnter_Notify::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.otherinfo_);
+  }
+
+  // int32 speed = 2;
+  if (this->_internal_speed() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_speed());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -688,6 +765,9 @@ void ObjectEnter_Notify::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, con
     _this->_internal_mutable_otherinfo()->::protocol::mmo::ObjectInfo::MergeFrom(
         from._internal_otherinfo());
   }
+  if (from._internal_speed() != 0) {
+    _this->_internal_set_speed(from._internal_speed());
+  }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -705,7 +785,12 @@ bool ObjectEnter_Notify::IsInitialized() const {
 void ObjectEnter_Notify::InternalSwap(ObjectEnter_Notify* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_.otherinfo_, other->_impl_.otherinfo_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(ObjectEnter_Notify, _impl_.speed_)
+      + sizeof(ObjectEnter_Notify::_impl_.speed_)
+      - PROTOBUF_FIELD_OFFSET(ObjectEnter_Notify, _impl_.otherinfo_)>(
+          reinterpret_cast<char*>(&_impl_.otherinfo_),
+          reinterpret_cast<char*>(&other->_impl_.otherinfo_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata ObjectEnter_Notify::GetMetadata() const {
@@ -2130,6 +2215,422 @@ void UseSkill_Resp::InternalSwap(UseSkill_Resp* other) {
       file_level_metadata_MMO_5fprotocol_2eproto[8]);
 }
 
+// ===================================================================
+
+class MonsterNormalAttack_Notify::_Internal {
+ public:
+};
+
+MonsterNormalAttack_Notify::MonsterNormalAttack_Notify(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:protocol.mmo.MonsterNormalAttack_Notify)
+}
+MonsterNormalAttack_Notify::MonsterNormalAttack_Notify(const MonsterNormalAttack_Notify& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  MonsterNormalAttack_Notify* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.objid_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_impl_.objid_ = from._impl_.objid_;
+  // @@protoc_insertion_point(copy_constructor:protocol.mmo.MonsterNormalAttack_Notify)
+}
+
+inline void MonsterNormalAttack_Notify::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.objid_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+MonsterNormalAttack_Notify::~MonsterNormalAttack_Notify() {
+  // @@protoc_insertion_point(destructor:protocol.mmo.MonsterNormalAttack_Notify)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void MonsterNormalAttack_Notify::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void MonsterNormalAttack_Notify::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void MonsterNormalAttack_Notify::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.mmo.MonsterNormalAttack_Notify)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.objid_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* MonsterNormalAttack_Notify::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 objID = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.objid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* MonsterNormalAttack_Notify::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.mmo.MonsterNormalAttack_Notify)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 objID = 1;
+  if (this->_internal_objid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_objid(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.mmo.MonsterNormalAttack_Notify)
+  return target;
+}
+
+size_t MonsterNormalAttack_Notify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.mmo.MonsterNormalAttack_Notify)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int32 objID = 1;
+  if (this->_internal_objid() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_objid());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData MonsterNormalAttack_Notify::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    MonsterNormalAttack_Notify::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*MonsterNormalAttack_Notify::GetClassData() const { return &_class_data_; }
+
+
+void MonsterNormalAttack_Notify::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<MonsterNormalAttack_Notify*>(&to_msg);
+  auto& from = static_cast<const MonsterNormalAttack_Notify&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:protocol.mmo.MonsterNormalAttack_Notify)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_objid() != 0) {
+    _this->_internal_set_objid(from._internal_objid());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void MonsterNormalAttack_Notify::CopyFrom(const MonsterNormalAttack_Notify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.mmo.MonsterNormalAttack_Notify)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MonsterNormalAttack_Notify::IsInitialized() const {
+  return true;
+}
+
+void MonsterNormalAttack_Notify::InternalSwap(MonsterNormalAttack_Notify* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_.objid_, other->_impl_.objid_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MonsterNormalAttack_Notify::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_MMO_5fprotocol_2eproto_getter, &descriptor_table_MMO_5fprotocol_2eproto_once,
+      file_level_metadata_MMO_5fprotocol_2eproto[9]);
+}
+
+// ===================================================================
+
+class StatsChange_Notify::_Internal {
+ public:
+};
+
+StatsChange_Notify::StatsChange_Notify(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:protocol.mmo.StatsChange_Notify)
+}
+StatsChange_Notify::StatsChange_Notify(const StatsChange_Notify& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  StatsChange_Notify* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.objid_){}
+    , decltype(_impl_.what_){}
+    , decltype(_impl_.val_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&_impl_.objid_, &from._impl_.objid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.val_) -
+    reinterpret_cast<char*>(&_impl_.objid_)) + sizeof(_impl_.val_));
+  // @@protoc_insertion_point(copy_constructor:protocol.mmo.StatsChange_Notify)
+}
+
+inline void StatsChange_Notify::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.objid_){0}
+    , decltype(_impl_.what_){0}
+    , decltype(_impl_.val_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+StatsChange_Notify::~StatsChange_Notify() {
+  // @@protoc_insertion_point(destructor:protocol.mmo.StatsChange_Notify)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void StatsChange_Notify::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void StatsChange_Notify::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void StatsChange_Notify::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.mmo.StatsChange_Notify)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&_impl_.objid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.val_) -
+      reinterpret_cast<char*>(&_impl_.objid_)) + sizeof(_impl_.val_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* StatsChange_Notify::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 objID = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.objid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .protocol.mmo.E_Stats what = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_what(static_cast<::protocol::mmo::E_Stats>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 val = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.val_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* StatsChange_Notify::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.mmo.StatsChange_Notify)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 objID = 1;
+  if (this->_internal_objid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_objid(), target);
+  }
+
+  // .protocol.mmo.E_Stats what = 2;
+  if (this->_internal_what() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      2, this->_internal_what(), target);
+  }
+
+  // int32 val = 3;
+  if (this->_internal_val() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_val(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.mmo.StatsChange_Notify)
+  return target;
+}
+
+size_t StatsChange_Notify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.mmo.StatsChange_Notify)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int32 objID = 1;
+  if (this->_internal_objid() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_objid());
+  }
+
+  // .protocol.mmo.E_Stats what = 2;
+  if (this->_internal_what() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_what());
+  }
+
+  // int32 val = 3;
+  if (this->_internal_val() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_val());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData StatsChange_Notify::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    StatsChange_Notify::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*StatsChange_Notify::GetClassData() const { return &_class_data_; }
+
+
+void StatsChange_Notify::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<StatsChange_Notify*>(&to_msg);
+  auto& from = static_cast<const StatsChange_Notify&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:protocol.mmo.StatsChange_Notify)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_objid() != 0) {
+    _this->_internal_set_objid(from._internal_objid());
+  }
+  if (from._internal_what() != 0) {
+    _this->_internal_set_what(from._internal_what());
+  }
+  if (from._internal_val() != 0) {
+    _this->_internal_set_val(from._internal_val());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void StatsChange_Notify::CopyFrom(const StatsChange_Notify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.mmo.StatsChange_Notify)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool StatsChange_Notify::IsInitialized() const {
+  return true;
+}
+
+void StatsChange_Notify::InternalSwap(StatsChange_Notify* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(StatsChange_Notify, _impl_.val_)
+      + sizeof(StatsChange_Notify::_impl_.val_)
+      - PROTOBUF_FIELD_OFFSET(StatsChange_Notify, _impl_.objid_)>(
+          reinterpret_cast<char*>(&_impl_.objid_),
+          reinterpret_cast<char*>(&other->_impl_.objid_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata StatsChange_Notify::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_MMO_5fprotocol_2eproto_getter, &descriptor_table_MMO_5fprotocol_2eproto_once,
+      file_level_metadata_MMO_5fprotocol_2eproto[10]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace mmo
 }  // namespace protocol
@@ -2169,6 +2670,14 @@ Arena::CreateMaybeMessage< ::protocol::mmo::UseSkill_Req >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::protocol::mmo::UseSkill_Resp*
 Arena::CreateMaybeMessage< ::protocol::mmo::UseSkill_Resp >(Arena* arena) {
   return Arena::CreateMessageInternal< ::protocol::mmo::UseSkill_Resp >(arena);
+}
+template<> PROTOBUF_NOINLINE ::protocol::mmo::MonsterNormalAttack_Notify*
+Arena::CreateMaybeMessage< ::protocol::mmo::MonsterNormalAttack_Notify >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::mmo::MonsterNormalAttack_Notify >(arena);
+}
+template<> PROTOBUF_NOINLINE ::protocol::mmo::StatsChange_Notify*
+Arena::CreateMaybeMessage< ::protocol::mmo::StatsChange_Notify >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::mmo::StatsChange_Notify >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

@@ -358,6 +358,7 @@ class ObjectInfo final :
     kTransformFieldNumber = 3,
     kIdFieldNumber = 1,
     kStateFieldNumber = 2,
+    kFlipXFieldNumber = 4,
   };
   // .protocol.mmo.TransformInt transform = 3;
   bool has_transform() const;
@@ -395,6 +396,15 @@ class ObjectInfo final :
   void _internal_set_state(::protocol::mmo::E_ObjectState value);
   public:
 
+  // bool flipX = 4;
+  void clear_flipx();
+  bool flipx() const;
+  void set_flipx(bool value);
+  private:
+  bool _internal_flipx() const;
+  void _internal_set_flipx(bool value);
+  public:
+
   // @@protoc_insertion_point(class_scope:protocol.mmo.ObjectInfo)
  private:
   class _Internal;
@@ -406,6 +416,7 @@ class ObjectInfo final :
     ::protocol::mmo::TransformInt* transform_;
     int32_t id_;
     int state_;
+    bool flipx_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -614,6 +625,26 @@ inline void ObjectInfo::set_allocated_transform(::protocol::mmo::TransformInt* t
   }
   _impl_.transform_ = transform;
   // @@protoc_insertion_point(field_set_allocated:protocol.mmo.ObjectInfo.transform)
+}
+
+// bool flipX = 4;
+inline void ObjectInfo::clear_flipx() {
+  _impl_.flipx_ = false;
+}
+inline bool ObjectInfo::_internal_flipx() const {
+  return _impl_.flipx_;
+}
+inline bool ObjectInfo::flipx() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.ObjectInfo.flipX)
+  return _internal_flipx();
+}
+inline void ObjectInfo::_internal_set_flipx(bool value) {
+  
+  _impl_.flipx_ = value;
+}
+inline void ObjectInfo::set_flipx(bool value) {
+  _internal_set_flipx(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.ObjectInfo.flipX)
 }
 
 #ifdef __GNUC__

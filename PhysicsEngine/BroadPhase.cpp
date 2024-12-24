@@ -1,11 +1,16 @@
 #include "pch.h"
 #include "BroadPhase.h"
+#include <vector>
 
+std::vector<int> v;
 #pragma region public
 int BroadPhase::insert(void* userData, const AABB& aabb)
 {
 	int ret = _tree.insert(userData, aabb);
 	_thingsToBeUpdated.push_back(ret);
+	/*for (int i = 0; i < v.size(); ++i)
+		_candidates.push_back({v[i], ret});
+	v.push_back(ret);*/
 	return ret;
 }
 void BroadPhase::remove(int id)

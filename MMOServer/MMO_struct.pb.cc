@@ -42,6 +42,7 @@ PROTOBUF_CONSTEXPR ObjectInfo::ObjectInfo(
     /*decltype(_impl_.transform_)*/nullptr
   , /*decltype(_impl_.id_)*/0
   , /*decltype(_impl_.state_)*/0
+  , /*decltype(_impl_.flipx_)*/false
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct ObjectInfoDefaultTypeInternal {
   PROTOBUF_CONSTEXPR ObjectInfoDefaultTypeInternal()
@@ -77,6 +78,7 @@ const uint32_t TableStruct_MMO_5fstruct_2eproto::offsets[] PROTOBUF_SECTION_VARI
   PROTOBUF_FIELD_OFFSET(::protocol::mmo::ObjectInfo, _impl_.id_),
   PROTOBUF_FIELD_OFFSET(::protocol::mmo::ObjectInfo, _impl_.state_),
   PROTOBUF_FIELD_OFFSET(::protocol::mmo::ObjectInfo, _impl_.transform_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::ObjectInfo, _impl_.flipx_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::protocol::mmo::TransformInt)},
@@ -92,17 +94,17 @@ const char descriptor_table_protodef_MMO_5fstruct_2eproto[] PROTOBUF_SECTION_VAR
   "\n\020MMO_struct.proto\022\014protocol.mmo\032\016MMO_en"
   "um.proto\"F\n\014TransformInt\022\t\n\001x\030\001 \001(\005\022\t\n\001y"
   "\030\002 \001(\005\022 \n\003dir\030\003 \001(\0162\023.protocol.mmo.E_Dir"
-  "\"s\n\nObjectInfo\022\n\n\002id\030\001 \001(\005\022*\n\005state\030\002 \001("
-  "\0162\033.protocol.mmo.E_ObjectState\022-\n\ttransf"
-  "orm\030\003 \001(\0132\032.protocol.mmo.TransformIntb\006p"
-  "roto3"
+  "\"\202\001\n\nObjectInfo\022\n\n\002id\030\001 \001(\005\022*\n\005state\030\002 \001"
+  "(\0162\033.protocol.mmo.E_ObjectState\022-\n\ttrans"
+  "form\030\003 \001(\0132\032.protocol.mmo.TransformInt\022\r"
+  "\n\005flipX\030\004 \001(\010b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_MMO_5fstruct_2eproto_deps[1] = {
   &::descriptor_table_MMO_5fenum_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_MMO_5fstruct_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_MMO_5fstruct_2eproto = {
-    false, false, 245, descriptor_table_protodef_MMO_5fstruct_2eproto,
+    false, false, 261, descriptor_table_protodef_MMO_5fstruct_2eproto,
     "MMO_struct.proto",
     &descriptor_table_MMO_5fstruct_2eproto_once, descriptor_table_MMO_5fstruct_2eproto_deps, 1, 2,
     schemas, file_default_instances, TableStruct_MMO_5fstruct_2eproto::offsets,
@@ -380,6 +382,7 @@ ObjectInfo::ObjectInfo(const ObjectInfo& from)
       decltype(_impl_.transform_){nullptr}
     , decltype(_impl_.id_){}
     , decltype(_impl_.state_){}
+    , decltype(_impl_.flipx_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -387,8 +390,8 @@ ObjectInfo::ObjectInfo(const ObjectInfo& from)
     _this->_impl_.transform_ = new ::protocol::mmo::TransformInt(*from._impl_.transform_);
   }
   ::memcpy(&_impl_.id_, &from._impl_.id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.state_) -
-    reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.state_));
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.flipx_) -
+    reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.flipx_));
   // @@protoc_insertion_point(copy_constructor:protocol.mmo.ObjectInfo)
 }
 
@@ -400,6 +403,7 @@ inline void ObjectInfo::SharedCtor(
       decltype(_impl_.transform_){nullptr}
     , decltype(_impl_.id_){0}
     , decltype(_impl_.state_){0}
+    , decltype(_impl_.flipx_){false}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -433,8 +437,8 @@ void ObjectInfo::Clear() {
   }
   _impl_.transform_ = nullptr;
   ::memset(&_impl_.id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.state_) -
-      reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.state_));
+      reinterpret_cast<char*>(&_impl_.flipx_) -
+      reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.flipx_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -465,6 +469,14 @@ const char* ObjectInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ct
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           ptr = ctx->ParseMessage(_internal_mutable_transform(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool flipX = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.flipx_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -518,6 +530,12 @@ uint8_t* ObjectInfo::_InternalSerialize(
         _Internal::transform(this).GetCachedSize(), target, stream);
   }
 
+  // bool flipX = 4;
+  if (this->_internal_flipx() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(4, this->_internal_flipx(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -552,6 +570,11 @@ size_t ObjectInfo::ByteSizeLong() const {
       ::_pbi::WireFormatLite::EnumSize(this->_internal_state());
   }
 
+  // bool flipX = 4;
+  if (this->_internal_flipx() != 0) {
+    total_size += 1 + 1;
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -580,6 +603,9 @@ void ObjectInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PRO
   if (from._internal_state() != 0) {
     _this->_internal_set_state(from._internal_state());
   }
+  if (from._internal_flipx() != 0) {
+    _this->_internal_set_flipx(from._internal_flipx());
+  }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -598,8 +624,8 @@ void ObjectInfo::InternalSwap(ObjectInfo* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(ObjectInfo, _impl_.state_)
-      + sizeof(ObjectInfo::_impl_.state_)
+      PROTOBUF_FIELD_OFFSET(ObjectInfo, _impl_.flipx_)
+      + sizeof(ObjectInfo::_impl_.flipx_)
       - PROTOBUF_FIELD_OFFSET(ObjectInfo, _impl_.transform_)>(
           reinterpret_cast<char*>(&_impl_.transform_),
           reinterpret_cast<char*>(&other->_impl_.transform_));

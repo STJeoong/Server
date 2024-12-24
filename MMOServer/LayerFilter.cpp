@@ -13,6 +13,8 @@ void LayerFilter::init()
 
 	LayerFilter::enable(E_Layer::SKILL, E_Layer::PLAYER_OBJ);
 	LayerFilter::enable(E_Layer::SKILL, E_Layer::MONSTER_OBJ);
+
+	LayerFilter::enable(E_Layer::MONSTER_NORMAL_ATTACK, E_Layer::PLAYER_OBJ);
 }
 void LayerFilter::enable(E_Layer layer1, E_Layer layer2)
 {

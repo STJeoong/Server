@@ -21,12 +21,11 @@ void Monster::init()
 	std::cout << "Monster init...\n";
 	// TODO : 설정파일로 몬스터 정보 가져와서 한번에 소환하기
 	std::ifstream fstream("C:/Users/taejeong/source/repos/ServerFramework/MMOServer/data/MonsterData.json");
-	std::vector<S_MonsterData> data;
 	json j = json::parse(fstream);
-	j.get_to(data);
+	j.get_to(s_monsterData);
 
-	for (int i = 0; i < data.size(); ++i)
-		Monster::spawn(data[i]);
+	for (int i = 0; i < s_monsterData.size(); ++i)
+		Monster::spawn(s_monsterData[i]);
 }
 #pragma endregion
 
@@ -58,9 +57,20 @@ void Monster::spawn(const S_MonsterData& data)
 			if (data.isAggressive)
 			{
 				Area* aggressiveArea = monster->addComponent<Area>();
+				controller->aggressiveArea(aggressiveArea);
 				aggressiveArea->layer(E_Layer::MONSTER_AGGRESSIVE);
 				aggressiveArea->addShape(new Rectangular(aggressiveArea, data.aggressiveArea));
 			}
+
+			{
+				// 몬스터 기본공격
+				Area* normalAttackArea = monster->addComponent<Area>();
+				controller->normalAttackArea(normalAttackArea);
+				normalAttackArea->layer(E_Layer::MONSTER_NORMAL_ATTACK);
+				normalAttackArea->addShape(new Rectangular(normalAttackArea, data.normalAttack.areaDefine));
+				normalAttackArea->enable(false);
+			}
+
 			// TODO : 몬스터 스탯
 			monster->_stats = data.stats;
 			monster->id(Utils::createID(E_ObjectType::MONSTER, data.templateID, j));
@@ -76,6 +86,7 @@ void Monster::spawn(const S_MonsterData& data)
 			monster->_initTF.set_y(y);
 			monster->_initTF.set_x(x);
 			monster->transform(y, x, E_Dir::BOTTOM);
+			monster->flipX(false);
 		}
 	}
 }
@@ -90,6 +101,7 @@ void Monster::respawn()
 
 		// 스탯 및 위치값 다시 초기화
 		monster->transform(initTF.y(), initTF.x(), initTF.dir());
+		monster->flipX(false);
 		stats.hp = stats.maxHp;
 		stats.mp = stats.maxMp;
 		stats.atk = stats.defaultAtk;
@@ -166,3 +178,4 @@ void Monster::takeDamage(protocol::mmo::E_Stats what, int val)
 #pragma endregion
 
 std::queue<Monster*> Monster::s_deadMonsters;
+std::vector<S_MonsterData> Monster::s_monsterData;

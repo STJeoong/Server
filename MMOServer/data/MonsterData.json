@@ -10,9 +10,37 @@
       "defaultDef": 3,
       "defaultSpeed": 2
     },
-    "skills": [
-      "MONSTER_CLOSE_RANGE_ATK"
-    ],
+    "normalAttack": {
+      "onlyTarget": true,
+      "maxTarget": 0,
+      "areaDefine": {
+        "offsetY": 0,
+        "offsetX": 0,
+        "yExtension": 2,
+        "xExtension": 1
+      },
+      "fixedRotation": false,
+      "delayTime": 3000,
+      "actions": [
+        {
+          "actionType": 0,
+          "hitInterval": 0,
+          "duration": 0,
+          "ccType": 0,
+          "isProportional": false,
+          "isTargetStandard": false,
+          "referenceValue": 20,
+          "standardStats": 0,
+          "targetStats": 2
+        }
+      ],
+      "userAnim": "",
+      "userEffect": "",
+      "userSound": "",
+      "targetAnim": "",
+      "targetEffect": "",
+      "targetSound": ""
+    },
     "spawnInfo": [
       {
         "mapName": "Main",

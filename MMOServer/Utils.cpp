@@ -88,6 +88,12 @@ int Utils::createID(E_ObjectType objType, UINT8 templateID, int objID)
 	ret |= objID;
 	return ret;
 }
+int Utils::getTemplateID(int id)
+{
+	int mask = (1 << 8) - 1;
+	id = id >> 20;
+	return id & mask;
+}
 int Utils::getID(int id)
 {
 	int mask = (1 << 20) - 1;

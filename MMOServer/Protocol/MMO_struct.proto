@@ -15,4 +15,5 @@ message ObjectInfo
 	int32 id = 1;
 	E_ObjectState state = 2;
 	TransformInt transform = 3;
+	bool flipX = 4;
 }

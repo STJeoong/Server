@@ -29,7 +29,6 @@ struct S_SkillAction
 	bool fixedRotation;
 
 	// persistent
-	Area* skillArea = nullptr;
 	int areaDuration;
 	int interval;
 	bool revertOnExit;

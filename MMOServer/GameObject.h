@@ -39,6 +39,7 @@ public:
 	void state(protocol::mmo::E_ObjectState val) { _info.set_state(val); }
 	const protocol::mmo::TransformInt& transform() const { return _info.transform(); }
 	void transform(int y, int x, protocol::mmo::E_Dir dir);
+	void flipX(bool val) { _info.set_flipx(val); }
 	const protocol::mmo::ObjectInfo& info() const { return _info; }
 	void active(bool flag, bool evtInvoke = true);
 	bool activeSelf() const { return _activeSelf; }

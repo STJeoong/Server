@@ -14,11 +14,13 @@ class Monster : public GameObject, public I_Targetable
 	friend class Map;
 public:
 	static void init();
+	static const S_MonsterData& monsterData(int templateID) { return s_monsterData[templateID]; }
 private:
 	static void spawn(const S_MonsterData& data);
 	static void respawn();
 
 	static std::queue<Monster*> s_deadMonsters;
+	static std::vector<S_MonsterData> s_monsterData;
 
 public:
 	virtual protocol::mmo::E_ObjectType objectType() const override { return protocol::mmo::E_ObjectType::MONSTER; }

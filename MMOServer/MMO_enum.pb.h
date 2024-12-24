@@ -108,7 +108,8 @@ enum E_ObjectState : int {
   NONE = 0,
   IDLE = 1,
   MOVE = 2,
-  DEAD = 3,
+  ATTACK = 3,
+  DEAD = 4,
   E_ObjectState_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   E_ObjectState_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };

@@ -1,9 +1,10 @@
 #pragma once
 #include "S_SkillData.h"
 class GameObject;
+class I_Revertable;
 class PersistentHitAction
 {
 public:
-	static void action(const S_SkillAction& skillActionDetail, const S_TargetBasedAction& targetActionDetail, GameObject* targetObj, GameObject* user);
+	static I_Revertable* action(const S_TargetBasedAction& targetActionDetail, GameObject* targetObj, GameObject* user);
 };
 

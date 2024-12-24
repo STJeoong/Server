@@ -7,6 +7,7 @@
 #include "Area.h"
 #include "Rectangular.h"
 #include "Map.h"
+#include "I_Revertable.h"
 
 using namespace protocol::mmo;
 #pragma region public
@@ -15,11 +16,10 @@ void PersistentTargetBasedAction::action(S_SkillAction& detail, GameObject* pivo
 	Area* area = pivotObj->addComponent<Area>();
 	area->addShape(new Rectangular(area, detail.areaDefine));
 	area->layer(E_Layer::SKILL);
-	detail.skillArea = area;
 
 	for (const S_TargetBasedAction& targetAction : detail.targetBasedActions)
 	{
-		void (*f)(const S_SkillAction&, const S_TargetBasedAction&, GameObject*, GameObject*) = nullptr;
+		I_Revertable* (*f)(const S_TargetBasedAction&, GameObject*, GameObject*) = nullptr;
 		switch (targetAction.actionType)
 		{
 		case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_BUFF: f = BuffAction::action; break;
@@ -27,7 +27,7 @@ void PersistentTargetBasedAction::action(S_SkillAction& detail, GameObject* pivo
 		case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_PERSISTENT_HIT: f = PersistentHitAction::action; break;
 		}
 
-		std::function<void(Area&)> onAreaEnter = [f, detail, targetAction, user](Area& other)
+		std::function<void(Area&)> onAreaEnter = [f, area, detail, targetAction, user](Area& other)
 		{
 			GameObject* targetObj = other.gameObject();
 			if (!(detail.filter & ((int)targetObj->objectType())))
@@ -37,7 +37,12 @@ void PersistentTargetBasedAction::action(S_SkillAction& detail, GameObject* pivo
 			if (targetObj != user && detail.onlyMe)
 				return;
 
-			f(detail, targetAction, targetObj, user);
+			I_Revertable* revertable = f(targetAction, targetObj, user);
+			if (detail.revertOnExit)
+			{
+				std::function<void(Area&)> onAreaExit = [revertable, targetObj](Area& other) { if (other.gameObject() == targetObj) revertable->revert(); };
+				area->addListenerOnAreaExit(onAreaExit);
+			}
 		};
 		area->addListenerOnAreaEnter(onAreaEnter);
 	}

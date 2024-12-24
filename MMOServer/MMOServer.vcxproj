@@ -210,6 +210,7 @@
     <ClInclude Include="HitAction.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="InstantLocationBasedAction.h" />
+    <ClInclude Include="I_Revertable.h" />
     <ClInclude Include="I_Targetable.h" />
     <ClInclude Include="MonsterController.h" />
     <ClInclude Include="PersistentHit.h" />
@@ -243,6 +244,9 @@
     <None Include="Protocol\MMO_protocol.bat" />
     <None Include="Protocol\MMO_protocol.proto" />
     <None Include="Protocol\MMO_struct.proto" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\map\Main_Collision.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

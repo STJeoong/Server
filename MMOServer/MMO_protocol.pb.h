@@ -57,6 +57,9 @@ extern EnterGame_RespDefaultTypeInternal _EnterGame_Resp_default_instance_;
 class Idle_Notify;
 struct Idle_NotifyDefaultTypeInternal;
 extern Idle_NotifyDefaultTypeInternal _Idle_Notify_default_instance_;
+class MonsterNormalAttack_Notify;
+struct MonsterNormalAttack_NotifyDefaultTypeInternal;
+extern MonsterNormalAttack_NotifyDefaultTypeInternal _MonsterNormalAttack_Notify_default_instance_;
 class Move_Notify;
 struct Move_NotifyDefaultTypeInternal;
 extern Move_NotifyDefaultTypeInternal _Move_Notify_default_instance_;
@@ -69,6 +72,9 @@ extern ObjectEnter_NotifyDefaultTypeInternal _ObjectEnter_Notify_default_instanc
 class ObjectExit_Notify;
 struct ObjectExit_NotifyDefaultTypeInternal;
 extern ObjectExit_NotifyDefaultTypeInternal _ObjectExit_Notify_default_instance_;
+class StatsChange_Notify;
+struct StatsChange_NotifyDefaultTypeInternal;
+extern StatsChange_NotifyDefaultTypeInternal _StatsChange_Notify_default_instance_;
 class UseSkill_Req;
 struct UseSkill_ReqDefaultTypeInternal;
 extern UseSkill_ReqDefaultTypeInternal _UseSkill_Req_default_instance_;
@@ -81,10 +87,12 @@ PROTOBUF_NAMESPACE_OPEN
 template<> ::protocol::mmo::ChangeQuickSlot_Req* Arena::CreateMaybeMessage<::protocol::mmo::ChangeQuickSlot_Req>(Arena*);
 template<> ::protocol::mmo::EnterGame_Resp* Arena::CreateMaybeMessage<::protocol::mmo::EnterGame_Resp>(Arena*);
 template<> ::protocol::mmo::Idle_Notify* Arena::CreateMaybeMessage<::protocol::mmo::Idle_Notify>(Arena*);
+template<> ::protocol::mmo::MonsterNormalAttack_Notify* Arena::CreateMaybeMessage<::protocol::mmo::MonsterNormalAttack_Notify>(Arena*);
 template<> ::protocol::mmo::Move_Notify* Arena::CreateMaybeMessage<::protocol::mmo::Move_Notify>(Arena*);
 template<> ::protocol::mmo::Move_Req* Arena::CreateMaybeMessage<::protocol::mmo::Move_Req>(Arena*);
 template<> ::protocol::mmo::ObjectEnter_Notify* Arena::CreateMaybeMessage<::protocol::mmo::ObjectEnter_Notify>(Arena*);
 template<> ::protocol::mmo::ObjectExit_Notify* Arena::CreateMaybeMessage<::protocol::mmo::ObjectExit_Notify>(Arena*);
+template<> ::protocol::mmo::StatsChange_Notify* Arena::CreateMaybeMessage<::protocol::mmo::StatsChange_Notify>(Arena*);
 template<> ::protocol::mmo::UseSkill_Req* Arena::CreateMaybeMessage<::protocol::mmo::UseSkill_Req>(Arena*);
 template<> ::protocol::mmo::UseSkill_Resp* Arena::CreateMaybeMessage<::protocol::mmo::UseSkill_Resp>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -383,6 +391,7 @@ class ObjectEnter_Notify final :
 
   enum : int {
     kOtherInfoFieldNumber = 1,
+    kSpeedFieldNumber = 2,
   };
   // .protocol.mmo.ObjectInfo otherInfo = 1;
   bool has_otherinfo() const;
@@ -402,6 +411,15 @@ class ObjectEnter_Notify final :
       ::protocol::mmo::ObjectInfo* otherinfo);
   ::protocol::mmo::ObjectInfo* unsafe_arena_release_otherinfo();
 
+  // int32 speed = 2;
+  void clear_speed();
+  int32_t speed() const;
+  void set_speed(int32_t value);
+  private:
+  int32_t _internal_speed() const;
+  void _internal_set_speed(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:protocol.mmo.ObjectEnter_Notify)
  private:
   class _Internal;
@@ -411,6 +429,7 @@ class ObjectEnter_Notify final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::protocol::mmo::ObjectInfo* otherinfo_;
+    int32_t speed_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -1504,6 +1523,324 @@ class UseSkill_Resp final :
   union { Impl_ _impl_; };
   friend struct ::TableStruct_MMO_5fprotocol_2eproto;
 };
+// -------------------------------------------------------------------
+
+class MonsterNormalAttack_Notify final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.mmo.MonsterNormalAttack_Notify) */ {
+ public:
+  inline MonsterNormalAttack_Notify() : MonsterNormalAttack_Notify(nullptr) {}
+  ~MonsterNormalAttack_Notify() override;
+  explicit PROTOBUF_CONSTEXPR MonsterNormalAttack_Notify(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  MonsterNormalAttack_Notify(const MonsterNormalAttack_Notify& from);
+  MonsterNormalAttack_Notify(MonsterNormalAttack_Notify&& from) noexcept
+    : MonsterNormalAttack_Notify() {
+    *this = ::std::move(from);
+  }
+
+  inline MonsterNormalAttack_Notify& operator=(const MonsterNormalAttack_Notify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MonsterNormalAttack_Notify& operator=(MonsterNormalAttack_Notify&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const MonsterNormalAttack_Notify& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const MonsterNormalAttack_Notify* internal_default_instance() {
+    return reinterpret_cast<const MonsterNormalAttack_Notify*>(
+               &_MonsterNormalAttack_Notify_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    9;
+
+  friend void swap(MonsterNormalAttack_Notify& a, MonsterNormalAttack_Notify& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MonsterNormalAttack_Notify* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(MonsterNormalAttack_Notify* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  MonsterNormalAttack_Notify* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<MonsterNormalAttack_Notify>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const MonsterNormalAttack_Notify& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const MonsterNormalAttack_Notify& from) {
+    MonsterNormalAttack_Notify::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MonsterNormalAttack_Notify* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "protocol.mmo.MonsterNormalAttack_Notify";
+  }
+  protected:
+  explicit MonsterNormalAttack_Notify(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kObjIDFieldNumber = 1,
+  };
+  // int32 objID = 1;
+  void clear_objid();
+  int32_t objid() const;
+  void set_objid(int32_t value);
+  private:
+  int32_t _internal_objid() const;
+  void _internal_set_objid(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:protocol.mmo.MonsterNormalAttack_Notify)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t objid_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_MMO_5fprotocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class StatsChange_Notify final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.mmo.StatsChange_Notify) */ {
+ public:
+  inline StatsChange_Notify() : StatsChange_Notify(nullptr) {}
+  ~StatsChange_Notify() override;
+  explicit PROTOBUF_CONSTEXPR StatsChange_Notify(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  StatsChange_Notify(const StatsChange_Notify& from);
+  StatsChange_Notify(StatsChange_Notify&& from) noexcept
+    : StatsChange_Notify() {
+    *this = ::std::move(from);
+  }
+
+  inline StatsChange_Notify& operator=(const StatsChange_Notify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline StatsChange_Notify& operator=(StatsChange_Notify&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const StatsChange_Notify& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const StatsChange_Notify* internal_default_instance() {
+    return reinterpret_cast<const StatsChange_Notify*>(
+               &_StatsChange_Notify_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    10;
+
+  friend void swap(StatsChange_Notify& a, StatsChange_Notify& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(StatsChange_Notify* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(StatsChange_Notify* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  StatsChange_Notify* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<StatsChange_Notify>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const StatsChange_Notify& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const StatsChange_Notify& from) {
+    StatsChange_Notify::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(StatsChange_Notify* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "protocol.mmo.StatsChange_Notify";
+  }
+  protected:
+  explicit StatsChange_Notify(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kObjIDFieldNumber = 1,
+    kWhatFieldNumber = 2,
+    kValFieldNumber = 3,
+  };
+  // int32 objID = 1;
+  void clear_objid();
+  int32_t objid() const;
+  void set_objid(int32_t value);
+  private:
+  int32_t _internal_objid() const;
+  void _internal_set_objid(int32_t value);
+  public:
+
+  // .protocol.mmo.E_Stats what = 2;
+  void clear_what();
+  ::protocol::mmo::E_Stats what() const;
+  void set_what(::protocol::mmo::E_Stats value);
+  private:
+  ::protocol::mmo::E_Stats _internal_what() const;
+  void _internal_set_what(::protocol::mmo::E_Stats value);
+  public:
+
+  // int32 val = 3;
+  void clear_val();
+  int32_t val() const;
+  void set_val(int32_t value);
+  private:
+  int32_t _internal_val() const;
+  void _internal_set_val(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:protocol.mmo.StatsChange_Notify)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t objid_;
+    int what_;
+    int32_t val_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_MMO_5fprotocol_2eproto;
+};
 // ===================================================================
 
 
@@ -1707,6 +2044,26 @@ inline void ObjectEnter_Notify::set_allocated_otherinfo(::protocol::mmo::ObjectI
   }
   _impl_.otherinfo_ = otherinfo;
   // @@protoc_insertion_point(field_set_allocated:protocol.mmo.ObjectEnter_Notify.otherInfo)
+}
+
+// int32 speed = 2;
+inline void ObjectEnter_Notify::clear_speed() {
+  _impl_.speed_ = 0;
+}
+inline int32_t ObjectEnter_Notify::_internal_speed() const {
+  return _impl_.speed_;
+}
+inline int32_t ObjectEnter_Notify::speed() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.ObjectEnter_Notify.speed)
+  return _internal_speed();
+}
+inline void ObjectEnter_Notify::_internal_set_speed(int32_t value) {
+  
+  _impl_.speed_ = value;
+}
+inline void ObjectEnter_Notify::set_speed(int32_t value) {
+  _internal_set_speed(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.ObjectEnter_Notify.speed)
 }
 
 // -------------------------------------------------------------------
@@ -2062,9 +2419,101 @@ inline void UseSkill_Resp::set_allocated_skillname(std::string* skillname) {
   // @@protoc_insertion_point(field_set_allocated:protocol.mmo.UseSkill_Resp.skillName)
 }
 
+// -------------------------------------------------------------------
+
+// MonsterNormalAttack_Notify
+
+// int32 objID = 1;
+inline void MonsterNormalAttack_Notify::clear_objid() {
+  _impl_.objid_ = 0;
+}
+inline int32_t MonsterNormalAttack_Notify::_internal_objid() const {
+  return _impl_.objid_;
+}
+inline int32_t MonsterNormalAttack_Notify::objid() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.MonsterNormalAttack_Notify.objID)
+  return _internal_objid();
+}
+inline void MonsterNormalAttack_Notify::_internal_set_objid(int32_t value) {
+  
+  _impl_.objid_ = value;
+}
+inline void MonsterNormalAttack_Notify::set_objid(int32_t value) {
+  _internal_set_objid(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.MonsterNormalAttack_Notify.objID)
+}
+
+// -------------------------------------------------------------------
+
+// StatsChange_Notify
+
+// int32 objID = 1;
+inline void StatsChange_Notify::clear_objid() {
+  _impl_.objid_ = 0;
+}
+inline int32_t StatsChange_Notify::_internal_objid() const {
+  return _impl_.objid_;
+}
+inline int32_t StatsChange_Notify::objid() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.StatsChange_Notify.objID)
+  return _internal_objid();
+}
+inline void StatsChange_Notify::_internal_set_objid(int32_t value) {
+  
+  _impl_.objid_ = value;
+}
+inline void StatsChange_Notify::set_objid(int32_t value) {
+  _internal_set_objid(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.StatsChange_Notify.objID)
+}
+
+// .protocol.mmo.E_Stats what = 2;
+inline void StatsChange_Notify::clear_what() {
+  _impl_.what_ = 0;
+}
+inline ::protocol::mmo::E_Stats StatsChange_Notify::_internal_what() const {
+  return static_cast< ::protocol::mmo::E_Stats >(_impl_.what_);
+}
+inline ::protocol::mmo::E_Stats StatsChange_Notify::what() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.StatsChange_Notify.what)
+  return _internal_what();
+}
+inline void StatsChange_Notify::_internal_set_what(::protocol::mmo::E_Stats value) {
+  
+  _impl_.what_ = value;
+}
+inline void StatsChange_Notify::set_what(::protocol::mmo::E_Stats value) {
+  _internal_set_what(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.StatsChange_Notify.what)
+}
+
+// int32 val = 3;
+inline void StatsChange_Notify::clear_val() {
+  _impl_.val_ = 0;
+}
+inline int32_t StatsChange_Notify::_internal_val() const {
+  return _impl_.val_;
+}
+inline int32_t StatsChange_Notify::val() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.StatsChange_Notify.val)
+  return _internal_val();
+}
+inline void StatsChange_Notify::_internal_set_val(int32_t value) {
+  
+  _impl_.val_ = value;
+}
+inline void StatsChange_Notify::set_val(int32_t value) {
+  _internal_set_val(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.StatsChange_Notify.val)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

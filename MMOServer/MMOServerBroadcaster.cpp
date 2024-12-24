@@ -25,9 +25,9 @@ void MMOServerBroadcaster::broadcastMessage(const S_EngineEvent& evt)
 
 	switch ((E_PacketID)header->id)
 	{
-	case E_PacketID::ENTER_GAME_REQ: MMOServerBroadcaster::onEnterGameReq(evt.serial); break;
-	case E_PacketID::MOVE_REQ: { Move_Req req = {}; req.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader)); MMOServerBroadcaster::onMoveReq(evt.serial, req); break; }
-	case E_PacketID::IDLE_REQ: MMOServerBroadcaster::onIdleReq(evt.serial); break;
+	case E_PacketID::ENTER_GAME_REQ: MMOServerBroadcaster::onEnterGameReq(evt.serial); printf("%d : enter game req\n", evt.serial); break;
+	case E_PacketID::MOVE_REQ: { Move_Req req = {}; req.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader)); MMOServerBroadcaster::onMoveReq(evt.serial, req); printf("%d : move req\n", evt.serial); break; }
+	case E_PacketID::IDLE_REQ: MMOServerBroadcaster::onIdleReq(evt.serial); printf("%d : idle req\n", evt.serial); break;
 	}
 }
 void MMOServerBroadcaster::broadcastTimer(const S_EngineEvent& evt)

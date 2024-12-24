@@ -2,19 +2,19 @@
   {
     "skillName": "MONSTER_CLOSE_RANGE_ATK",
     "templateID": 0,
-    "coolTime": 2000,
-    "delayTime": 0,
+    "coolTime": 0,
+    "delayTime": 3000,
     "mpUsed": 0,
     "userAnim": "",
     "userEffect": "",
     "userSound": "",
     "skillAction": {
-      "skillType": 2,
+      "skillType": 0,
       "areaDefine": {
         "offsetY": 0,
         "offsetX": 0,
-        "yExtension": 0,
-        "xExtension": 0
+        "yExtension": 2,
+        "xExtension": 1
       },
       "fixedRotation": false,
       "areaDuration": 0,
@@ -22,16 +22,16 @@
       "revertOnExit": false,
       "objectType": 1,
       "templateID": 0,
-      "filter": 0,
+      "filter": 1,
       "containMe": false,
       "onlyMe": false,
-      "maxTarget": 0,
+      "maxTarget": 1,
       "targetAnim": "",
       "targetEffect": "",
       "targetSound": "",
       "targetBasedActions": [
         {
-          "actionType": 3,
+          "actionType": 0,
           "hitInterval": 0,
           "duration": 0,
           "ccType": 0,

@@ -81,6 +81,7 @@ void Player::onEnterReq(int serial)
 	auto [baseY, baseX] = player->map()->basePoint();
 	player->transform(baseY, baseX, E_Dir::BOTTOM);
 	player->active(true);
+	player->flipX(false);
 
 	resp.set_resp(E_RespCode::OK);
 	*(resp.mutable_myinfo()) = player->info();

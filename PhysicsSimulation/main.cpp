@@ -126,7 +126,10 @@ void demo2()
     def3.bouncinessThreshold = 50.0f;
     GameObject* g3 = World::instantiate(); // floor
     BoxCollider2D* c3 = g3->addComponent<BoxCollider2D>(def3);
-    g3->addComponent<Renderder>(new sf::RectangleShape({ def3.halfSize.x() * 2, def3.halfSize.y() * 2 }), def3.halfSize);
+    auto r = g3->addComponent<Renderder>(new sf::RectangleShape({ def3.halfSize.x() * 2, def3.halfSize.y() * 2 }), def3.halfSize);
+    sf::Color c = sf::Color::Blue;
+    c.a = 130;
+    r->fillColor(c);
     //g3->moveTo({ 400.0f, 305.0f });
     g3->moveTo({ 400.0f, 335.0f });
 
@@ -134,10 +137,10 @@ void demo2()
     Point2D startPoint = { 372.0f, 300.5f };
     Vector2D dx = { 2.15f, 0.0f };
     Vector2D dy = { 0.0f, 2.25f };
-    for (int i = 0; i < 30; ++i)
+    for (int i = 0; i < 25; ++i)
     {
         Point2D from = startPoint + Vector2D(1.0f, 0.0f) * (float)i;
-        for (int j = 0; j < 30 - i; ++j)
+        for (int j = 0; j < 25 - i; ++j)
         {
             S_BoxDef def;
             def.halfSize = { 1.0f,1.0f };
@@ -573,6 +576,7 @@ int main()
     sf::View originalView = window.getDefaultView();
     sf::View zoomedView = window.getDefaultView();
     zoomedView.zoom(1.0f / 10.0f);
+
 	while (window.isOpen())
 	{
 		sf::Event evt;
@@ -586,14 +590,14 @@ int main()
         dt += clock.restart().asSeconds();
         //
         // threshold값이 step의 dt값보다 n배 크면 실제 시뮬레이션은 1/n배속된다.
-        if (dt < 0.02f / timeScale) continue;
-        dt -= 0.02f / timeScale;
+        if (dt < 0.01f / timeScale) continue;
         if (pause) continue;
         window.clear(sf::Color::Black);
         //dt = clock.restart().asSeconds();
-        World::step(0.02f, 8, 6);
+        World::step(0.01f, 8, 6);
         window.setView(zoomedView);
         window.display();
+        dt = 0.0f;
 	}
 	return 0;
 }

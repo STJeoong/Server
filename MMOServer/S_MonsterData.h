@@ -5,6 +5,7 @@
 #include <vector>
 #include "S_Stats.h"
 #include "S_RectDefine.h"
+#include "S_SkillData.h"
 #include <basetsd.h>
 
 struct S_SpawnInfo
@@ -13,6 +14,16 @@ struct S_SpawnInfo
 	int howMany;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(S_SpawnInfo, mapName, howMany)
+struct S_MonsterNormalAttack
+{
+	bool onlyTarget;
+	int maxTarget;
+	S_RectDefine areaDefine;
+	bool fixedRotation;
+	int delayTime;
+	std::vector<S_TargetBasedAction> actions;
+};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(S_MonsterNormalAttack, onlyTarget, maxTarget, areaDefine, fixedRotation, delayTime, actions)
 struct S_MonsterData
 {
 	std::string monsterName;
@@ -20,11 +31,11 @@ struct S_MonsterData
 	int extraCellSize;
 	S_Stats stats;
 
-	std::vector<std::string> skills;
+	S_MonsterNormalAttack normalAttack;
 	std::vector<S_SpawnInfo> spawnInfo; // 무슨맵에 몇 마리 스폰시키는지
 
 	// 선공몹
 	bool isAggressive;
 	S_RectDefine aggressiveArea;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(S_MonsterData, monsterName, templateID, extraCellSize, stats, skills, spawnInfo, isAggressive, aggressiveArea)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(S_MonsterData, monsterName, templateID, extraCellSize, stats, normalAttack, spawnInfo, isAggressive, aggressiveArea)

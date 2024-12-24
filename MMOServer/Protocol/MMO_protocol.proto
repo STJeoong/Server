@@ -12,6 +12,7 @@ message EnterGame_Resp
 message ObjectEnter_Notify
 {
 	ObjectInfo otherInfo = 1;
+	int32 speed = 2;
 }
 message ObjectExit_Notify
 {
@@ -43,4 +44,14 @@ message UseSkill_Resp
 {
 	ObjectInfo who = 1;
 	string skillName = 2;
+}
+message MonsterNormalAttack_Notify
+{
+	int32 objID = 1;
+}
+message StatsChange_Notify
+{
+	int32 objID = 1;
+	E_Stats what = 2;
+	int32 val = 3;
 }

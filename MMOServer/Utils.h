@@ -23,6 +23,7 @@ namespace Utils
 	bool gacha(int percentage);
 	int randomVal(int minVal, int maxVal);
 	int createID(protocol::mmo::E_ObjectType objType, UINT8 templateID, int objID);
+	int getTemplateID(int id);
 	int getID(int id);
 	AABB calcAABB(const S_RectDefine& rect, const protocol::mmo::TransformInt& pivot, bool fixedRotation);
 }

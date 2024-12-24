@@ -1,9 +1,10 @@
 #pragma once
 #include "S_SkillData.h"
+#include "I_Revertable.h"
 class I_Targetable;
-class Buff
+class Buff : public I_Revertable
 {
 public:
 	void apply(const S_TargetBasedAction& targetActionDetail, I_Targetable* target);
-	void revert();
+	virtual void revert() override;
 };
