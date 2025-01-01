@@ -57,15 +57,15 @@ extern EnterGame_RespDefaultTypeInternal _EnterGame_Resp_default_instance_;
 class Idle_Notify;
 struct Idle_NotifyDefaultTypeInternal;
 extern Idle_NotifyDefaultTypeInternal _Idle_Notify_default_instance_;
-class MonsterNormalAttack_Notify;
-struct MonsterNormalAttack_NotifyDefaultTypeInternal;
-extern MonsterNormalAttack_NotifyDefaultTypeInternal _MonsterNormalAttack_Notify_default_instance_;
 class Move_Notify;
 struct Move_NotifyDefaultTypeInternal;
 extern Move_NotifyDefaultTypeInternal _Move_Notify_default_instance_;
 class Move_Req;
 struct Move_ReqDefaultTypeInternal;
 extern Move_ReqDefaultTypeInternal _Move_Req_default_instance_;
+class NormalAttack_Notify;
+struct NormalAttack_NotifyDefaultTypeInternal;
+extern NormalAttack_NotifyDefaultTypeInternal _NormalAttack_Notify_default_instance_;
 class ObjectEnter_Notify;
 struct ObjectEnter_NotifyDefaultTypeInternal;
 extern ObjectEnter_NotifyDefaultTypeInternal _ObjectEnter_Notify_default_instance_;
@@ -87,9 +87,9 @@ PROTOBUF_NAMESPACE_OPEN
 template<> ::protocol::mmo::ChangeQuickSlot_Req* Arena::CreateMaybeMessage<::protocol::mmo::ChangeQuickSlot_Req>(Arena*);
 template<> ::protocol::mmo::EnterGame_Resp* Arena::CreateMaybeMessage<::protocol::mmo::EnterGame_Resp>(Arena*);
 template<> ::protocol::mmo::Idle_Notify* Arena::CreateMaybeMessage<::protocol::mmo::Idle_Notify>(Arena*);
-template<> ::protocol::mmo::MonsterNormalAttack_Notify* Arena::CreateMaybeMessage<::protocol::mmo::MonsterNormalAttack_Notify>(Arena*);
 template<> ::protocol::mmo::Move_Notify* Arena::CreateMaybeMessage<::protocol::mmo::Move_Notify>(Arena*);
 template<> ::protocol::mmo::Move_Req* Arena::CreateMaybeMessage<::protocol::mmo::Move_Req>(Arena*);
+template<> ::protocol::mmo::NormalAttack_Notify* Arena::CreateMaybeMessage<::protocol::mmo::NormalAttack_Notify>(Arena*);
 template<> ::protocol::mmo::ObjectEnter_Notify* Arena::CreateMaybeMessage<::protocol::mmo::ObjectEnter_Notify>(Arena*);
 template<> ::protocol::mmo::ObjectExit_Notify* Arena::CreateMaybeMessage<::protocol::mmo::ObjectExit_Notify>(Arena*);
 template<> ::protocol::mmo::StatsChange_Notify* Arena::CreateMaybeMessage<::protocol::mmo::StatsChange_Notify>(Arena*);
@@ -1525,24 +1525,24 @@ class UseSkill_Resp final :
 };
 // -------------------------------------------------------------------
 
-class MonsterNormalAttack_Notify final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.mmo.MonsterNormalAttack_Notify) */ {
+class NormalAttack_Notify final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.mmo.NormalAttack_Notify) */ {
  public:
-  inline MonsterNormalAttack_Notify() : MonsterNormalAttack_Notify(nullptr) {}
-  ~MonsterNormalAttack_Notify() override;
-  explicit PROTOBUF_CONSTEXPR MonsterNormalAttack_Notify(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline NormalAttack_Notify() : NormalAttack_Notify(nullptr) {}
+  ~NormalAttack_Notify() override;
+  explicit PROTOBUF_CONSTEXPR NormalAttack_Notify(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  MonsterNormalAttack_Notify(const MonsterNormalAttack_Notify& from);
-  MonsterNormalAttack_Notify(MonsterNormalAttack_Notify&& from) noexcept
-    : MonsterNormalAttack_Notify() {
+  NormalAttack_Notify(const NormalAttack_Notify& from);
+  NormalAttack_Notify(NormalAttack_Notify&& from) noexcept
+    : NormalAttack_Notify() {
     *this = ::std::move(from);
   }
 
-  inline MonsterNormalAttack_Notify& operator=(const MonsterNormalAttack_Notify& from) {
+  inline NormalAttack_Notify& operator=(const NormalAttack_Notify& from) {
     CopyFrom(from);
     return *this;
   }
-  inline MonsterNormalAttack_Notify& operator=(MonsterNormalAttack_Notify&& from) noexcept {
+  inline NormalAttack_Notify& operator=(NormalAttack_Notify&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -1565,20 +1565,20 @@ class MonsterNormalAttack_Notify final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const MonsterNormalAttack_Notify& default_instance() {
+  static const NormalAttack_Notify& default_instance() {
     return *internal_default_instance();
   }
-  static inline const MonsterNormalAttack_Notify* internal_default_instance() {
-    return reinterpret_cast<const MonsterNormalAttack_Notify*>(
-               &_MonsterNormalAttack_Notify_default_instance_);
+  static inline const NormalAttack_Notify* internal_default_instance() {
+    return reinterpret_cast<const NormalAttack_Notify*>(
+               &_NormalAttack_Notify_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     9;
 
-  friend void swap(MonsterNormalAttack_Notify& a, MonsterNormalAttack_Notify& b) {
+  friend void swap(NormalAttack_Notify& a, NormalAttack_Notify& b) {
     a.Swap(&b);
   }
-  inline void Swap(MonsterNormalAttack_Notify* other) {
+  inline void Swap(NormalAttack_Notify* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -1591,7 +1591,7 @@ class MonsterNormalAttack_Notify final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(MonsterNormalAttack_Notify* other) {
+  void UnsafeArenaSwap(NormalAttack_Notify* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -1599,14 +1599,14 @@ class MonsterNormalAttack_Notify final :
 
   // implements Message ----------------------------------------------
 
-  MonsterNormalAttack_Notify* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<MonsterNormalAttack_Notify>(arena);
+  NormalAttack_Notify* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<NormalAttack_Notify>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const MonsterNormalAttack_Notify& from);
+  void CopyFrom(const NormalAttack_Notify& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const MonsterNormalAttack_Notify& from) {
-    MonsterNormalAttack_Notify::MergeImpl(*this, from);
+  void MergeFrom( const NormalAttack_Notify& from) {
+    NormalAttack_Notify::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -1624,15 +1624,15 @@ class MonsterNormalAttack_Notify final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(MonsterNormalAttack_Notify* other);
+  void InternalSwap(NormalAttack_Notify* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "protocol.mmo.MonsterNormalAttack_Notify";
+    return "protocol.mmo.NormalAttack_Notify";
   }
   protected:
-  explicit MonsterNormalAttack_Notify(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit NormalAttack_Notify(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -1657,7 +1657,7 @@ class MonsterNormalAttack_Notify final :
   void _internal_set_objid(int32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:protocol.mmo.MonsterNormalAttack_Notify)
+  // @@protoc_insertion_point(class_scope:protocol.mmo.NormalAttack_Notify)
  private:
   class _Internal;
 
@@ -2421,26 +2421,26 @@ inline void UseSkill_Resp::set_allocated_skillname(std::string* skillname) {
 
 // -------------------------------------------------------------------
 
-// MonsterNormalAttack_Notify
+// NormalAttack_Notify
 
 // int32 objID = 1;
-inline void MonsterNormalAttack_Notify::clear_objid() {
+inline void NormalAttack_Notify::clear_objid() {
   _impl_.objid_ = 0;
 }
-inline int32_t MonsterNormalAttack_Notify::_internal_objid() const {
+inline int32_t NormalAttack_Notify::_internal_objid() const {
   return _impl_.objid_;
 }
-inline int32_t MonsterNormalAttack_Notify::objid() const {
-  // @@protoc_insertion_point(field_get:protocol.mmo.MonsterNormalAttack_Notify.objID)
+inline int32_t NormalAttack_Notify::objid() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.NormalAttack_Notify.objID)
   return _internal_objid();
 }
-inline void MonsterNormalAttack_Notify::_internal_set_objid(int32_t value) {
+inline void NormalAttack_Notify::_internal_set_objid(int32_t value) {
   
   _impl_.objid_ = value;
 }
-inline void MonsterNormalAttack_Notify::set_objid(int32_t value) {
+inline void NormalAttack_Notify::set_objid(int32_t value) {
   _internal_set_objid(value);
-  // @@protoc_insertion_point(field_set:protocol.mmo.MonsterNormalAttack_Notify.objID)
+  // @@protoc_insertion_point(field_set:protocol.mmo.NormalAttack_Notify.objID)
 }
 
 // -------------------------------------------------------------------

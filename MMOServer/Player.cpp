@@ -153,7 +153,6 @@ void Player::removePersistentHit(PersistentHit* persistentHit)
 void Player::takeDamage(protocol::mmo::E_Stats what, int val)
 {
 	// TODO
-	std::cout << "takeDamage called\n";
 }
 #pragma endregion
 
