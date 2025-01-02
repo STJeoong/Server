@@ -19,11 +19,15 @@ using namespace protocol::mmo;
 #pragma region protected
 void MonsterController::update()
 {
+	// 매 프레임마다 타겟 검증(프레임과 프레임 사이에 플레이어의 상태가 변경될 수 있으므로)
 	if (_target != nullptr)
 	{
 		bool invalidTarget = !_target->activeInHierarchy() || _target->state() == E_ObjectState::DEAD || _target->map() != _me->map();
 		if (invalidTarget)
+		{
 			_target = this->findNewTarget();
+			_me->state(E_ObjectState::MOVE);
+		}
 		if (_target == nullptr)
 			_normalAttackArea->enable(false);
 	}
@@ -53,6 +57,11 @@ void MonsterController::onAreaEnter(Area& my, Area& other)
 	_me->state(E_ObjectState::MOVE);
 	_normalAttackArea->enable(true);
 }
+void MonsterController::onAreaExit(Area& my, Area& other)
+{
+	if (my.layer() == E_Layer::MONSTER_NORMAL_ATTACK && other.gameObject() == _target)
+		_me->state(E_ObjectState::MOVE);
+}
 #pragma endregion
 
 #pragma region private
@@ -69,20 +78,6 @@ void MonsterController::move()
 }
 void MonsterController::attack()
 {
-	if (_target == nullptr)
-	{
-		this->decisionWhenNoTarget();
-		return;
-	}
-	const std::vector<Area*>& areas = _normalAttackArea->overlappedAreas();
-	auto it = std::find_if(areas.begin(), areas.end(), [this](Area* area) { return area->gameObject() == _target; });
-	if (it == areas.end())
-	{
-		this->decisionWhenTargetExist();
-		return;
-	}
-
-	// attack
 	NormalAttack_Notify notify = {};
 	notify.set_objid(_me->id());
 	_me->broadcastPacket(E_PacketID::NORMAL_ATTACK_NOTIFY, notify);
@@ -101,6 +96,8 @@ void MonsterController::attack()
 	}
 	if (normalAttack.onlyTarget)
 		return;
+
+	const std::vector<Area*>& areas = _normalAttackArea->overlappedAreas();
 	int cnt = 1;
 	for (Area* area : areas)
 	{

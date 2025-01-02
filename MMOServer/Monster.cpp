@@ -84,10 +84,10 @@ void Monster::spawn(const S_MonsterData& data)
 				if (map->canGo(y, x))
 					break;
 			}
-			monster->_initTF.set_dir(E_Dir::BOTTOM);
+			monster->_initTF.set_dir((E_Dir)0);
 			monster->_initTF.set_y(y);
 			monster->_initTF.set_x(x);
-			monster->transform(y, x, E_Dir::BOTTOM);
+			monster->transform(y, x, (E_Dir)0);
 			monster->flipX(false);
 		}
 	}

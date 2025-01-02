@@ -1,0 +1,4 @@
+Area는 가장 마지막에 addComponent하도록
+한 맵의 update는 아래와 같은 순서로 이루어지기 떄문에
+
+(컴포넌트의 update) -> (onArea~) -> (destroy)

@@ -16,8 +16,8 @@
       "areaDefine": {
         "offsetY": 0,
         "offsetX": 0,
-        "yExtension": 2,
-        "xExtension": 1
+        "yExtension": 1,
+        "xExtension": 2
       },
       "fixedRotation": false,
       "delayTime": 1000,
@@ -44,7 +44,7 @@
     "spawnInfo": [
       {
         "mapName": "Main",
-        "howMany": 0
+        "howMany": 1
       }
     ],
     "isAggressive": true,
