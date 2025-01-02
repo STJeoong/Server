@@ -12,12 +12,12 @@ void Rectangular::removeFromDAT()
 }
 void Rectangular::insertToDAT(const TransformInt& pivot, Area* userData)
 {
-	AABB aabb = Utils::calcAABB(_rect, pivot, _attachedArea->fixedRotation());
+	AABB aabb = Utils::calcAdjustedAABB(_rect, pivot, _attachedArea->fixedRotation());
 	_ids[0] = this->add(userData, aabb);
 }
 void Rectangular::move(const TransformInt& pivot)
 {
-	AABB aabb = Utils::calcAABB(_rect, pivot, _attachedArea->fixedRotation());
+	AABB aabb = Utils::calcAdjustedAABB(_rect, pivot, _attachedArea->fixedRotation());
 	Shape::move(_ids[0], aabb);
 }
 #pragma endregion

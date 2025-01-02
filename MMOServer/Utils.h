@@ -26,6 +26,7 @@ namespace Utils
 	int getTemplateID(int id);
 	int getID(int id);
 	AABB calcAABB(const S_RectDefine& rect, const protocol::mmo::TransformInt& pivot, bool fixedRotation);
+	AABB calcAdjustedAABB(const S_RectDefine& rect, const protocol::mmo::TransformInt& pivot, bool fixedRotation);
 }
 const int dy[4] = { 0,1,0,-1 };
 const int dx[4] = { 1,0,-1,0 };

@@ -17,6 +17,7 @@ AABB AABB::operator+(const AABB& obj) const
 	int maxX = std::max(_maxX, obj._maxX);
 	return { minY, minX, maxY, maxX };
 }
+void AABB::move(int deltaY, int deltaX) { _minY += deltaY; _minX += deltaX; _maxY += deltaY; _maxX += deltaX; }
 #pragma endregion
 
 #pragma region private

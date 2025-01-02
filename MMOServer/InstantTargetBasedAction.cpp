@@ -15,7 +15,7 @@ void InstantTargetBasedAction::action(S_SkillAction& detail, GameObject* pivotOb
 	int cnt = 0;
 	std::vector<GameObject*> list;
 
-	AABB aabb = Utils::calcAABB(detail.areaDefine, pivotObj->transform(), detail.fixedRotation);
+	AABB aabb = Utils::calcAdjustedAABB(detail.areaDefine, pivotObj->transform(), detail.fixedRotation);
 	map->overlapsBox(aabb, detail.filter, list);
 	for (GameObject* targetObj : list)
 	{
