@@ -157,7 +157,7 @@ GameObject::GameObject(bool isActive, GameObject* p)
 	_info.set_id(GameObject::INVALID_ID);
 	_info.set_state(E_ObjectState::NONE);
 	TransformInt* worldTF = _info.mutable_transform();
-	worldTF->set_dir(E_Dir::BOTTOM);
+	worldTF->set_dir((E_Dir)0);
 	worldTF->set_y(0);
 	worldTF->set_x(0);
 	this->parent(p, false);

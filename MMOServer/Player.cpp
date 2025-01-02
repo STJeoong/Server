@@ -36,9 +36,10 @@ void Player::onConnect(int serial)
 
 	Map* mainMap = Map::getMap(MapName::MAIN);
 	Player* newPlayer = mainMap->instantiate<Player>(false);
-	Area* aoi = newPlayer->addComponent<Area>();
-	Area* myObjArea = newPlayer->addComponent<Area>();
 	PlayerController* controller = newPlayer->addComponent<PlayerController>();
+	//Area* aoi = newPlayer->addComponent<Area>();
+	Area* myObjArea = newPlayer->addComponent<Area>();
+	myObjArea->fixedRotation(false);
 
 	newPlayer->state(E_ObjectState::NONE);
 	newPlayer->id(Utils::createID(E_ObjectType::PLAYER, 0, serial));
@@ -47,10 +48,10 @@ void Player::onConnect(int serial)
 	controller->myObjArea(myObjArea);
 
 	S_RectDefine aoiDef = {-10, -10, 21, 21};
-	S_RectDefine objDef = { 0,0,1,1 };
-	aoi->layer(E_Layer::AOI);
+	S_RectDefine objDef = { 0,0,1,2 };
+	//aoi->layer(E_Layer::AOI);
 	myObjArea->layer(E_Layer::PLAYER_OBJ);
-	aoi->addShape(new Rectangular(aoi, aoiDef));
+	//aoi->addShape(new Rectangular(aoi, aoiDef));
 	myObjArea->addShape(new Rectangular(myObjArea, objDef));
 
 	s_players[serial] = newPlayer;
@@ -79,7 +80,7 @@ void Player::onEnterReq(int serial)
 
 	player->state(E_ObjectState::IDLE);
 	auto [baseY, baseX] = player->map()->basePoint();
-	player->transform(baseY, baseX, E_Dir::BOTTOM);
+	player->transform(baseY, baseX, (E_Dir)0);
 	player->active(true);
 	player->flipX(false);
 

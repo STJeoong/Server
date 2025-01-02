@@ -101,47 +101,43 @@ int Utils::getID(int id)
 }
 AABB Utils::calcAABB(const S_RectDefine& rect, const protocol::mmo::TransformInt& pivot, bool fixedRotation)
 {
-	int leftTopY = pivot.y() + rect.offsetY;
-	int leftTopX = pivot.x() + rect.offsetX;
-	int rightBtmY = pivot.y() + rect.offsetY + rect.yExtension;
-	int rightBtmX = pivot.x() + rect.offsetX + rect.xExtension;
+	int minY = pivot.y() + rect.offsetY;
+	int minX = pivot.x() + rect.offsetX;
+	int maxY = pivot.y() + rect.offsetY + rect.yExtension;
+	int maxX = pivot.x() + rect.offsetX + rect.xExtension;
 	if (!fixedRotation)
 	{
 		TransformInt localPoints[4] = {};
 		TransformInt worldPoints[4] = {};
 
 		//  로컬 직사각형의 좌표
-		//  [0]  [1]
 		//  [2]  [3]
-		localPoints[0].set_dir(E_Dir::BOTTOM);
+		//  [0]  [1]
 		localPoints[0].set_y(rect.offsetY);
 		localPoints[0].set_x(rect.offsetX);
 
-		localPoints[1].set_dir(E_Dir::BOTTOM);
 		localPoints[1].set_y(rect.offsetY);
 		localPoints[1].set_x(rect.offsetX + rect.xExtension);
 
-		localPoints[2].set_dir(E_Dir::BOTTOM);
 		localPoints[2].set_y(rect.offsetY + rect.yExtension);
 		localPoints[2].set_x(rect.offsetX);
 
-		localPoints[3].set_dir(E_Dir::BOTTOM);
 		localPoints[3].set_y(rect.offsetY + rect.yExtension);
 		localPoints[3].set_x(rect.offsetX + rect.xExtension);
 		for (int i = 0; i < 4; ++i)
 			Utils::localToWorld(pivot, localPoints[i], worldPoints[i]);
 
-		leftTopY = worldPoints[0].y();
-		leftTopX = worldPoints[0].x();
-		rightBtmY = worldPoints[0].y();
-		rightBtmX = worldPoints[0].x();
+		minY = worldPoints[0].y();
+		minX = worldPoints[0].x();
+		maxY = worldPoints[0].y();
+		maxX = worldPoints[0].x();
 		for (int i = 1; i < 4; ++i)
 		{
-			leftTopY = std::min(leftTopY, worldPoints[i].y());
-			leftTopX = std::min(leftTopX, worldPoints[i].x());
-			rightBtmY = std::max(rightBtmY, worldPoints[i].y());
-			rightBtmX = std::max(rightBtmX, worldPoints[i].x());
+			minY = std::min(minY, worldPoints[i].y());
+			minX = std::min(minX, worldPoints[i].x());
+			maxY = std::max(maxY, worldPoints[i].y());
+			maxX = std::max(maxX, worldPoints[i].x());
 		}
 	}
-	return { leftTopY, leftTopX, rightBtmY, rightBtmX };
+	return { minY, minX, maxY, maxX };
 }

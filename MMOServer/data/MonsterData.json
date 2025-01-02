@@ -44,7 +44,7 @@
     "spawnInfo": [
       {
         "mapName": "Main",
-        "howMany": 1
+        "howMany": 0
       }
     ],
     "isAggressive": true,
@@ -54,7 +54,7 @@
       "yExtension": 5,
       "xExtension": 5
     },
-    "name": "TEST_MONSTER_1",
+    "name": "TEST_MONSTER_1_DATA",
     "hideFlags": 0
   }
 ]

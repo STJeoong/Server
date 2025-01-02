@@ -135,16 +135,16 @@ inline bool E_ObjectState_Parse(
     E_ObjectState_descriptor(), name, value);
 }
 enum E_Dir : int {
-  BOTTOM = 0,
-  LEFT = 1,
-  UP = 2,
-  RIGHT = 3,
+  RIGHT = 0,
+  UP = 1,
+  LEFT = 2,
+  BOTTOM = 3,
   MAX = 4,
   E_Dir_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   E_Dir_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool E_Dir_IsValid(int value);
-constexpr E_Dir E_Dir_MIN = BOTTOM;
+constexpr E_Dir E_Dir_MIN = RIGHT;
 constexpr E_Dir E_Dir_MAX = MAX;
 constexpr int E_Dir_ARRAYSIZE = E_Dir_MAX + 1;
 

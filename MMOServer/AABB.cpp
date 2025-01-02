@@ -2,20 +2,20 @@
 #include <algorithm>
 
 #pragma region public
-int AABB::perimeter() const { return 2 * (_rightBtmX - _leftTopX + _rightBtmY - _leftTopY); }
+int AABB::perimeter() const { return 2 * (_maxX - _minX + _maxY - _minY); }
 bool AABB::overlaps(const AABB& obj) const
 {
-	if (_leftTopX >= obj._rightBtmX || _rightBtmX <= obj._leftTopX) return false;
-	if (_leftTopY >= obj._rightBtmY || _rightBtmY <= obj._leftTopY) return false;
+	if (_minX >= obj._maxX || _maxX <= obj._minX) return false;
+	if (_minY >= obj._maxY || _maxY <= obj._minY) return false;
 	return true;
 }
 AABB AABB::operator+(const AABB& obj) const
 {
-	int leftTopY = std::min(_leftTopY, obj._leftTopY);
-	int leftTopX = std::min(_leftTopX, obj._leftTopX);
-	int rightBtmY = std::max(_rightBtmY, obj._rightBtmY);
-	int rightBtmX = std::max(_rightBtmX, obj._rightBtmX);
-	return { leftTopY, leftTopX, rightBtmY, rightBtmX };
+	int minY = std::min(_minY, obj._minY);
+	int minX = std::min(_minX, obj._minX);
+	int maxY = std::max(_maxY, obj._maxY);
+	int maxX = std::max(_maxX, obj._maxX);
+	return { minY, minX, maxY, maxX };
 }
 #pragma endregion
 

@@ -39,6 +39,7 @@ void Monster::spawn(const S_MonsterData& data)
 		Map* map = Map::getMap(mapName);
 		for (int j = 0; j < howMany; ++j)
 		{
+			// Area는 가장 마지막에 addComponent해줘야됨.
 			Monster* monster = map->instantiate<Monster>(true);
 			monster->state(E_ObjectState::IDLE);
 			monster->_objArea = monster->addComponent<Area>();
@@ -68,6 +69,7 @@ void Monster::spawn(const S_MonsterData& data)
 				controller->normalAttackArea(normalAttackArea);
 				normalAttackArea->layer(E_Layer::MONSTER_NORMAL_ATTACK);
 				normalAttackArea->addShape(new Rectangular(normalAttackArea, data.normalAttack.areaDefine));
+				normalAttackArea->fixedRotation(data.normalAttack.fixedRotation);
 				normalAttackArea->enable(false);
 			}
 

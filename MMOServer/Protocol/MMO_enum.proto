@@ -31,10 +31,10 @@ enum E_ObjectState
 }
 enum E_Dir
 {
-	BOTTOM = 0;
-	LEFT = 1;
-	UP = 2;
-	RIGHT = 3;
+	RIGHT = 0;
+	UP = 1;
+	LEFT = 2;
+	BOTTOM = 3;
 	MAX = 4;
 }
 enum E_KeyCode

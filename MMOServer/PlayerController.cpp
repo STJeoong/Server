@@ -8,7 +8,7 @@ using namespace protocol::mmo;
 #pragma region  public
 void PlayerController::move(const protocol::mmo::Move_Req& req)
 {
-	if (req.dir() < E_Dir::BOTTOM || req.dir() > E_Dir::RIGHT)
+	if (req.dir() < E_Dir::RIGHT || req.dir() > E_Dir::BOTTOM)
 		return; // 위조된 패킷
 	const TransformInt& worldTF = _me->transform();
 

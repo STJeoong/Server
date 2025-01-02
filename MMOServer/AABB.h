@@ -4,11 +4,11 @@ class AABB
 {
 public:
 	AABB() {}
-	AABB(int leftTopY, int leftTopX, int rightBtmY, int rightBtmX) : _leftTopY(leftTopY), _leftTopX(leftTopX), _rightBtmY(rightBtmY), _rightBtmX(rightBtmX) {}
+	AABB(int minY, int minX, int maxY, int maxX) : _minY(minY), _minX(minX), _maxY(maxY), _maxX(maxX) {}
 	int perimeter() const;
 	bool overlaps(const AABB& obj) const;
 	AABB operator+(const AABB& obj) const;
 private:
 
-	int _leftTopY = 0, _leftTopX = 0, _rightBtmY = 0, _rightBtmX = 0;
+	int _minY = 0, _minX = 0, _maxY = 0, _maxX = 0;
 };
