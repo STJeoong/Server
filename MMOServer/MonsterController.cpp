@@ -62,6 +62,11 @@ void MonsterController::onAreaExit(Area& my, Area& other)
 	if (my.layer() == E_Layer::MONSTER_NORMAL_ATTACK && other.gameObject() == _target)
 		_me->state(E_ObjectState::MOVE);
 }
+void MonsterController::onDisable() // ¸ó½ºÅÍ dead
+{
+	_me->state(E_ObjectState::MOVE);
+	_target = nullptr;
+}
 #pragma endregion
 
 #pragma region private
@@ -79,7 +84,7 @@ void MonsterController::move()
 void MonsterController::attack()
 {
 	NormalAttack_Notify notify = {};
-	notify.set_objid(_me->id());
+	notify.set_id(_me->id());
 	_me->broadcastPacket(E_PacketID::NORMAL_ATTACK_NOTIFY, notify);
 	const S_MonsterData& data = Monster::monsterData(Utils::getTemplateID(_me->id()));
 	const S_MonsterNormalAttack& normalAttack = data.normalAttack;

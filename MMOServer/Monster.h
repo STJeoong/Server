@@ -27,7 +27,6 @@ public:
 	void broadcastPacket(protocol::mmo::E_PacketID packetID);
 	void broadcastPacket(protocol::mmo::E_PacketID packetID, google::protobuf::Message& message);
 	const S_Stats& stats() const { return _stats; }
-	void stats(const S_Stats& val);
 
 	// I_Targetable을(를) 통해 상속됨
 	virtual void addBuff(Buff* buff) override;

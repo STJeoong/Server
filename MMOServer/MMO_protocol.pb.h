@@ -1646,15 +1646,15 @@ class NormalAttack_Notify final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kObjIDFieldNumber = 1,
+    kIdFieldNumber = 1,
   };
-  // int32 objID = 1;
-  void clear_objid();
-  int32_t objid() const;
-  void set_objid(int32_t value);
+  // int32 id = 1;
+  void clear_id();
+  int32_t id() const;
+  void set_id(int32_t value);
   private:
-  int32_t _internal_objid() const;
-  void _internal_set_objid(int32_t value);
+  int32_t _internal_id() const;
+  void _internal_set_id(int32_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:protocol.mmo.NormalAttack_Notify)
@@ -1665,7 +1665,7 @@ class NormalAttack_Notify final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    int32_t objid_;
+    int32_t id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -1794,35 +1794,75 @@ class StatsChange_Notify final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kObjIDFieldNumber = 1,
-    kWhatFieldNumber = 2,
-    kValFieldNumber = 3,
+    kIdFieldNumber = 1,
+    kMaxHpFieldNumber = 2,
+    kMaxMpFieldNumber = 3,
+    kHpFieldNumber = 4,
+    kMpFieldNumber = 5,
+    kAtkFieldNumber = 6,
+    kDefFieldNumber = 7,
   };
-  // int32 objID = 1;
-  void clear_objid();
-  int32_t objid() const;
-  void set_objid(int32_t value);
+  // int32 id = 1;
+  void clear_id();
+  int32_t id() const;
+  void set_id(int32_t value);
   private:
-  int32_t _internal_objid() const;
-  void _internal_set_objid(int32_t value);
+  int32_t _internal_id() const;
+  void _internal_set_id(int32_t value);
   public:
 
-  // .protocol.mmo.E_Stats what = 2;
-  void clear_what();
-  ::protocol::mmo::E_Stats what() const;
-  void set_what(::protocol::mmo::E_Stats value);
+  // int32 maxHp = 2;
+  void clear_maxhp();
+  int32_t maxhp() const;
+  void set_maxhp(int32_t value);
   private:
-  ::protocol::mmo::E_Stats _internal_what() const;
-  void _internal_set_what(::protocol::mmo::E_Stats value);
+  int32_t _internal_maxhp() const;
+  void _internal_set_maxhp(int32_t value);
   public:
 
-  // int32 val = 3;
-  void clear_val();
-  int32_t val() const;
-  void set_val(int32_t value);
+  // int32 maxMp = 3;
+  void clear_maxmp();
+  int32_t maxmp() const;
+  void set_maxmp(int32_t value);
   private:
-  int32_t _internal_val() const;
-  void _internal_set_val(int32_t value);
+  int32_t _internal_maxmp() const;
+  void _internal_set_maxmp(int32_t value);
+  public:
+
+  // int32 hp = 4;
+  void clear_hp();
+  int32_t hp() const;
+  void set_hp(int32_t value);
+  private:
+  int32_t _internal_hp() const;
+  void _internal_set_hp(int32_t value);
+  public:
+
+  // int32 mp = 5;
+  void clear_mp();
+  int32_t mp() const;
+  void set_mp(int32_t value);
+  private:
+  int32_t _internal_mp() const;
+  void _internal_set_mp(int32_t value);
+  public:
+
+  // int32 atk = 6;
+  void clear_atk();
+  int32_t atk() const;
+  void set_atk(int32_t value);
+  private:
+  int32_t _internal_atk() const;
+  void _internal_set_atk(int32_t value);
+  public:
+
+  // int32 def = 7;
+  void clear_def();
+  int32_t def() const;
+  void set_def(int32_t value);
+  private:
+  int32_t _internal_def() const;
+  void _internal_set_def(int32_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:protocol.mmo.StatsChange_Notify)
@@ -1833,9 +1873,13 @@ class StatsChange_Notify final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    int32_t objid_;
-    int what_;
-    int32_t val_;
+    int32_t id_;
+    int32_t maxhp_;
+    int32_t maxmp_;
+    int32_t hp_;
+    int32_t mp_;
+    int32_t atk_;
+    int32_t def_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -2423,88 +2467,168 @@ inline void UseSkill_Resp::set_allocated_skillname(std::string* skillname) {
 
 // NormalAttack_Notify
 
-// int32 objID = 1;
-inline void NormalAttack_Notify::clear_objid() {
-  _impl_.objid_ = 0;
+// int32 id = 1;
+inline void NormalAttack_Notify::clear_id() {
+  _impl_.id_ = 0;
 }
-inline int32_t NormalAttack_Notify::_internal_objid() const {
-  return _impl_.objid_;
+inline int32_t NormalAttack_Notify::_internal_id() const {
+  return _impl_.id_;
 }
-inline int32_t NormalAttack_Notify::objid() const {
-  // @@protoc_insertion_point(field_get:protocol.mmo.NormalAttack_Notify.objID)
-  return _internal_objid();
+inline int32_t NormalAttack_Notify::id() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.NormalAttack_Notify.id)
+  return _internal_id();
 }
-inline void NormalAttack_Notify::_internal_set_objid(int32_t value) {
+inline void NormalAttack_Notify::_internal_set_id(int32_t value) {
   
-  _impl_.objid_ = value;
+  _impl_.id_ = value;
 }
-inline void NormalAttack_Notify::set_objid(int32_t value) {
-  _internal_set_objid(value);
-  // @@protoc_insertion_point(field_set:protocol.mmo.NormalAttack_Notify.objID)
+inline void NormalAttack_Notify::set_id(int32_t value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.NormalAttack_Notify.id)
 }
 
 // -------------------------------------------------------------------
 
 // StatsChange_Notify
 
-// int32 objID = 1;
-inline void StatsChange_Notify::clear_objid() {
-  _impl_.objid_ = 0;
+// int32 id = 1;
+inline void StatsChange_Notify::clear_id() {
+  _impl_.id_ = 0;
 }
-inline int32_t StatsChange_Notify::_internal_objid() const {
-  return _impl_.objid_;
+inline int32_t StatsChange_Notify::_internal_id() const {
+  return _impl_.id_;
 }
-inline int32_t StatsChange_Notify::objid() const {
-  // @@protoc_insertion_point(field_get:protocol.mmo.StatsChange_Notify.objID)
-  return _internal_objid();
+inline int32_t StatsChange_Notify::id() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.StatsChange_Notify.id)
+  return _internal_id();
 }
-inline void StatsChange_Notify::_internal_set_objid(int32_t value) {
+inline void StatsChange_Notify::_internal_set_id(int32_t value) {
   
-  _impl_.objid_ = value;
+  _impl_.id_ = value;
 }
-inline void StatsChange_Notify::set_objid(int32_t value) {
-  _internal_set_objid(value);
-  // @@protoc_insertion_point(field_set:protocol.mmo.StatsChange_Notify.objID)
+inline void StatsChange_Notify::set_id(int32_t value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.StatsChange_Notify.id)
 }
 
-// .protocol.mmo.E_Stats what = 2;
-inline void StatsChange_Notify::clear_what() {
-  _impl_.what_ = 0;
+// int32 maxHp = 2;
+inline void StatsChange_Notify::clear_maxhp() {
+  _impl_.maxhp_ = 0;
 }
-inline ::protocol::mmo::E_Stats StatsChange_Notify::_internal_what() const {
-  return static_cast< ::protocol::mmo::E_Stats >(_impl_.what_);
+inline int32_t StatsChange_Notify::_internal_maxhp() const {
+  return _impl_.maxhp_;
 }
-inline ::protocol::mmo::E_Stats StatsChange_Notify::what() const {
-  // @@protoc_insertion_point(field_get:protocol.mmo.StatsChange_Notify.what)
-  return _internal_what();
+inline int32_t StatsChange_Notify::maxhp() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.StatsChange_Notify.maxHp)
+  return _internal_maxhp();
 }
-inline void StatsChange_Notify::_internal_set_what(::protocol::mmo::E_Stats value) {
+inline void StatsChange_Notify::_internal_set_maxhp(int32_t value) {
   
-  _impl_.what_ = value;
+  _impl_.maxhp_ = value;
 }
-inline void StatsChange_Notify::set_what(::protocol::mmo::E_Stats value) {
-  _internal_set_what(value);
-  // @@protoc_insertion_point(field_set:protocol.mmo.StatsChange_Notify.what)
+inline void StatsChange_Notify::set_maxhp(int32_t value) {
+  _internal_set_maxhp(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.StatsChange_Notify.maxHp)
 }
 
-// int32 val = 3;
-inline void StatsChange_Notify::clear_val() {
-  _impl_.val_ = 0;
+// int32 maxMp = 3;
+inline void StatsChange_Notify::clear_maxmp() {
+  _impl_.maxmp_ = 0;
 }
-inline int32_t StatsChange_Notify::_internal_val() const {
-  return _impl_.val_;
+inline int32_t StatsChange_Notify::_internal_maxmp() const {
+  return _impl_.maxmp_;
 }
-inline int32_t StatsChange_Notify::val() const {
-  // @@protoc_insertion_point(field_get:protocol.mmo.StatsChange_Notify.val)
-  return _internal_val();
+inline int32_t StatsChange_Notify::maxmp() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.StatsChange_Notify.maxMp)
+  return _internal_maxmp();
 }
-inline void StatsChange_Notify::_internal_set_val(int32_t value) {
+inline void StatsChange_Notify::_internal_set_maxmp(int32_t value) {
   
-  _impl_.val_ = value;
+  _impl_.maxmp_ = value;
 }
-inline void StatsChange_Notify::set_val(int32_t value) {
-  _internal_set_val(value);
-  // @@protoc_insertion_point(field_set:protocol.mmo.StatsChange_Notify.val)
+inline void StatsChange_Notify::set_maxmp(int32_t value) {
+  _internal_set_maxmp(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.StatsChange_Notify.maxMp)
+}
+
+// int32 hp = 4;
+inline void StatsChange_Notify::clear_hp() {
+  _impl_.hp_ = 0;
+}
+inline int32_t StatsChange_Notify::_internal_hp() const {
+  return _impl_.hp_;
+}
+inline int32_t StatsChange_Notify::hp() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.StatsChange_Notify.hp)
+  return _internal_hp();
+}
+inline void StatsChange_Notify::_internal_set_hp(int32_t value) {
+  
+  _impl_.hp_ = value;
+}
+inline void StatsChange_Notify::set_hp(int32_t value) {
+  _internal_set_hp(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.StatsChange_Notify.hp)
+}
+
+// int32 mp = 5;
+inline void StatsChange_Notify::clear_mp() {
+  _impl_.mp_ = 0;
+}
+inline int32_t StatsChange_Notify::_internal_mp() const {
+  return _impl_.mp_;
+}
+inline int32_t StatsChange_Notify::mp() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.StatsChange_Notify.mp)
+  return _internal_mp();
+}
+inline void StatsChange_Notify::_internal_set_mp(int32_t value) {
+  
+  _impl_.mp_ = value;
+}
+inline void StatsChange_Notify::set_mp(int32_t value) {
+  _internal_set_mp(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.StatsChange_Notify.mp)
+}
+
+// int32 atk = 6;
+inline void StatsChange_Notify::clear_atk() {
+  _impl_.atk_ = 0;
+}
+inline int32_t StatsChange_Notify::_internal_atk() const {
+  return _impl_.atk_;
+}
+inline int32_t StatsChange_Notify::atk() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.StatsChange_Notify.atk)
+  return _internal_atk();
+}
+inline void StatsChange_Notify::_internal_set_atk(int32_t value) {
+  
+  _impl_.atk_ = value;
+}
+inline void StatsChange_Notify::set_atk(int32_t value) {
+  _internal_set_atk(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.StatsChange_Notify.atk)
+}
+
+// int32 def = 7;
+inline void StatsChange_Notify::clear_def() {
+  _impl_.def_ = 0;
+}
+inline int32_t StatsChange_Notify::_internal_def() const {
+  return _impl_.def_;
+}
+inline int32_t StatsChange_Notify::def() const {
+  // @@protoc_insertion_point(field_get:protocol.mmo.StatsChange_Notify.def)
+  return _internal_def();
+}
+inline void StatsChange_Notify::_internal_set_def(int32_t value) {
+  
+  _impl_.def_ = value;
+}
+inline void StatsChange_Notify::set_def(int32_t value) {
+  _internal_set_def(value);
+  // @@protoc_insertion_point(field_set:protocol.mmo.StatsChange_Notify.def)
 }
 
 #ifdef __GNUC__

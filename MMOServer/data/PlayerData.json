@@ -1,0 +1,15 @@
+[
+  {
+    "vocationName": "Warrior",
+    "templateID": 0,
+    "stats": {
+      "maxHp": 100,
+      "maxMp": 100,
+      "defaultAtk": 10,
+      "defaultDef": 5,
+      "defaultSpeed": 4
+    },
+    "name": "Warrior_DATA",
+    "hideFlags": 0
+  }
+]

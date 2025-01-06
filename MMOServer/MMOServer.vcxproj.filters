@@ -307,6 +307,9 @@
     <ClInclude Include="I_Revertable.h">
       <Filter>소스 파일\Game\Skill\Action\TargetBased\TargetBasedActionType</Filter>
     </ClInclude>
+    <ClInclude Include="S_PlayerData.h">
+      <Filter>소스 파일\Game\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Protocol\MMO_enum.proto">
@@ -329,6 +332,9 @@
     </None>
     <None Include="data\SkillData.json">
       <Filter>소스 파일\Game\Skill</Filter>
+    </None>
+    <None Include="data\PlayerData.json">
+      <Filter>소스 파일\Game\Player</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

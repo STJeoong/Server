@@ -2,6 +2,7 @@
 #include <vector>
 #include "GameObject.h"
 #include "MMO_protocol.pb.h"
+#include "S_PlayerData.h"
 #include "S_Stats.h"
 #include "I_Targetable.h"
 
@@ -21,14 +22,15 @@ private:
 	static void onEnterReq(int serial);
 	static void onMoveReq(int serial, const protocol::mmo::Move_Req& req);
 	static void onIdleReq(int serial);
+	static void onNormalAttackReq(int serial);
 
 	static std::vector<Player*> s_players;
-	
+	static std::vector<S_PlayerData> s_playerData;
 public:
 	virtual protocol::mmo::E_ObjectType objectType() const override { return protocol::mmo::E_ObjectType::PLAYER; }
 	int networkSerial() const { return _networkSerial; }
-	void broadcastPacket(protocol::mmo::E_PacketID packetID, bool includeMe = true);
-	void broadcastPacket(protocol::mmo::E_PacketID packetID, google::protobuf::Message& message, bool includeMe = true);
+	void broadcastPacket(protocol::mmo::E_PacketID packetID, bool includeMe = false);
+	void broadcastPacket(protocol::mmo::E_PacketID packetID, google::protobuf::Message& message, bool includeMe = false);
 
 	// I_Targetable을(를) 통해 상속됨
 	virtual void addBuff(Buff* buff) override;

@@ -3,9 +3,9 @@
     "skillName": "MONSTER_CLOSE_RANGE_ATK",
     "templateID": 0,
     "coolTime": 0,
-    "delayTime": 3000,
+    "delayTime": 1000,
     "mpUsed": 0,
-    "userAnim": "",
+    "userAnim": "Attack",
     "userEffect": "",
     "userSound": "",
     "skillAction": {
@@ -43,7 +43,54 @@
         }
       ]
     },
-    "name": "MONSTER_CLOSE_RANGE_ATK",
+    "name": "MONSTER_CLOSE_RANGE_ATK_DATA",
+    "hideFlags": 0
+  },
+  {
+    "skillName": "PLAYER_NORMAL_ATTACK",
+    "templateID": 1,
+    "coolTime": 0,
+    "delayTime": 1000,
+    "mpUsed": 0,
+    "userAnim": "Attack",
+    "userEffect": "",
+    "userSound": "",
+    "skillAction": {
+      "skillType": 0,
+      "areaDefine": {
+        "offsetY": 0,
+        "offsetX": 0,
+        "yExtension": 1,
+        "xExtension": 2
+      },
+      "fixedRotation": false,
+      "areaDuration": 0,
+      "interval": 0,
+      "revertOnExit": false,
+      "objectType": 0,
+      "templateID": 0,
+      "filter": 2,
+      "containMe": false,
+      "onlyMe": false,
+      "maxTarget": 1,
+      "targetAnim": "",
+      "targetEffect": "",
+      "targetSound": "",
+      "targetBasedActions": [
+        {
+          "actionType": 0,
+          "hitInterval": 0,
+          "duration": 0,
+          "ccType": 0,
+          "isProportional": false,
+          "isTargetStandard": false,
+          "referenceValue": 10,
+          "standardStats": 0,
+          "targetStats": 2
+        }
+      ]
+    },
+    "name": "PLAYER_NORMAL_ATTACK_DATA",
     "hideFlags": 0
   }
 ]

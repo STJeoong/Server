@@ -3,6 +3,7 @@
 #include "Utils.h"
 #include "Map.h"
 #include "Player.h"
+#include "Skill.h"
 
 using namespace protocol::mmo;
 #pragma region  public
@@ -27,6 +28,11 @@ void PlayerController::move(const protocol::mmo::Move_Req& req)
 	notify.set_id(_me->id());
 	notify.set_dir(req.dir());
 	_me->broadcastPacket(E_PacketID::MOVE_NOTIFY, notify);
+}
+void PlayerController::normalAttack()
+{
+	if (_normalAtk == nullptr) _normalAtk = Skill::get("PLAYER_NORMAL_ATTACK");
+	_normalAtk->use(_me);
 }
 #pragma endregion
 

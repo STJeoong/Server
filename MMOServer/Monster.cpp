@@ -75,6 +75,11 @@ void Monster::spawn(const S_MonsterData& data)
 
 			// TODO : ¸ó½ºÅÍ ½ºÅÈ
 			monster->_stats = data.stats;
+			monster->_stats.hp = data.stats.maxHp;
+			monster->_stats.mp = data.stats.maxMp;
+			monster->_stats.atk = data.stats.defaultAtk;
+			monster->_stats.def = data.stats.defaultDef;
+			monster->_stats.speed = data.stats.defaultSpeed;
 			monster->id(Utils::createID(E_ObjectType::MONSTER, data.templateID, j));
 			int y, x;
 			while (true)
@@ -139,13 +144,6 @@ void Monster::broadcastPacket(E_PacketID packetID, google::protobuf::Message& me
 			Utils::send(player->networkSerial(), packetID, 0, message);
 		}
 }
-void Monster::stats(const S_Stats& val)
-{
-	_stats = val;
-	if (_stats.hp <= 0)
-		Monster::s_deadMonsters.push(this);
-	this->active(false);
-}
 void Monster::addBuff(Buff* buff) { _buff.push_back(buff); }
 void Monster::removeBuff(Buff* buff)
 {
@@ -170,6 +168,27 @@ void Monster::removePersistentHit(PersistentHit* persistentHit)
 void Monster::takeDamage(protocol::mmo::E_Stats what, int val)
 {
 	// TODO
+	switch (what)
+	{
+	case protocol::mmo::MAX_HP:
+		break;
+	case protocol::mmo::MAX_MP:
+		break;
+	case protocol::mmo::HP:
+		_stats.hp -= val;
+		if (_stats.hp <= 0)
+		{
+			s_deadMonsters.push(this);
+			this->active(false);
+		}
+		break;
+	case protocol::mmo::MP:
+		break;
+	case protocol::mmo::ATK:
+		break;
+	case protocol::mmo::DEF:
+		break;
+	}
 }
 #pragma endregion
 

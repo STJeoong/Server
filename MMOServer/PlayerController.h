@@ -12,6 +12,7 @@ class PlayerController : public Behaviour
 public:
 	void myObjArea(Area* val) { _myObjArea = val; }
 	void move(const protocol::mmo::Move_Req& req);
+	void normalAttack();
 protected:
 	PlayerController() = delete;
 	PlayerController(const PlayerController&) = delete;
@@ -30,5 +31,6 @@ private:
 	Skill* _w = nullptr;
 	Skill* _e = nullptr;
 	Skill* _r = nullptr;
+	Skill* _normalAtk = nullptr;
 	std::unordered_map<int, long long> _coolTimes;
 };

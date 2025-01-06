@@ -47,11 +47,15 @@ message UseSkill_Resp
 }
 message NormalAttack_Notify
 {
-	int32 objID = 1;
+	int32 id = 1;
 }
 message StatsChange_Notify
 {
-	int32 objID = 1;
-	E_Stats what = 2;
-	int32 val = 3;
+	int32 id = 1;
+	int32 maxHp = 2;
+	int32 maxMp = 3;
+	int32 hp = 4;
+	int32 mp = 5;
+	int32 atk = 6;
+	int32 def = 7;
 }

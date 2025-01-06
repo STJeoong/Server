@@ -230,6 +230,7 @@
     <ClInclude Include="Rectangular.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="S_MonsterData.h" />
+    <ClInclude Include="S_PlayerData.h" />
     <ClInclude Include="S_RectDefine.h" />
     <ClInclude Include="S_SkillData.h" />
     <ClInclude Include="S_Stats.h" />
@@ -239,6 +240,7 @@
   <ItemGroup>
     <None Include="data\config.json" />
     <None Include="data\MonsterData.json" />
+    <None Include="data\PlayerData.json" />
     <None Include="data\SkillData.json" />
     <None Include="Protocol\MMO_enum.proto" />
     <None Include="Protocol\MMO_protocol.bat" />

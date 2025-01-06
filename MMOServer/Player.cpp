@@ -23,9 +23,13 @@ void Player::init()
 	MMOServerBroadcaster::onEnterGameReq += Player::onEnterReq;
 	MMOServerBroadcaster::onIdleReq += Player::onIdleReq;
 	MMOServerBroadcaster::onMoveReq += Player::onMoveReq;
+	MMOServerBroadcaster::onNormalAttackReq += Player::onNormalAttackReq;
 
 	std::cout << "Player Manager init...\n";
 	s_players.resize(Engine::getEngineConfig((int)E_EngineType::MMO_SERVER).maxClient);
+	std::ifstream fstream("C:/Users/taejeong/source/repos/ServerFramework/MMOServer/data/PlayerData.json");
+	json j = json::parse(fstream);
+	j.get_to(s_playerData);
 }
 #pragma endregion
 
@@ -83,6 +87,12 @@ void Player::onEnterReq(int serial)
 	player->active(true);
 	player->flipX(false);
 
+	// TODO
+	player->_stats.maxHp = 100;
+	player->_stats.maxMp = 100;
+	player->_stats.hp = 100;
+	player->_stats.mp = 100;
+
 	resp.set_resp(E_RespCode::OK);
 	*(resp.mutable_myinfo()) = player->info();
 	
@@ -91,16 +101,25 @@ void Player::onEnterReq(int serial)
 void Player::onMoveReq(int serial, const Move_Req& req)
 {
 	Player* player = s_players[serial];
-	if (player == nullptr || player->state() == E_ObjectState::NONE) return;
+	if (player == nullptr || player->state() == E_ObjectState::NONE || player->state() == E_ObjectState::DEAD) return;
 	player->_controller->move(req);
 }
 void Player::onIdleReq(int serial)
 {
 	Player* player = s_players[serial];
-	if (player == nullptr || player->state() == E_ObjectState::NONE) return;
+	if (player == nullptr || player->state() == E_ObjectState::NONE || player->state() == E_ObjectState::DEAD) return;
 	Idle_Notify notify = {};
 	notify.set_id(player->id());
 	player->broadcastPacket(E_PacketID::IDLE_NOTIFY, notify);
+}
+void Player::onNormalAttackReq(int serial)
+{
+	Player* player = s_players[serial];
+	if (player == nullptr || player->state() == E_ObjectState::NONE || player->state() == E_ObjectState::DEAD) return;
+	player->_controller->normalAttack();
+	NormalAttack_Notify notify = {};
+	notify.set_id(player->id());
+	player->broadcastPacket(E_PacketID::NORMAL_ATTACK_NOTIFY, notify);
 }
 #pragma endregion
 
@@ -153,6 +172,27 @@ void Player::removePersistentHit(PersistentHit* persistentHit)
 void Player::takeDamage(protocol::mmo::E_Stats what, int val)
 {
 	// TODO
+	switch (what)
+	{
+	case protocol::mmo::MAX_HP:
+		break;
+	case protocol::mmo::MAX_MP:
+		break;
+	case protocol::mmo::HP:
+		_stats.hp -= val;
+		if (_stats.hp <= 0)
+		{
+			Utils::send(_networkSerial, E_PacketID::DEAD_NOTIFY, 0);
+			this->state(E_ObjectState::DEAD);
+		}
+		break;
+	case protocol::mmo::MP:
+		break;
+	case protocol::mmo::ATK:
+		break;
+	case protocol::mmo::DEF:
+		break;
+	}
 }
 #pragma endregion
 
@@ -163,3 +203,4 @@ void Player::takeDamage(protocol::mmo::E_Stats what, int val)
 #pragma endregion
 
 std::vector<Player*> Player::s_players;
+std::vector<S_PlayerData> Player::s_playerData;

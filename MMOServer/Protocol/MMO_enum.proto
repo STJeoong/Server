@@ -12,8 +12,10 @@ enum E_PacketID
 	MOVE_NOTIFY = 5;
 	IDLE_REQ = 6;
 	IDLE_NOTIFY = 7;
-	NORMAL_ATTACK_REQ = 8; // TODO :
+	NORMAL_ATTACK_REQ = 8;
 	NORMAL_ATTACK_NOTIFY = 9;
+	STATS_CHANGE_NOTIFY = 10;
+	DEAD_NOTIFY = 11;
 }
 enum E_RespCode
 {
@@ -71,6 +73,14 @@ enum E_Stats
 	MAX_MP = 1;
 	HP = 2;
 	MP = 3;
+	ATK = 4;
+	DEF = 5;
+}
+enum E_ItemType
+{
+	EQUIP = 0;
+	CONSUME = 1;
+	ETC = 2;
 }
 enum E_TargetBasedActionType
 {

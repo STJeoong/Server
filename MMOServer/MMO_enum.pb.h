@@ -59,12 +59,14 @@ enum E_PacketID : int {
   IDLE_NOTIFY = 7,
   NORMAL_ATTACK_REQ = 8,
   NORMAL_ATTACK_NOTIFY = 9,
+  STATS_CHANGE_NOTIFY = 10,
+  DEAD_NOTIFY = 11,
   E_PacketID_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   E_PacketID_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool E_PacketID_IsValid(int value);
 constexpr E_PacketID E_PacketID_MIN = ENTER_GAME_REQ;
-constexpr E_PacketID E_PacketID_MAX = NORMAL_ATTACK_NOTIFY;
+constexpr E_PacketID E_PacketID_MAX = DEAD_NOTIFY;
 constexpr int E_PacketID_ARRAYSIZE = E_PacketID_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_PacketID_descriptor();
@@ -275,12 +277,14 @@ enum E_Stats : int {
   MAX_MP = 1,
   HP = 2,
   MP = 3,
+  ATK = 4,
+  DEF = 5,
   E_Stats_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   E_Stats_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool E_Stats_IsValid(int value);
 constexpr E_Stats E_Stats_MIN = MAX_HP;
-constexpr E_Stats E_Stats_MAX = MP;
+constexpr E_Stats E_Stats_MAX = DEF;
 constexpr int E_Stats_ARRAYSIZE = E_Stats_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_Stats_descriptor();
@@ -296,6 +300,32 @@ inline bool E_Stats_Parse(
     ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, E_Stats* value) {
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_Stats>(
     E_Stats_descriptor(), name, value);
+}
+enum E_ItemType : int {
+  EQUIP = 0,
+  CONSUME = 1,
+  ETC = 2,
+  E_ItemType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  E_ItemType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool E_ItemType_IsValid(int value);
+constexpr E_ItemType E_ItemType_MIN = EQUIP;
+constexpr E_ItemType E_ItemType_MAX = ETC;
+constexpr int E_ItemType_ARRAYSIZE = E_ItemType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_ItemType_descriptor();
+template<typename T>
+inline const std::string& E_ItemType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, E_ItemType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function E_ItemType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    E_ItemType_descriptor(), enum_t_value);
+}
+inline bool E_ItemType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, E_ItemType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_ItemType>(
+    E_ItemType_descriptor(), name, value);
 }
 enum E_TargetBasedActionType : int {
   TARGET_BASED_ACTION_TYPE_HIT = 0,
@@ -391,6 +421,11 @@ template <> struct is_proto_enum< ::protocol::mmo::E_Stats> : ::std::true_type {
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_Stats>() {
   return ::protocol::mmo::E_Stats_descriptor();
+}
+template <> struct is_proto_enum< ::protocol::mmo::E_ItemType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_ItemType>() {
+  return ::protocol::mmo::E_ItemType_descriptor();
 }
 template <> struct is_proto_enum< ::protocol::mmo::E_TargetBasedActionType> : ::std::true_type {};
 template <>

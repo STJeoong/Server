@@ -19,6 +19,7 @@ protected:
 	virtual void update() override;
 	virtual void onAreaEnter(Area& my, Area& other) override;
 	virtual void onAreaExit(Area& my, Area& other) override;
+	virtual void onDisable() override;
 private:
 	void idle();
 	void move();

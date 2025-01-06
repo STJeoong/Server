@@ -26,6 +26,7 @@ namespace Utils
 	int getTemplateID(int id);
 	int getID(int id);
 	AABB calcAABB(const S_RectDefine& rect, const protocol::mmo::TransformInt& pivot, bool fixedRotation);
+	// 캐릭터를 기준으로하는 AABB를 생성할때 사용
 	AABB calcAdjustedAABB(const S_RectDefine& rect, const protocol::mmo::TransformInt& pivot, bool fixedRotation);
 }
 const int dy[4] = { 0,1,0,-1 };

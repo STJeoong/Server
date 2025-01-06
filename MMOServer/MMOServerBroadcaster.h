@@ -15,6 +15,7 @@ public:
 	static Delegate<const int> onEnterGameReq;
 	static Delegate<const int, const protocol::mmo::Move_Req&> onMoveReq;
 	static Delegate<const int> onIdleReq;
+	static Delegate<const int> onNormalAttackReq;
 	// timer
 	static Delegate<> onUpdate;
 	static Delegate<> onMonsterRespawn;
