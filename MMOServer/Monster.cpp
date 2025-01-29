@@ -75,11 +75,6 @@ void Monster::spawn(const S_MonsterData& data)
 
 			// TODO : 몬스터 스탯
 			monster->_stats = data.stats;
-			monster->_stats.hp = data.stats.maxHp;
-			monster->_stats.mp = data.stats.maxMp;
-			monster->_stats.atk = data.stats.defaultAtk;
-			monster->_stats.def = data.stats.defaultDef;
-			monster->_stats.speed = data.stats.defaultSpeed;
 			monster->id(Utils::createID(E_ObjectType::MONSTER, data.templateID, j));
 			int y, x;
 			while (true)
@@ -105,16 +100,12 @@ void Monster::respawn()
 		s_deadMonsters.pop();
 		const TransformInt& initTF = monster->_initTF;
 		S_Stats& stats = monster->_stats;
+		S_MonsterData data = Monster::monsterData(Utils::getTemplateID(monster->id()));
 
 		// 스탯 및 위치값 다시 초기화
 		monster->transform(initTF.y(), initTF.x(), initTF.dir());
 		monster->flipX(false);
-		stats.hp = stats.maxHp;
-		stats.mp = stats.maxMp;
-		stats.atk = stats.defaultAtk;
-		stats.def = stats.defaultDef;
-		stats.speed = stats.defaultSpeed;
-
+		stats = data.stats;
 
 		// 리스폰
 		monster->active(true);
@@ -158,37 +149,35 @@ void Monster::removeCC(CC* cc)
 	if (it != _cc.end())
 		_cc.erase(it);
 }
-void Monster::addPersistentHit(PersistentHit* persistentHit) { _persistentHit.push_back(persistentHit); }
-void Monster::removePersistentHit(PersistentHit* persistentHit)
+void Monster::addPersistentChangeStats(PersistentChangeStats* persistent) { _persistent.push_back(persistent); }
+void Monster::removePersistentChangeStats(PersistentChangeStats* persistent)
 {
-	auto it = std::find(_persistentHit.begin(), _persistentHit.end(), persistentHit);
-	if (it != _persistentHit.end())
-		_persistentHit.erase(it);
+	auto it = std::find(_persistent.begin(), _persistent.end(), persistent);
+	if (it != _persistent.end())
+		_persistent.erase(it);
 }
-void Monster::takeDamage(protocol::mmo::E_Stats what, int val)
+void Monster::changeStats(S_Stats delta)
 {
-	// TODO
-	switch (what)
+	_stats += delta;
+	if (_stats.hp <= 0)
 	{
-	case protocol::mmo::MAX_HP:
-		break;
-	case protocol::mmo::MAX_MP:
-		break;
-	case protocol::mmo::HP:
-		_stats.hp -= val;
-		if (_stats.hp <= 0)
-		{
-			s_deadMonsters.push(this);
-			this->active(false);
-		}
-		break;
-	case protocol::mmo::MP:
-		break;
-	case protocol::mmo::ATK:
-		break;
-	case protocol::mmo::DEF:
-		break;
+		s_deadMonsters.push(this);
+		this->active(false);
+		return;
 	}
+
+	ChangeStats_Notify notify = {};
+
+	notify.set_id(this->id());
+	notify.set_maxhp(_stats.maxHp);
+	notify.set_maxmp(_stats.maxMp);
+	notify.set_atk(_stats.atk);
+	notify.set_def(_stats.def);
+	notify.set_speed(_stats.speed);
+	notify.set_hp(_stats.hp);
+	notify.set_mp(_stats.mp);
+
+	this->broadcastPacket(E_PacketID::CHANGE_STATS_NOTIFY, notify);
 }
 #pragma endregion
 

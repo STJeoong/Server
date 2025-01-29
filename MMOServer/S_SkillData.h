@@ -4,22 +4,22 @@
 #include <nlohmann/json.hpp>
 #include "MMO_protocol.pb.h"
 #include "S_RectDefine.h"
+#include "S_Stats.h"
 
 class Area;
 struct S_TargetBasedAction
 {
 	protocol::mmo::E_TargetBasedActionType actionType;
-	int hitInterval;
+	int interval;
 	int duration;
 	protocol::mmo::E_CCType ccType;
 	bool isProportional;
 	bool isTargetStandard;
-	int referenceValue;
+	S_Stats deltaStats;
 	protocol::mmo::E_Stats standardStats;
-	protocol::mmo::E_Stats targetStats;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(S_TargetBasedAction, actionType, hitInterval, duration, ccType, isProportional, isTargetStandard,
-	referenceValue,	standardStats, targetStats)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(S_TargetBasedAction, actionType, interval, duration, ccType, isProportional, isTargetStandard,
+	deltaStats, standardStats)
 
 
 struct S_SkillAction

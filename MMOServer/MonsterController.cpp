@@ -7,10 +7,10 @@
 #include "Utils.h"
 #include "Monster.h"
 #include "Game.h"
-#include "HitAction.h"
+#include "ChangeStatsAction.h"
 #include "BuffAction.h"
 #include "CCAction.h"
-#include "PersistentHitAction.h"
+#include "PersistentChangeStatsAction.h"
 
 using namespace protocol::mmo;
 #pragma region public
@@ -93,10 +93,10 @@ void MonsterController::attack()
 	{
 		switch (targetAction.actionType)
 		{
-		case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_HIT: HitAction::action(targetAction, _target, _me); break;
-		case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_BUFF: BuffAction::action(targetAction, _target, _me); break;
-		case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_CC: CCAction::action(targetAction, _target, _me); break;
-		case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_PERSISTENT_HIT: PersistentHitAction::action(targetAction, _target, _me); break;
+		case E_TargetBasedActionType::CHANGE_STATS: ChangeStatsAction::action(targetAction, _target, _me); break;
+		case E_TargetBasedActionType::BUFF: BuffAction::action(targetAction, _target, _me); break;
+		case E_TargetBasedActionType::CROWD_CONTROL: CCAction::action(targetAction, _target, _me); break;
+		case E_TargetBasedActionType::PERSISTENT_CHANGE_STATS: PersistentChangeStatsAction::action(targetAction, _target, _me); break;
 		}
 	}
 	if (normalAttack.onlyTarget)
@@ -113,10 +113,10 @@ void MonsterController::attack()
 		{
 			switch (targetAction.actionType)
 			{
-			case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_HIT: HitAction::action(targetAction, obj, _me); break;
-			case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_BUFF: BuffAction::action(targetAction, obj, _me); break;
-			case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_CC: CCAction::action(targetAction, obj, _me); break;
-			case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_PERSISTENT_HIT: PersistentHitAction::action(targetAction, obj, _me); break;
+			case E_TargetBasedActionType::CHANGE_STATS: ChangeStatsAction::action(targetAction, obj, _me); break;
+			case E_TargetBasedActionType::BUFF: BuffAction::action(targetAction, obj, _me); break;
+			case E_TargetBasedActionType::CROWD_CONTROL: CCAction::action(targetAction, obj, _me); break;
+			case E_TargetBasedActionType::PERSISTENT_CHANGE_STATS: PersistentChangeStatsAction::action(targetAction, obj, _me); break;
 			}
 		}
 		++cnt;
@@ -189,7 +189,7 @@ void MonsterController::move(protocol::mmo::E_Dir dir)
 	_me->state(E_ObjectState::MOVE);
 	int ny = _me->transform().y() + dy[(int)dir];
 	int nx = _me->transform().x() + dx[(int)dir];
-	int speed = _me->stats().defaultSpeed; // TODO : 현재 speed값으로
+	int speed = _me->stats().speed; // TODO : 현재 speed값으로
 	_me->transform(ny, nx, dir);
 	if (dir == E_Dir::LEFT)
 		_me->flipX(true);

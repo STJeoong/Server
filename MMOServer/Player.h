@@ -10,10 +10,14 @@ class Area;
 class PlayerController;
 class Buff;
 class CC;
-class PersistentHit;
+class PersistentChangeStats;
+class Equipment;
+class Consume;
 class Player : public GameObject, public I_Targetable
 {
 	friend class Map;
+
+	static const int MAX_INVEN_SIZE = 20;
 public:
 	static void init();
 private:
@@ -37,9 +41,9 @@ public:
 	virtual void removeBuff(Buff* buff) override;
 	virtual void addCC(CC* cc) override;
 	virtual void removeCC(CC* cc) override;
-	virtual void addPersistentHit(PersistentHit* persistentHit) override;
-	virtual void removePersistentHit(PersistentHit* persistentHit) override;
-	virtual void takeDamage(protocol::mmo::E_Stats what, int val) override;
+	virtual void addPersistentChangeStats(PersistentChangeStats* persistent) override;
+	virtual void removePersistentChangeStats(PersistentChangeStats* persistent) override;
+	virtual void changeStats(S_Stats delta) override;
 protected:
 	Player() = delete;
 	Player(const Player&) = delete;
@@ -58,7 +62,11 @@ private:
 
 	std::vector<Buff*> _buff;
 	std::vector<CC*> _cc;
-	std::vector<PersistentHit*> _persistentHit;
+	std::vector<PersistentChangeStats*> _persistent;
+
+	// Inventory
+	Equipment* _equipments[Player::MAX_INVEN_SIZE] = {};
+	Consume* _consume[Player::MAX_INVEN_SIZE] = {};
 };
 
 // id == -1 => disconnected ป๓ลย

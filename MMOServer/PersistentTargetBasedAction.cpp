@@ -1,8 +1,8 @@
 #include "PersistentTargetBasedAction.h"
-#include "HitAction.h"
+#include "ChangeStatsAction.h"
 #include "CCAction.h"
 #include "BuffAction.h"
-#include "PersistentHitAction.h"
+#include "PersistentChangeStatsAction.h"
 #include "GameObject.h"
 #include "Area.h"
 #include "Rectangular.h"
@@ -22,9 +22,9 @@ void PersistentTargetBasedAction::action(S_SkillAction& detail, GameObject* pivo
 		I_Revertable* (*f)(const S_TargetBasedAction&, GameObject*, GameObject*) = nullptr;
 		switch (targetAction.actionType)
 		{
-		case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_BUFF: f = BuffAction::action; break;
-		case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_CC: f = CCAction::action; break;
-		case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_PERSISTENT_HIT: f = PersistentHitAction::action; break;
+		case E_TargetBasedActionType::BUFF: f = BuffAction::action; break;
+		case E_TargetBasedActionType::CROWD_CONTROL: f = CCAction::action; break;
+		case E_TargetBasedActionType::PERSISTENT_CHANGE_STATS: f = PersistentChangeStatsAction::action; break;
 		}
 
 		std::function<void(Area&)> onAreaEnter = [f, area, detail, targetAction, user](Area& other)

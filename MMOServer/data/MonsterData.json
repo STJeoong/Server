@@ -6,9 +6,11 @@
     "stats": {
       "maxHp": 20,
       "maxMp": 0,
-      "defaultAtk": 5,
-      "defaultDef": 3,
-      "defaultSpeed": 2
+      "atk": 5,
+      "def": 3,
+      "speed": 2,
+      "hp": 20,
+      "mp": 0
     },
     "normalAttack": {
       "onlyTarget": true,
@@ -24,14 +26,21 @@
       "actions": [
         {
           "actionType": 0,
-          "hitInterval": 0,
+          "interval": 0,
           "duration": 0,
           "ccType": 0,
           "isProportional": false,
           "isTargetStandard": false,
-          "referenceValue": 20,
-          "standardStats": 0,
-          "targetStats": 2
+          "deltaStats": {
+            "maxHp": 0,
+            "maxMp": 0,
+            "atk": 0,
+            "def": 0,
+            "speed": 0,
+            "hp": -20,
+            "mp": 0
+          },
+          "standardStats": 0
         }
       ],
       "userAnim": "",
@@ -47,6 +56,8 @@
         "howMany": 1
       }
     ],
+    "equipDropInfo": {},
+    "consumeDropInfo": {},
     "isAggressive": true,
     "aggressiveArea": {
       "offsetY": -2,

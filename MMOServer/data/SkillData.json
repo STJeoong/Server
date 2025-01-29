@@ -32,14 +32,21 @@
       "targetBasedActions": [
         {
           "actionType": 0,
-          "hitInterval": 0,
+          "interval": 0,
           "duration": 0,
           "ccType": 0,
           "isProportional": false,
           "isTargetStandard": false,
-          "referenceValue": 20,
-          "standardStats": 0,
-          "targetStats": 2
+          "deltaStats": {
+            "maxHp": 0,
+            "maxMp": 0,
+            "atk": 0,
+            "def": 0,
+            "speed": 0,
+            "hp": 0,
+            "mp": 0
+          },
+          "standardStats": 0
         }
       ]
     },
@@ -79,14 +86,21 @@
       "targetBasedActions": [
         {
           "actionType": 0,
-          "hitInterval": 0,
+          "interval": 0,
           "duration": 0,
           "ccType": 0,
           "isProportional": false,
           "isTargetStandard": false,
-          "referenceValue": 10,
-          "standardStats": 0,
-          "targetStats": 2
+          "deltaStats": {
+            "maxHp": 0,
+            "maxMp": 0,
+            "atk": 0,
+            "def": 0,
+            "speed": 0,
+            "hp": -10,
+            "mp": 0
+          },
+          "standardStats": 0
         }
       ]
     },

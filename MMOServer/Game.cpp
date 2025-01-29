@@ -16,7 +16,9 @@
 #include "ActionTimer.h"
 #include "Buff.h"
 #include "CC.h"	
-#include "PersistentHit.h"
+#include "PersistentChangeStats.h"
+#include "Equipment.h"
+#include "Consume.h"
 #include <ObjectPool.h>
 
 #pragma region public static
@@ -38,18 +40,20 @@ void Game::init()
 	ObjectPool::makePool<ActionTimer>(10000, []() { return new ActionTimer(); }, [](void* p) {}, [](void* p) {});
 	ObjectPool::makePool<Buff>(10000, []() { return new Buff(); }, [](void* p) {}, [](void* p) {});
 	ObjectPool::makePool<CC>(10000, []() { return new CC(); }, [](void* p) {}, [](void* p) {});
-	ObjectPool::makePool<PersistentHit>(10000, []() { return new PersistentHit(); }, [](void* p) {}, [](void* p) {});
+	ObjectPool::makePool<PersistentChangeStats>(10000, []() { return new PersistentChangeStats(); }, [](void* p) {}, [](void* p) {});
 	ObjectPool::useActionOnGet<ActionTimer>(false);
 	ObjectPool::useActionOnRelease<ActionTimer>(false);
 	ObjectPool::useActionOnGet<Buff>(false);
 	ObjectPool::useActionOnRelease<Buff>(false);
 	ObjectPool::useActionOnGet<CC>(false);
 	ObjectPool::useActionOnRelease<CC>(false);
-	ObjectPool::useActionOnGet<PersistentHit>(false);
-	ObjectPool::useActionOnRelease<PersistentHit>(false);
+	ObjectPool::useActionOnGet<PersistentChangeStats>(false);
+	ObjectPool::useActionOnRelease<PersistentChangeStats>(false);
 
 	Map::load();
 	LayerFilter::init();
+	Equipment::init();
+	Consume::init();
 	Skill::init();
 	Player::init();
 	Monster::init();

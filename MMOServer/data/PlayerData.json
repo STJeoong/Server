@@ -5,9 +5,11 @@
     "stats": {
       "maxHp": 100,
       "maxMp": 100,
-      "defaultAtk": 10,
-      "defaultDef": 5,
-      "defaultSpeed": 4
+      "atk": 0,
+      "def": 0,
+      "speed": 0,
+      "hp": 0,
+      "mp": 0
     },
     "name": "Warrior_DATA",
     "hideFlags": 0

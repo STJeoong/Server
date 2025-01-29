@@ -49,13 +49,14 @@ message NormalAttack_Notify
 {
 	int32 id = 1;
 }
-message StatsChange_Notify
+message ChangeStats_Notify
 {
 	int32 id = 1;
 	int32 maxHp = 2;
 	int32 maxMp = 3;
-	int32 hp = 4;
-	int32 mp = 5;
-	int32 atk = 6;
-	int32 def = 7;
+	int32 atk = 4;
+	int32 def = 5;
+	int32 speed = 6;
+	int32 hp = 7;
+	int32 mp = 8;
 }

@@ -1,9 +1,9 @@
 #include "InstantTargetBasedAction.h"
 #include "GameObject.h"
-#include "HitAction.h"
+#include "ChangeStatsAction.h"
 #include "CCAction.h"
 #include "BuffAction.h"
-#include "PersistentHitAction.h"
+#include "PersistentChangeStatsAction.h"
 #include "Utils.h"
 #include "Map.h"
 
@@ -30,10 +30,10 @@ void InstantTargetBasedAction::action(S_SkillAction& detail, GameObject* pivotOb
 		{
 			switch (targetAction.actionType)
 			{
-			case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_HIT: HitAction::action(targetAction, targetObj, user); break;
-			case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_BUFF: BuffAction::action(targetAction, targetObj, user); break;
-			case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_CC: CCAction::action(targetAction, targetObj, user); break;
-			case E_TargetBasedActionType::TARGET_BASED_ACTION_TYPE_PERSISTENT_HIT: PersistentHitAction::action(targetAction, targetObj, user); break;
+			case E_TargetBasedActionType::CHANGE_STATS: ChangeStatsAction::action(targetAction, targetObj, user); break;
+			case E_TargetBasedActionType::BUFF: BuffAction::action(targetAction, targetObj, user); break;
+			case E_TargetBasedActionType::CROWD_CONTROL: CCAction::action(targetAction, targetObj, user); break;
+			case E_TargetBasedActionType::PERSISTENT_CHANGE_STATS: PersistentChangeStatsAction::action(targetAction, targetObj, user); break;
 			}
 		}
 		if (detail.maxTarget == 0)

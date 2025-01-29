@@ -3,9 +3,10 @@
 #include "MMO_protocol.pb.h"
 #include "E_GameObjectEvent.h"
 #include "I_Revertable.h"
+#include "S_Stats.h"
 class GameObject;
 class I_Targetable;
-class PersistentHit : public I_Revertable
+class PersistentChangeStats : public I_Revertable
 {
 	friend class GameObject;
 public:
@@ -20,14 +21,11 @@ private:
 	I_Targetable* _target = nullptr;
 	int _duration = 0;
 	int _remainingTime = 0; // 남은 시간
-	int _hitInterval = 0;
+	int _interval = 0;
 	int _nextHitTime = 0;
 
 	bool _isProportional;
 	bool _isTargetStandard;
-	int _refValue;
+	S_Stats _delta;
 	protocol::mmo::E_Stats _refStats;
-	protocol::mmo::E_Stats _targetStats;
-	int _damage;
-
 };

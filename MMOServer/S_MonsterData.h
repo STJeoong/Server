@@ -3,6 +3,7 @@
 #include <tuple>
 #include <string>
 #include <vector>
+#include <map>
 #include "S_Stats.h"
 #include "S_RectDefine.h"
 #include "S_SkillData.h"
@@ -33,9 +34,11 @@ struct S_MonsterData
 
 	S_MonsterNormalAttack normalAttack;
 	std::vector<S_SpawnInfo> spawnInfo; // 무슨맵에 몇 마리 스폰시키는지
+	std::map<std::string, int> equipDropInfo;
+	std::map<std::string, int> consumeDropInfo;
 
 	// 선공몹
 	bool isAggressive;
 	S_RectDefine aggressiveArea;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(S_MonsterData, monsterName, templateID, extraCellSize, stats, normalAttack, spawnInfo, isAggressive, aggressiveArea)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(S_MonsterData, monsterName, templateID, extraCellSize, stats, normalAttack, spawnInfo, equipDropInfo, consumeDropInfo, isAggressive, aggressiveArea)

@@ -1,0 +1,17 @@
+[
+  {
+    "equipmentName": "Sword",
+    "templateID": 0,
+    "deltaStats": {
+      "maxHp": 0,
+      "maxMp": 0,
+      "atk": 10,
+      "def": 0,
+      "speed": 0,
+      "hp": 0,
+      "mp": 0
+    },
+    "name": "Sword_DATA",
+    "hideFlags": 0
+  }
+]

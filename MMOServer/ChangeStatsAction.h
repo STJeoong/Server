@@ -2,9 +2,8 @@
 #include "S_SkillData.h"
 class GameObject;
 class I_Revertable;
-class PersistentHitAction
+class ChangeStatsAction
 {
 public:
 	static I_Revertable* action(const S_TargetBasedAction& targetActionDetail, GameObject* targetObj, GameObject* user);
 };
-

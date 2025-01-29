@@ -12,7 +12,7 @@
 #include "S_RectDefine.h"
 #include "Buff.h"
 #include "CC.h"	
-#include "PersistentHit.h"
+#include "PersistentChangeStats.h"
 
 using namespace protocol::mmo;
 #pragma region public static
@@ -162,37 +162,30 @@ void Player::removeCC(CC* cc)
 	if (it != _cc.end())
 		_cc.erase(it);
 }
-void Player::addPersistentHit(PersistentHit* persistentHit) { _persistentHit.push_back(persistentHit); }
-void Player::removePersistentHit(PersistentHit* persistentHit)
+void Player::addPersistentChangeStats(PersistentChangeStats* persistent) { _persistent.push_back(persistent); }
+void Player::removePersistentChangeStats(PersistentChangeStats* persistent)
 {
-	auto it = std::find(_persistentHit.begin(), _persistentHit.end(), persistentHit);
-	if (it != _persistentHit.end())
-		_persistentHit.erase(it);
+	auto it = std::find(_persistent.begin(), _persistent.end(), persistent);
+	if (it != _persistent.end())
+		_persistent.erase(it);
 }
-void Player::takeDamage(protocol::mmo::E_Stats what, int val)
+void Player::changeStats(S_Stats delta)
 {
-	// TODO
-	switch (what)
-	{
-	case protocol::mmo::MAX_HP:
-		break;
-	case protocol::mmo::MAX_MP:
-		break;
-	case protocol::mmo::HP:
-		_stats.hp -= val;
-		if (_stats.hp <= 0)
-		{
-			Utils::send(_networkSerial, E_PacketID::DEAD_NOTIFY, 0);
-			this->state(E_ObjectState::DEAD);
-		}
-		break;
-	case protocol::mmo::MP:
-		break;
-	case protocol::mmo::ATK:
-		break;
-	case protocol::mmo::DEF:
-		break;
-	}
+	_stats += delta;
+	ChangeStats_Notify notify = {};
+
+	notify.set_id(this->id());
+	notify.set_maxhp(_stats.maxHp);
+	notify.set_maxmp(_stats.maxMp);
+	notify.set_atk(_stats.atk);
+	notify.set_def(_stats.def);
+	notify.set_speed(_stats.speed);
+	notify.set_hp(_stats.hp);
+	notify.set_mp(_stats.mp);
+
+	this->broadcastPacket(E_PacketID::CHANGE_STATS_NOTIFY, notify, true);
+	if (_stats.hp <= 0)
+		this->state(E_ObjectState::DEAD);
 }
 #pragma endregion
 

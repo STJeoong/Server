@@ -8,7 +8,7 @@
 class Area;
 class Buff;
 class CC;
-class PersistentHit;
+class PersistentChangeStats;
 class Monster : public GameObject, public I_Targetable
 {
 	friend class Map;
@@ -33,9 +33,9 @@ public:
 	virtual void removeBuff(Buff* buff) override;
 	virtual void addCC(CC* cc) override;
 	virtual void removeCC(CC* cc) override;
-	virtual void addPersistentHit(PersistentHit* persistentHit) override;
-	virtual void removePersistentHit(PersistentHit* persistentHit) override;
-	virtual void takeDamage(protocol::mmo::E_Stats what, int val) override;
+	virtual void addPersistentChangeStats(PersistentChangeStats* persistent) override;
+	virtual void removePersistentChangeStats(PersistentChangeStats* persistent) override;
+	virtual void changeStats(S_Stats delta) override;
 protected:
 	Monster() = delete;
 	Monster(const Monster&) = delete;
@@ -53,5 +53,5 @@ private:
 
 	std::vector<Buff*> _buff;
 	std::vector<CC*> _cc;
-	std::vector<PersistentHit*> _persistentHit;
+	std::vector<PersistentChangeStats*> _persistent;
 };
