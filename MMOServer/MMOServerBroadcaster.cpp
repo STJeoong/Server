@@ -29,6 +29,7 @@ void MMOServerBroadcaster::broadcastMessage(const S_EngineEvent& evt)
 	case E_PacketID::MOVE_REQ: { Move_Req req = {}; req.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader)); MMOServerBroadcaster::onMoveReq(evt.serial, req); break; }
 	case E_PacketID::IDLE_REQ: MMOServerBroadcaster::onIdleReq(evt.serial); break;
 	case E_PacketID::NORMAL_ATTACK_REQ: MMOServerBroadcaster::onNormalAttackReq(evt.serial); break;
+	case E_PacketID::USE_ITEM_REQ: { UseItem_Req req = {}; req.ParseFromArray(evt.data + sizeof(S_PacketHeader), header->initLen - sizeof(S_PacketHeader)); MMOServerBroadcaster::onUseItemReq(evt.serial, req); break; }
 	}
 }
 void MMOServerBroadcaster::broadcastTimer(const S_EngineEvent& evt)
@@ -48,6 +49,7 @@ Delegate<const int> MMOServerBroadcaster::onEnterGameReq;
 Delegate<const int, const Move_Req&> MMOServerBroadcaster::onMoveReq;
 Delegate<const int> MMOServerBroadcaster::onIdleReq;
 Delegate<const int> MMOServerBroadcaster::onNormalAttackReq;
+Delegate<const int, const UseItem_Req&> MMOServerBroadcaster::onUseItemReq;
 
 Delegate<> MMOServerBroadcaster::onUpdate;
 Delegate<> MMOServerBroadcaster::onMonsterRespawn;

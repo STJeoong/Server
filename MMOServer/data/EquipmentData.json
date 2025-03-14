@@ -2,6 +2,7 @@
   {
     "equipmentName": "Sword",
     "templateID": 0,
+    "type": 3,
     "deltaStats": {
       "maxHp": 0,
       "maxMp": 0,

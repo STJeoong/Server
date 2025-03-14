@@ -24,42 +24,47 @@ namespace protocol {
 namespace mmo {
 }  // namespace mmo
 }  // namespace protocol
-static const ::_pb::EnumDescriptor* file_level_enum_descriptors_MMO_5fenum_2eproto[11];
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_MMO_5fenum_2eproto[13];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_MMO_5fenum_2eproto = nullptr;
 const uint32_t TableStruct_MMO_5fenum_2eproto::offsets[1] = {};
 static constexpr ::_pbi::MigrationSchema* schemas = nullptr;
 static constexpr ::_pb::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_MMO_5fenum_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\016MMO_enum.proto\022\014protocol.mmo*\356\001\n\nE_Pac"
+  "\n\016MMO_enum.proto\022\014protocol.mmo*\262\002\n\nE_Pac"
   "ketID\022\022\n\016ENTER_GAME_REQ\020\000\022\023\n\017ENTER_GAME_"
   "RESP\020\001\022\027\n\023OBJECT_ENTER_NOTIFY\020\002\022\026\n\022OBJEC"
   "T_EXIT_NOTIFY\020\003\022\014\n\010MOVE_REQ\020\004\022\017\n\013MOVE_NO"
   "TIFY\020\005\022\014\n\010IDLE_REQ\020\006\022\017\n\013IDLE_NOTIFY\020\007\022\025\n"
   "\021NORMAL_ATTACK_REQ\020\010\022\030\n\024NORMAL_ATTACK_NO"
-  "TIFY\020\t\022\027\n\023CHANGE_STATS_NOTIFY\020\n*\034\n\nE_Res"
-  "pCode\022\006\n\002OK\020\000\022\006\n\002NO\020\001*C\n\rE_ObjectState\022\010"
-  "\n\004NONE\020\000\022\010\n\004IDLE\020\001\022\010\n\004MOVE\020\002\022\n\n\006ATTACK\020\003"
-  "\022\010\n\004DEAD\020\004*9\n\005E_Dir\022\t\n\005RIGHT\020\000\022\006\n\002UP\020\001\022\010"
-  "\n\004LEFT\020\002\022\n\n\006BOTTOM\020\003\022\007\n\003MAX\020\004*\'\n\tE_KeyCo"
-  "de\022\005\n\001Q\020\000\022\005\n\001W\020\001\022\005\n\001E\020\002\022\005\n\001R\020\003*Y\n\014E_Obje"
-  "ctType\022\024\n\020OBJECT_TYPE_NULL\020\000\022\n\n\006PLAYER\020\001"
-  "\022\013\n\007MONSTER\020\002\022\020\n\014SKILL_OBJECT\020\004\022\010\n\004ITEM\020"
-  "\010*\177\n\013E_SkillType\022\030\n\024INSTANT_TARGET_BASED"
-  "\020\000\022\032\n\026INSTANT_LOCATION_BASED\020\001\022\033\n\027PERSIS"
-  "TENT_TARGET_BASED\020\002\022\035\n\031PERSISTENT_LOCATI"
-  "ON_BASED\020\003*1\n\010E_CCType\022\010\n\004STUN\020\000\022\r\n\tNO_P"
-  "OTION\020\001\022\014\n\010NO_SKILL\020\002*C\n\007E_Stats\022\n\n\006MAX_"
-  "HP\020\000\022\n\n\006MAX_MP\020\001\022\006\n\002HP\020\002\022\006\n\002MP\020\003\022\007\n\003ATK\020"
-  "\004\022\007\n\003DEF\020\005*F\n\013E_Equipment\022\n\n\006WEAPON\020\000\022\n\n"
-  "\006HELMET\020\001\022\t\n\005SHIRT\020\002\022\t\n\005PANTS\020\003\022\t\n\005SHOES"
-  "\020\004*e\n\027E_TargetBasedActionType\022\020\n\014CHANGE_"
-  "STATS\020\000\022\010\n\004BUFF\020\001\022\021\n\rCROWD_CONTROL\020\002\022\033\n\027"
-  "PERSISTENT_CHANGE_STATS\020\003b\006proto3"
+  "TIFY\020\t\022\027\n\023CHANGE_STATS_NOTIFY\020\n\022\030\n\024GET_E"
+  "QUIPMENT_NOTIFY\020\013\022\026\n\022GET_CONSUME_NOTIFY\020"
+  "\014\022\020\n\014USE_ITEM_REQ\020\r*\034\n\nE_RespCode\022\006\n\002OK\020"
+  "\000\022\006\n\002NO\020\001*C\n\rE_ObjectState\022\010\n\004NONE\020\000\022\010\n\004"
+  "IDLE\020\001\022\010\n\004MOVE\020\002\022\n\n\006ATTACK\020\003\022\010\n\004DEAD\020\004*="
+  "\n\005E_Dir\022\t\n\005RIGHT\020\000\022\006\n\002UP\020\001\022\010\n\004LEFT\020\002\022\n\n\006"
+  "BOTTOM\020\003\022\013\n\007DIR_MAX\020\004*\'\n\tE_KeyCode\022\005\n\001Q\020"
+  "\000\022\005\n\001W\020\001\022\005\n\001E\020\002\022\005\n\001R\020\003*Y\n\014E_ObjectType\022\024"
+  "\n\020OBJECT_TYPE_NULL\020\000\022\n\n\006PLAYER\020\001\022\013\n\007MONS"
+  "TER\020\002\022\020\n\014SKILL_OBJECT\020\004\022\010\n\004ITEM\020\010*\177\n\013E_S"
+  "killType\022\030\n\024INSTANT_TARGET_BASED\020\000\022\032\n\026IN"
+  "STANT_LOCATION_BASED\020\001\022\033\n\027PERSISTENT_TAR"
+  "GET_BASED\020\002\022\035\n\031PERSISTENT_LOCATION_BASED"
+  "\020\003*1\n\010E_CCType\022\010\n\004STUN\020\000\022\r\n\tNO_POTION\020\001\022"
+  "\014\n\010NO_SKILL\020\002*C\n\007E_Stats\022\n\n\006MAX_HP\020\000\022\n\n\006"
+  "MAX_MP\020\001\022\006\n\002HP\020\002\022\006\n\002MP\020\003\022\007\n\003ATK\020\004\022\007\n\003DEF"
+  "\020\005*`\n\013E_Equipment\022\n\n\006HELMET\020\000\022\t\n\005ARMOR\020\001"
+  "\022\n\n\006GLOVES\020\002\022\n\n\006WEAPON\020\003\022\010\n\004RING\020\004\022\t\n\005SH"
+  "OES\020\005\022\r\n\tEQUIP_MAX\020\006*e\n\027E_TargetBasedAct"
+  "ionType\022\020\n\014CHANGE_STATS\020\000\022\010\n\004BUFF\020\001\022\021\n\rC"
+  "ROWD_CONTROL\020\002\022\033\n\027PERSISTENT_CHANGE_STAT"
+  "S\020\003*(\n\nE_ItemType\022\r\n\tEQUIPMENT\020\000\022\013\n\007CONS"
+  "UME\020\001*5\n\017E_QuestTaskType\022\020\n\014KILL_MONSTER"
+  "\020\000\022\020\n\014COLLECT_ITEM\020\001b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_MMO_5fenum_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_MMO_5fenum_2eproto = {
-    false, false, 993, descriptor_table_protodef_MMO_5fenum_2eproto,
+    false, false, 1188, descriptor_table_protodef_MMO_5fenum_2eproto,
     "MMO_enum.proto",
     &descriptor_table_MMO_5fenum_2eproto_once, nullptr, 0, 0,
     schemas, file_default_instances, TableStruct_MMO_5fenum_2eproto::offsets,
@@ -91,6 +96,9 @@ bool E_PacketID_IsValid(int value) {
     case 8:
     case 9:
     case 10:
+    case 11:
+    case 12:
+    case 13:
       return true;
     default:
       return false;
@@ -238,6 +246,8 @@ bool E_Equipment_IsValid(int value) {
     case 2:
     case 3:
     case 4:
+    case 5:
+    case 6:
       return true;
     default:
       return false;
@@ -254,6 +264,34 @@ bool E_TargetBasedActionType_IsValid(int value) {
     case 1:
     case 2:
     case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_ItemType_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_MMO_5fenum_2eproto);
+  return file_level_enum_descriptors_MMO_5fenum_2eproto[11];
+}
+bool E_ItemType_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_QuestTaskType_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_MMO_5fenum_2eproto);
+  return file_level_enum_descriptors_MMO_5fenum_2eproto[12];
+}
+bool E_QuestTaskType_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
       return true;
     default:
       return false;

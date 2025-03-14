@@ -9,12 +9,12 @@ class Area;
 class Buff;
 class CC;
 class PersistentChangeStats;
+class Player;
 class Monster : public GameObject, public I_Targetable
 {
 	friend class Map;
 public:
 	static void init();
-	static const S_MonsterData& monsterData(int templateID) { return s_monsterData[templateID]; }
 private:
 	static void spawn(const S_MonsterData& data);
 	static void respawn();
@@ -27,6 +27,7 @@ public:
 	void broadcastPacket(protocol::mmo::E_PacketID packetID);
 	void broadcastPacket(protocol::mmo::E_PacketID packetID, google::protobuf::Message& message);
 	const S_Stats& stats() const { return _stats; }
+	const S_MonsterData& data() const { return *_data; }
 
 	// I_Targetable을(를) 통해 상속됨
 	virtual void addBuff(Buff* buff) override;
@@ -35,7 +36,7 @@ public:
 	virtual void removeCC(CC* cc) override;
 	virtual void addPersistentChangeStats(PersistentChangeStats* persistent) override;
 	virtual void removePersistentChangeStats(PersistentChangeStats* persistent) override;
-	virtual void changeStats(S_Stats delta) override;
+	virtual void changeStats(S_Stats delta, GameObject* who) override;
 protected:
 	Monster() = delete;
 	Monster(const Monster&) = delete;
@@ -45,8 +46,10 @@ protected:
 	virtual ~Monster() = default; // TODO : 삭제할거 있으면 삭제
 private:
 	virtual GameObject* clone() override { return new Monster(this); }
+	void giveItems(Player* player);
 
 
+	const S_MonsterData* _data = nullptr;
 	Area* _objArea = nullptr;
 	S_Stats _stats = {};
 	protocol::mmo::TransformInt _initTF; // 초기위치 (리스폰할때 사용)

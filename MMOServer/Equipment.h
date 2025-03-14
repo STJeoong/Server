@@ -1,12 +1,33 @@
 #pragma once
 #include <vector>
-#include "S_Equipment.h"
+#include "MMO_protocol.pb.h"
+#include "S_EquipmentData.h"
+#include "S_Stats.h"
+class Player;
 class Equipment
 {
 public:
 	static void init();
-	static S_Equipment getData(int templateID) { return s_equipmentData[templateID]; }
-	static S_Equipment getData(const std::string& name);
+	static Equipment* makeEquipment(const std::string& name);
+	static void deleteEquipment(Equipment* equipment);
 private:
-	static std::vector<S_Equipment> s_equipmentData;
+	static Equipment* load() {} // TODO
+	static void unload(Equipment* equipment) { delete equipment; }
+
+	static std::vector<S_EquipmentData> s_equipmentData;
+
+
+public:
+	void setNotify(protocol::mmo::GetEquipment_Notify& notify);
+	protocol::mmo::E_Equipment type() const { return _data->type; }
+	void wear(Player* player);
+	void unwear(Player* player);
+private:
+	Equipment(const S_EquipmentData& data) : _data(&data), _deltaStats(data.deltaStats) {}
+	Equipment(const Equipment& other) = delete;
+	~Equipment() = default;
+
+
+	const S_EquipmentData* _data = nullptr;
+	S_Stats _deltaStats = {};
 };

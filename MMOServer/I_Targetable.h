@@ -5,6 +5,7 @@
 class Buff;
 class CC;
 class PersistentChangeStats;
+class GameObject;
 class I_Targetable
 {
 public:
@@ -15,5 +16,5 @@ public:
 	virtual void removeCC(CC* cc) = 0;
 	virtual void addPersistentChangeStats(PersistentChangeStats* persistent) = 0;
 	virtual void removePersistentChangeStats(PersistentChangeStats* persistent) = 0;
-	virtual void changeStats(S_Stats delta) = 0;
+	virtual void changeStats(S_Stats delta, GameObject* who) = 0;
 };

@@ -13,9 +13,9 @@ void Consume::init()
 	json j = json::parse(fstream);
 	j.get_to(s_consumeData);
 }
-S_Consume Consume::getData(const std::string& name)
+S_ConsumeData Consume::getData(const std::string& name)
 {
-	for (S_Consume data : s_consumeData)
+	for (S_ConsumeData data : s_consumeData)
 		if (data.consumeName == name)
 			return data;
 	std::cout << "Consume (" << name << ") doesnt exist. but you try to get data\n";
@@ -26,4 +26,4 @@ S_Consume Consume::getData(const std::string& name)
 #pragma region private static
 #pragma endregion
 
-std::vector<S_Consume> Consume::s_consumeData;
+std::vector<S_ConsumeData> Consume::s_consumeData;

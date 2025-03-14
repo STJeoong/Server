@@ -19,6 +19,7 @@
 #include "PersistentChangeStats.h"
 #include "Equipment.h"
 #include "Consume.h"
+#include "QuestManager.h"
 #include <ObjectPool.h>
 
 #pragma region public static
@@ -55,6 +56,7 @@ void Game::init()
 	Equipment::init();
 	Consume::init();
 	Skill::init();
+	QuestManager::init();
 	Player::init();
 	Monster::init();
 	std::cout << "Server Start\n";

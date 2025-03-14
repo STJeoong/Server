@@ -86,7 +86,7 @@ void MonsterController::attack()
 	NormalAttack_Notify notify = {};
 	notify.set_id(_me->id());
 	_me->broadcastPacket(E_PacketID::NORMAL_ATTACK_NOTIFY, notify);
-	const S_MonsterData& data = Monster::monsterData(Utils::getTemplateID(_me->id()));
+	const S_MonsterData& data = _me->data();
 	const S_MonsterNormalAttack& normalAttack = data.normalAttack;
 	_nextUpdateCnt = normalAttack.delayTime / Game::UPDATE_DELTA_TIME;
 	for (const S_TargetBasedAction& targetAction : normalAttack.actions)

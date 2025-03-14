@@ -15,6 +15,9 @@ enum E_PacketID
 	NORMAL_ATTACK_REQ = 8;
 	NORMAL_ATTACK_NOTIFY = 9;
 	CHANGE_STATS_NOTIFY = 10;
+	GET_EQUIPMENT_NOTIFY = 11;
+	GET_CONSUME_NOTIFY = 12;
+	USE_ITEM_REQ = 13;
 }
 enum E_RespCode
 {
@@ -36,7 +39,7 @@ enum E_Dir
 	UP = 1;
 	LEFT = 2;
 	BOTTOM = 3;
-	MAX = 4;
+	DIR_MAX = 4;
 }
 enum E_KeyCode
 {
@@ -77,11 +80,13 @@ enum E_Stats
 }
 enum E_Equipment
 {
-	WEAPON = 0;
-	HELMET = 1;
-	SHIRT = 2;
-	PANTS = 3;
-	SHOES = 4;
+	HELMET = 0;
+	ARMOR = 1;
+	GLOVES = 2;
+	WEAPON = 3;
+	RING = 4;
+	SHOES = 5;
+	EQUIP_MAX = 6;
 }
 enum E_TargetBasedActionType
 {
@@ -89,4 +94,14 @@ enum E_TargetBasedActionType
 	BUFF = 1; // 디버프도 포함
 	CROWD_CONTROL = 2;
 	PERSISTENT_CHANGE_STATS = 3;
+}
+enum E_ItemType
+{
+	EQUIPMENT = 0;
+	CONSUME = 1;
+}
+enum E_QuestTaskType
+{
+	KILL_MONSTER = 0;
+	COLLECT_ITEM = 1;
 }

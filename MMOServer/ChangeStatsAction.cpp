@@ -13,7 +13,7 @@ I_Revertable* ChangeStatsAction::action(const S_TargetBasedAction& targetActionD
         // TODO : 비례 데미지
     }
     I_Targetable* target = dynamic_cast<I_Targetable*>(targetObj);
-    target->changeStats(delta);
+    target->changeStats(delta, user);
     return nullptr;
 }
 #pragma endregion

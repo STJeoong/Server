@@ -13,6 +13,9 @@
 #include "Buff.h"
 #include "CC.h"	
 #include "PersistentChangeStats.h"
+#include "Equipment.h"
+#include "Consume.h"
+#include "ObjectPool.h"
 
 using namespace protocol::mmo;
 #pragma region public static
@@ -121,6 +124,12 @@ void Player::onNormalAttackReq(int serial)
 	notify.set_id(player->id());
 	player->broadcastPacket(E_PacketID::NORMAL_ATTACK_NOTIFY, notify);
 }
+void Player::onUseItem(int serial, const protocol::mmo::UseItem_Req& req)
+{
+	Player* player = s_players[serial];
+	if (player == nullptr || player->state() == E_ObjectState::NONE || player->state() == E_ObjectState::DEAD) return;
+
+}
 #pragma endregion
 
 
@@ -148,28 +157,70 @@ void Player::broadcastPacket(protocol::mmo::E_PacketID packetID, google::protobu
 	if (includeMe)
 		Utils::send(_networkSerial, packetID, 0, message);
 }
-void Player::addBuff(Buff* buff) { _buff.push_back(buff); }
+bool Player::hasSpaceInEquipment() const
+{
+	for (int i = 0; i < Player::MAX_INVEN_SIZE; ++i)
+		if (_equipments[i] == nullptr)
+			return true;
+	return false;
+}
+bool Player::hasSpaceInConsume() const
+{
+	for (int i = 0; i < Player::MAX_INVEN_SIZE; ++i)
+		if (_consume[i] == nullptr)
+			return true;
+	return false;
+}
+void Player::getEquipment(Equipment* equipment)
+{
+	for (int i = 0; i < Player::MAX_INVEN_SIZE; ++i)
+		if (_equipments[i] == nullptr)
+		{
+			_equipments[i] = equipment;
+			GetEquipment_Notify notify = {};
+			equipment->setNotify(notify);
+			notify.set_slotidx(i);
+			Utils::send(_networkSerial, E_PacketID::GET_EQUIPMENT_NOTIFY, 0, notify);
+			break;
+		}
+}
+void Player::getConsume(Consume* consume)
+{
+	for (int i = 0; i < Player::MAX_INVEN_SIZE; ++i)
+		if (_consume[i] == nullptr)
+		{
+			_consume[i] = consume;
+			break;
+		}
+}
+void Player::addBuff(Buff* buff) { if (buff == nullptr) return; _buff.push_back(buff); }
 void Player::removeBuff(Buff* buff)
 {
+	if (buff == nullptr) return;
 	auto it = std::find(_buff.begin(), _buff.end(), buff);
 	if (it != _buff.end())
 		_buff.erase(it);
+	ObjectPool::release(buff);
 }
-void Player::addCC(CC* cc) { _cc.push_back(cc); }
+void Player::addCC(CC* cc) { if (cc == nullptr) return; _cc.push_back(cc); }
 void Player::removeCC(CC* cc)
 {
+	if (cc == nullptr) return;
 	auto it = std::find(_cc.begin(), _cc.end(), cc);
 	if (it != _cc.end())
 		_cc.erase(it);
+	ObjectPool::release(cc);
 }
-void Player::addPersistentChangeStats(PersistentChangeStats* persistent) { _persistent.push_back(persistent); }
+void Player::addPersistentChangeStats(PersistentChangeStats* persistent) { if (persistent == nullptr) return; _persistent.push_back(persistent); }
 void Player::removePersistentChangeStats(PersistentChangeStats* persistent)
 {
+	if (persistent == nullptr) return;
 	auto it = std::find(_persistent.begin(), _persistent.end(), persistent);
 	if (it != _persistent.end())
 		_persistent.erase(it);
+	ObjectPool::release(persistent);
 }
-void Player::changeStats(S_Stats delta)
+void Player::changeStats(S_Stats delta, GameObject* who)
 {
 	_stats += delta;
 	ChangeStats_Notify notify = {};
@@ -190,9 +241,42 @@ void Player::changeStats(S_Stats delta)
 #pragma endregion
 
 #pragma region protected
+Player::~Player()
+{
+	// TODO : DB에 player 상태 정보 저장
+
+}
 #pragma endregion
 
 #pragma region private
+void Player::useItem(const protocol::mmo::UseItem_Req& req)
+{
+	switch (req.itemtype())
+	{
+	case E_ItemType::EQUIPMENT:
+	{
+		Equipment* item = _equipments[req.slotidx()];
+		if (item == nullptr) return;
+		item->wear(this);
+		int idx = (int)item->type();
+		if (_wearing[idx] != nullptr)
+		{
+			_wearing[idx]->unwear(this);
+			_equipments[req.slotidx()] = _wearing[idx];
+		}
+		_equipments[req.slotidx()] = nullptr;
+		_wearing[idx] = item;
+		break;
+	}
+	case E_ItemType::CONSUME:
+	{
+		Consume* item = _consume[req.slotidx()];
+		if (item == nullptr) return;
+		// TODO
+		break;
+	}
+	}
+}
 #pragma endregion
 
 std::vector<Player*> Player::s_players;

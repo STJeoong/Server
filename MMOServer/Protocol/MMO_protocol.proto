@@ -60,3 +60,27 @@ message ChangeStats_Notify
 	int32 hp = 7;
 	int32 mp = 8;
 }
+message GetEquipment_Notify
+{
+	int32 id = 1; // 장비의 templateID
+	int32 slotIdx = 2; // 인벤토리의 몇번째 슬롯에 획득했는지
+	// 장비 능력치
+	int32 maxHp = 3;
+	int32 maxMp = 4;
+	int32 atk = 5;
+	int32 def = 6;
+	int32 speed = 7;
+	int32 hp = 8;
+	int32 mp = 9;
+}
+message GetConsume_Notify
+{
+	int32 id = 1; // Consume의 templateID
+	int32 slotIdx = 2;
+	int32 cnt = 3; // 몇개
+}
+message UseItem_Req
+{
+	E_ItemType itemType = 1;
+	int32 slotIdx = 2;
+}

@@ -116,7 +116,7 @@ std::optional<E_Dir> Map::findPath(const TransformInt& start, const TransformInt
 		{
 			while (true)
 			{
-				int dir = ((int)trace[y - _yMin][x - _xMin] + ((int)E_Dir::MAX / 2)) % (int)E_Dir::MAX; // 반대 방향
+				int dir = ((int)trace[y - _yMin][x - _xMin] + ((int)E_Dir::DIR_MAX / 2)) % (int)E_Dir::DIR_MAX; // 반대 방향
 				int ny = y + dy[dir]; // 이전 y좌표
 				int nx = x + dx[dir]; // 이전 x좌표
 				if (ny == startY && nx == startX)

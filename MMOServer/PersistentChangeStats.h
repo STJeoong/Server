@@ -19,6 +19,7 @@ private:
 	void action();
 
 	I_Targetable* _target = nullptr;
+	GameObject* _user = nullptr;
 	int _duration = 0;
 	int _remainingTime = 0; // 남은 시간
 	int _interval = 0;

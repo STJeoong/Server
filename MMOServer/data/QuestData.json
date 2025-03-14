@@ -1,0 +1,16 @@
+[
+  {
+    "questName": "TEST_QUEST",
+    "templateID": 0,
+    "description": "test quest",
+    "tasks": [
+      {
+        "type": 0,
+        "what": "TEST_MONSTER_1",
+        "cnt": 3
+      }
+    ],
+    "name": "TEST_QUEST_DATA",
+    "hideFlags": 0
+  }
+]

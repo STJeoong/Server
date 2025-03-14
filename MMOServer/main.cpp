@@ -2,18 +2,21 @@
 #include <fstream>
 #include "E_EngineType.h"
 #include "MMOServerBroadcaster.h"
+#include "DBClientBroadcaster.h"
 #include "Game.h"
 #include <DbgHelp.h>
+#include <map>
 
 #pragma comment(lib, "DbgHelp.lib")
 static void setEngine()
 {
 	std::ifstream fstream("C:/Users/taejeong/source/repos/ServerFramework/MMOServer/data/config.json");
 	json j = json::parse(fstream);
-	S_ServerConfig config;
-	j.get_to(config);
+	std::map<std::string, S_ServerConfig> mp;
+	j.get_to(mp);
 
-	Engine::addEngine((int)E_EngineType::MMO_SERVER, config, new MMOServerBroadcaster());
+	Engine::addEngine((int)E_EngineType::MMO_SERVER, mp["mmo"], new MMOServerBroadcaster());
+	Engine::addEngine((int)E_EngineType::DB_CLIENT, mp["db"], new DBClientBroadcaster());
 }
 static LONG WINAPI createDump(EXCEPTION_POINTERS* exceptPointers)
 {

@@ -10,6 +10,9 @@
 #include "Utils.h"
 #include "Rectangular.h"
 #include "MonsterController.h"
+#include "S_EquipmentData.h"
+#include "S_ConsumeData.h"
+#include "Equipment.h"
 
 using namespace protocol::mmo;
 using json = nlohmann::json;
@@ -41,6 +44,7 @@ void Monster::spawn(const S_MonsterData& data)
 		{
 			// Area는 가장 마지막에 addComponent해줘야됨.
 			Monster* monster = map->instantiate<Monster>(true);
+			monster->_data = &data;
 			monster->state(E_ObjectState::IDLE);
 			monster->_objArea = monster->addComponent<Area>();
 			monster->_objArea->layer(E_Layer::MONSTER_OBJ);
@@ -100,12 +104,11 @@ void Monster::respawn()
 		s_deadMonsters.pop();
 		const TransformInt& initTF = monster->_initTF;
 		S_Stats& stats = monster->_stats;
-		S_MonsterData data = Monster::monsterData(Utils::getTemplateID(monster->id()));
 
 		// 스탯 및 위치값 다시 초기화
 		monster->transform(initTF.y(), initTF.x(), initTF.dir());
 		monster->flipX(false);
-		stats = data.stats;
+		stats = (*(monster->_data)).stats;
 
 		// 리스폰
 		monster->active(true);
@@ -156,13 +159,14 @@ void Monster::removePersistentChangeStats(PersistentChangeStats* persistent)
 	if (it != _persistent.end())
 		_persistent.erase(it);
 }
-void Monster::changeStats(S_Stats delta)
+void Monster::changeStats(S_Stats delta, GameObject* who)
 {
 	_stats += delta;
 	if (_stats.hp <= 0)
 	{
 		s_deadMonsters.push(this);
 		this->active(false);
+		this->giveItems(reinterpret_cast<Player*>(who));
 		return;
 	}
 
@@ -178,6 +182,21 @@ void Monster::changeStats(S_Stats delta)
 	notify.set_mp(_stats.mp);
 
 	this->broadcastPacket(E_PacketID::CHANGE_STATS_NOTIFY, notify);
+}
+void Monster::giveItems(Player* player)
+{
+	if (player == nullptr) return;
+
+	for (auto data : _data->equipDropInfo)
+	{
+		if (!player->hasSpaceInEquipment())
+			break;
+		const std::string& name = data.first;
+		int percent = data.second;
+		if (Utils::gacha(percent))
+			player->getEquipment(Equipment::makeEquipment(name));
+	}
+	// TODO : 물약
 }
 #pragma endregion
 

@@ -60,12 +60,15 @@ enum E_PacketID : int {
   NORMAL_ATTACK_REQ = 8,
   NORMAL_ATTACK_NOTIFY = 9,
   CHANGE_STATS_NOTIFY = 10,
+  GET_EQUIPMENT_NOTIFY = 11,
+  GET_CONSUME_NOTIFY = 12,
+  USE_ITEM_REQ = 13,
   E_PacketID_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   E_PacketID_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool E_PacketID_IsValid(int value);
 constexpr E_PacketID E_PacketID_MIN = ENTER_GAME_REQ;
-constexpr E_PacketID E_PacketID_MAX = CHANGE_STATS_NOTIFY;
+constexpr E_PacketID E_PacketID_MAX = USE_ITEM_REQ;
 constexpr int E_PacketID_ARRAYSIZE = E_PacketID_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_PacketID_descriptor();
@@ -140,13 +143,13 @@ enum E_Dir : int {
   UP = 1,
   LEFT = 2,
   BOTTOM = 3,
-  MAX = 4,
+  DIR_MAX = 4,
   E_Dir_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   E_Dir_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool E_Dir_IsValid(int value);
 constexpr E_Dir E_Dir_MIN = RIGHT;
-constexpr E_Dir E_Dir_MAX = MAX;
+constexpr E_Dir E_Dir_MAX = DIR_MAX;
 constexpr int E_Dir_ARRAYSIZE = E_Dir_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_Dir_descriptor();
@@ -301,17 +304,19 @@ inline bool E_Stats_Parse(
     E_Stats_descriptor(), name, value);
 }
 enum E_Equipment : int {
-  WEAPON = 0,
-  HELMET = 1,
-  SHIRT = 2,
-  PANTS = 3,
-  SHOES = 4,
+  HELMET = 0,
+  ARMOR = 1,
+  GLOVES = 2,
+  WEAPON = 3,
+  RING = 4,
+  SHOES = 5,
+  EQUIP_MAX = 6,
   E_Equipment_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   E_Equipment_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool E_Equipment_IsValid(int value);
-constexpr E_Equipment E_Equipment_MIN = WEAPON;
-constexpr E_Equipment E_Equipment_MAX = SHOES;
+constexpr E_Equipment E_Equipment_MIN = HELMET;
+constexpr E_Equipment E_Equipment_MAX = EQUIP_MAX;
 constexpr int E_Equipment_ARRAYSIZE = E_Equipment_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_Equipment_descriptor();
@@ -354,6 +359,56 @@ inline bool E_TargetBasedActionType_Parse(
     ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, E_TargetBasedActionType* value) {
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_TargetBasedActionType>(
     E_TargetBasedActionType_descriptor(), name, value);
+}
+enum E_ItemType : int {
+  EQUIPMENT = 0,
+  CONSUME = 1,
+  E_ItemType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  E_ItemType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool E_ItemType_IsValid(int value);
+constexpr E_ItemType E_ItemType_MIN = EQUIPMENT;
+constexpr E_ItemType E_ItemType_MAX = CONSUME;
+constexpr int E_ItemType_ARRAYSIZE = E_ItemType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_ItemType_descriptor();
+template<typename T>
+inline const std::string& E_ItemType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, E_ItemType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function E_ItemType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    E_ItemType_descriptor(), enum_t_value);
+}
+inline bool E_ItemType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, E_ItemType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_ItemType>(
+    E_ItemType_descriptor(), name, value);
+}
+enum E_QuestTaskType : int {
+  KILL_MONSTER = 0,
+  COLLECT_ITEM = 1,
+  E_QuestTaskType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  E_QuestTaskType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool E_QuestTaskType_IsValid(int value);
+constexpr E_QuestTaskType E_QuestTaskType_MIN = KILL_MONSTER;
+constexpr E_QuestTaskType E_QuestTaskType_MAX = COLLECT_ITEM;
+constexpr int E_QuestTaskType_ARRAYSIZE = E_QuestTaskType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* E_QuestTaskType_descriptor();
+template<typename T>
+inline const std::string& E_QuestTaskType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, E_QuestTaskType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function E_QuestTaskType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    E_QuestTaskType_descriptor(), enum_t_value);
+}
+inline bool E_QuestTaskType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, E_QuestTaskType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<E_QuestTaskType>(
+    E_QuestTaskType_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -432,6 +487,16 @@ template <> struct is_proto_enum< ::protocol::mmo::E_TargetBasedActionType> : ::
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_TargetBasedActionType>() {
   return ::protocol::mmo::E_TargetBasedActionType_descriptor();
+}
+template <> struct is_proto_enum< ::protocol::mmo::E_ItemType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_ItemType>() {
+  return ::protocol::mmo::E_ItemType_descriptor();
+}
+template <> struct is_proto_enum< ::protocol::mmo::E_QuestTaskType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::protocol::mmo::E_QuestTaskType>() {
+  return ::protocol::mmo::E_QuestTaskType_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

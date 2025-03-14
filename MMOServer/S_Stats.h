@@ -14,14 +14,28 @@ struct S_Stats
 
 	void operator+=(S_Stats delta)
 	{
-		maxHp = (maxHp + delta.maxHp) < 0 ? 0 : (maxHp + delta.maxHp);
-		maxMp = (maxMp + delta.maxMp) < 0 ? 0 : (maxMp + delta.maxMp);
-		atk = (atk + delta.atk) < 0 ? 0 : (atk + delta.atk);
-		def = (def + delta.def) < 0 ? 0 : (def + delta.def);
-		speed = (speed + delta.speed) < 0 ? 0 : (speed + delta.speed);
+		maxHp = maxHp + delta.maxHp;
+		maxMp = maxMp + delta.maxMp;
+		atk = atk + delta.atk;
+		def = def + delta.def;
+		speed = speed + delta.speed;
 
-		hp = (hp + delta.hp) < 0 ? 0 : (hp + delta.hp);
-		mp = (mp + delta.mp) < 0 ? 0 : (mp + delta.mp);
+		hp = hp + delta.hp;
+		mp = mp + delta.mp;
+	}
+	S_Stats operator*(int value)
+	{
+		S_Stats ret = {};
+
+		ret.maxHp = maxHp * value;
+		ret.maxMp = maxMp * value;
+		ret.atk = atk * value;
+		ret.def = def * value;
+		ret.speed = speed * value;
+		ret.hp = hp * value;
+		ret.mp = mp * value;
+
+		return ret;
 	}
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(S_Stats, maxHp, maxMp, atk, def, speed, hp, mp)

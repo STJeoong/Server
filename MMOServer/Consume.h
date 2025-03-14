@@ -1,12 +1,12 @@
 #pragma once
 #include <vector>
-#include "S_Consume.h"
+#include "S_ConsumeData.h"
 class Consume
 {
 public:
 	static void init();
-	static S_Consume getData(int templateID) { return s_consumeData[templateID]; }
-	static S_Consume getData(const std::string& name);
+	static S_ConsumeData getData(int templateID) { return s_consumeData[templateID]; }
+	static S_ConsumeData getData(const std::string& name);
 private:
-	static std::vector<S_Consume> s_consumeData;
+	static std::vector<S_ConsumeData> s_consumeData;
 };

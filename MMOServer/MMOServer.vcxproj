@@ -160,7 +160,9 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Consume.cpp" />
     <ClCompile Include="DAT.cpp" />
+    <ClCompile Include="DBClientBroadcaster.cpp" />
     <ClCompile Include="Equipment.cpp" />
+    <ClCompile Include="E_QuestState.h" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="ChangeStatsAction.cpp" />
@@ -180,6 +182,9 @@
     <ClCompile Include="PersistentTargetBasedAction.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="Quest.cpp" />
+    <ClCompile Include="QuestManager.cpp" />
+    <ClCompile Include="QuestTask.cpp" />
     <ClCompile Include="Rectangular.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Skill.cpp" />
@@ -203,6 +208,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Consume.h" />
     <ClInclude Include="DAT.h" />
+    <ClInclude Include="DBClientBroadcaster.h" />
     <ClInclude Include="Equipment.h" />
     <ClInclude Include="E_EngineType.h" />
     <ClInclude Include="E_GameObjectEvent.h" />
@@ -221,6 +227,9 @@
     <ClInclude Include="PersistentTargetBasedAction.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="Quest.h" />
+    <ClInclude Include="QuestManager.h" />
+    <ClInclude Include="QuestTask.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="LayerFilter.h" />
     <ClInclude Include="Map.h" />
@@ -231,10 +240,11 @@
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Rectangular.h" />
     <ClInclude Include="Skill.h" />
-    <ClInclude Include="S_Consume.h" />
-    <ClInclude Include="S_Equipment.h" />
+    <ClInclude Include="S_ConsumeData.h" />
+    <ClInclude Include="S_EquipmentData.h" />
     <ClInclude Include="S_MonsterData.h" />
     <ClInclude Include="S_PlayerData.h" />
+    <ClInclude Include="S_QuestData.h" />
     <ClInclude Include="S_RectDefine.h" />
     <ClInclude Include="S_SkillData.h" />
     <ClInclude Include="S_Stats.h" />
@@ -243,9 +253,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="data\config.json" />
+    <None Include="data\ConsumeData.json" />
+    <None Include="data\EquipmentData.json" />
     <None Include="data\MonsterData.json" />
     <None Include="data\PlayerData.json" />
+    <None Include="data\QuestData.json" />
     <None Include="data\SkillData.json" />
+    <None Include="Protocol\DB_enum.proto" />
+    <None Include="Protocol\DB_protocol.bat" />
+    <None Include="Protocol\DB_protocol.proto" />
+    <None Include="Protocol\DB_struct.proto" />
     <None Include="Protocol\MMO_enum.proto" />
     <None Include="Protocol\MMO_protocol.bat" />
     <None Include="Protocol\MMO_protocol.proto" />

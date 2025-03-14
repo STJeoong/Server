@@ -1,6 +1,14 @@
 {
-  "network": "server",
-  "ip": "127.0.0.1",
-  "port": 9090,
-  "maxClient": 100
+  "mmo": {
+    "network": "server",
+    "ip": "127.0.0.1",
+    "port": 9090,
+    "maxClient": 100
+  },
+  "db": {
+    "network": "client",
+    "ip": "127.0.0.1",
+    "port": 9091,
+    "maxClient": 1
+  }
 }

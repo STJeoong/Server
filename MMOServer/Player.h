@@ -27,6 +27,7 @@ private:
 	static void onMoveReq(int serial, const protocol::mmo::Move_Req& req);
 	static void onIdleReq(int serial);
 	static void onNormalAttackReq(int serial);
+	static void onUseItem(int serial, const protocol::mmo::UseItem_Req& req);
 
 	static std::vector<Player*> s_players;
 	static std::vector<S_PlayerData> s_playerData;
@@ -35,6 +36,10 @@ public:
 	int networkSerial() const { return _networkSerial; }
 	void broadcastPacket(protocol::mmo::E_PacketID packetID, bool includeMe = false);
 	void broadcastPacket(protocol::mmo::E_PacketID packetID, google::protobuf::Message& message, bool includeMe = false);
+	bool hasSpaceInEquipment() const;
+	bool hasSpaceInConsume() const;
+	void getEquipment(Equipment* equipment);
+	void getConsume(Consume* consume);
 
 	// I_Targetable을(를) 통해 상속됨
 	virtual void addBuff(Buff* buff) override;
@@ -43,17 +48,18 @@ public:
 	virtual void removeCC(CC* cc) override;
 	virtual void addPersistentChangeStats(PersistentChangeStats* persistent) override;
 	virtual void removePersistentChangeStats(PersistentChangeStats* persistent) override;
-	virtual void changeStats(S_Stats delta) override;
+	virtual void changeStats(S_Stats delta, GameObject* who) override;
 protected:
 	Player() = delete;
 	Player(const Player&) = delete;
 	Player(Player* copy) : GameObject(copy) {} // TODO 복사할 거 있으면 복사
 	Player(bool isActive, GameObject* parent) : GameObject(isActive, parent) {}
 	Player(bool isActive, Player* copy, GameObject* parent) : GameObject(isActive, copy, parent) {}
-	virtual ~Player() = default; // TODO : 삭제할거 있으면 삭제
+	virtual ~Player(); // TODO : 삭제할거 있으면 삭제
 
 private:
 	virtual GameObject* clone() override { return new Player(this); }
+	void useItem(const protocol::mmo::UseItem_Req& req);
 
 	int _networkSerial = -1;
 	Area* _objArea = nullptr;
@@ -67,6 +73,8 @@ private:
 	// Inventory
 	Equipment* _equipments[Player::MAX_INVEN_SIZE] = {};
 	Consume* _consume[Player::MAX_INVEN_SIZE] = {};
+
+	Equipment* _wearing[protocol::mmo::E_Equipment::EQUIP_MAX] = {};
 };
 
 // id == -1 => disconnected 상태

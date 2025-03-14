@@ -56,7 +56,9 @@
         "howMany": 1
       }
     ],
-    "equipDropInfo": {},
+    "equipDropInfo": {
+      "Sword": 100
+    },
     "consumeDropInfo": {},
     "isAggressive": true,
     "aggressiveArea": {

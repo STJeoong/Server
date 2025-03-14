@@ -7,6 +7,9 @@ void Buff::apply(const S_TargetBasedAction& targetActionDetail, I_Targetable* ta
 }
 void Buff::revert()
 {
+	// TODO
+
+
 }
 #pragma endregion
 

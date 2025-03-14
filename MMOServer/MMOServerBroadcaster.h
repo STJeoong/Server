@@ -16,11 +16,12 @@ public:
 	static Delegate<const int, const protocol::mmo::Move_Req&> onMoveReq;
 	static Delegate<const int> onIdleReq;
 	static Delegate<const int> onNormalAttackReq;
+	static Delegate<const int, const protocol::mmo::UseItem_Req&> onUseItemReq;
 	// timer
 	static Delegate<> onUpdate;
 	static Delegate<> onMonsterRespawn;
 
-
+public:
 	virtual void broadcast(const S_EngineEvent& evt) override;
 private:
 	void broadcastMessage(const S_EngineEvent& evt);

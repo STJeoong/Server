@@ -177,9 +177,59 @@ struct ChangeStats_NotifyDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ChangeStats_NotifyDefaultTypeInternal _ChangeStats_Notify_default_instance_;
+PROTOBUF_CONSTEXPR GetEquipment_Notify::GetEquipment_Notify(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.id_)*/0
+  , /*decltype(_impl_.slotidx_)*/0
+  , /*decltype(_impl_.maxhp_)*/0
+  , /*decltype(_impl_.maxmp_)*/0
+  , /*decltype(_impl_.atk_)*/0
+  , /*decltype(_impl_.def_)*/0
+  , /*decltype(_impl_.speed_)*/0
+  , /*decltype(_impl_.hp_)*/0
+  , /*decltype(_impl_.mp_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct GetEquipment_NotifyDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GetEquipment_NotifyDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GetEquipment_NotifyDefaultTypeInternal() {}
+  union {
+    GetEquipment_Notify _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetEquipment_NotifyDefaultTypeInternal _GetEquipment_Notify_default_instance_;
+PROTOBUF_CONSTEXPR GetConsume_Notify::GetConsume_Notify(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.id_)*/0
+  , /*decltype(_impl_.slotidx_)*/0
+  , /*decltype(_impl_.cnt_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct GetConsume_NotifyDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GetConsume_NotifyDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GetConsume_NotifyDefaultTypeInternal() {}
+  union {
+    GetConsume_Notify _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetConsume_NotifyDefaultTypeInternal _GetConsume_Notify_default_instance_;
+PROTOBUF_CONSTEXPR UseItem_Req::UseItem_Req(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.itemtype_)*/0
+  , /*decltype(_impl_.slotidx_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct UseItem_ReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR UseItem_ReqDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~UseItem_ReqDefaultTypeInternal() {}
+  union {
+    UseItem_Req _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 UseItem_ReqDefaultTypeInternal _UseItem_Req_default_instance_;
 }  // namespace mmo
 }  // namespace protocol
-static ::_pb::Metadata file_level_metadata_MMO_5fprotocol_2eproto[11];
+static ::_pb::Metadata file_level_metadata_MMO_5fprotocol_2eproto[14];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_MMO_5fprotocol_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_MMO_5fprotocol_2eproto = nullptr;
 
@@ -273,6 +323,38 @@ const uint32_t TableStruct_MMO_5fprotocol_2eproto::offsets[] PROTOBUF_SECTION_VA
   PROTOBUF_FIELD_OFFSET(::protocol::mmo::ChangeStats_Notify, _impl_.speed_),
   PROTOBUF_FIELD_OFFSET(::protocol::mmo::ChangeStats_Notify, _impl_.hp_),
   PROTOBUF_FIELD_OFFSET(::protocol::mmo::ChangeStats_Notify, _impl_.mp_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::GetEquipment_Notify, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::GetEquipment_Notify, _impl_.id_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::GetEquipment_Notify, _impl_.slotidx_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::GetEquipment_Notify, _impl_.maxhp_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::GetEquipment_Notify, _impl_.maxmp_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::GetEquipment_Notify, _impl_.atk_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::GetEquipment_Notify, _impl_.def_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::GetEquipment_Notify, _impl_.speed_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::GetEquipment_Notify, _impl_.hp_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::GetEquipment_Notify, _impl_.mp_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::GetConsume_Notify, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::GetConsume_Notify, _impl_.id_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::GetConsume_Notify, _impl_.slotidx_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::GetConsume_Notify, _impl_.cnt_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::UseItem_Req, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::UseItem_Req, _impl_.itemtype_),
+  PROTOBUF_FIELD_OFFSET(::protocol::mmo::UseItem_Req, _impl_.slotidx_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::protocol::mmo::EnterGame_Resp)},
@@ -286,6 +368,9 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 60, -1, -1, sizeof(::protocol::mmo::UseSkill_Resp)},
   { 68, -1, -1, sizeof(::protocol::mmo::NormalAttack_Notify)},
   { 75, -1, -1, sizeof(::protocol::mmo::ChangeStats_Notify)},
+  { 89, -1, -1, sizeof(::protocol::mmo::GetEquipment_Notify)},
+  { 104, -1, -1, sizeof(::protocol::mmo::GetConsume_Notify)},
+  { 113, -1, -1, sizeof(::protocol::mmo::UseItem_Req)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -300,6 +385,9 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::protocol::mmo::_UseSkill_Resp_default_instance_._instance,
   &::protocol::mmo::_NormalAttack_Notify_default_instance_._instance,
   &::protocol::mmo::_ChangeStats_Notify_default_instance_._instance,
+  &::protocol::mmo::_GetEquipment_Notify_default_instance_._instance,
+  &::protocol::mmo::_GetConsume_Notify_default_instance_._instance,
+  &::protocol::mmo::_UseItem_Req_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_MMO_5fprotocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -323,7 +411,14 @@ const char descriptor_table_protodef_MMO_5fprotocol_2eproto[] PROTOBUF_SECTION_V
   "angeStats_Notify\022\n\n\002id\030\001 \001(\005\022\r\n\005maxHp\030\002 "
   "\001(\005\022\r\n\005maxMp\030\003 \001(\005\022\013\n\003atk\030\004 \001(\005\022\013\n\003def\030\005"
   " \001(\005\022\r\n\005speed\030\006 \001(\005\022\n\n\002hp\030\007 \001(\005\022\n\n\002mp\030\010 "
-  "\001(\005b\006proto3"
+  "\001(\005\"\221\001\n\023GetEquipment_Notify\022\n\n\002id\030\001 \001(\005\022"
+  "\017\n\007slotIdx\030\002 \001(\005\022\r\n\005maxHp\030\003 \001(\005\022\r\n\005maxMp"
+  "\030\004 \001(\005\022\013\n\003atk\030\005 \001(\005\022\013\n\003def\030\006 \001(\005\022\r\n\005spee"
+  "d\030\007 \001(\005\022\n\n\002hp\030\010 \001(\005\022\n\n\002mp\030\t \001(\005\"=\n\021GetCo"
+  "nsume_Notify\022\n\n\002id\030\001 \001(\005\022\017\n\007slotIdx\030\002 \001("
+  "\005\022\013\n\003cnt\030\003 \001(\005\"J\n\013UseItem_Req\022*\n\010itemTyp"
+  "e\030\001 \001(\0162\030.protocol.mmo.E_ItemType\022\017\n\007slo"
+  "tIdx\030\002 \001(\005b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_MMO_5fprotocol_2eproto_deps[2] = {
   &::descriptor_table_MMO_5fenum_2eproto,
@@ -331,9 +426,9 @@ static const ::_pbi::DescriptorTable* const descriptor_table_MMO_5fprotocol_2epr
 };
 static ::_pbi::once_flag descriptor_table_MMO_5fprotocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_MMO_5fprotocol_2eproto = {
-    false, false, 811, descriptor_table_protodef_MMO_5fprotocol_2eproto,
+    false, false, 1098, descriptor_table_protodef_MMO_5fprotocol_2eproto,
     "MMO_protocol.proto",
-    &descriptor_table_MMO_5fprotocol_2eproto_once, descriptor_table_MMO_5fprotocol_2eproto_deps, 2, 11,
+    &descriptor_table_MMO_5fprotocol_2eproto_once, descriptor_table_MMO_5fprotocol_2eproto_deps, 2, 14,
     schemas, file_default_instances, TableStruct_MMO_5fprotocol_2eproto::offsets,
     file_level_metadata_MMO_5fprotocol_2eproto, file_level_enum_descriptors_MMO_5fprotocol_2eproto,
     file_level_service_descriptors_MMO_5fprotocol_2eproto,
@@ -2759,6 +2854,834 @@ void ChangeStats_Notify::InternalSwap(ChangeStats_Notify* other) {
       file_level_metadata_MMO_5fprotocol_2eproto[10]);
 }
 
+// ===================================================================
+
+class GetEquipment_Notify::_Internal {
+ public:
+};
+
+GetEquipment_Notify::GetEquipment_Notify(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:protocol.mmo.GetEquipment_Notify)
+}
+GetEquipment_Notify::GetEquipment_Notify(const GetEquipment_Notify& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  GetEquipment_Notify* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.id_){}
+    , decltype(_impl_.slotidx_){}
+    , decltype(_impl_.maxhp_){}
+    , decltype(_impl_.maxmp_){}
+    , decltype(_impl_.atk_){}
+    , decltype(_impl_.def_){}
+    , decltype(_impl_.speed_){}
+    , decltype(_impl_.hp_){}
+    , decltype(_impl_.mp_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&_impl_.id_, &from._impl_.id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.mp_) -
+    reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.mp_));
+  // @@protoc_insertion_point(copy_constructor:protocol.mmo.GetEquipment_Notify)
+}
+
+inline void GetEquipment_Notify::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.id_){0}
+    , decltype(_impl_.slotidx_){0}
+    , decltype(_impl_.maxhp_){0}
+    , decltype(_impl_.maxmp_){0}
+    , decltype(_impl_.atk_){0}
+    , decltype(_impl_.def_){0}
+    , decltype(_impl_.speed_){0}
+    , decltype(_impl_.hp_){0}
+    , decltype(_impl_.mp_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+GetEquipment_Notify::~GetEquipment_Notify() {
+  // @@protoc_insertion_point(destructor:protocol.mmo.GetEquipment_Notify)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void GetEquipment_Notify::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void GetEquipment_Notify::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void GetEquipment_Notify::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.mmo.GetEquipment_Notify)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&_impl_.id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.mp_) -
+      reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.mp_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* GetEquipment_Notify::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 slotIdx = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.slotidx_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 maxHp = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.maxhp_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 maxMp = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.maxmp_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 atk = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
+          _impl_.atk_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 def = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 48)) {
+          _impl_.def_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 speed = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 56)) {
+          _impl_.speed_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 hp = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 64)) {
+          _impl_.hp_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 mp = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 72)) {
+          _impl_.mp_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* GetEquipment_Notify::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.mmo.GetEquipment_Notify)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 id = 1;
+  if (this->_internal_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_id(), target);
+  }
+
+  // int32 slotIdx = 2;
+  if (this->_internal_slotidx() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_slotidx(), target);
+  }
+
+  // int32 maxHp = 3;
+  if (this->_internal_maxhp() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_maxhp(), target);
+  }
+
+  // int32 maxMp = 4;
+  if (this->_internal_maxmp() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_maxmp(), target);
+  }
+
+  // int32 atk = 5;
+  if (this->_internal_atk() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(5, this->_internal_atk(), target);
+  }
+
+  // int32 def = 6;
+  if (this->_internal_def() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(6, this->_internal_def(), target);
+  }
+
+  // int32 speed = 7;
+  if (this->_internal_speed() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(7, this->_internal_speed(), target);
+  }
+
+  // int32 hp = 8;
+  if (this->_internal_hp() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(8, this->_internal_hp(), target);
+  }
+
+  // int32 mp = 9;
+  if (this->_internal_mp() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(9, this->_internal_mp(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.mmo.GetEquipment_Notify)
+  return target;
+}
+
+size_t GetEquipment_Notify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.mmo.GetEquipment_Notify)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int32 id = 1;
+  if (this->_internal_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_id());
+  }
+
+  // int32 slotIdx = 2;
+  if (this->_internal_slotidx() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_slotidx());
+  }
+
+  // int32 maxHp = 3;
+  if (this->_internal_maxhp() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_maxhp());
+  }
+
+  // int32 maxMp = 4;
+  if (this->_internal_maxmp() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_maxmp());
+  }
+
+  // int32 atk = 5;
+  if (this->_internal_atk() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_atk());
+  }
+
+  // int32 def = 6;
+  if (this->_internal_def() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_def());
+  }
+
+  // int32 speed = 7;
+  if (this->_internal_speed() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_speed());
+  }
+
+  // int32 hp = 8;
+  if (this->_internal_hp() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_hp());
+  }
+
+  // int32 mp = 9;
+  if (this->_internal_mp() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_mp());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData GetEquipment_Notify::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    GetEquipment_Notify::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetEquipment_Notify::GetClassData() const { return &_class_data_; }
+
+
+void GetEquipment_Notify::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<GetEquipment_Notify*>(&to_msg);
+  auto& from = static_cast<const GetEquipment_Notify&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:protocol.mmo.GetEquipment_Notify)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_id() != 0) {
+    _this->_internal_set_id(from._internal_id());
+  }
+  if (from._internal_slotidx() != 0) {
+    _this->_internal_set_slotidx(from._internal_slotidx());
+  }
+  if (from._internal_maxhp() != 0) {
+    _this->_internal_set_maxhp(from._internal_maxhp());
+  }
+  if (from._internal_maxmp() != 0) {
+    _this->_internal_set_maxmp(from._internal_maxmp());
+  }
+  if (from._internal_atk() != 0) {
+    _this->_internal_set_atk(from._internal_atk());
+  }
+  if (from._internal_def() != 0) {
+    _this->_internal_set_def(from._internal_def());
+  }
+  if (from._internal_speed() != 0) {
+    _this->_internal_set_speed(from._internal_speed());
+  }
+  if (from._internal_hp() != 0) {
+    _this->_internal_set_hp(from._internal_hp());
+  }
+  if (from._internal_mp() != 0) {
+    _this->_internal_set_mp(from._internal_mp());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void GetEquipment_Notify::CopyFrom(const GetEquipment_Notify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.mmo.GetEquipment_Notify)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetEquipment_Notify::IsInitialized() const {
+  return true;
+}
+
+void GetEquipment_Notify::InternalSwap(GetEquipment_Notify* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(GetEquipment_Notify, _impl_.mp_)
+      + sizeof(GetEquipment_Notify::_impl_.mp_)
+      - PROTOBUF_FIELD_OFFSET(GetEquipment_Notify, _impl_.id_)>(
+          reinterpret_cast<char*>(&_impl_.id_),
+          reinterpret_cast<char*>(&other->_impl_.id_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata GetEquipment_Notify::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_MMO_5fprotocol_2eproto_getter, &descriptor_table_MMO_5fprotocol_2eproto_once,
+      file_level_metadata_MMO_5fprotocol_2eproto[11]);
+}
+
+// ===================================================================
+
+class GetConsume_Notify::_Internal {
+ public:
+};
+
+GetConsume_Notify::GetConsume_Notify(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:protocol.mmo.GetConsume_Notify)
+}
+GetConsume_Notify::GetConsume_Notify(const GetConsume_Notify& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  GetConsume_Notify* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.id_){}
+    , decltype(_impl_.slotidx_){}
+    , decltype(_impl_.cnt_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&_impl_.id_, &from._impl_.id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.cnt_) -
+    reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.cnt_));
+  // @@protoc_insertion_point(copy_constructor:protocol.mmo.GetConsume_Notify)
+}
+
+inline void GetConsume_Notify::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.id_){0}
+    , decltype(_impl_.slotidx_){0}
+    , decltype(_impl_.cnt_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+GetConsume_Notify::~GetConsume_Notify() {
+  // @@protoc_insertion_point(destructor:protocol.mmo.GetConsume_Notify)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void GetConsume_Notify::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void GetConsume_Notify::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void GetConsume_Notify::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.mmo.GetConsume_Notify)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&_impl_.id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.cnt_) -
+      reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.cnt_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* GetConsume_Notify::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 slotIdx = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.slotidx_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 cnt = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.cnt_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* GetConsume_Notify::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.mmo.GetConsume_Notify)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 id = 1;
+  if (this->_internal_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_id(), target);
+  }
+
+  // int32 slotIdx = 2;
+  if (this->_internal_slotidx() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_slotidx(), target);
+  }
+
+  // int32 cnt = 3;
+  if (this->_internal_cnt() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_cnt(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.mmo.GetConsume_Notify)
+  return target;
+}
+
+size_t GetConsume_Notify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.mmo.GetConsume_Notify)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int32 id = 1;
+  if (this->_internal_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_id());
+  }
+
+  // int32 slotIdx = 2;
+  if (this->_internal_slotidx() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_slotidx());
+  }
+
+  // int32 cnt = 3;
+  if (this->_internal_cnt() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_cnt());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData GetConsume_Notify::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    GetConsume_Notify::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetConsume_Notify::GetClassData() const { return &_class_data_; }
+
+
+void GetConsume_Notify::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<GetConsume_Notify*>(&to_msg);
+  auto& from = static_cast<const GetConsume_Notify&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:protocol.mmo.GetConsume_Notify)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_id() != 0) {
+    _this->_internal_set_id(from._internal_id());
+  }
+  if (from._internal_slotidx() != 0) {
+    _this->_internal_set_slotidx(from._internal_slotidx());
+  }
+  if (from._internal_cnt() != 0) {
+    _this->_internal_set_cnt(from._internal_cnt());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void GetConsume_Notify::CopyFrom(const GetConsume_Notify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.mmo.GetConsume_Notify)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetConsume_Notify::IsInitialized() const {
+  return true;
+}
+
+void GetConsume_Notify::InternalSwap(GetConsume_Notify* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(GetConsume_Notify, _impl_.cnt_)
+      + sizeof(GetConsume_Notify::_impl_.cnt_)
+      - PROTOBUF_FIELD_OFFSET(GetConsume_Notify, _impl_.id_)>(
+          reinterpret_cast<char*>(&_impl_.id_),
+          reinterpret_cast<char*>(&other->_impl_.id_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata GetConsume_Notify::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_MMO_5fprotocol_2eproto_getter, &descriptor_table_MMO_5fprotocol_2eproto_once,
+      file_level_metadata_MMO_5fprotocol_2eproto[12]);
+}
+
+// ===================================================================
+
+class UseItem_Req::_Internal {
+ public:
+};
+
+UseItem_Req::UseItem_Req(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:protocol.mmo.UseItem_Req)
+}
+UseItem_Req::UseItem_Req(const UseItem_Req& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  UseItem_Req* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.itemtype_){}
+    , decltype(_impl_.slotidx_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&_impl_.itemtype_, &from._impl_.itemtype_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.slotidx_) -
+    reinterpret_cast<char*>(&_impl_.itemtype_)) + sizeof(_impl_.slotidx_));
+  // @@protoc_insertion_point(copy_constructor:protocol.mmo.UseItem_Req)
+}
+
+inline void UseItem_Req::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.itemtype_){0}
+    , decltype(_impl_.slotidx_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+UseItem_Req::~UseItem_Req() {
+  // @@protoc_insertion_point(destructor:protocol.mmo.UseItem_Req)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void UseItem_Req::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void UseItem_Req::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void UseItem_Req::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.mmo.UseItem_Req)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&_impl_.itemtype_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.slotidx_) -
+      reinterpret_cast<char*>(&_impl_.itemtype_)) + sizeof(_impl_.slotidx_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* UseItem_Req::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .protocol.mmo.E_ItemType itemType = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_itemtype(static_cast<::protocol::mmo::E_ItemType>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 slotIdx = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.slotidx_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* UseItem_Req::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.mmo.UseItem_Req)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .protocol.mmo.E_ItemType itemType = 1;
+  if (this->_internal_itemtype() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_itemtype(), target);
+  }
+
+  // int32 slotIdx = 2;
+  if (this->_internal_slotidx() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_slotidx(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.mmo.UseItem_Req)
+  return target;
+}
+
+size_t UseItem_Req::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.mmo.UseItem_Req)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .protocol.mmo.E_ItemType itemType = 1;
+  if (this->_internal_itemtype() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_itemtype());
+  }
+
+  // int32 slotIdx = 2;
+  if (this->_internal_slotidx() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_slotidx());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData UseItem_Req::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    UseItem_Req::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*UseItem_Req::GetClassData() const { return &_class_data_; }
+
+
+void UseItem_Req::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<UseItem_Req*>(&to_msg);
+  auto& from = static_cast<const UseItem_Req&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:protocol.mmo.UseItem_Req)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_itemtype() != 0) {
+    _this->_internal_set_itemtype(from._internal_itemtype());
+  }
+  if (from._internal_slotidx() != 0) {
+    _this->_internal_set_slotidx(from._internal_slotidx());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void UseItem_Req::CopyFrom(const UseItem_Req& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.mmo.UseItem_Req)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool UseItem_Req::IsInitialized() const {
+  return true;
+}
+
+void UseItem_Req::InternalSwap(UseItem_Req* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(UseItem_Req, _impl_.slotidx_)
+      + sizeof(UseItem_Req::_impl_.slotidx_)
+      - PROTOBUF_FIELD_OFFSET(UseItem_Req, _impl_.itemtype_)>(
+          reinterpret_cast<char*>(&_impl_.itemtype_),
+          reinterpret_cast<char*>(&other->_impl_.itemtype_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata UseItem_Req::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_MMO_5fprotocol_2eproto_getter, &descriptor_table_MMO_5fprotocol_2eproto_once,
+      file_level_metadata_MMO_5fprotocol_2eproto[13]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace mmo
 }  // namespace protocol
@@ -2806,6 +3729,18 @@ Arena::CreateMaybeMessage< ::protocol::mmo::NormalAttack_Notify >(Arena* arena) 
 template<> PROTOBUF_NOINLINE ::protocol::mmo::ChangeStats_Notify*
 Arena::CreateMaybeMessage< ::protocol::mmo::ChangeStats_Notify >(Arena* arena) {
   return Arena::CreateMessageInternal< ::protocol::mmo::ChangeStats_Notify >(arena);
+}
+template<> PROTOBUF_NOINLINE ::protocol::mmo::GetEquipment_Notify*
+Arena::CreateMaybeMessage< ::protocol::mmo::GetEquipment_Notify >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::mmo::GetEquipment_Notify >(arena);
+}
+template<> PROTOBUF_NOINLINE ::protocol::mmo::GetConsume_Notify*
+Arena::CreateMaybeMessage< ::protocol::mmo::GetConsume_Notify >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::mmo::GetConsume_Notify >(arena);
+}
+template<> PROTOBUF_NOINLINE ::protocol::mmo::UseItem_Req*
+Arena::CreateMaybeMessage< ::protocol::mmo::UseItem_Req >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::mmo::UseItem_Req >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

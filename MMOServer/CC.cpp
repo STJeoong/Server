@@ -7,6 +7,8 @@ void CC::apply(const S_TargetBasedAction& targetActionDetail, I_Targetable* targ
 }
 void CC::revert()
 {
+	// TODO
+
 }
 #pragma endregion
 

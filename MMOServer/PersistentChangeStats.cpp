@@ -8,7 +8,8 @@ using namespace protocol::mmo;
 #pragma region public
 void PersistentChangeStats::apply(const S_TargetBasedAction& targetActionDetail, GameObject* targetObj, GameObject* user)
 {
-	_target = reinterpret_cast<I_Targetable*>(targetObj);
+	_target = dynamic_cast<I_Targetable*>(targetObj);
+	_user = user;
 	_duration = targetActionDetail.duration;
 	_remainingTime = _duration;
 	_interval = targetActionDetail.interval;
@@ -26,7 +27,6 @@ void PersistentChangeStats::apply(const S_TargetBasedAction& targetActionDetail,
 void PersistentChangeStats::revert()
 {
 	_target->removePersistentChangeStats(this);
-	ObjectPool::release<PersistentChangeStats>(this);
 }
 #pragma endregion
 
@@ -42,6 +42,9 @@ void PersistentChangeStats::invoke(const E_GameObjectEvent& evt, void* arg)
 }
 void PersistentChangeStats::update()
 {
+	if (!_user->activeInHierarchy())
+		_user = nullptr;
+	// 만약 퍼뎀이라 해도 매 update마다 deltaStats을 update해줄 필요 없음. ( user가 도중에 disconnect할 수 있으니까 )
 	_nextHitTime -= Game::UPDATE_DELTA_TIME;
 	_remainingTime -= Game::UPDATE_DELTA_TIME;
 	if (_nextHitTime <= 0)
@@ -54,6 +57,6 @@ void PersistentChangeStats::update()
 }
 void PersistentChangeStats::action()
 {
-	_target->changeStats(_delta);
+	_target->changeStats(_delta, _user);
 }
 #pragma endregion
